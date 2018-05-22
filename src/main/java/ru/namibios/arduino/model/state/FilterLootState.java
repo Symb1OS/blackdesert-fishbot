@@ -1,10 +1,8 @@
 package ru.namibios.arduino.model.state;
 
-
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.command.FishLoot;
 import ru.namibios.arduino.utils.Keyboard;
 
@@ -24,9 +22,6 @@ public class FilterLootState extends State{
 		logger.info("Check loot...");
 		
 		try {
-			
-			Screen screen = new Screen(Screen.FULL_SCREEN, false);
-			screen.upload();
 			
 			FishLoot filter = new FishLoot();
 			Keyboard.send(filter);

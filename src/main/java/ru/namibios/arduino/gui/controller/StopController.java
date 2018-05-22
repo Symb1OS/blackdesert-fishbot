@@ -15,7 +15,8 @@ public class StopController implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		threadTransfer.getFishBot().setRunned(false);
+		if(threadTransfer != null)
+			threadTransfer.getFishBot().setRunned(false);
 	}
 	
 }

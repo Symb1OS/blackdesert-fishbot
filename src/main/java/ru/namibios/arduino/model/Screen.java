@@ -13,13 +13,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
 
-import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.utils.DateUtils;
-import ru.namibios.arduino.utils.Http;
 
 public class Screen {
 	
@@ -96,13 +93,17 @@ public class Screen {
 		}
 	}
 	
-	public void saveImage(String folder) {
+	public String saveImage(String folder) {
 		
 		try {
-			ImageIO.write(screenShot, "jpg", new File(Path.RESOURCES + folder + "/" + DateUtils.getYYYY_MM_DD_HH_MM_SS_S() + ".jpg"));
+			String filename = Path.RESOURCES + folder + "/" + DateUtils.getYYYY_MM_DD_HH_MM_SS_S() + ".jpg";
+			File file = new File(filename);
+			ImageIO.write(screenShot, "jpg", file);
+			return file.getAbsolutePath();
 		} catch (IOException e) {
 			logger.error("Exception " + e);
 		}
+		return null;
 	}
 	
 	public BufferedImage getScreenShot() {
@@ -129,11 +130,6 @@ public class Screen {
 		}
 		
 		return imageInByte;
-	}
-	
-	public void upload() throws ClientProtocolException, IOException{
-		Http http = new Http();
-		http.uploadImage(Application.getInstance().HASH(), screenShot);
 	}
 	
 public class Noise {

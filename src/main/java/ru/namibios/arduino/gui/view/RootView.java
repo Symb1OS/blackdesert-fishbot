@@ -25,13 +25,10 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.PatternLayout;
 
 import ru.namibios.arduino.Transfer;
-import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.gui.controller.SettingsController;
 import ru.namibios.arduino.gui.controller.StartController;
 import ru.namibios.arduino.gui.controller.StopController;
-import ru.namibios.arduino.gui.controller.TestController;
-import ru.namibios.arduino.utils.ExecUtils;
 import ru.namibios.arduino.utils.TextAreaAppender;
 
 public class RootView extends JFrame{
@@ -69,9 +66,6 @@ public class RootView extends JFrame{
 	    file.add(exit);
 	    
 	    JMenu help = new JMenu(UIManager.getString("rootview.menu.help"));
-	    JMenuItem personal = new JMenuItem(UIManager.getString("rootview.menu.help.myaccount"));
-	    personal.addActionListener((e) -> ExecUtils.openUri(String.format("http://%s/monitoring", Application.getInstance().HTTP_SERVER())));
-	    help.add(personal);
 	    
 	    JMenuItem feedback = new JMenuItem(UIManager.getString("rootview.menu.help.feedback"));
 	    feedback.addActionListener((e) -> JOptionPane.showMessageDialog(this, UIManager.getString("rootview.menu.help.feedback.message")));
@@ -112,20 +106,19 @@ public class RootView extends JFrame{
 	    butonPanel.setLayout(new FlowLayout());
 	  
 	    JButton bStart = new JButton(UIManager.getString("rootview.button.start"));
-	    butonPanel.add(bStart);
-	    
 	    StartController startController = new StartController(transfer, this);
 	    bStart.addActionListener(startController);
+	    butonPanel.add(bStart);
 	    
 	    JButton bStop = new JButton(UIManager.getString("rootview.button.stop"));
 	    StopController stopController = new StopController(transfer);
 	    bStop.addActionListener(stopController);
 	    butonPanel.add(bStop);
 	    
-	    JButton bTest = new JButton(UIManager.getString("rootview.button.test"));
+	  /*  JButton bTest = new JButton(UIManager.getString("rootview.button.test"));
 	    TestController testController = new TestController();
 	    bTest.addActionListener(testController);
-	    butonPanel.add(bTest);
+	    butonPanel.add(bTest)*/;
 	    
 	    setVisible(true);
 	}

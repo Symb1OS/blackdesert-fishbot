@@ -578,7 +578,8 @@ public class SettingsView extends JFrame{
 		
 		Application.getInstance();
 		
-		tHash.setText(Application.getInstance().HASH());
+		tHash.setText(UIManager.getString("preference.label.key.value"));
+		tHash.setEditable(false);
 		
 		int count = tPort.getItemCount();
 		for (int index = 0; index < count; index++) {

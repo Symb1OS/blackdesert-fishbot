@@ -11,19 +11,9 @@ import ru.namibios.arduino.model.Touch;
 @Sources("file:resources/application.properties")
 public interface ApplicationConfig extends Accessible, Mutable{
 	
-	@Key("bot.key")
-	String HASH();
-	
 	@Key("bot.port")
+	@DefaultValue("")
 	String PORT();
-	
-	@Key("bot.http")
-	@DefaultValue("46.188.5.59:9090")
-	String HTTP_SERVER();
-	
-	@Key("bot.ws.action")
-	@DefaultValue("ws://${bot.http}/monitoring/action/${bot.key}")
-	String WS_ACTION();
 	
 	@Key("bot.rod.count")
 	@DefaultValue("0")
@@ -97,6 +87,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	boolean TRASH();
 	
 	@Key("bot.loot.unknown")
+	@DefaultValue("false")
 	boolean TAKE_UNKNOWN();
 	
 	@Key("bot.autouse.beer")

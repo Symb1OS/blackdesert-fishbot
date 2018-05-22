@@ -14,7 +14,6 @@ public class Transfer extends Thread{
 	
 	public Transfer() {
 		this.fishBot = new FishBot();
-		new ActionClientSocket();
 	}
 	
 	public FishBot getFishBot() {

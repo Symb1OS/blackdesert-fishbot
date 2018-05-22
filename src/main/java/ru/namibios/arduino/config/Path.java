@@ -8,4 +8,6 @@ public class Path {
 	
 	public static final String ROOT_ICON = RESOURCES + "icon.png";
 	
+	public static final String SCRIPT_PATH = RESOURCES + "model/parsing.sh";
+	
 }

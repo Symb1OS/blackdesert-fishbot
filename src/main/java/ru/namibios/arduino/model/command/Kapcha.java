@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.utils.Http;
-import ru.namibios.arduino.utils.JSON;
+import ru.namibios.arduino.model.template.Keys;
+import ru.namibios.arduino.utils.PythonExec;
 
 public class Kapcha implements Command{
 
@@ -20,11 +20,12 @@ public class Kapcha implements Command{
 
 	private Screen screen;
 	private String key;
+	private String filename;
 	
 	public Kapcha() throws AWTException  {
 		this.screen = new Screen(Screen.KAPCHA);
 		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
-		this.screen.saveImage("kapcha");
+		this.filename = screen.saveImage("kapcha");
 		this.key = "";
 	}
 	
@@ -45,18 +46,19 @@ public class Kapcha implements Command{
 		
 		try {
 			
-			ImageParser imageParser = new ImageParser(screen);
-			imageParser.parse(Screen.GRAY);
-			
-			Http http = new Http();
-			
 			switch (Application.getInstance().PARSE_VARIABLE()) {
 				case NEURAL_NETWORK:
-					key = http.parseByteKapcha(Application.getInstance().HASH(), screen.toByteArray());
+					
+					String key = PythonExec.exec(filename);
+					key = key.replaceAll("0", "w").replaceAll("1", "s").replaceAll("2", "a").replaceAll("3", "d").replaceAll("4", "");
 					break;
 					
 				case ALGORITHM:
-					key = http.parseKapcha(Application.getInstance().HASH(), JSON.getInstance().writeValueAsString(imageParser.getImageMatrix()));
+					
+					ImageParser imageParser = new ImageParser(screen, Keys.values());
+					imageParser.parse(Screen.GRAY);
+					key = imageParser.getNumber();
+					
 					break;
 	
 				default:
