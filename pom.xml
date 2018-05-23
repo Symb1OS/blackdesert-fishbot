@@ -85,19 +85,19 @@
    	</resource>
    	<resource>
    		<directory>arduino/emulation</directory>
-   		<targetPath>../${project.artifactId}_${pom.version}/emulation</targetPath>
+   		<targetPath>../${project.artifactId}_${project.version}/emulation</targetPath>
    	</resource>
    	<resource>
    		<directory>resources</directory>
-   		<targetPath>../${project.artifactId}_${pom.version}/resources</targetPath>
+   		<targetPath>../${project.artifactId}_${project.version}/resources</targetPath>
    	</resource>
    	<resource>
    		<directory>soft</directory>
-   		<targetPath>../${project.artifactId}_${pom.version}/soft</targetPath>
+   		<targetPath>../${project.artifactId}_${project.version}/soft</targetPath>
    	</resource>
    	<resource>
    		<directory>script</directory>
-   		<targetPath>../${project.artifactId}_${pom.version}</targetPath>
+   		<targetPath>../${project.artifactId}_${project.version}</targetPath>
    	</resource>
    </resources> 
    
@@ -132,7 +132,7 @@
 	        <artifactId>maven-jar-plugin</artifactId>
 	        <version>3.0.2</version>
 	        <configuration>
-			  <outputDirectory>${project.build.directory}/${project.artifactId}_${pom.version}</outputDirectory>
+			  <outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}</outputDirectory>
 	          <archive>
 	            <manifest>
 	              <addClasspath>true</addClasspath>
@@ -152,7 +152,7 @@
 	              <goal>copy-dependencies</goal>
 	            </goals>
 	            <configuration>
-	              <outputDirectory>${project.build.directory}/${project.artifactId}_${pom.version}/libs</outputDirectory>
+	              <outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/libs</outputDirectory>
 	            </configuration>
 	          </execution>
 	        </executions>

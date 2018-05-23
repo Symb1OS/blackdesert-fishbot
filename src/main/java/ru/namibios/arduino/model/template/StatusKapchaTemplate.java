@@ -1,14 +1,14 @@
-package ru.namibios.arduino.model.template;
+/*package ru.namibios.arduino.model.template;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public enum StatusKapchaTemplate implements MatrixTemplate{
 
-	/**
+	*//**
 		Картинка постоянно меняет свою положение, потому сложно распознавать программно, гораздо проще
 		обучить нейронную сеть на опознание. Но эта функция несильно нужна, поэтому как-нибудь потом.
-	*/
+	*//*
 	
 	SUCCESS(
 			new int[][]{
@@ -192,4 +192,4 @@ public enum StatusKapchaTemplate implements MatrixTemplate{
 			templates.add(template);
 		}
 	}
-}
+}*/
