@@ -10,6 +10,15 @@
 - реакция на сообщение в ПМ
 - автоюз пива, миниигры 
 
+### Navigation
+
+- [Requirements](#requirements)
+- [Presets](#presets)
+- [Installing](#installing)
+- [Tests](#tests)
+- [Running](#running)
+- [Donation](#donation)
+
 ### Requirements
 
 - Разрешение экрана 1920x1080(При необходимости можно добавить поддержку других разрешений)
@@ -107,7 +116,7 @@ python parse.py cd 13.jpg
 ### Running
 ```
 cd target/blackdesert-fishbot_0.1.9
-run.bat
+java -jar blackdesert-fishbot.jar
 ```
 
 Для дальнейших действий воспользуйтесь [инструкцией по настройке и запуску бота](https://docs.google.com/document/d/1DkkaUYzsAG57zADdlMZyV0jzGTR5s-Vo13wi64Z0TC8/edit#heading=h.3ppzcxu04cdm)
