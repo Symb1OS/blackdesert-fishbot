@@ -1,6 +1,6 @@
 #!/bin/bash
 
-jarname="fishing.jar"
+jarname="blackdesert-fishbot.jar"
 
 if [ -f ${jarname} ]
 then
