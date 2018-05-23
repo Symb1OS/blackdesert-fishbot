@@ -18,7 +18,7 @@ public class PythonExec {
 		
 		String absolute = file.getAbsolutePath();
 		cmd[0] = absolute;
-		cmd[1] = absolute.substring(0, absolute.lastIndexOf("/"));
+		cmd[1] = absolute.substring(0, absolute.lastIndexOf("\\"));
 		cmd[2] = fileKapcha;
 		
 		Runtime rt = Runtime.getRuntime();
@@ -35,7 +35,7 @@ public class PythonExec {
 	
 	public static void main(String[] args) throws IOException {
 		
-		System.out.println(exec("/home/symbios/git/blackdesert-fishbot/resources/model/13.jpg"));
+		System.out.println(exec("D:/work/test/blackdesert-fishbot_0.1.9/resources/model/13.jpg"));
 	}
 	
 }
