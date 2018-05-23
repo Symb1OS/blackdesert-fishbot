@@ -1,2 +1,2 @@
-set jarname="fishing.jar"
+set jarname="blackdesert-fishbot.jar"
 java -jar %jarname%
