@@ -1,4 +1,4 @@
-/*package ru.namibios.arduino.model.status;
+package ru.namibios.arduino.model.status;
 
 import java.awt.AWTException;
 import java.io.IOException;
@@ -27,4 +27,4 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 		return (StatusKapchaTemplate) parser.getNameTemplate();
 	}
 	
-}*/
+}

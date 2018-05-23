@@ -70,7 +70,7 @@ C:\Users\jyk>git --version
 git version 2.17.0.windows.1
 ```
 
-Устанавливаем pytorch:
+Устанавливаем pytorch.
 Переходим по [ссылке](https://pytorch.org/), отмечаем галочки ОС - windows, Manager - pip, Python - 3.6, CUDA - none. 
 Запускаем предложенную команду в терминале, у меня это выглядит следующим образом:
 
@@ -89,7 +89,20 @@ git clone https://github.com/Symb1OS/blackdesert-fishbot.git
 
 ```
 mvn package
+
 ```
+
+### Tests
+
+Чтобы проверить корректность работы нашей НС проделаем следующее:
+ 
+```
+cd resources/model
+python parse.py cd 13.jpg
+```
+
+Если никаких ошибок не возникло и наша нейронка вернула `1111044444`, значит все ок.
+
 
 ### Running
 ```

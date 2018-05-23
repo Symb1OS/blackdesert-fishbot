@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.status.Status;
+import ru.namibios.arduino.model.status.StatusKapcha;
+import ru.namibios.arduino.model.template.StatusKapchaTemplate;
 
 public class StatusKapchaState extends State{
 
@@ -30,7 +32,7 @@ public class StatusKapchaState extends State{
 				fishBot.setState(new FilterLootState(fishBot));
 			}
 			
-		/*	Status<StatusKapchaTemplate> statusKapcha = new StatusKapcha();
+			Status<StatusKapchaTemplate> statusKapcha = new StatusKapcha();
 			StatusKapchaTemplate status = statusKapcha.getNameTemplate();
 			
 			if(status == null) {
@@ -50,7 +52,7 @@ public class StatusKapchaState extends State{
 					fishBot.setState(new StartFishState(fishBot));
 					break;
 				} 
-			}*/
+			}
 			
 		}catch (Exception e) {
 			logger.error("Exception " + e);
