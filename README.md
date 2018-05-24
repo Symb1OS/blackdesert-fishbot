@@ -109,7 +109,7 @@ mvn package
  
 ```
 cd resources/model
-python parse.py cd 13.jpg
+python parse.py %cd% 13.jpg
 ```
 
 Если никаких ошибок не возникло и наша нейронка вернула `1111044444`, значит все ок.
