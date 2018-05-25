@@ -21,8 +21,8 @@
 
 ### Requirements
 
-- Разрешение экрана 1920x1080(При необходимости можно добавить поддержку других разрешений)
-- Плата arduino pro micro(с поддежкой эмуляции клавиатуры и мыши)
+- Разрешение экрана 1920x1080 (полноэкранный режим или в окне без рамки. При необходимости можно добавить поддержку других разрешений)
+- Плата arduino pro micro (с поддежкой эмуляции клавиатуры и мыши)
 - jdk >= 1.8
 - Apache Maven >= 3.0.5
 
@@ -116,10 +116,20 @@ python parse.py %cd% 13.jpg
 
 
 ### Running
+
+```
+run.bat
+```
+
+or
+
 ```
 cd target/blackdesert-fishbot_0.1.9
 java -jar blackdesert-fishbot.jar
+
 ```
+
+
 
 Для дальнейших действий воспользуйтесь [инструкцией по настройке и запуску бота](https://docs.google.com/document/d/1DkkaUYzsAG57zADdlMZyV0jzGTR5s-Vo13wi64Z0TC8/edit#heading=h.3ppzcxu04cdm)
 
