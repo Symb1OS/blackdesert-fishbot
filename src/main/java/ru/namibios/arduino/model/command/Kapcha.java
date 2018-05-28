@@ -49,7 +49,7 @@ public class Kapcha implements Command{
 			switch (Application.getInstance().PARSE_VARIABLE()) {
 				case NEURAL_NETWORK:
 					
-					String key = PythonExec.exec(filename);
+					key = PythonExec.exec(filename);
 					key = key.replaceAll("0", "w").replaceAll("1", "s").replaceAll("2", "a").replaceAll("3", "d").replaceAll("4", "");
 					break;
 					
