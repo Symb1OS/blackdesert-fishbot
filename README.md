@@ -23,7 +23,7 @@
 ### Requirements
 
 - Разрешение экрана 1920x1080 (полноэкранный режим или в окне без рамки. При необходимости можно добавить поддержку других разрешений)
-- [Arduino pro micro](https://ru.aliexpress.com/item/Pro-Micro-ATmega32U4-5V-16MHz-Replace-ATmega328-For-Arduino-Pro-Mini-With-2-Row-Pin-Header/32808519179.html?spm=a2g0v.search0104.3.9.d2a96d6aHce2uv&ws_ab_test=searchweb0_0,searchweb201602_2_10152_10151_5711320_10065_10344_10068_10342_10343_10340_10341_10543_10696_10084_5722520_10083_5711520_10618_10307_10301_5711220_10059_5722620_5722920_308_5722720_5722820_100031_5711420_10103_10624_10623_10622_10621_10620_10125,searchweb201603_19,ppcSwitch_4&algo_expid=b55f39b5-4705-42af-9628-7fc4498fc65d-1&algo_pvid=b55f39b5-4705-42af-9628-7fc4498fc65d&priceBeautifyAB=0) (с поддежкой эмуляции клавиатуры и мыши).
+- [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) (с поддежкой эмуляции клавиатуры и мыши).
 
 
 - [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
