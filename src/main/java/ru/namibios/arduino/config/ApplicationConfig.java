@@ -189,11 +189,4 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	boolean PM_NOTHING();
 	
-	/**	0 - NN;  
-	 *  1 - ALG  work only 1920*1080
-	 *  									*/
-	@Key("bot.parse.variable")
-	@DefaultValue("0")
-	int PARSE_VARIABLE();
-	
 }

@@ -6,17 +6,12 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.model.template.Keys;
 import ru.namibios.arduino.utils.PythonExec;
 
 public class Kapcha implements Command{
 
 	final static Logger logger = Logger.getLogger(Kapcha.class);
-
-	private static final int NEURAL_NETWORK = 0;
-	private static final int ALGORITHM = 1;
 
 	private Screen screen;
 	private String key;
@@ -46,29 +41,15 @@ public class Kapcha implements Command{
 		
 		try {
 			
-			switch (Application.getInstance().PARSE_VARIABLE()) {
-				case NEURAL_NETWORK:
-					
-					key = PythonExec.exec(filename);
-					key = key.replaceAll("0", "w").replaceAll("1", "s").replaceAll("2", "a").replaceAll("3", "d").replaceAll("4", "");
-					break;
-					
-				case ALGORITHM:
-					
-					ImageParser imageParser = new ImageParser(screen, Keys.values());
-					imageParser.parse(Screen.GRAY);
-					key = imageParser.getNumber();
-					
-					break;
-	
-				default:
-					throw new IllegalArgumentException(String.format("Strategy is not defined. Strategy = %s", Application.getInstance().PARSE_VARIABLE()));
-			}
+			key = PythonExec.exec(filename);
+			key = key.replaceAll("0", "w").replaceAll("1", "s").replaceAll("2", "a").replaceAll("3", "d").replaceAll("4", "");
 			
-		} catch (IOException e){
-			logger.error("Exception: " + e); 
-		} 
+		}catch (IOException e) {
+			logger.error(e);
+		}
+		
 		return key.replaceAll("\"", "").replaceAll("\n", "");
+		
 	}
 
 }

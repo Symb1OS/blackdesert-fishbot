@@ -1,7 +1,5 @@
 package ru.namibios.arduino.utils;
 
-import ru.namibios.arduino.model.MatrixElement;
-
 public class MatrixUtils {
 
 	private MatrixUtils() {}
@@ -35,13 +33,4 @@ public class MatrixUtils {
 		System.out.println();
 	}
 	
-	public static void printMatrix(int[][] matrix, MatrixElement element) {
-		for (int i = element.getMinRow(); i < element.getMaxRow(); i++) {
-			for (int j = element.getMinColumn(); j < element.getMaxColumn(); j++) {
-				System.out.print(matrix[i][j] != 0 ? "1 " : " " + " ");
-			}
-			System.out.println();
-		}
-		
-	}
 }
