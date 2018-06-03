@@ -46,7 +46,7 @@ public class RootView extends JFrame{
 		this.setTitle("Fish bot");
 		
 		this.setSize(new Dimension(WIDTH, HEIGHT));
-		this.setLocation(20, 400);
+		this.setLocation(0, 400);
 	    this.setAlwaysOnTop(true);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    getContentPane().setLayout(new BorderLayout(0, 0));
