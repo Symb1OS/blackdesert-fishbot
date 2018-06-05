@@ -9,7 +9,7 @@ import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.utils.ImageUtils;
 
-public enum Loot implements MatrixTemplate{
+public enum Loot implements MatrixTemplate {
 	
 	SCALA("resources/loot/ok/scala"),
 	
@@ -29,7 +29,7 @@ public enum Loot implements MatrixTemplate{
 		return templates;
 	}
 	
-	private Loot(String fileFolderName){
+	private Loot(String fileFolderName) {
 		this.templates = new ArrayList<int[][]>();
 		
 		Stream.of(new File(fileFolderName).listFiles())
@@ -41,5 +41,5 @@ public enum Loot implements MatrixTemplate{
 					templates.add(parser.getImageMatrix());
 				});
 	}
-	
+
 }

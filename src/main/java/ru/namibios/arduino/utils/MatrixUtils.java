@@ -1,5 +1,11 @@
 package ru.namibios.arduino.utils;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+
 public class MatrixUtils {
 
 	private MatrixUtils() {}
@@ -33,4 +39,40 @@ public class MatrixUtils {
 		System.out.println();
 	}
 	
+	public static int[][] importTemplate(List<String> list){
+		
+		int rowcnt = list.size();
+		int columncnt = list.get(0).length();
+		
+		int[][] mas = new int[rowcnt][columncnt];
+		
+		for (int row = 0; row < list.size(); row++) {
+			String v = list.get(row);
+			char[] charArray = v.toCharArray();
+			for (int column = 0; column < charArray.length; column++) {
+				mas[row][column] = Character.getNumericValue(charArray[column]);
+			}
+		}
+		
+		return mas;
+	}
+	
+	public static void export(String path, StatusKapchaTemplate[] statusCutTemplates) throws IOException {
+		
+		for (StatusKapchaTemplate template : StatusKapchaTemplate.values()) {
+			List<int[][]> list = template.getTemplates();
+			for (int[][] mas : list) {
+				try(FileWriter writer = new FileWriter(path + template.name(), false)){
+					
+					for (int row = 0; row < mas.length; row++) {
+						for (int column = 0; column < mas[0].length; column++) {
+							writer.write(String.valueOf(mas[row][column]));
+						}
+						writer.write(System.lineSeparator());
+					}
+				}
+			}
+		}
+	}
+
 }
