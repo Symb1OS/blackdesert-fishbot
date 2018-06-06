@@ -32,13 +32,13 @@
 
 ### Presets
 
-Скачиваем и устанавливаем [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+- Скачиваем и устанавливаем [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 
-Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
+- Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
-Распаковываем, переходим в папку с ботом.
+- Распаковываем архив, переходим в папку с ботом.
 
-Запускам `build.bat`, ждем окончания сборки.
+- Запускам `build.bat`, ждем окончания сборки.
 
 
 ### Installing
