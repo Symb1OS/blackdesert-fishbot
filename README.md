@@ -34,6 +34,7 @@
 ### Presets
 
 - Скачиваем и устанавливаем [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+![java](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/java.jpg)
 
 - Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
