@@ -1,6 +1,4 @@
 @echo off 
-set /p ji= install Java? y/n
-if %ji%==y (echo Installing Java... & soft\jdk-8u171-windows-i586.exe) 
 
 set /p pyi= Install Python? y/n
 if %pyi%==y (echo Installing Python... & soft\python-3.5.4.exe)
