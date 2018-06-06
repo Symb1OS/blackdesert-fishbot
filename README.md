@@ -46,7 +46,7 @@
 
 ### Installing
 
-Переходим в директорию target/blackdesert-fishbot
+Переходим в директорию `target/blackdesert-fishbot`
 ![install](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/install.jpg)
 
 Запускаем `install.bat`, устанавливаем все необходимые зависимости для корректной работы.
