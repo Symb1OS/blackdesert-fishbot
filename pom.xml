@@ -174,22 +174,11 @@
 						<goal>wget</goal>
 					</goals>
 					<configuration>
-						<url>https://www.arduino.cc/download_handler.php</url>
+						<url>https://www.arduino.cc/download.php?f=/arduino-1.8.5-windows.exe</url>
 						<outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft</outputDirectory>
 					</configuration>
 				</execution>
 				
-				<execution>
-					<id>install-java</id>
-					<phase>prepare-package</phase>
-					<goals>
-						<goal>wget</goal>
-					</goals>
-					<configuration>
-						<url>http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-windows-i586.exe</url>
-						<outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft</outputDirectory>
-					</configuration>
-				</execution>
 			</executions>
 		</plugin>
       
