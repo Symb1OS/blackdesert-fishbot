@@ -37,6 +37,7 @@
 - Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
 - Распаковываем архив, переходим в папку с ботом.
+![build](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/build.jpg)
 
 - Запускам `build.bat`, ждем окончания сборки.
 
