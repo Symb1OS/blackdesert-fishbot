@@ -41,14 +41,14 @@
 
 ### Building
 - Распаковываем архив, переходим в папку с ботом.
-![build](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/build.jpg)
+![build](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/build.png)
 
 - Запускам `build.bat`, ждем окончания сборки.
 
 ### Installing
 
 Переходим в директорию `target/blackdesert-fishbot`
-![install](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/install.jpg)
+![install](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/install.png)
 
 Запускаем `install.bat`, устанавливаем все необходимые зависимости для корректной работы.
 
