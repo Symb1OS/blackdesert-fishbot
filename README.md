@@ -61,7 +61,7 @@
 
 
 ### Wiki
-[Для дальнейшей настройки воспользуетесь инструкцией](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
+[Для дальнейшей настройки воспользуетесь документацией](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
 
 
 ### Donation
