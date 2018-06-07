@@ -34,7 +34,6 @@
 ### Presets
 
 - Скачиваем и устанавливаем [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
-![java](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/java.jpg)
 
 - Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
@@ -58,7 +57,7 @@
 Запускаем `run.bat`
 
 
-Для дальнейших действий воспользуйтесь [инструкцией по настройке и запуску бота](https://docs.google.com/document/d/1DkkaUYzsAG57zADdlMZyV0jzGTR5s-Vo13wi64Z0TC8/edit#heading=h.3ppzcxu04cdm)
+Для дальнейших действий воспользуйтесь [инструкцией по настройке и запуску бота](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
 
 
 ### Donation
