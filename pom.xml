@@ -179,7 +179,7 @@
 					</configuration>
 				</execution>
 				
-				<execution>
+	<!-- 			<execution>
 					<id>download-MouseTo</id>
 					<phase>prepare-package</phase>
 					<goals>
@@ -190,7 +190,7 @@
 						<outputFileName>MouseTo.zip</outputFileName>
 						<outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft</outputDirectory>
 					</configuration>
-				</execution>
+				</execution> -->
 				
 				
 			</executions>
