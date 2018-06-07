@@ -11,6 +11,8 @@
 - реакция на сообщение в ПМ;
 - автоюз пива, миниигры.
 
+[Wiki по проекту](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
+
 ### Navigation
 
 - [Requirements](#requirements)
@@ -55,9 +57,6 @@
 ### Running
 
 Запускаем `run.bat`
-
-
-Для дальнейших действий воспользуйтесь [инструкцией по настройке и запуску бота](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
 
 
 ### Donation
