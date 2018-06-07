@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ru.namibios.arduino</groupId>
   <artifactId>blackdesert-fishbot</artifactId>
-  <version>1.3.3</version>
+  <version>1.3.4</version>
   
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -178,6 +178,20 @@
 						<outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft</outputDirectory>
 					</configuration>
 				</execution>
+				
+				<execution>
+					<id>download-MouseTo</id>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>wget</goal>
+					</goals>
+					<configuration>
+						<url>https://github.com/per1234/MouseTo/archive/master.zip</url>
+						<outputFileName>MouseTo.zip</outputFileName>
+						<outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft</outputDirectory>
+					</configuration>
+				</execution>
+				
 				
 			</executions>
 		</plugin>
