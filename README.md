@@ -11,7 +11,6 @@
 - реакция на сообщение в ПМ;
 - автоюз пива, миниигры.
 
-[Wiki по проекту](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
 
 ### Navigation
 
@@ -20,7 +19,9 @@
 - [Building](#building)
 - [Installing](#installing)
 - [Running](#running)
+- [Wiki](#wiki)
 - [Donation](#donation)
+
 
 ### Requirements
 
@@ -46,6 +47,7 @@
 
 - Запускам `build.bat`, ждем окончания сборки.
 
+
 ### Installing
 
 Переходим в директорию `target/blackdesert-fishbot`
@@ -55,8 +57,11 @@
 
 
 ### Running
-
 Запускаем `run.bat`
+
+
+### Wiki
+[Для дальнейшей настройки воспользуетесь инструкцией](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
 
 
 ### Donation
