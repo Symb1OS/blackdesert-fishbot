@@ -179,19 +179,6 @@
 					</configuration>
 				</execution>
 				
-				<execution>
-					<id>download-MouseTo</id>
-					<phase>prepare-package</phase>
-					<goals>
-						<goal>wget</goal>
-					</goals>
-					<configuration>
-						<url>https://github.com/per1234/MouseTo/archive/master.zip</url>
-						<outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft</outputDirectory>
-					</configuration>
-				</execution>
-				
-				
 			</executions>
 		</plugin>
       
