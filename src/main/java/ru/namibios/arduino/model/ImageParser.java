@@ -58,7 +58,7 @@ public class ImageParser {
 				
 				boolean isIdentified = color.getRed()   > identificationColor.getRed()
 									&& color.getGreen() > identificationColor.getGreen()
-									&& color.getRed()   > identificationColor.getRed();
+									&& color.getBlue()   > identificationColor.getBlue();
 				
 				screenMatrix[i][j] = isIdentified ? 1 : 0;
 			}
