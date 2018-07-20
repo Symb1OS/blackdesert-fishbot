@@ -2,7 +2,8 @@ package ru.namibios.arduino.config;
 
 public class Path {
 	public static final String RESOURCES = "resources/";
-	public static final String SCRIPT_PATH = RESOURCES + "model/parsing.bat";
+	public static final String SCRIPT_PATH_WIN = RESOURCES + "model/parsing.bat";
+	public static final String SCRIPT_PATH_LINUX = RESOURCES + "model/parsing.sh";
 	
 	public static final String ROOT_ICON = RESOURCES + "icon.png";
 	
