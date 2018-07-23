@@ -19,6 +19,7 @@
 - [Building](#building)
 - [Installing](#installing)
 - [Running](#running)
+- [Tests](#tests)
 - [Wiki](#wiki)
 - [Donation](#donation)
 
@@ -58,6 +59,10 @@
 
 ### Running
 Запускаем `run.bat`
+
+
+### Tests
+Запускаем `test.bat`
 
 
 ### Wiki
