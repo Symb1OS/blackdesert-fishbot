@@ -37,10 +37,12 @@ public class FishLoot implements Command{
 		this.scrins = new ArrayList<>();
 		
 		this.one = new Screen(Screen.LOOT_SLOT_ONE);
-		this.one.saveImage("loot/unsort");
-		
 		this.two = new Screen(Screen.LOOT_SLOT_TWO);
-		this.two.saveImage("loot/unsort");
+		
+		if(Application.getInstance().SAVE_UNSORT()) {
+			this.one.saveImage("loot/unsort");
+			this.two.saveImage("loot/unsort");
+		}
 		
 		this.scrins.add(one);
 		this.scrins.add(two);

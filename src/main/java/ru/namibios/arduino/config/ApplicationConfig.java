@@ -90,6 +90,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("false")
 	boolean TAKE_UNKNOWN();
 	
+	@Key("bot.loot.save_unsort")
+	@DefaultValue("true")
+	boolean SAVE_UNSORT();
+	
 	@Key("bot.autouse.beer")
 	@DefaultValue("true")
 	boolean BEER();
