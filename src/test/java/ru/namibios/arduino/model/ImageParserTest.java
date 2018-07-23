@@ -1,4 +1,4 @@
-package ru.namibios.arduino.utils;
+package ru.namibios.arduino.model;
 
 import java.io.IOException;
 

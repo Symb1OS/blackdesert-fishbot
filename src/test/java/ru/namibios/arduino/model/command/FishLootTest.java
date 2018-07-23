@@ -1,4 +1,4 @@
-package ru.namibios.arduino.utils;
+package ru.namibios.arduino.model.command;
 
 
 import static org.junit.Assert.assertEquals;
@@ -11,6 +11,7 @@ import org.junit.Test;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.command.FishLoot;
 import ru.namibios.arduino.utils.Keyboard;
+import ru.namibios.arduino.utils.Keyboard.Keys;
 
 public class FishLootTest {
 	
