@@ -1,4 +1,4 @@
-package ru.namibios.arduino.model;
+package ru.namibios.arduino.utils;
 
 
 import static org.junit.Assert.assertEquals;
@@ -17,6 +17,11 @@ public class FishLootTest {
 	@Before
 	public void init() {
 		Application.getInstance();
+		Application.getInstance().setProperty("bot.loot.rock", "true");
+		Application.getInstance().setProperty("bot.loot.key",  "true");
+		Application.getInstance().setProperty("bot.loot.fish", "true");
+		Application.getInstance().setProperty("bot.loot.event","true");
+		
 	}
 	
 	// ------------------------------ALL FILTER TRUE------------------------------//
@@ -75,14 +80,5 @@ public class FishLootTest {
 		
 		assertEquals(Keyboard.Keys.IGNORE, key);
 	} 
-	
-	@Test
-	public void unknowEmpty() throws IOException{
-		FishLoot fishLoot = new FishLoot("resources/loot/unknow/20171021_173648_334.jpg", "resources/loot/ok/empty/empty.jpg");
-		String key = fishLoot.getKey();
-		
-		assertEquals("", key);
-		
-	}
 	
 }

@@ -1,10 +1,12 @@
-package ru.namibios.arduino.model;
+package ru.namibios.arduino.utils;
 
 import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import ru.namibios.arduino.model.ImageParser;
+import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.Loot;
 
 public class ImageParserTest {
@@ -29,8 +31,7 @@ public class ImageParserTest {
 		
 		parser.parse(Screen.GRAY);
 		String key = parser.getKey();
-		
-		Assert.assertEquals("1", key);
+		Assert.assertEquals("1,", key);
 	}
 	
 }

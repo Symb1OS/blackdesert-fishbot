@@ -1,12 +1,10 @@
-package ru.namibios.arduino.model;
+package ru.namibios.arduino.utils;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import ru.namibios.arduino.utils.PythonExec;
 
 public class PythonExecTest {
 
