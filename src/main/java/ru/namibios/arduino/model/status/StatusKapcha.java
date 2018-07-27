@@ -13,7 +13,6 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 
 	public StatusKapcha() throws AWTException {
 		this.screen = new Screen(Screen.STATUS_KAPCHA);
-		
 	}
 	
 	public StatusKapcha(String filename) throws IOException {

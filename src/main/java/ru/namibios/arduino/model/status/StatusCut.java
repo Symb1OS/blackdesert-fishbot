@@ -15,7 +15,6 @@ public class StatusCut implements Status<StatusCutTemplate>{
 		screen = new Screen(Screen.STATUS_CUT);
 	}
 	
-	
 	public StatusCut(String filename) throws IOException{
 		screen = new Screen(filename);
 	}

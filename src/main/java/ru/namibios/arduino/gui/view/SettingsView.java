@@ -589,7 +589,7 @@ public class SettingsView extends JFrame{
 		for (int index = 0; index < count; index++) {
 			if(tPort.getItemAt(index).contains(Application.getInstance().PORT())){
 				tPort.setSelectedItem(tPort.getItemAt(index));
-			};
+			}
 		}
 		
 		cbFish.setSelected(Application.getInstance().FISH());
