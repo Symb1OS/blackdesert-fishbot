@@ -3,13 +3,15 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.WaitFish;
+import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.Keyboard;
 
 public class WaitFishState extends State {
 	
-	private static final Logger logger = Logger.getLogger(WaitFishState.class);
+	private static final Logger LOG = Logger.getLogger(WaitFishState.class);
 
 	public WaitFishState(FishBot fishBot) {
 		super(fishBot);
@@ -21,7 +23,7 @@ public class WaitFishState extends State {
 
 	@Override
 	public void onStep() {
-		logger.info("Wait fish..");
+		LOG.info("Wait fish..");
 		
 		try {
 			
@@ -35,8 +37,8 @@ public class WaitFishState extends State {
 			} 
 			
 		}catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Exception " + e);
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
 		}
 	}
 	

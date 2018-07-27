@@ -1,4 +1,4 @@
-package ru.namibios.arduino.utils;
+package ru.namibios.arduino.config;
 
 import javax.swing.JTextArea;
 

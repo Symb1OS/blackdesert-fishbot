@@ -3,12 +3,14 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.FishLoot;
+import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.Keyboard;
 
 public class FilterLootState extends State{
 
-	private static final Logger logger = Logger.getLogger(FilterLootState.class);
+	private static final Logger LOG = Logger.getLogger(FilterLootState.class);
 
 	public FilterLootState(FishBot fishBot) {
 		super(fishBot);
@@ -19,7 +21,7 @@ public class FilterLootState extends State{
 
 	@Override
 	public void onStep() {
-		logger.info("Check loot...");
+		LOG.info("Check loot...");
 		
 		try {
 			
@@ -29,7 +31,9 @@ public class FilterLootState extends State{
 			fishBot.setState(new UseSlotState(fishBot));
 			
 		}catch (Exception e) {
-			logger.error("Exception " + e);
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
+			
 			fishBot.setState(new StartFishState(fishBot));
 		}
 		

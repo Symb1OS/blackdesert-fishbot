@@ -2,7 +2,7 @@ package ru.namibios.arduino.utils;
 
 public class DelayUtils{
 	
-	final void DateUtils() {}
+	private DelayUtils() {}
 	
 	public static void delay(long value) {
 		

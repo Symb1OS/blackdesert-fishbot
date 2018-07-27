@@ -10,7 +10,7 @@ import ru.namibios.arduino.utils.Keyboard;
 
 public class ChangeRodState extends State{
 
-	private static final Logger logger = Logger.getLogger(ChangeRodState.class);
+	private static final Logger LOG = Logger.getLogger(ChangeRodState.class);
 	
 	public ChangeRodState(FishBot fishBot) {
 		super(fishBot);
@@ -21,11 +21,11 @@ public class ChangeRodState extends State{
 	@Override
 	public void onStep() {
 
-		logger.info("Start change rod...");
+		LOG.info("Start change rod...");
 		
-		logger.info("Check new rod..");
+		LOG.info("Check new rod..");
 		if(fishBot.getRod().hasNext()){
-			logger.info("New fishing rod found. Use..");
+			LOG.info("New fishing rod found. Use..");
 			Touch touch = fishBot.getRod().getNext();
 			Command command  = () -> "Rod" + touch;
 			Keyboard.send(command);
@@ -34,7 +34,7 @@ public class ChangeRodState extends State{
 			fishBot.restart();
 			
 		}else{
-			logger.info("Free fishing rods are locked. Finish work.");
+			LOG.info("Free fishing rods are locked. Finish work.");
 			fishBot.notifyUser(Message.OUT_RODS);
 			fishBot.setRunned(false);
 		}

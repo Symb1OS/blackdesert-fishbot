@@ -3,13 +3,15 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.status.Status;
 import ru.namibios.arduino.model.status.StatusKapcha;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 public class StatusKapchaState extends State{
 
-	private static final Logger logger = Logger.getLogger(StatusKapchaState.class);
+	private static final Logger LOG = Logger.getLogger(StatusKapchaState.class);
 
 	private static final int COUNT_OVERFLOW = 150;
 	
@@ -28,7 +30,7 @@ public class StatusKapchaState extends State{
 		try {
 			
 			if(step > COUNT_OVERFLOW){
-				logger.info("Status not identified. Go filter loot...");
+				LOG.info("Status not identified. Go filter loot...");
 				fishBot.setState(new FilterLootState(fishBot));
 			}
 			
@@ -42,20 +44,22 @@ public class StatusKapchaState extends State{
 			
 			switch (status) {
 				case SUCCESS: {
-					logger.info("Kapcha parsed success. Go filter loot...");
+					LOG.info("Kapcha parsed success. Go filter loot...");
 					fishBot.setState(new FilterLootState(fishBot));
 					break;
 				}
 				
 				case FAILURE: {
-					logger.info("Kapcha parsed failure. Back to start...");
+					LOG.info("Kapcha parsed failure. Back to start...");
 					fishBot.setState(new StartFishState(fishBot));
 					break;
 				} 
 			}
 			
 		}catch (Exception e) {
-			logger.error("Exception " + e);
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
+			
 			fishBot.setState(new FilterLootState(fishBot));
 		}
 	}

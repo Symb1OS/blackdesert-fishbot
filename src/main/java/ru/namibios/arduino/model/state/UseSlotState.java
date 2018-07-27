@@ -7,7 +7,7 @@ import ru.namibios.arduino.utils.Keyboard;
 
 public class UseSlotState extends State{
 
-	private static final Logger logger = Logger.getLogger(UseSlotState.class);
+	private static final Logger LOG = Logger.getLogger(UseSlotState.class);
 	
 	public UseSlotState(FishBot fishBot) {
 		super(fishBot);
@@ -19,7 +19,7 @@ public class UseSlotState extends State{
 	public void onStep() {
 		
 		if(fishBot.getSlot().isNeedUse()) {
-			logger.info("Run auto use slot...");
+			LOG.info("Run auto use slot...");
 			Command hotKey = () -> fishBot.getSlot().getKey();
 			Keyboard.send(hotKey);
 		}

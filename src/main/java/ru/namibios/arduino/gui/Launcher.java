@@ -7,9 +7,15 @@ import java.util.Set;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
+
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.gui.view.RootView;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 public class Launcher {
+	
+	private static final Logger LOG = Logger.getLogger(Launcher.class);
 
 	private static final Set<String> LOCALES = new HashSet<>();
 	
@@ -30,7 +36,8 @@ public class Launcher {
 		try {
 			SwingUtilities.invokeLater( () -> new RootView() );
 		}catch (Exception e) {
-			e.printStackTrace();
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
 		}
 	}
 }

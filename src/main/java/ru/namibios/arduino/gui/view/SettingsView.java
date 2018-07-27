@@ -25,12 +25,14 @@ import org.apache.log4j.Logger;
 import com.fazecast.jSerialComm.SerialPort;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.gui.controller.CancelController;
 import ru.namibios.arduino.gui.controller.SaveController;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 public class SettingsView extends JFrame{
 	
-	private Logger logger = Logger.getLogger(SettingsView.class);
+	private static final Logger LOG = Logger.getLogger(SettingsView.class);
 
 	private static final long serialVersionUID = 1L;
 	
@@ -77,6 +79,7 @@ public class SettingsView extends JFrame{
 		this.setSize(new Dimension(520, 550));
 		this.setLocationRelativeTo(null);  
 	    this.setAlwaysOnTop(true);
+	    this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -120,7 +123,8 @@ public class SettingsView extends JFrame{
 			try{
 				tPort.addItem(new String(portNames[i].getDescriptivePortName().getBytes("ISO-8859-1"), "Cp1251"));
 			}catch (Exception e) {
-				logger.error("Exception " + e);
+				LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+				LOG.error(ExceptionUtils.getString(e));
 			}
 		}
 
@@ -626,10 +630,6 @@ public class SettingsView extends JFrame{
 		tFilterDelayBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_FILTER_LOOT()));
 		tFilterDelayAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_FILTER_LOOT()));
 		
-	}
-
-	public Logger getLogger() {
-		return logger;
 	}
 
 	public JTextField gettHash() {

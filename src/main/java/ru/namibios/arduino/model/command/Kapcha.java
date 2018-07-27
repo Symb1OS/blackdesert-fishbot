@@ -6,12 +6,14 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.Screen;
+import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.PythonExec;
 
 public class Kapcha implements Command{
 
-	final static Logger logger = Logger.getLogger(Kapcha.class);
+	private final static Logger LOG = Logger.getLogger(Kapcha.class);
 
 	private Screen screen;
 	private String key;
@@ -45,7 +47,8 @@ public class Kapcha implements Command{
 			key = key.replaceAll("0", "w").replaceAll("1", "s").replaceAll("2", "a").replaceAll("3", "d").replaceAll("4", "");
 			
 		}catch (IOException e) {
-			logger.error(e);
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
 		}
 		
 		return key.replaceAll("\"", "").replaceAll("\n", "");

@@ -3,13 +3,15 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.Line;
+import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.Keyboard;
 
 public class CutFishState extends State {
 
-	private static final Logger logger = Logger.getLogger(CutFishState.class);
+	private static final Logger LOG = Logger.getLogger(CutFishState.class);
 
 	public CutFishState(FishBot fishBot) {
 		super(fishBot);
@@ -27,12 +29,13 @@ public class CutFishState extends State {
 			boolean isBlueZone = Keyboard.send(line);
 			
 			if(isBlueZone) {
-				logger.info("Cut the fish...");
+				LOG.info("Cut the fish...");
 				fishBot.setState(new StatusCutState(fishBot));
 			}
 			
 		}catch (Exception e) {
-			logger.error("Exception " + e);
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
 			
 		}
 		

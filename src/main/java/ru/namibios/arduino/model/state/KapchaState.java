@@ -3,12 +3,14 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Kapcha;
+import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.Keyboard;
 
 public class KapchaState extends State {
 
-	private static final Logger logger = Logger.getLogger(KapchaState.class);
+	private static final Logger LOG = Logger.getLogger(KapchaState.class);
 
 	public KapchaState(FishBot fishBot) {
 		super(fishBot);
@@ -20,7 +22,7 @@ public class KapchaState extends State {
 	@Override
 	public void onStep() {
 	
-		logger.info("Parsing kapcha...");
+		LOG.info("Parsing kapcha...");
 		
 		try{
 			
@@ -28,16 +30,18 @@ public class KapchaState extends State {
 			boolean isSendToInput = Keyboard.send(kapcha);
 			
 			if(isSendToInput){
-				logger.info("Kapcha send to input. Go to check status...");
+				LOG.info("Kapcha send to input. Go to check status...");
 				fishBot.setState(new StatusKapchaState(fishBot));
 			}
 			else {
-				logger.info("Kapcha is not recognized. Return to start...");
+				LOG.info("Kapcha is not recognized. Return to start...");
 				fishBot.setState(new StartFishState(fishBot));
 			}
 			
 		}catch (Exception e) {
-			logger.error("Back to start. Exception: " + e);
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
+			
 			fishBot.setState(new StartFishState(fishBot));
 		}
 		

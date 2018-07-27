@@ -8,7 +8,7 @@ import ru.namibios.arduino.utils.DelayUtils;
 
 public class Transfer extends Thread{ 
 	
-	final static Logger logger = Logger.getLogger(Transfer.class);
+	private final static Logger LOG = Logger.getLogger(Transfer.class);
 
 	private FishBot fishBot;
 	
@@ -21,7 +21,7 @@ public class Transfer extends Thread{
 	}
 	
 	public void restart(){
-		logger.info("Need Restart. Restarted after 15 second...");
+		LOG.info("Need Restart. Restarted after 15 second...");
 		DelayUtils.delay(15000);
 		fishBot.setRunned(true);
 		fishBot.setRestart(false);
@@ -31,24 +31,24 @@ public class Transfer extends Thread{
 	@Override
 	public void run() {
 		
-		logger.info("Start...");
+		LOG.info("Start...");
 
 		Application.getPhysicalPort().openPort();
 		DelayUtils.delay(3000);
 		
 		if(!Application.getPhysicalPort().isOpen()) {
-			logger.info("Port is closed. Check you port in settings");
+			LOG.info("Port is closed. Check you port in settings");
 			return;
 		} 
 		
-		logger.info("Port is open...");
+		LOG.info("Port is open...");
 		
 		while (fishBot.isRunned()) fishBot.getState().start();
 		
 		Application.getPhysicalPort().closePort();
 		
-		logger.info("Port closed...");
-		logger.info("Thread stop.");
+		LOG.info("Port closed...");
+		LOG.info("Thread stop.");
 		
 		if(fishBot.isRestart()) restart();
 

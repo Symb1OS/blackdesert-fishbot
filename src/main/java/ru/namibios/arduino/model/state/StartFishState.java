@@ -8,7 +8,7 @@ import ru.namibios.arduino.utils.Keyboard;
 
 public class StartFishState extends State{
 
-	private static final Logger logger= Logger.getLogger(StartFishState.class);
+	private static final Logger LOG = Logger.getLogger(StartFishState.class);
 	
 	public StartFishState(FishBot fishBot) {
 		super(fishBot);
@@ -19,7 +19,7 @@ public class StartFishState extends State{
 
 	@Override
 	public void onStep() {
-		logger.info("Start Fish...");
+		LOG.info("Start Fish...");
 		
 		Command command = () -> Keyboard.Keys.SPACE;
 		boolean isSend = Keyboard.send(command);

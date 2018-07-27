@@ -9,7 +9,7 @@ import ru.namibios.arduino.model.command.Command;
 
 public final class Keyboard {
 	
-	final static Logger logger = Logger.getLogger(Keyboard.class);
+	private final static Logger LOG = Logger.getLogger(Keyboard.class);
 	
 	private Keyboard() {}
 	
@@ -34,7 +34,7 @@ public final class Keyboard {
 			output.println(message);
 			output.flush();
 			
-			logger.info("Sended message[" + message.length() + "]: " + message);
+			LOG.info("Sended message[" + message.length() + "]: " + message);
 			status = true;
 		}
 		

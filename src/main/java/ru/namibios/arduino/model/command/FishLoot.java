@@ -18,7 +18,7 @@ import ru.namibios.arduino.utils.Keyboard;
 
 public class FishLoot implements Command{
 	
-	final static Logger logger = Logger.getLogger(FishLoot.class);
+	private final static Logger LOG = Logger.getLogger(FishLoot.class);
 
 	private List<Screen> scrins;
 	private Screen one;
@@ -69,17 +69,17 @@ public class FishLoot implements Command{
 		Looter looter = new Looter(arrayLoots, isTakeUnknow);
 		
 		if(looter.isTakeAll()) {
-			logger.info("Loot ok. Take all..");
+			LOG.info("Loot ok. Take all..");
 			return Keyboard.Keys.TAKE;
 		}
 		
 		if(looter.isIgnoreAll()) {
-			logger.info("Trash. Throw out all..");
+			LOG.info("Trash. Throw out all..");
 			return Keyboard.Keys.IGNORE;
 		}
 		
 		if(looter.isTakeByIndex()) {
-			logger.info("Take by index");
+			LOG.info("Take by index");
 			for(LootType type : looter.getLootTypeList()) {
 				if(type.isOk()) {
 					int index = type.getIndex();
@@ -89,7 +89,7 @@ public class FishLoot implements Command{
 			}
 		}
 		
-		logger.info("Strategy is not defined. Take..");
+		LOG.info("Strategy is not defined. Take..");
 		return Keyboard.Keys.TAKE;
 	}
 

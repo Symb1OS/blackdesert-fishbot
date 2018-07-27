@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -25,11 +24,13 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.PatternLayout;
 
 import ru.namibios.arduino.Transfer;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.config.TextAreaAppender;
 import ru.namibios.arduino.gui.controller.SettingsController;
 import ru.namibios.arduino.gui.controller.StartController;
 import ru.namibios.arduino.gui.controller.StopController;
-import ru.namibios.arduino.utils.TextAreaAppender;
+import ru.namibios.arduino.utils.ExecUtils;
 
 public class RootView extends JFrame{
 	
@@ -68,7 +69,7 @@ public class RootView extends JFrame{
 	    JMenu help = new JMenu(UIManager.getString("rootview.menu.help"));
 	    
 	    JMenuItem feedback = new JMenuItem(UIManager.getString("rootview.menu.help.feedback"));
-	    feedback.addActionListener((e) -> JOptionPane.showMessageDialog(this, UIManager.getString("rootview.menu.help.feedback.message")));
+	    feedback.addActionListener((e) -> ExecUtils.openUri(Message.URI_REPORT_PROBLEM));
 	    help.add(feedback);
 	    
 	    menubar.add(file);

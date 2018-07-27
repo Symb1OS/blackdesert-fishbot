@@ -3,6 +3,8 @@
 /resources/changes
 /resources/loot/unknow/*
 /work.log
+/error.log
+/debug.log
 /lib
 /app
 /debug/
