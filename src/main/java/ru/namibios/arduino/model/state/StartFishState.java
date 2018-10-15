@@ -1,7 +1,6 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.utils.Keyboard;
@@ -10,7 +9,7 @@ public class StartFishState extends State{
 
 	private static final Logger LOG = Logger.getLogger(StartFishState.class);
 	
-	public StartFishState(FishBot fishBot) {
+	StartFishState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_START();

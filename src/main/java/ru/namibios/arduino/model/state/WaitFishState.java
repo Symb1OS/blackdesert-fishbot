@@ -1,7 +1,6 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Command;
@@ -13,7 +12,7 @@ public class WaitFishState extends State {
 	
 	private static final Logger LOG = Logger.getLogger(WaitFishState.class);
 
-	public WaitFishState(FishBot fishBot) {
+	WaitFishState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_WAIT_FISH();

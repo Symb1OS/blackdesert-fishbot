@@ -9,7 +9,7 @@ public abstract class State {
 	protected long beforeStart;
 	protected long afterStart;
 	
-	protected long timeStart;
+	private long timeStart;
 	
 	public State(FishBot fishBot) {
 		this.fishBot = fishBot;
@@ -30,11 +30,14 @@ public abstract class State {
 	
 	public abstract void onStep();
 	
-	public boolean checkTime(long period){
+	boolean checkTime(long period){
 		long current = System.currentTimeMillis();
 		long workTime = current - timeStart;
 		
 		return workTime > period;
 	}
 
+	public FishBot getFishBot() {
+		return fishBot;
+	}
 }

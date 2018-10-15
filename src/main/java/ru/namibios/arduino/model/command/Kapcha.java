@@ -1,15 +1,14 @@
 package ru.namibios.arduino.model.command;
 
-import java.awt.AWTException;
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.PythonExec;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class Kapcha implements Command{
 
@@ -42,9 +41,13 @@ public class Kapcha implements Command{
 	public String getKey(){
 		
 		try {
-			
+
 			key = PythonExec.exec(filename);
-			key = key.replaceAll("0", "w").replaceAll("1", "s").replaceAll("2", "a").replaceAll("3", "d").replaceAll("4", "");
+			key = key.replaceAll("0", "w")
+					 .replaceAll("1", "s")
+					 .replaceAll("2", "a")
+					 .replaceAll("3", "d")
+					 .replaceAll("4", "");
 			
 		}catch (IOException e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

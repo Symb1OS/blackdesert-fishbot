@@ -29,12 +29,12 @@ public class FishBot {
 		state = new UseSlotState(this);
 	}
 	
-	public void restart(){
+	void restart(){
 		setRestart(true);
 		setRunned(false);
 	}
 	
-	public void notifyUser(String message){
+	void notifyUser(String message){
 			
 		if(Application.getInstance().TELEGRAM()) {
 			Notification telegram = new TelegramNotification(message);

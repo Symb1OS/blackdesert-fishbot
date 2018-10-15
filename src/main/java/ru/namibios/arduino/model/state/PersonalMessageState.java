@@ -1,7 +1,6 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.PersonalMessage;
@@ -12,7 +11,7 @@ public class PersonalMessageState extends State {
 
 	private static final Logger LOG = Logger.getLogger(PersonalMessage.class);
 	
-	public PersonalMessageState(FishBot fishBot) {
+	PersonalMessageState(FishBot fishBot) {
 		super(fishBot);
 		this.beforeStart = 0;
 		this.afterStart = 0;

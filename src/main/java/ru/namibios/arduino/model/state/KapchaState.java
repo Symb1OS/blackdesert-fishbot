@@ -1,7 +1,6 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Kapcha;
@@ -12,7 +11,7 @@ public class KapchaState extends State {
 
 	private static final Logger LOG = Logger.getLogger(KapchaState.class);
 
-	public KapchaState(FishBot fishBot) {
+	KapchaState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_KAPCHA();

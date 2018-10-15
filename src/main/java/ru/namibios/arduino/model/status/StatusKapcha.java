@@ -1,11 +1,11 @@
 package ru.namibios.arduino.model.status;
 
-import java.awt.AWTException;
-import java.io.IOException;
-
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class StatusKapcha implements Status<StatusKapchaTemplate>{
 
@@ -17,6 +17,10 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 	
 	public StatusKapcha(String filename) throws IOException {
 		this.screen = new Screen(filename);
+	}
+
+	public void init() throws AWTException {
+		this.screen = new Screen(Screen.STATUS_KAPCHA);
 	}
 	
 	public StatusKapchaTemplate getNameTemplate() {

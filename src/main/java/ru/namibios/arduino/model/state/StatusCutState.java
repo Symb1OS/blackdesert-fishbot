@@ -1,27 +1,30 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.model.status.Status;
 import ru.namibios.arduino.model.status.StatusCut;
 import ru.namibios.arduino.model.template.StatusCutTemplate;
 import ru.namibios.arduino.utils.ExceptionUtils;
+
+import java.awt.*;
 
 public class StatusCutState extends State{
 
 	private static final int COUNT_BEFORE_OVERFLOW = 300;
 
 	private static final Logger LOG = Logger.getLogger(StatusCutState.class);
-	
-	private int step ;
-	
-	public StatusCutState(FishBot fishBot) {
+
+	private StatusCut statusCut;
+
+	private int step;
+
+	StatusCutState(FishBot fishBot) throws AWTException {
 		super(fishBot);
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_CUT();
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_CUT();
 		this.step = 0;
+		this.statusCut = new StatusCut();
 	}
 
 	@Override
@@ -32,9 +35,9 @@ public class StatusCutState extends State{
 			if(step > COUNT_BEFORE_OVERFLOW){
 				LOG.info("Status not identified... Go to FilterLoot..");
 				fishBot.setState(new FilterLootState(fishBot));
-			} 
-			
-			Status<StatusCutTemplate> statusCut = new StatusCut();
+			}
+
+			statusCut.init();
 			StatusCutTemplate status = statusCut.getNameTemplate();
 			if(status == null) {
 				step++;
@@ -67,5 +70,5 @@ public class StatusCutState extends State{
 		}
 		
 	}
-	
+
 }

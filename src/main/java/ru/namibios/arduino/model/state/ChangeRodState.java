@@ -1,7 +1,6 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.Touch;
@@ -12,7 +11,7 @@ public class ChangeRodState extends State{
 
 	private static final Logger LOG = Logger.getLogger(ChangeRodState.class);
 	
-	public ChangeRodState(FishBot fishBot) {
+	ChangeRodState(FishBot fishBot) {
 		super(fishBot);
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_CHANGE_ROD();
 		this.afterStart = Application.getInstance().DELAY_AFTER_CHANGE_ROD();

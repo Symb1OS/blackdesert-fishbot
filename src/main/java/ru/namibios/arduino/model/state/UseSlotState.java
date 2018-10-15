@@ -1,7 +1,6 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.utils.Keyboard;
 
@@ -9,7 +8,7 @@ public class UseSlotState extends State{
 
 	private static final Logger LOG = Logger.getLogger(UseSlotState.class);
 	
-	public UseSlotState(FishBot fishBot) {
+	UseSlotState(FishBot fishBot) {
 		super(fishBot);
 		this.beforeStart = 0;
 		this.afterStart = 1000;

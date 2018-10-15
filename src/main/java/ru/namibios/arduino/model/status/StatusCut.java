@@ -1,11 +1,11 @@
 package ru.namibios.arduino.model.status;
 
-import java.awt.AWTException;
-import java.io.IOException;
-
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.StatusCutTemplate;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class StatusCut implements Status<StatusCutTemplate>{
 	
@@ -19,8 +19,13 @@ public class StatusCut implements Status<StatusCutTemplate>{
 		screen = new Screen(filename);
 	}
 
+	public void init() throws AWTException {
+		screen = new Screen(Screen.STATUS_CUT);
+	}
+
 	@Override
 	public StatusCutTemplate getNameTemplate() {
+
 		ImageParser parser = new ImageParser(screen, StatusCutTemplate.values());
 		parser.parse(Screen.WHITE);
 		
