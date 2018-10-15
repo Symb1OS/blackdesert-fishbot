@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.model.status.StatusCut;
 import ru.namibios.arduino.utils.MatrixUtils;
 
 public enum StatusCutTemplate implements MatrixTemplate{
 	
-	PERFECT("PERFECT"),
+	PERFECT("PERFECT_RU","PERFECT_EN"),
 	
-	GOOD("GOOD"),
+	GOOD("GOOD_RU", "GOOD_EN"),
 	
-	BAD("BAD");
+	BAD("BAD_RU", "BAD_EN");
 
 	private final List<int[][]> templates;
 	
@@ -26,19 +27,21 @@ public enum StatusCutTemplate implements MatrixTemplate{
 		return templates;
 	}
 	
-	private StatusCutTemplate(String filename) {
-		this.templates = new ArrayList<int[][]>();
+	StatusCutTemplate(String... filenames) {
+		this.templates = new ArrayList<>();
 
 		try {
-			
-			List<String> list = Files.lines(Paths.get(Path.STATUS_CUT, filename), StandardCharsets.UTF_8)
-					.collect(Collectors.toCollection(ArrayList::new));
-		
-			templates.add(MatrixUtils.importTemplate(list));
-			
+
+            for (String filename : filenames) {
+                List<String> list = Files.lines(Paths.get(Path.STATUS_CUT, filename), StandardCharsets.UTF_8)
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                templates.add(MatrixUtils.importTemplate(list));
+            }
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
