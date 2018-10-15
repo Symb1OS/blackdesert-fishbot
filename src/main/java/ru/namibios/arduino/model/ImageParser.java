@@ -28,7 +28,7 @@ public class ImageParser {
 		this.column = screenShot.getWidth();
 		this.screenMatrix = new int[row][column];
 		this.collectionTemplate = matrixTemplate;
-		this.keyList = new ArrayList<int[][]>();
+		this.keyList = new ArrayList<>();
 	}
 	
 	public ImageParser(Screen screen){
@@ -36,7 +36,7 @@ public class ImageParser {
 		this.row = screenShot.getHeight();
 		this.column = screenShot.getWidth();
 		this.screenMatrix = new int[row][column];
-		this.keyList = new ArrayList<int[][]>();
+		this.keyList = new ArrayList<>();
 	}
 	
 	public ImageParser(BufferedImage screenShot){
@@ -44,7 +44,7 @@ public class ImageParser {
 		this.row = screenShot.getHeight();
 		this.column = screenShot.getWidth();
 		this.screenMatrix = new int[row][column];
-		this.keyList = new ArrayList<int[][]>();
+		this.keyList = new ArrayList<>();
 	}
 	
 	public int[][] getImageMatrix() {
@@ -58,7 +58,7 @@ public class ImageParser {
 				
 				boolean isIdentified = color.getRed()   > identificationColor.getRed()
 									&& color.getGreen() > identificationColor.getGreen()
-									&& color.getBlue()   > identificationColor.getBlue();
+									&& color.getBlue()  > identificationColor.getBlue();
 				
 				screenMatrix[i][j] = isIdentified ? 1 : 0;
 			}
@@ -104,7 +104,7 @@ public class ImageParser {
 		StringBuilder rezult = new StringBuilder();
 		
 		for (int[][] numberMatrix : keyList) {
-			rezult.append(compare(numberMatrix)+ ",");
+			rezult.append(compare(numberMatrix)).append(",");
 		}	
 		return rezult.toString();
 	}
@@ -143,13 +143,13 @@ public class ImageParser {
 		
 		private int rezultIndex;
 		
-		public Coefficient(double minKoef) {
+		Coefficient(double minKoef) {
 			this.minKoef = minKoef; 
 			this.calcKoef = 0;
 			this.maxCalcKoef = 0;
 		}
 		
-		public void init(int[][] value, int[][] template) {
+		void init(int[][] value, int[][] template) {
 			
 			valueKoef = templateKoef = 0;
 			for (int i = 0; i < template.length; i++) {
@@ -160,7 +160,7 @@ public class ImageParser {
 			}
 		}
 		
-		public void calculate(int index) {
+		void calculate(int index) {
 			calcKoef = valueKoef / templateKoef;
 			boolean isNewKoef = calcKoef > maxCalcKoef; 
 			if( isNewKoef ){
@@ -169,11 +169,11 @@ public class ImageParser {
 			}
 		}
 		
-		public boolean isFound() {
+		boolean isFound() {
 			return maxCalcKoef > minKoef;
 		}
 		
-		public int unknowIndex() {
+		int unknowIndex() {
 			return -1;
 		}
 		
@@ -181,7 +181,7 @@ public class ImageParser {
 			rezultIndex = -1;
 		}
 		
-		public int getRezultIndex() {
+		int getRezultIndex() {
 			return rezultIndex;
 		}
 
