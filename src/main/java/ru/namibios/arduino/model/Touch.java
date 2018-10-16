@@ -32,4 +32,8 @@ public class Touch {
 		return "[" + x + "," + y + "]";
 	}
 
+	public String toCommandRod(){
+		return "Rod" + toString();
+	}
+
 }

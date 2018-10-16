@@ -23,7 +23,6 @@ public class StatusKapchaStateTest {
     @InjectMocks
     private StatusKapchaState statusKapchaState;
 
-
     @Before
     public void setUp(){
 

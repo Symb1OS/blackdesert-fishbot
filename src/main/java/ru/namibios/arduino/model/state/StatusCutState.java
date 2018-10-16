@@ -28,16 +28,27 @@ public class StatusCutState extends State{
 	}
 
 	@Override
+	public void onOverflow() {
+		if(step > COUNT_BEFORE_OVERFLOW){
+			LOG.info("Status not identified... Go to FilterLoot..");
+			fishBot.setState(new FilterLootState(fishBot));
+		}
+	}
+
+	@Override
+	public void onInit() throws AWTException {
+		statusCut.init();
+	}
+
+	@Override
 	public void onStep() {
 		
 		try{
-			
-			if(step > COUNT_BEFORE_OVERFLOW){
-				LOG.info("Status not identified... Go to FilterLoot..");
-				fishBot.setState(new FilterLootState(fishBot));
-			}
 
-			statusCut.init();
+			onOverflow();
+
+			onInit();
+
 			StatusCutTemplate status = statusCut.getNameTemplate();
 			if(status == null) {
 				step++;
@@ -51,7 +62,7 @@ public class StatusCutState extends State{
 					break;
 				} 
 				case GOOD: {
-					LOG.info("GOOD. Go parse kapcha");
+					LOG.info("GOOD. Go parse captcha");
 					fishBot.setState(new KapchaState(fishBot));
 					break;
 				}

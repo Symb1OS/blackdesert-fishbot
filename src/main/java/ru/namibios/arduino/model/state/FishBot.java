@@ -3,6 +3,7 @@ package ru.namibios.arduino.model.state;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Rod;
 import ru.namibios.arduino.model.Slot;
+import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.notification.Notification;
 import ru.namibios.arduino.notification.TelegramNotification;
 
@@ -41,6 +42,14 @@ public class FishBot {
 			telegram.notifyUser();
 		}
 			
+	}
+
+	public boolean hasNextRod(){
+		return rod.hasNext();
+	}
+
+	public Touch getNextRod(){
+		return rod.getNext();
 	}
 	
 	public Slot getSlot() {

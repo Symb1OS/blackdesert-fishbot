@@ -2,6 +2,8 @@ package ru.namibios.arduino.model.state;
 
 import ru.namibios.arduino.utils.DelayUtils;
 
+import java.awt.*;
+
 public abstract class State {
 	
 	public FishBot fishBot;
@@ -27,7 +29,15 @@ public abstract class State {
 		onStep();
 		DelayUtils.delay(afterStart);
 	}
-	
+
+	public void onOverflow() throws AWTException {
+
+	}
+
+	public void onInit() throws AWTException {
+
+	}
+
 	public abstract void onStep();
 	
 	boolean checkTime(long period){

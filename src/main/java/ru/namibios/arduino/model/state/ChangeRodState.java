@@ -23,10 +23,10 @@ public class ChangeRodState extends State{
 		LOG.info("Start change rod...");
 		
 		LOG.info("Check new rod..");
-		if(fishBot.getRod().hasNext()){
+		if(fishBot.hasNextRod()){
 			LOG.info("New fishing rod found. Use..");
-			Touch touch = fishBot.getRod().getNext();
-			Command command  = () -> "Rod" + touch;
+			Touch touch = fishBot.getNextRod();
+			Command command  = () -> touch.toCommandRod();
 			Keyboard.send(command);
 			
 			fishBot.setState(new StartFishState(fishBot));

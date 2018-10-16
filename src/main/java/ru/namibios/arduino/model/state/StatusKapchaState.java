@@ -28,16 +28,26 @@ public class StatusKapchaState extends State{
 	}
 
 	@Override
+	public void onOverflow() {
+		if(step > COUNT_OVERFLOW){
+			LOG.info("Status not identified. Go filter loot...");
+			fishBot.setState(new FilterLootState(fishBot));
+		}
+	}
+
+	@Override
+	public void onInit() throws AWTException {
+		statusKapcha.init();
+	}
+
+	@Override
 	public void onStep() {
 	
 		try {
-			
-			if(step > COUNT_OVERFLOW){
-				LOG.info("Status not identified. Go filter loot...");
-				fishBot.setState(new FilterLootState(fishBot));
-			}
 
-			statusKapcha.init();
+			onOverflow();
+			onInit();
+
 			StatusKapchaTemplate status = statusKapcha.getNameTemplate();
 			
 			if(status == null) {
@@ -62,8 +72,9 @@ public class StatusKapchaState extends State{
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
-			
+
 			fishBot.setState(new FilterLootState(fishBot));
+
 		}
 	}
 	
