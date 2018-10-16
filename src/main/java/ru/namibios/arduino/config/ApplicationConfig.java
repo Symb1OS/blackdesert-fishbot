@@ -1,12 +1,12 @@
 package ru.namibios.arduino.config;
 
+import com.fazecast.jSerialComm.SerialPort;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
-
-import com.fazecast.jSerialComm.SerialPort;
-
 import ru.namibios.arduino.model.Touch;
+
+import java.awt.*;
 
 @Sources("file:resources/application.properties")
 public interface ApplicationConfig extends Accessible, Mutable{
@@ -192,5 +192,54 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.pm.event.nothing")
 	@DefaultValue("true")
 	boolean PM_NOTHING();
-	
+
+	@Key("bot.screen.fullscreen")
+	@DefaultValue("0, 0, 1920, 1080")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle FULL_SCREEN();
+
+	@Key("bot.screen.space")
+	@DefaultValue("928, 194, 63, 25")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle SPACE();
+
+	@Key("bot.screen.line")
+	@DefaultValue("820, 402, 278, 25")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LINE();
+
+	@Key("bot.screen.subline")
+	@DefaultValue("997, 402, 10, 25")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle SUB_LINE();
+
+	@Key("bot.screen.statuscut")
+	@DefaultValue("874, 480, 171, 33")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle STATUS_CUT();
+
+	@Key("bot.screen.captcha")
+	@DefaultValue("780, 350, 372, 58")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle KAPCHA();
+
+	@Key("bot.screen.statuscaptcha")
+	@DefaultValue("810, 495, 295, 85")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle STATUS_KAPCHA();
+
+	@Key("bot.screen.lootslotone")
+	@DefaultValue("1537, 592, 47, 48")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_SLOT_ONE();
+
+	@Key("bot.screen.lootslottwo")
+	@DefaultValue("1584, 592, 47, 48")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_SLOT_TWO();
+
+	@Key("bot.screen.chat")
+	@DefaultValue("5, 1000, 355, 40")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle CHAT();
 }

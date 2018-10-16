@@ -1,9 +1,12 @@
 package ru.namibios.arduino.model;
 
-import java.awt.AWTException;
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.Robot;
+import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.utils.DateUtils;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,27 +14,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
-import org.apache.log4j.Logger;
-
-import ru.namibios.arduino.config.Path;
-import ru.namibios.arduino.utils.DateUtils;
-
 public class Screen {
 	
 	private final static Logger logger = Logger.getLogger(Screen.class);
 
-	public static final Rectangle FULL_SCREEN   = new Rectangle(0, 0, 1920, 1080);
-	public static final Rectangle SPACE 	    = new Rectangle(928, 194, 63, 25);
-	public static final Rectangle LINE 			= new Rectangle(820, 402, 278, 25);
-	public static final Rectangle SUB_LINE 	 	= new Rectangle(997, 402, 10, 25);
-	public static final Rectangle STATUS_CUT 	= new Rectangle(874, 480, 171, 33);
-	public static final Rectangle KAPCHA 		= new Rectangle(780, 350, 372, 58);
-	public static final Rectangle STATUS_KAPCHA = new Rectangle(810, 495, 295, 85);
-	public static final Rectangle LOOT_SLOT_ONE = new Rectangle(1537, 592, 47, 48);
-	public static final Rectangle LOOT_SLOT_TWO = new Rectangle(1584, 592, 47, 48);
-	public static final Rectangle CHAT 			= new Rectangle(5, 1000, 355, 40);
+	public static final Rectangle FULL_SCREEN   = Application.getInstance().FULL_SCREEN();
+	public static final Rectangle SPACE 	    = Application.getInstance().SPACE();
+	public static final Rectangle LINE 			= Application.getInstance().LINE();
+	public static final Rectangle SUB_LINE 	 	= Application.getInstance().SUB_LINE();
+	public static final Rectangle STATUS_CUT 	= Application.getInstance().STATUS_CUT();
+	public static final Rectangle KAPCHA 		= Application.getInstance().KAPCHA();
+	public static final Rectangle STATUS_KAPCHA = Application.getInstance().STATUS_KAPCHA();
+	public static final Rectangle LOOT_SLOT_ONE = Application.getInstance().LOOT_SLOT_ONE();
+	public static final Rectangle LOOT_SLOT_TWO = Application.getInstance().LOOT_SLOT_TWO();
+	public static final Rectangle CHAT 			= Application.getInstance().CHAT();
 	
 	public static final Color WHITE = new Color(120,120,120);
 	public static final Color GRAY = new Color(40,40,40);
