@@ -69,7 +69,7 @@ public class StatusKapchaStateTest {
     }
 
     @Test
-    public void throwException(){
+    public void testThrowException(){
 
         when(statusKapcha.getNameTemplate()).thenThrow(new NullPointerException());
 

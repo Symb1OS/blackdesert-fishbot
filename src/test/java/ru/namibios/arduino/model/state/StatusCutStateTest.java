@@ -90,7 +90,7 @@ public class StatusCutStateTest {
     }
 
     @Test
-    public void throwException(){
+    public void testThrowException(){
 
         when(statusCut.getNameTemplate()).thenThrow(new NullPointerException());
 
