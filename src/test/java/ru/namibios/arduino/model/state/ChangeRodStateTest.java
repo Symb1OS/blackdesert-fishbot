@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import ru.namibios.arduino.model.Rod;
 import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.utils.Keyboard;
@@ -23,9 +22,6 @@ public class ChangeRodStateTest {
 
     @Mock
     private FishBot fishBot;
-
-    @Mock
-    private Rod rod;
 
     @InjectMocks
     private ChangeRodState changeRodState;

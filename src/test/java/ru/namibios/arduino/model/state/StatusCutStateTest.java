@@ -6,22 +6,24 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.model.status.Status;
 import ru.namibios.arduino.model.status.StatusCut;
 import ru.namibios.arduino.model.template.StatusCutTemplate;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StatusCutStateTest {
 
-    @Spy
+    @Mock
     private FishBot fishBot;
 
     @Mock
     private StatusCut statusCut;
+
+    @Mock
+    private StatusService statusService;
 
     @InjectMocks
     private StatusCutState statusCutState;
@@ -36,39 +38,35 @@ public class StatusCutStateTest {
     @Test
     public void testPerfect() {
 
-        when(statusCut.getNameTemplate()).thenReturn(StatusCutTemplate.PERFECT);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusCutTemplate.PERFECT);
 
         statusCutState.onStep();
 
-        verify(statusCut).getNameTemplate();
-
-        assertEquals(FilterLootState.class, statusCutState.getFishBot().getState().getClass());
-
+        verify(fishBot).setState(isA(FilterLootState.class));
+        verify(statusService).getTemplate(isA(Status.class));
     }
 
     @Test
     public void testGood() {
 
-        when(statusCut.getNameTemplate()).thenReturn(StatusCutTemplate.GOOD);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusCutTemplate.GOOD);
 
         statusCutState.onStep();
 
-        verify(statusCut).getNameTemplate();
-
-        assertEquals(KapchaState.class, statusCutState.getFishBot().getState().getClass());
+        verify(fishBot).setState(isA(KapchaState.class));
+        verify(statusService).getTemplate(isA(Status.class));
 
     }
 
     @Test
     public void testBad() {
 
-        when(statusCut.getNameTemplate()).thenReturn(StatusCutTemplate.BAD);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusCutTemplate.BAD);
 
         statusCutState.onStep();
 
-        verify(statusCut).getNameTemplate();
-
-        assertEquals(StartFishState.class, statusCutState.getFishBot().getState().getClass());
+        verify(fishBot).setState(isA(StartFishState.class));
+        verify(statusService).getTemplate(isA(Status.class));
 
     }
 
@@ -77,26 +75,25 @@ public class StatusCutStateTest {
 
         int overflow = 500;
 
-        when(statusCut.getNameTemplate()).thenReturn(null);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 
         for (int i = 0; i < overflow; i++) {
             statusCutState.onStep();
         }
 
-        verify(statusCut, times(overflow)).getNameTemplate();
-
-        assertEquals(FilterLootState.class, statusCutState.getFishBot().getState().getClass());
+        verify(statusService, times(overflow)).getTemplate(isA(StatusCut.class));
+        verify(fishBot, atLeastOnce()).setState(any(FilterLootState.class));
 
     }
 
     @Test
     public void testThrowException(){
 
-        when(statusCut.getNameTemplate()).thenThrow(new NullPointerException());
+        when(statusService.getTemplate(any(Status.class))).thenThrow(new NullPointerException());
 
         statusCutState.onStep();
 
-        assertEquals(KapchaState.class, statusCutState.getFishBot().getState().getClass());
+        verify(fishBot).setState(isA(KapchaState.class));
 
     }
 

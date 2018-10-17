@@ -3,10 +3,8 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.Line;
 import ru.namibios.arduino.utils.ExceptionUtils;
-import ru.namibios.arduino.utils.Keyboard;
 
 public class CutFishState extends State {
 
@@ -23,11 +21,8 @@ public class CutFishState extends State {
 	public void onStep() {
 		
 		try{
-			
-			Command line = new Line(); 
-			boolean isBlueZone = Keyboard.send(line);
-			
-			if(isBlueZone) {
+
+			if(commandSender.send(new Line())) {
 				LOG.info("Cut the fish...");
 				fishBot.setState(new StatusCutState(fishBot));
 			}

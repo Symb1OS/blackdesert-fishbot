@@ -5,17 +5,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.namibios.arduino.model.command.Line;
+import ru.namibios.arduino.model.command.Command;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CutFishStateTest {
+public class StartFishStateTest {
 
     @Mock
     private FishBot fishBot;
@@ -24,23 +23,23 @@ public class CutFishStateTest {
     private CommandSender commandSender;
 
     @InjectMocks
-    private CutFishState cutFishState;
+    private StartFishState startFishState;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testCutFish() {
+    public void testStart() {
 
-        when(commandSender.send(any(Line.class))).thenReturn(true);
+        Mockito.when(commandSender.send(any(Command.class))).thenReturn(true);
 
-        cutFishState.onStep();
+        startFishState.onStep();
 
-        verify(commandSender).send(isA(Line.class));
-        verify(fishBot).setState(isA(StatusCutState.class));
+        Mockito.verify(commandSender).send(any(Command.class));
+        Mockito.verify(fishBot).setState(isA(PersonalMessageState.class));
 
     }
 

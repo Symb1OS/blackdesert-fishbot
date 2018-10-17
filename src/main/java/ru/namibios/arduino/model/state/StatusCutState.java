@@ -7,37 +7,25 @@ import ru.namibios.arduino.model.status.StatusCut;
 import ru.namibios.arduino.model.template.StatusCutTemplate;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
-import java.awt.*;
-
 public class StatusCutState extends State{
-
-	private static final int COUNT_BEFORE_OVERFLOW = 300;
 
 	private static final Logger LOG = Logger.getLogger(StatusCutState.class);
 
-	private StatusCut statusCut;
+	private StatusService<StatusCutTemplate> statusService;
 
-	private int step;
+	StatusCutState(FishBot fishBot) {
 
-	StatusCutState(FishBot fishBot) throws AWTException {
 		super(fishBot);
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_CUT();
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_CUT();
-		this.step = 0;
-		this.statusCut = new StatusCut();
+
+		this.statusService = new StatusService<>();
 	}
 
 	@Override
 	public void onOverflow() {
-		if(step > COUNT_BEFORE_OVERFLOW){
-			LOG.info("Status not identified... Go to FilterLoot..");
-			fishBot.setState(new FilterLootState(fishBot));
-		}
-	}
-
-	@Override
-	public void onInit() throws AWTException {
-		statusCut.init();
+		LOG.info("Status not identified... Go to FilterLoot..");
+		fishBot.setState(new FilterLootState(fishBot));
 	}
 
 	@Override
@@ -45,34 +33,32 @@ public class StatusCutState extends State{
 		
 		try{
 
-			onOverflow();
+			StatusCutTemplate status = statusService.getTemplate(new StatusCut());
+			if (status == null) {
+				ifBreak();
 
-			onInit();
+			} else {
 
-			StatusCutTemplate status = statusCut.getNameTemplate();
-			if(status == null) {
-				step++;
-				return;
-			}
-			
-			switch ( status ) {
-				case PERFECT:{
-					LOG.info("PERFECT. Go filter loot..");
-					fishBot.setState(new FilterLootState(fishBot));
-					break;
-				} 
-				case GOOD: {
-					LOG.info("GOOD. Go parse captcha");
-					fishBot.setState(new KapchaState(fishBot));
-					break;
+				switch ( status ) {
+					case PERFECT:{
+						LOG.info("PERFECT. Go filter loot..");
+						fishBot.setState(new FilterLootState(fishBot));
+						break;
+					}
+					case GOOD: {
+						LOG.info("GOOD. Go parse captcha");
+						fishBot.setState(new KapchaState(fishBot));
+						break;
+					}
+					case BAD: {
+						LOG.info("BAD. Back to start...");
+						fishBot.setState(new StartFishState(fishBot));
+						break;
+					}
 				}
-				case BAD: {
-					LOG.info("BAD. Back to start...");
-					fishBot.setState(new StartFishState(fishBot));
-					break;
-				}
+
 			}
-			
+
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));

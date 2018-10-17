@@ -1,57 +1,51 @@
 package ru.namibios.arduino.model.state;
 
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import ru.namibios.arduino.model.command.Command;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.FishLoot;
-import ru.namibios.arduino.utils.Keyboard;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Keyboard.class)
-@Ignore
+@RunWith(MockitoJUnitRunner.class)
 public class FilterLootStateTest {
 
     @Mock
     private FishBot fishBot;
 
     @Mock
-    private FishLoot filter;
+    private CommandSender commandSender;
 
     @InjectMocks
     private FilterLootState filterLootState;
 
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
     public void testFilter() {
-        PowerMockito.mockStatic(Keyboard.class);
-
-        Mockito.when(Keyboard.send(any(Command.class))).thenReturn(true);
 
         filterLootState.onStep();
 
-        PowerMockito.verifyStatic(Keyboard.class);
-        Keyboard.send(any(Command.class));
-
-        verify(fishBot).setState(any(UseSlotState.class));
+        verify(commandSender).send(isA(FishLoot.class));
+        verify(fishBot).setState(isA(UseSlotState.class));
     }
 
     @Test
     public void testException() {
-        PowerMockito.mockStatic(Keyboard.class);
 
-        PowerMockito.doThrow(new Exception("Some exception")).when(Keyboard.class);
+        doThrow(NullPointerException.class).when(commandSender).send(isA(FishLoot.class));
 
         filterLootState.onStep();
 
-        verify(fishBot).setState(any(StartFishState.class));
+        verify(fishBot).setState(isA(StartFishState.class));
     }
 }

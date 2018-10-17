@@ -5,7 +5,6 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.FishLoot;
 import ru.namibios.arduino.utils.ExceptionUtils;
-import ru.namibios.arduino.utils.Keyboard;
 
 public class FilterLootState extends State{
 
@@ -23,10 +22,8 @@ public class FilterLootState extends State{
 		LOG.info("Check loot...");
 		
 		try {
-			
-			FishLoot filter = new FishLoot();
-			Keyboard.send(filter);
-			
+
+			commandSender.send(new FishLoot());
 			fishBot.setState(new UseSlotState(fishBot));
 			
 		}catch (Exception e) {

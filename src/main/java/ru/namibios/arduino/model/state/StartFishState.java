@@ -2,7 +2,6 @@ package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.utils.Keyboard;
 
 public class StartFishState extends State{
@@ -20,10 +19,9 @@ public class StartFishState extends State{
 	public void onStep() {
 		LOG.info("Start Fish...");
 		
-		Command command = () -> Keyboard.Keys.SPACE;
-		boolean isSend = Keyboard.send(command);
-		
-		if(isSend) fishBot.setState(new PersonalMessageState(fishBot));
+		if(commandSender.send(() -> Keyboard.Keys.SPACE)){
+			fishBot.setState(new PersonalMessageState(fishBot));
+		}
 		
 	}
 }
