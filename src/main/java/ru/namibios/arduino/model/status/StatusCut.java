@@ -28,7 +28,7 @@ public class StatusCut implements Status<StatusCutTemplate>{
 	public StatusCutTemplate getNameTemplate() {
 
 		ImageParser parser = new ImageParser(screen, StatusCutTemplate.values());
-		parser.parse(Screen.WHITE);
+		parser.parse(Screen.GRAY);
 		
 		return (StatusCutTemplate) parser.getNameTemplate();
 	}

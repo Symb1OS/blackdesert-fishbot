@@ -1,22 +1,34 @@
 package ru.namibios.arduino.utils;
 
+import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import ru.namibios.arduino.model.template.StatusKapchaTemplate;
-
 public class MatrixUtils {
 
 	private MatrixUtils() {}
-	
+
 	public static void printMatrix(int[][] tmp){
+		int row = tmp.length;
+		int column = tmp[0].length;
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				System.out.print(tmp[i][j]!= 0 ? 1 : " ");
+			}
+			System.out.println();
+		}
+	}
+
+	public static void printMatrix(int[][] tmp, String defaultSymbol){
 		int row = tmp.length;
 		int column = tmp[0].length;
 		
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
-				System.out.print(tmp[i][j]!= 0 ? 1 : " ");
+				System.out.print(tmp[i][j]!= 0 ? 1 : defaultSymbol);
 			}
 			System.out.println();
 		}

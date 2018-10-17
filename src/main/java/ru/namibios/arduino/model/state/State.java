@@ -18,13 +18,13 @@ public abstract class State {
 	public State(FishBot fishBot) {
 		this.fishBot = fishBot;
 		this.timeService = new TimeService();
+		this.commandSender = new CommandSender();
 	}
 	
 	public State(FishBot fishBot, long beforeStart, long afterStart) {
-		this.fishBot = fishBot;
+		this(fishBot);
 		this.beforeStart = beforeStart;
 		this.afterStart = afterStart;
-		this.timeService = new TimeService();
 	}
 
 	private static final int OVERFLOW = 300;
