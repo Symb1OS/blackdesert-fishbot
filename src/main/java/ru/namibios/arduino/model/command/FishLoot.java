@@ -1,20 +1,15 @@
 package ru.namibios.arduino.model.command;
 
-import java.awt.AWTException;
+import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.model.*;
+import ru.namibios.arduino.model.template.Loot;
+import ru.namibios.arduino.utils.Keyboard;
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
-
-import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.ImageParser;
-import ru.namibios.arduino.model.LootType;
-import ru.namibios.arduino.model.Looter;
-import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.model.Touch;
-import ru.namibios.arduino.model.template.Loot;
-import ru.namibios.arduino.utils.Keyboard;
 
 public class FishLoot implements Command{
 	
@@ -36,8 +31,8 @@ public class FishLoot implements Command{
 	public FishLoot() throws AWTException {
 		this.scrins = new ArrayList<>();
 		
-		this.one = new Screen(Screen.LOOT_SLOT_ONE);
-		this.two = new Screen(Screen.LOOT_SLOT_TWO);
+		this.one = new Screen(Application.getInstance().LOOT_SLOT_ONE());
+		this.two = new Screen(Application.getInstance().LOOT_SLOT_TWO());
 		
 		if(Application.getInstance().SAVE_UNSORT()) {
 			this.one.saveImage("loot/unsort");

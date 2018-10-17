@@ -1,11 +1,12 @@
 package ru.namibios.arduino.utils.debug;
 
-import java.awt.AWTException;
-import java.io.File;
-import java.util.stream.Stream;
-
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.Screen;
+
+import java.awt.*;
+import java.io.File;
+import java.util.stream.Stream;
 
 public class LineKeeper {
 	
@@ -37,7 +38,7 @@ public class LineKeeper {
 		long start = System.currentTimeMillis();
 		
 		while(System.currentTimeMillis() - start < workTime) {
-			Screen screen = new Screen(Screen.LINE);
+			Screen screen = new Screen(Application.getInstance().LINE());
 			screen.saveImage(imagesFolder);
 		}
 	}

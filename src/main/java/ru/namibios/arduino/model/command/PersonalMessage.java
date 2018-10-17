@@ -1,10 +1,10 @@
 package ru.namibios.arduino.model.command;
 
-import java.awt.AWTException;
-import java.io.IOException;
-
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
+
+import java.awt.*;
 
 public class PersonalMessage {
 	
@@ -12,8 +12,8 @@ public class PersonalMessage {
 	
 	private double allowableCoef;
 	
-	public PersonalMessage(double coef) throws AWTException, IOException {
-		this.screen = new Screen(Screen.CHAT);
+	public PersonalMessage(double coef) throws AWTException {
+		this.screen = new Screen(Application.getInstance().CHAT());
 		this.allowableCoef = coef;
 	}
 	

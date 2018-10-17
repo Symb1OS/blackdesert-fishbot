@@ -18,17 +18,6 @@ public class Screen {
 	
 	private final static Logger logger = Logger.getLogger(Screen.class);
 
-	public static final Rectangle FULL_SCREEN   = Application.getInstance().FULL_SCREEN();
-	public static final Rectangle SPACE 	    = Application.getInstance().SPACE();
-	public static final Rectangle LINE 			= Application.getInstance().LINE();
-	public static final Rectangle SUB_LINE 	 	= Application.getInstance().SUB_LINE();
-	public static final Rectangle STATUS_CUT 	= Application.getInstance().STATUS_CUT();
-	public static final Rectangle KAPCHA 		= Application.getInstance().KAPCHA();
-	public static final Rectangle STATUS_KAPCHA = Application.getInstance().STATUS_KAPCHA();
-	public static final Rectangle LOOT_SLOT_ONE = Application.getInstance().LOOT_SLOT_ONE();
-	public static final Rectangle LOOT_SLOT_TWO = Application.getInstance().LOOT_SLOT_TWO();
-	public static final Rectangle CHAT 			= Application.getInstance().CHAT();
-	
 	public static final Color WHITE = new Color(120,120,120);
 	public static final Color GRAY = new Color(40,40,40);
 	
@@ -58,7 +47,7 @@ public class Screen {
 		logger.info("Clean the noise...");
 		int cnt = 0;
 		while(cnt < iteration){
-			BufferedImage noiseImage = new Screen(Screen.KAPCHA).getScreenShot();
+			BufferedImage noiseImage = new Screen(Application.getInstance().KAPCHA()).getScreenShot();
 			noise.addNois(noiseImage);
 			cnt++;
 		}

@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.status;
 
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.StatusCutTemplate;
@@ -12,7 +13,7 @@ public class StatusCut implements Status<StatusCutTemplate>{
 	private Screen screen;
 	
 	public StatusCut() throws AWTException {
-		screen = new Screen(Screen.STATUS_CUT);
+		screen = new Screen(Application.getInstance().STATUS_CUT());
 	}
 	
 	public StatusCut(String filename) throws IOException{
@@ -20,7 +21,7 @@ public class StatusCut implements Status<StatusCutTemplate>{
 	}
 
 	public void init() throws AWTException {
-		screen = new Screen(Screen.STATUS_CUT);
+		screen = new Screen(Application.getInstance().STATUS_CUT());
 	}
 
 	@Override

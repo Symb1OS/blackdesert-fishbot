@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.status;
 
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
@@ -12,7 +13,7 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 	private Screen screen;
 
 	public StatusKapcha() throws AWTException {
-		this.screen = new Screen(Screen.STATUS_KAPCHA);
+		this.screen = new Screen(Application.getInstance().STATUS_KAPCHA());
 	}
 	
 	public StatusKapcha(String filename) throws IOException {
@@ -20,7 +21,7 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 	}
 
 	public void init() throws AWTException {
-		this.screen = new Screen(Screen.STATUS_KAPCHA);
+		this.screen = new Screen(Application.getInstance().STATUS_KAPCHA());
 	}
 	
 	public StatusKapchaTemplate getNameTemplate() {

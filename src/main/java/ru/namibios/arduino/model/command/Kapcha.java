@@ -19,7 +19,7 @@ public class Kapcha implements Command{
 	private String filename;
 	
 	public Kapcha() throws AWTException  {
-		this.screen = new Screen(Screen.KAPCHA);
+		this.screen = new Screen(Application.getInstance().KAPCHA());
 		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
 		this.filename = screen.saveImage("kapcha");
 		this.key = "";
