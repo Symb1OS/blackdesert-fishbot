@@ -198,15 +198,15 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	boolean FIRST_SLOT();
 	
 	@Key("bot.slot.first.key")
-	@DefaultValue("1")
+	@DefaultValue("9")
 	String FIRST_KEY_NUMBER();
 	
-	@Key("bot.slot.first.delayuse")
+	@Key("bot.slot.first.delay")
 	@DefaultValue("0")
 	int FIRST_SLOT_USE_DELAY();
 
-	@Key("bot.slot.first.delayuse")
-	@DefaultValue("5000")
+	@Key("bot.slot.first.period")
+	@DefaultValue("5460000")
 	int FIRST_SLOT_USE_PERIOD();
 
 	///////////////////////////////////////////////////////////////////////////
@@ -218,15 +218,15 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	boolean SECOND_SLOT();
 
 	@Key("bot.slot.second.key")
-	@DefaultValue("2")
+	@DefaultValue("8")
 	String SECOND_KEY_NUMBER();
 
-	@Key("bot.slot.second.delayuse")
-	@DefaultValue("0")
+	@Key("bot.slot.second.delay")
+	@DefaultValue("1860000")
 	int SECOND_SLOT_USE_DELAY();
 
-	@Key("bot.slot.second.delayuse")
-	@DefaultValue("10000")
+	@Key("bot.slot.second.period")
+	@DefaultValue("6660000")
 	int SECOND_SLOT_USE_PERIOD();
 
 	///////////////////////////////////////////////////////////////////////////
@@ -238,15 +238,15 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	boolean THIRD_SLOT();
 
 	@Key("bot.slot.third.key")
-	@DefaultValue("3")
+	@DefaultValue("7")
 	String THIRD_KEY_NUMBER();
 
-	@Key("bot.slot.third.delayuse")
-	@DefaultValue("0")
+	@Key("bot.slot.third.delay")
+	@DefaultValue("3720000")
 	int THIRD_SLOT_USE_DELAY();
 
-	@Key("bot.slot.third.delayuse")
-	@DefaultValue("15000")
+	@Key("bot.slot.third.period")
+	@DefaultValue("5460000")
 	int THIRD_SLOT_USE_PERIOD();
 
 	///////////////////////////////////////////////////////////////////////////
