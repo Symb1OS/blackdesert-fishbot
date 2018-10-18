@@ -36,4 +36,8 @@ public class Touch {
 		return "Rod" + toString();
 	}
 
+	public String toCommandLoot(){
+		return "Loot" + toString();
+	}
+
 }

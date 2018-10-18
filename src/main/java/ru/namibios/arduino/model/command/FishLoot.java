@@ -79,7 +79,7 @@ public class FishLoot implements Command{
 				if(type.isOk()) {
 					int index = type.getIndex();
 					Touch touch = Application.getInstance().LOOT_TOUCH()[index];
-					return "Loot" + touch;
+					return touch.toCommandLoot();
 				}
 			}
 		}
@@ -95,5 +95,5 @@ public class FishLoot implements Command{
 	public Screen getTwo() {
 		return two;
 	}
-	
+
 }
