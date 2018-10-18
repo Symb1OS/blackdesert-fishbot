@@ -10,11 +10,15 @@ import java.awt.*;
 
 @Sources("file:resources/application.properties")
 public interface ApplicationConfig extends Accessible, Mutable{
-	
+
 	@Key("bot.port")
 	@DefaultValue("")
 	String PORT();
-	
+
+	///////////////////////////////////////////////////////////////////////////
+	// RODS
+	///////////////////////////////////////////////////////////////////////////
+
 	@Key("bot.rod.count")
 	@DefaultValue("0")
 	int COUNT_ROD();
@@ -46,6 +50,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.delay.rod.after")
 	@DefaultValue("15000")
 	int DELAY_AFTER_CHANGE_ROD();
+
+	///////////////////////////////////////////////////////////////////////////
+	//	CAPTCHA
+	///////////////////////////////////////////////////////////////////////////
 	
 	@DefaultValue("50")
 	@Key("bot.kapcha.noise.iteration")
@@ -65,7 +73,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("{1561,616};{1608,616}")
 	@ConverterClass(LootTouchConverter.class)
 	Touch[] LOOT_TOUCH();
-	
+
+	///////////////////////////////////////////////////////////////////////////
+	// LOOT FILTER
+	///////////////////////////////////////////////////////////////////////////
+
 	@Key("bot.loot.fish")
 	@DefaultValue("true")
 	boolean FISH();
@@ -93,6 +105,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.loot.save_unsort")
 	@DefaultValue("true")
 	boolean SAVE_UNSORT();
+
+	///////////////////////////////////////////////////////////////////////////
+	// TASKS
+	///////////////////////////////////////////////////////////////////////////
 	
 	@Key("bot.autouse.beer")
 	@DefaultValue("true")
@@ -101,6 +117,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.autouse.minigame")
 	@DefaultValue("false")
 	boolean MINIGAME();
+
+	///////////////////////////////////////////////////////////////////////////
+	// STATE DELAYS
+	///////////////////////////////////////////////////////////////////////////
 	
 	@Key("bot.delay.start.before")
 	@DefaultValue("3000")
@@ -157,6 +177,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.delay.filterloot.after")
 	@DefaultValue("0")
 	int DELAY_AFTER_FILTER_LOOT();
+
+	///////////////////////////////////////////////////////////////////////////
+	// NOTIFICATION
+	///////////////////////////////////////////////////////////////////////////
 	
 	@Key("bot.notification.telegram")
 	@DefaultValue("false")
@@ -164,9 +188,13 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	
 	@Key("bot.notification.telegram.key")
 	String TELEGRAM_KEY();
-	
+
+	///////////////////////////////////////////////////////////////////////////
+	// FIRST SLOT
+	///////////////////////////////////////////////////////////////////////////
+
 	@Key("bot.slot.first")
-	@DefaultValue("false")
+	@DefaultValue("true")
 	boolean FIRST_SLOT();
 	
 	@Key("bot.slot.first.key")
@@ -174,9 +202,57 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String FIRST_KEY_NUMBER();
 	
 	@Key("bot.slot.first.delayuse")
-	@DefaultValue("5000")
+	@DefaultValue("0")
 	int FIRST_SLOT_USE_DELAY();
-	
+
+	@Key("bot.slot.first.delayuse")
+	@DefaultValue("5000")
+	int FIRST_SLOT_USE_PERIOD();
+
+	///////////////////////////////////////////////////////////////////////////
+	// SECOND SLOT
+	///////////////////////////////////////////////////////////////////////////
+
+	@Key("bot.slot.second")
+	@DefaultValue("true")
+	boolean SECOND_SLOT();
+
+	@Key("bot.slot.second.key")
+	@DefaultValue("2")
+	String SECOND_KEY_NUMBER();
+
+	@Key("bot.slot.second.delayuse")
+	@DefaultValue("0")
+	int SECOND_SLOT_USE_DELAY();
+
+	@Key("bot.slot.second.delayuse")
+	@DefaultValue("10000")
+	int SECOND_SLOT_USE_PERIOD();
+
+	///////////////////////////////////////////////////////////////////////////
+	// THIRD SLOT
+	///////////////////////////////////////////////////////////////////////////
+
+	@Key("bot.slot.third")
+	@DefaultValue("true")
+	boolean THIRD_SLOT();
+
+	@Key("bot.slot.third.key")
+	@DefaultValue("3")
+	String THIRD_KEY_NUMBER();
+
+	@Key("bot.slot.third.delayuse")
+	@DefaultValue("0")
+	int THIRD_SLOT_USE_DELAY();
+
+	@Key("bot.slot.third.delayuse")
+	@DefaultValue("15000")
+	int THIRD_SLOT_USE_PERIOD();
+
+	///////////////////////////////////////////////////////////////////////////
+	// NOTIFICATION
+	///////////////////////////////////////////////////////////////////////////
+
 	@Key("bot.pm.event.coef")
 	@DefaultValue("0.1")
 	double PM_COEF();
@@ -192,6 +268,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.pm.event.nothing")
 	@DefaultValue("true")
 	boolean PM_NOTHING();
+
+	///////////////////////////////////////////////////////////////////////////
+	// SCREEN
+	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.screen.fullscreen")
 	@DefaultValue("0, 0, 1920, 1080")

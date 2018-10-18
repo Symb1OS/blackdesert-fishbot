@@ -7,27 +7,47 @@ import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.notification.Notification;
 import ru.namibios.arduino.notification.TelegramNotification;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class FishBot {
 
-	private State state;
+    private State state;
 	
 	private Rod rod;
 	
-	private Slot slot;
-	
+	private List<Slot> slots;
+
 	private boolean isRunned;
 	
 	private boolean isRestart;
 	
 	private boolean isPmDetected;
-	
+
 	public FishBot() {
+
 		this.rod = new Rod(Application.getInstance().COUNT_ROD());
-		this.slot = new Slot(Application.getInstance().FIRST_SLOT(), Application.getInstance().FIRST_KEY_NUMBER(), Application.getInstance().FIRST_SLOT_USE_DELAY());
-		
-		isRunned = true;
-		isPmDetected = false;
-		state = new UseSlotState(this);
+
+        this.slots = Arrays.asList(
+        		new Slot(Application.getInstance().FIRST_SLOT(),
+						Application.getInstance().FIRST_KEY_NUMBER(),
+						Application.getInstance().FIRST_SLOT_USE_DELAY(),
+						Application.getInstance().FIRST_SLOT_USE_PERIOD()),
+
+				new Slot(Application.getInstance().SECOND_SLOT(),
+						Application.getInstance().SECOND_KEY_NUMBER(),
+						Application.getInstance().SECOND_SLOT_USE_DELAY(),
+						Application.getInstance().SECOND_SLOT_USE_PERIOD()),
+
+				new Slot(Application.getInstance().THIRD_SLOT(),
+						Application.getInstance().THIRD_KEY_NUMBER(),
+						Application.getInstance().THIRD_SLOT_USE_DELAY(),
+						Application.getInstance().THIRD_SLOT_USE_PERIOD())
+				);
+
+		this.isRunned = true;
+		this.isPmDetected = false;
+		this.state = new UseSlotState(this);
 	}
 	
 	void restart(){
@@ -52,11 +72,7 @@ public class FishBot {
 		return rod.getNext();
 	}
 	
-	public Slot getSlot() {
-		return slot;
-	}
-
-	public void setRestart(boolean isRestart) {
+    public void setRestart(boolean isRestart) {
 		this.isRestart = isRestart;
 	}
 	
@@ -96,4 +112,7 @@ public class FishBot {
 		this.isPmDetected = isPmDetected;
 	}
 
+	public List<Slot> getSlots() {
+		return slots;
+	}
 }

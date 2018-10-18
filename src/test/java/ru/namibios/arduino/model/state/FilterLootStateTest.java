@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.FishLoot;
+import ru.namibios.arduino.model.state.service.CommandSender;
 
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doThrow;

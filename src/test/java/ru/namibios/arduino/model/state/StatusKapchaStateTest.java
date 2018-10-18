@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.Status;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
 

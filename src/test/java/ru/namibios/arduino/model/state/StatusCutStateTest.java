@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.Status;
 import ru.namibios.arduino.model.status.StatusCut;
 import ru.namibios.arduino.model.template.StatusCutTemplate;
@@ -18,9 +19,6 @@ public class StatusCutStateTest {
 
     @Mock
     private FishBot fishBot;
-
-    @Mock
-    private StatusCut statusCut;
 
     @Mock
     private StatusService statusService;

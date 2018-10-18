@@ -1,69 +1,53 @@
 package ru.namibios.arduino.model;
 
 import ru.namibios.arduino.model.command.Command;
-import ru.namibios.arduino.utils.WorkTime;
 
 public class Slot implements Command{
 	
 	private boolean isActive;
 	private String hotKey;
-	private long useDelay;
-	
-	private WorkTime workTime;
 
-	public Slot(boolean isActive, String hotKey, long useDelay) {
+	private Timer timer;
+
+	public Slot(boolean isActive, String hotKey, long period) {
 		this.isActive = isActive;
 		this.hotKey = hotKey;
-		this.useDelay = useDelay;
-		
-		workTime = new WorkTime();
+
+		this.timer = new Timer(0, period);
 	}
-	
+
+	public Slot(boolean isActive, String hotKey, long delay, long period) {
+		this.isActive = isActive;
+		this.hotKey = hotKey;
+
+		this.timer = new Timer(delay, period);
+	}
+
 	@Override
 	public String getKey() {
-		workTime.reloadStart();
+		timer.resetTimeLastRun();
+		return toCommand();
+	}
+
+	public long getReadyTime() {
+		return timer.getReadyTime();
+	}
+
+	private String toCommand(){
 		return "Slot[" + hotKey + "]";
 	}
-	
+
 	public boolean isNeedUse() {
-		return isActive && (workTime.getTime() > useDelay);
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public String getHotKey() {
-		return hotKey;
-	}
-
-	public void setHotKey(String hotKey) {
-		this.hotKey = hotKey;
-	}
-
-	public long getUseDelay() {
-		return useDelay;
-	}
-
-	public void setUseDelay(long useDelay) {
-		this.useDelay = useDelay;
-	}
-
-	public WorkTime getWorkTime() {
-		return workTime;
-	}
-
-	public void setWorkTime(WorkTime workTime) {
-		this.workTime = workTime;
+		return isActive && timer.hasReady();
 	}
 
 	@Override
 	public String toString() {
-		return "Slot [isActive=" + isActive + ", hotKey=" + hotKey + ", useDelay=" + useDelay + ", workTime=" + workTime
-				+ "]";
+		return "Slot{" +
+				"isActive=" + isActive +
+				", hotKey='" + hotKey + '\'' +
+				", timer=" + timer +
+				'}';
 	}
+
 }

@@ -1,4 +1,4 @@
-package ru.namibios.arduino.model.state;
+package ru.namibios.arduino.model.state.service;
 
 import ru.namibios.arduino.model.status.Status;
 

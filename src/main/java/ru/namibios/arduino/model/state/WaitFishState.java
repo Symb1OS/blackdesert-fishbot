@@ -24,10 +24,10 @@ public class WaitFishState extends State {
 		
 		try {
 
-			if(commandSender.send(new WaitFish())){
+			if (commandSender.send(new WaitFish())){
 				fishBot.setState(new CutFishState(fishBot));
 
-			}else if(timeService.isOver(Application.getInstance().TIME_CHANGE_ROD())){
+			} else if (timer.isOver(Application.getInstance().TIME_CHANGE_ROD())){
 				fishBot.setState(new ChangeRodState(fishBot));
 			}
 

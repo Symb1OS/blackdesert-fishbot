@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Command;
+import ru.namibios.arduino.model.state.service.CommandSender;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;

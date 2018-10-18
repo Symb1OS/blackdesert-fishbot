@@ -1,9 +1,8 @@
 package ru.namibios.arduino.model.state;
 
-import ru.namibios.arduino.model.TimeService;
+import ru.namibios.arduino.model.Timer;
+import ru.namibios.arduino.model.state.service.CommandSender;
 import ru.namibios.arduino.utils.DelayUtils;
-
-import java.awt.*;
 
 public abstract class State {
 	
@@ -12,13 +11,14 @@ public abstract class State {
 	protected long beforeStart;
 	protected long afterStart;
 
-	protected TimeService timeService;
+	protected Timer timer;
 	protected CommandSender commandSender;
 
 	public State(FishBot fishBot) {
 		this.fishBot = fishBot;
-		this.timeService = new TimeService();
+		this.timer = new Timer();
 		this.commandSender = new CommandSender();
+
 	}
 	
 	public State(FishBot fishBot, long beforeStart, long afterStart) {
@@ -44,10 +44,6 @@ public abstract class State {
 	}
 
 	public void onOverflow() {
-
-	}
-
-	public void onInit() throws AWTException {
 
 	}
 

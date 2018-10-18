@@ -4,41 +4,46 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.PersonalMessage;
+import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.utils.ExceptionUtils;
-import ru.namibios.arduino.utils.Keyboard;
+
+import java.awt.*;
 
 public class PersonalMessageState extends State {
 
 	private static final Logger LOG = Logger.getLogger(PersonalMessage.class);
-	
-	PersonalMessageState(FishBot fishBot) {
+
+	private PersonalMessage pm;
+
+	PersonalMessageState(FishBot fishBot) throws AWTException {
 		super(fishBot);
 		this.beforeStart = 0;
 		this.afterStart = 0;
+
+
+		pm = new PersonalMessage(Application.getInstance().PM_COEF());
 	}
 
 	@Override
 	public void onStep() {
 		
 		try {
-			
-			PersonalMessage pm = new PersonalMessage(Application.getInstance().PM_COEF());
+
 			if(pm.isDetected() && !fishBot.isPmDetected()) {
 				
 				LOG.info("Reseived a private message. Send telegram notification.");
 				fishBot.notifyUser(Message.RECEIVED_PRIVATE_MESSAGE);
 				
-				if(Application.getInstance().PM_AUTOFISH()) {
+				if (Application.getInstance().PM_AUTOFISH()) {
 					LOG.info("Received a private message. Switch to autofish...");
 					fishBot.notifyUser(Message.TURN_AUTOFISH);
 					fishBot.setRunned(false);
 				}
-				
-				if(Application.getInstance().PM_EXIT_GAME()) {
+				else if (Application.getInstance().PM_EXIT_GAME()) {
 					LOG.info("Received a private message. Exit game...");
 					fishBot.notifyUser(Message.EXIT_GAME);
 					fishBot.setRunned(false);
-					Keyboard.send(() -> "Exit");
+					commandSender.send(ShortCommand.EXIT);
 				}
 				
 				fishBot.setPmDetected(true);

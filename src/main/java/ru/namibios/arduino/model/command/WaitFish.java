@@ -14,13 +14,9 @@ public class WaitFish implements Command{
 	private ImageParser imageParser;
 	
 	public WaitFish() throws AWTException{
-		init();
-	}
-
-	public void init() throws AWTException {
-		this.screen = new Screen(Application.getInstance().SPACE());
-		this.imageParser = new ImageParser(screen, Chars.values());
-		imageParser.parse(Screen.WHITE);
+        this.screen = new Screen(Application.getInstance().SPACE());
+        this.imageParser = new ImageParser(screen, Chars.values());
+        imageParser.parse(Screen.WHITE);
 	}
 
 	@Override

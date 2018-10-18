@@ -7,8 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.namibios.arduino.model.command.Line;
+import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.SlotService;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CutFishStateTest {
+public class UseSlotStateTest {
 
     @Mock
     private FishBot fishBot;
@@ -24,8 +25,11 @@ public class CutFishStateTest {
     @Mock
     private CommandSender commandSender;
 
+    @Mock
+    private SlotService slotService;
+
     @InjectMocks
-    private CutFishState cutFishState;
+    private UseSlotState useSlotState;
 
     @Before
     public void setUp() throws Exception {
@@ -34,14 +38,18 @@ public class CutFishStateTest {
     }
 
     @Test
-    public void testCutFish() {
+    public void testUseSlot() {
 
-        when(commandSender.send(any(Line.class))).thenReturn(true);
+        when(slotService.isReady()).thenReturn(true);
+        when(slotService.getKey()).thenReturn("1");
+        when(commandSender.send(any(Command.class))).thenReturn(true);
 
-        cutFishState.onStep();
+        useSlotState.onStep();
 
-        verify(commandSender).send(isA(Line.class));
-        verify(fishBot).setState(isA(StatusCutState.class));
+        verify(slotService).isReady();
+        verify(slotService).getKey();
+        verify(commandSender).send(any(Command.class));
+        verify(fishBot).setState(isA(StartFishState.class));
 
     }
 

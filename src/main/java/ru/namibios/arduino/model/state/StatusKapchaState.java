@@ -3,6 +3,7 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.StatusKapcha;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
 import ru.namibios.arduino.utils.ExceptionUtils;

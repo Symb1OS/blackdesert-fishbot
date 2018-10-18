@@ -1,30 +1,47 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
-import ru.namibios.arduino.model.command.Command;
-import ru.namibios.arduino.utils.Keyboard;
+import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.model.state.service.SlotService;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
-public class UseSlotState extends State{
+public class UseSlotState extends State {
 
 	private static final Logger LOG = Logger.getLogger(UseSlotState.class);
-	
+
+	private SlotService slotService;
+
 	UseSlotState(FishBot fishBot) {
 		super(fishBot);
 		this.beforeStart = 0;
 		this.afterStart = 1000;
+
+		slotService = new SlotService(fishBot.getSlots());
 	}
 
 	@Override
 	public void onStep() {
-		
-		if(fishBot.getSlot().isNeedUse()) {
-			LOG.info("Run auto use slot...");
-			Command hotKey = () -> fishBot.getSlot().getKey();
-			Keyboard.send(hotKey);
+
+	    LOG.info("Check slots..");
+
+	    try {
+
+			if (slotService.isReady()) {
+				LOG.info("Slot ready.. Use");
+
+				String key = slotService.getKey();
+				commandSender.send(() -> key);
+			}
+
+			fishBot.setState(new StartFishState(fishBot));
+
+		} catch (Exception e) {
+			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+			LOG.error(ExceptionUtils.getString(e));
+
+			fishBot.setState(new StartFishState(fishBot));
 		}
-		
-		fishBot.setState(new StartFishState(fishBot));
-		
+
 	}
-	
+
 }
