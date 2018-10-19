@@ -4,6 +4,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
+import ru.namibios.arduino.model.HotSlot;
 import ru.namibios.arduino.model.Touch;
 
 import java.awt.*;
@@ -111,7 +112,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 	
 	@Key("bot.autouse.beer")
-	@DefaultValue("true")
+	@DefaultValue("false")
 	boolean BEER();
 	
 	@Key("bot.autouse.minigame")
@@ -188,6 +189,27 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	
 	@Key("bot.notification.telegram.key")
 	String TELEGRAM_KEY();
+
+
+	///////////////////////////////////////////////////////////////////////////
+	// SLOTS
+	///////////////////////////////////////////////////////////////////////////
+
+	@Key("bot.slot.one")
+	@DefaultValue("false, 1, 0s, 90m")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot SLOT_ONE();
+
+	@Key("bot.slot.one")
+	@DefaultValue("true, 7, 0s, 91m")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot SLOT_TWO();
+
+	@Key("bot.slot.one")
+	@DefaultValue("true, 7, 0s, 91m")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot SLOT_THREE();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// FIRST SLOT

@@ -29,20 +29,20 @@ public class FishBot {
 		this.rod = new Rod(Application.getInstance().COUNT_ROD());
 
         this.slots = Arrays.asList(
-        		new Slot(Application.getInstance().FIRST_SLOT(),
-						Application.getInstance().FIRST_KEY_NUMBER(),
-						Application.getInstance().FIRST_SLOT_USE_DELAY(),
-						Application.getInstance().FIRST_SLOT_USE_PERIOD()),
+        		new Slot(Application.getInstance().SLOT_ONE().isActive(),
+						Application.getInstance().SLOT_ONE().getKey(),
+						Application.getInstance().SLOT_ONE().getDelay(),
+						Application.getInstance().SLOT_ONE().getPeriod()),
 
-				new Slot(Application.getInstance().SECOND_SLOT(),
-						Application.getInstance().SECOND_KEY_NUMBER(),
-						Application.getInstance().SECOND_SLOT_USE_DELAY(),
-						Application.getInstance().SECOND_SLOT_USE_PERIOD()),
+				new Slot(Application.getInstance().SLOT_TWO().isActive(),
+						Application.getInstance().SLOT_TWO().getKey(),
+						Application.getInstance().SLOT_TWO().getDelay(),
+						Application.getInstance().SLOT_TWO().getPeriod()),
 
-				new Slot(Application.getInstance().THIRD_SLOT(),
-						Application.getInstance().THIRD_KEY_NUMBER(),
-						Application.getInstance().THIRD_SLOT_USE_DELAY(),
-						Application.getInstance().THIRD_SLOT_USE_PERIOD())
+				new Slot(Application.getInstance().SLOT_THREE().isActive(),
+						Application.getInstance().SLOT_THREE().getKey(),
+						Application.getInstance().SLOT_THREE().getDelay(),
+						Application.getInstance().SLOT_THREE().getPeriod())
 				);
 
 		this.isRunned = true;
