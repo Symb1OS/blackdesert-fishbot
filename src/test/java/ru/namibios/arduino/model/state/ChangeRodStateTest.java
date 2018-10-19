@@ -1,64 +1,74 @@
 package ru.namibios.arduino.model.state;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.model.command.Command;
-import ru.namibios.arduino.utils.Keyboard;
+import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.RodService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Keyboard.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ChangeRodStateTest {
 
     @Mock
     private FishBot fishBot;
 
+    @Mock
+    private CommandSender commandSender;
+
+    @Mock
+    private RodService rodService;
+
     @InjectMocks
     private ChangeRodState changeRodState;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testLockedRods() {
 
-        when(fishBot.hasNextRod()).thenReturn(false);
+        when(rodService.hasFree()).thenReturn(false);
 
         changeRodState.onStep();
 
-        verify(fishBot).notifyUser(anyString());
+        verify(fishBot).notifyUser(Message.OUT_RODS);
         verify(fishBot).setRunned(false);
 
     }
 
     @Captor
-    ArgumentCaptor<Command> commandCaptor;
+    private ArgumentCaptor<Command> commandCaptor;
 
     @Test
     public void testFreeFishRods() {
 
         Touch touch = new Touch(1, 1);
 
-        when(fishBot.hasNextRod()).thenReturn(true);
-        when(fishBot.getNextRod()).thenReturn(touch);
+        when(rodService.hasFree()).thenReturn(true);
 
-        PowerMockito.mockStatic(Keyboard.class);
+        when(rodService.getNextFree()).thenReturn(touch.toCommandRod());
+        when(commandSender.send(any(Command.class))).thenReturn(true);
 
         changeRodState.onStep();
 
-        PowerMockito.verifyStatic(Keyboard.class);
-        Keyboard.send(commandCaptor.capture());
+        verify(rodService).hasFree();
+        verify(rodService).getNextFree();
+
+        verify(commandSender).send(commandCaptor.capture());
 
         assertEquals(new Touch(1,1).toCommandRod(), commandCaptor.getValue().getKey());
 
-        verify(fishBot).setState(any(StartFishState.class));
+        verify(fishBot).setState(isA(StartFishState.class));
         verify(fishBot).restart();
 
     }
