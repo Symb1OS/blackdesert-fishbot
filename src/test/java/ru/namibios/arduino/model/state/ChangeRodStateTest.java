@@ -37,7 +37,7 @@ public class ChangeRodStateTest {
     @Test
     public void testLockedRods() {
 
-        when(rodService.hasFree()).thenReturn(false);
+        when(rodService.hasNext()).thenReturn(false);
 
         changeRodState.onStep();
 
@@ -54,15 +54,15 @@ public class ChangeRodStateTest {
 
         Touch touch = new Touch(1, 1);
 
-        when(rodService.hasFree()).thenReturn(true);
+        when(rodService.hasNext()).thenReturn(true);
 
-        when(rodService.getNextFree()).thenReturn(touch.toCommandRod());
+        when(rodService.getNext()).thenReturn(touch.toCommandRod());
         when(commandSender.send(any(Command.class))).thenReturn(true);
 
         changeRodState.onStep();
 
-        verify(rodService).hasFree();
-        verify(rodService).getNextFree();
+        verify(rodService).hasNext();
+        verify(rodService).getNext();
 
         verify(commandSender).send(commandCaptor.capture());
 

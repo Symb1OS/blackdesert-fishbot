@@ -1,9 +1,9 @@
 package ru.namibios.arduino.model.state;
 
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.Rod;
 import ru.namibios.arduino.model.Slot;
-import ru.namibios.arduino.model.Touch;
+import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.RodService;
 import ru.namibios.arduino.notification.Notification;
 import ru.namibios.arduino.notification.TelegramNotification;
 
@@ -14,8 +14,6 @@ public class FishBot {
 
     private State state;
 	
-	private Rod rod;
-	
 	private List<Slot> slots;
 
 	private boolean isRunned;
@@ -24,9 +22,11 @@ public class FishBot {
 	
 	private boolean isPmDetected;
 
-	public FishBot() {
+	private RodService rodService;
 
-		this.rod = new Rod(Application.getInstance().COUNT_ROD());
+	private CommandSender commandSender;
+
+	public FishBot() {
 
         this.slots = Arrays.asList(
         		new Slot(Application.getInstance().SLOT_ONE().isActive(),
@@ -44,6 +44,9 @@ public class FishBot {
 						Application.getInstance().SLOT_THREE().getDelay(),
 						Application.getInstance().SLOT_THREE().getPeriod())
 				);
+
+        this.rodService = new RodService(Application.getInstance().COUNT_ROD());
+        this.commandSender = new CommandSender();
 
 		this.isRunned = true;
 		this.isPmDetected = false;
@@ -64,14 +67,6 @@ public class FishBot {
 			
 	}
 
-	public boolean hasNextRod(){
-		return rod.hasNext();
-	}
-
-	public Touch getNextRod(){
-		return rod.getNext();
-	}
-	
     public void setRestart(boolean isRestart) {
 		this.isRestart = isRestart;
 	}
@@ -96,14 +91,6 @@ public class FishBot {
 		this.isRunned = isRunned;
 	}
 
-	public Rod getRod() {
-		return rod;
-	}
-
-	public void setRod(Rod rod) {
-		this.rod = rod;
-	}
-
 	public boolean isPmDetected() {
 		return isPmDetected;
 	}
@@ -115,4 +102,13 @@ public class FishBot {
 	public List<Slot> getSlots() {
 		return slots;
 	}
+
+    public RodService getRodService() {
+        return rodService;
+    }
+
+    public CommandSender getCommandSender() {
+        return commandSender;
+    }
+
 }

@@ -19,8 +19,9 @@ public class ChangeRodState extends State{
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_CHANGE_ROD();
 		this.afterStart = Application.getInstance().DELAY_AFTER_CHANGE_ROD();
 
-		this.rodService = new RodService(fishBot.getRod());
-		this.commandSender = new CommandSender();
+		this.commandSender = fishBot.getCommandSender();
+		this.rodService = fishBot.getRodService();
+
 	}
 
 	@Override
@@ -29,11 +30,11 @@ public class ChangeRodState extends State{
 		LOG.info("Start change rod...");
 		
 		LOG.info("Checking availability fishing rod..");
-		if (rodService.hasFree()) {
+		if (rodService.hasNext()) {
 
 			LOG.info("New fishing rod found. Use..");
 
-			String nextFree = rodService.getNextFree();
+			String nextFree = rodService.getNext();
 			commandSender.send( () -> nextFree);
 
 			fishBot.setState(new StartFishState(fishBot));
