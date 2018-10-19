@@ -20,10 +20,6 @@ public class StatusCut implements Status<StatusCutTemplate>{
 		screen = new Screen(filename);
 	}
 
-	public void init() throws AWTException {
-		screen = new Screen(Application.getInstance().STATUS_CUT());
-	}
-
 	@Override
 	public StatusCutTemplate getNameTemplate() {
 

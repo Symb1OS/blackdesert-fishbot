@@ -1,13 +1,13 @@
 package ru.namibios.arduino.model.template;
 
+import ru.namibios.arduino.model.ImageParser;
+import ru.namibios.arduino.model.Screen;
+import ru.namibios.arduino.utils.ImageUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
-import ru.namibios.arduino.model.ImageParser;
-import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.utils.ImageUtils;
 
 public enum Loot implements MatrixTemplate {
 	
@@ -29,7 +29,7 @@ public enum Loot implements MatrixTemplate {
 		return templates;
 	}
 	
-	private Loot(String fileFolderName) {
+	Loot(String fileFolderName) {
 		this.templates = new ArrayList<int[][]>();
 		
 		Stream.of(new File(fileFolderName).listFiles())

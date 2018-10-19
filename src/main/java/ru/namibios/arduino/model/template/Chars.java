@@ -32,6 +32,10 @@ public enum Chars implements MatrixTemplate{
 				List<String> list = Files.lines(Paths.get(filename.getPath()), StandardCharsets.UTF_8)
 						.collect(Collectors.toCollection(ArrayList::new));
 
+				if(list.isEmpty()){
+					throw new IOException("Empty template, please check " + filename);
+				}
+
 				templates.add(MatrixUtils.importTemplate(list));
 
 			}
