@@ -4,6 +4,7 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Slot;
 import ru.namibios.arduino.model.state.service.CommandSender;
 import ru.namibios.arduino.model.state.service.RodService;
+import ru.namibios.arduino.model.state.service.SlotService;
 import ru.namibios.arduino.notification.Notification;
 import ru.namibios.arduino.notification.TelegramNotification;
 
@@ -23,6 +24,8 @@ public class FishBot {
 	private boolean isPmDetected;
 
 	private RodService rodService;
+
+	private SlotService slotService;
 
 	private CommandSender commandSender;
 
@@ -45,11 +48,15 @@ public class FishBot {
 						Application.getInstance().SLOT_THREE().getPeriod())
 				);
 
+        this.slotService = new SlotService(slots);
+
         this.rodService = new RodService(Application.getInstance().COUNT_ROD());
+
         this.commandSender = new CommandSender();
 
 		this.isRunned = true;
 		this.isPmDetected = false;
+
 		this.state = new UseSlotState(this);
 	}
 	
@@ -109,6 +116,10 @@ public class FishBot {
 
     public CommandSender getCommandSender() {
         return commandSender;
+    }
+
+    public SlotService getSlotService() {
+        return slotService;
     }
 
 }

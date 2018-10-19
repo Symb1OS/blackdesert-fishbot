@@ -16,7 +16,7 @@ public class UseSlotState extends State {
 		this.beforeStart = 0;
 		this.afterStart = 1000;
 
-		slotService = new SlotService(fishBot.getSlots());
+		slotService = fishBot.getSlotService();
 	}
 
 	@Override

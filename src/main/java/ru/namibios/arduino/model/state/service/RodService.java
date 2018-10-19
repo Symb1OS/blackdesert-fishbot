@@ -8,11 +8,17 @@ import java.util.List;
 
 public class RodService {
 
+    public static final int MAX_RODS = 8;
+
     private List<Touch> rots;
 
     private int current;
 
     public RodService(int count) {
+
+        if(count > MAX_RODS){
+            throw new IllegalArgumentException("Rod count " + count + ". Max rod count = 8");
+        }
 
         current = 0;
 
