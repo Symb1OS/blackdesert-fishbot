@@ -196,17 +196,17 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.slot.one")
-	@DefaultValue("true, 1, 0s, 10s")
+	@DefaultValue("true, 0, 0s, 91m")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_ONE();
 
 	@Key("bot.slot.two")
-	@DefaultValue("true, 2, 0s, 15s")
+	@DefaultValue("true, 9, 31m, 111m")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_TWO();
 
 	@Key("bot.slot.three")
-	@DefaultValue("true, 3, 0s, 20s")
+	@DefaultValue("true, 8, 62m, 91m")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_THREE();
 
@@ -216,7 +216,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.slot.first")
-	@DefaultValue("true")
+	@DefaultValue("false")
 	boolean FIRST_SLOT();
 	
 	@Key("bot.slot.first.key")
@@ -236,7 +236,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.slot.second")
-	@DefaultValue("true")
+	@DefaultValue("false")
 	boolean SECOND_SLOT();
 
 	@Key("bot.slot.second.key")
@@ -256,7 +256,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.slot.third")
-	@DefaultValue("true")
+	@DefaultValue("false")
 	boolean THIRD_SLOT();
 
 	@Key("bot.slot.third.key")
@@ -301,7 +301,8 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle FULL_SCREEN();
 
 	@Key("bot.screen.space")
-	@DefaultValue("928, 194, 63, 25")
+//	@DefaultValue("928, 194, 63, 25")
+	@DefaultValue("928, 210, 63, 25")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle SPACE();
 

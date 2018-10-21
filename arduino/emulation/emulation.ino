@@ -32,7 +32,6 @@ void moveTo(int x, int y, char button) {
   while (MouseTo.move() == false) {}
   delay(random(1000, 1500));
 
-  Serial.println('Mouse button: ' + button);
   Mouse.press(button);   
   delay(random(120, 150));
   Mouse.release(button);
@@ -59,9 +58,6 @@ void changeRod(String touch){
   int x = touch.substring(sx, sy).toInt();
   int y = touch.substring(sy + 1, touch.length() - 1).toInt();
   
-  Serial.println(x);
-  Serial.println(y);
-
   moveTo(x, y, MOUSE_RIGHT);
 
   pressKey('i');
@@ -69,10 +65,7 @@ void changeRod(String touch){
 
 void useSlot(String slot){
   int start = slot.indexOf('[');
-
-  Serial.println(start);
   char key = slot.charAt(start + 1);
-  Serial.println(key);
   pressKey(key);
 }
 
@@ -86,9 +79,6 @@ void takeLoot(String loot){
   int x = loot.substring(sx, sy).toInt();
   int y = loot.substring(sy + 1, loot.length() - 1).toInt();
   
-  Serial.println(x);
-  Serial.println(y);
-
   moveTo(x, y, MOUSE_RIGHT);
 
   pressKey(0x80);
@@ -154,7 +144,7 @@ void loop() {
   String input = Serial.readString();
   int length = input.length();
   if (length != 0) {
-    Serial.println(input);
+//    Serial.println(input);
     if (input.startsWith("space")) {
       pressKey(0x20);
     } else if (input.startsWith("Rod")) {
@@ -176,9 +166,9 @@ void loop() {
         if (symbol != '@') pressKey(symbol);
         
       }
-
     }
 
+    Serial.print("END");
   }
   
 }
