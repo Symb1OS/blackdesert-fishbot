@@ -92,11 +92,10 @@ public class CommandSender {
 
         if (commandSender.isOpen()) {
             System.out.println("Port is open");
-            commandSender.send(() -> "sadasdasdasdsawww");
-            if (commandSender.isComplete()) {
-                System.out.println("Message sended");
+            boolean send = commandSender.send(() -> "wadsdawdsdawdsdasdwads");
+            if (send) {
+                System.out.println("Command complete!");
             }
-
         } else {
             System.out.println("Port is closed");
         }
