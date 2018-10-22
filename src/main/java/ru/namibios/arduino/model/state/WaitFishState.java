@@ -24,6 +24,7 @@ public class WaitFishState extends State {
 		
 		try {
 
+
 			if (commandSender.send(new WaitFish())){
 				fishBot.setState(new CutFishState(fishBot));
 
