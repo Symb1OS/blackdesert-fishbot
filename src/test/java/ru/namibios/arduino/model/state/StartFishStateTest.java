@@ -11,6 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 
@@ -33,7 +35,7 @@ public class StartFishStateTest {
     }
 
     @Test
-    public void testStart() {
+    public void testStart() throws IOException {
 
         Mockito.when(commandSender.send(any(Command.class))).thenReturn(true);
 

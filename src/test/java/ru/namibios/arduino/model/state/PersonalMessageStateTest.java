@@ -13,6 +13,8 @@ import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.PersonalMessage;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
+import java.io.IOException;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -57,7 +59,7 @@ public class PersonalMessageStateTest {
     }
 
     @Test
-    public void testDetectedExitGame() {
+    public void testDetectedExitGame() throws IOException {
 
         Application.getInstance().setProperty("bot.pm.event.autofish","false");
         Application.getInstance().setProperty("bot.pm.event.exitgame","true");

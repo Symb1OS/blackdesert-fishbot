@@ -11,6 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Kapcha;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 
@@ -32,7 +34,7 @@ public class KapchaStateTest {
     }
 
     @Test
-    public void testSendToInput() {
+    public void testSendToInput() throws IOException {
 
         Mockito.when(commandSender.send(any(Kapcha.class))).thenReturn(true);
 
@@ -44,7 +46,7 @@ public class KapchaStateTest {
     }
 
     @Test
-    public void testReturnToStart() {
+    public void testReturnToStart() throws IOException {
 
         Mockito.when(commandSender.send(any(Kapcha.class))).thenReturn(false);
 

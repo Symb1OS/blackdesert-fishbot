@@ -13,6 +13,8 @@ import ru.namibios.arduino.model.Timer;
 import ru.namibios.arduino.model.command.WaitFish;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 
@@ -37,7 +39,7 @@ public class WaitFishStateTest {
     }
 
     @Test
-    public void testBite() {
+    public void testBite() throws IOException {
 
         Mockito.when(commandSender.send(any(WaitFish.class))).thenReturn(true);
 
@@ -49,7 +51,7 @@ public class WaitFishStateTest {
     }
 
     @Test
-    public void testChangeRod() {
+    public void testChangeRod() throws IOException {
 
         Mockito.when(commandSender.send(any(WaitFish.class))).thenReturn(false);
         Mockito.when(timer.isOver(Application.getInstance().TIME_CHANGE_ROD())).thenReturn(true);

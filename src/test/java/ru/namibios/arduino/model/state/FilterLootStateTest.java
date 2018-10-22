@@ -10,6 +10,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.FishLoot;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -32,7 +34,7 @@ public class FilterLootStateTest {
     }
 
     @Test
-    public void testFilter() {
+    public void testFilter() throws IOException {
 
         filterLootState.onStep();
 
@@ -41,7 +43,7 @@ public class FilterLootStateTest {
     }
 
     @Test
-    public void testException() {
+    public void testException() throws IOException {
 
         doThrow(NullPointerException.class).when(commandSender).send(isA(FishLoot.class));
 

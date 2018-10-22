@@ -1,8 +1,6 @@
 package ru.namibios.arduino;
 
 import org.apache.log4j.Logger;
-
-import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.state.FishBot;
 import ru.namibios.arduino.utils.DelayUtils;
 
@@ -33,10 +31,10 @@ public class Transfer extends Thread{
 		
 		LOG.info("Start...");
 
-		Application.getPhysicalPort().openPort();
+		fishBot.getCommandSender().openPort();
 		DelayUtils.delay(3000);
 		
-		if(!Application.getPhysicalPort().isOpen()) {
+		if(!fishBot.getCommandSender().isOpen()) {
 			LOG.info("Port is closed. Check you port in settings");
 			return;
 		} 
@@ -45,7 +43,7 @@ public class Transfer extends Thread{
 		
 		while (fishBot.isRunned()) fishBot.getState().start();
 		
-		Application.getPhysicalPort().closePort();
+		fishBot.getCommandSender().closePort();
 		
 		LOG.info("Port closed...");
 		LOG.info("Thread stop.");

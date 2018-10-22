@@ -11,6 +11,8 @@ import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.state.service.CommandSender;
 import ru.namibios.arduino.model.state.service.SlotService;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
@@ -38,7 +40,7 @@ public class UseSlotStateTest {
     }
 
     @Test
-    public void testUseSlot() {
+    public void testUseSlot() throws IOException {
 
         when(slotService.isReady()).thenReturn(true);
         when(slotService.getKey()).thenReturn("1");

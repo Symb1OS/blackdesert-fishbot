@@ -17,7 +17,7 @@ public abstract class State {
 	public State(FishBot fishBot) {
 		this.fishBot = fishBot;
 		this.timer = new Timer();
-		this.commandSender = new CommandSender();
+		this.commandSender = fishBot.getCommandSender();
 
 	}
 	

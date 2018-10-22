@@ -11,6 +11,8 @@ import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.state.service.CommandSender;
 import ru.namibios.arduino.model.state.service.RodService;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -50,7 +52,7 @@ public class ChangeRodStateTest {
     private ArgumentCaptor<Command> commandCaptor;
 
     @Test
-    public void testFreeFishRods() {
+    public void testFreeFishRods() throws IOException {
 
         Touch touch = new Touch(1, 1);
 

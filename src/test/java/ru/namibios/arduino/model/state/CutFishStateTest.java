@@ -10,6 +10,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Line;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
@@ -34,7 +36,7 @@ public class CutFishStateTest {
     }
 
     @Test
-    public void testCutFish() {
+    public void testCutFish() throws IOException {
 
         when(commandSender.send(any(Line.class))).thenReturn(true);
 
