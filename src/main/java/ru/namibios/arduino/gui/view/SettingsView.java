@@ -1,34 +1,16 @@
 package ru.namibios.arduino.gui.view;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
-
-import org.apache.log4j.Logger;
-
 import com.fazecast.jSerialComm.SerialPort;
-
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.gui.controller.CancelController;
 import ru.namibios.arduino.gui.controller.SaveController;
 import ru.namibios.arduino.utils.ExceptionUtils;
+
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 
 public class SettingsView extends JFrame{
 	
@@ -601,9 +583,9 @@ public class SettingsView extends JFrame{
 		cbBeer.setSelected(Application.getInstance().BEER());
 		cbMinigame.setSelected(Application.getInstance().MINIGAME());
 		
-		cbAutoOne.setSelected(Application.getInstance().FIRST_SLOT());
-		tHotKeyOne.setText(Application.getInstance().FIRST_KEY_NUMBER());
-		tKeyTimerOne.setText(String.valueOf(Application.getInstance().FIRST_SLOT_USE_DELAY()));
+		cbAutoOne.setSelected(Application.getInstance().SLOT_ONE().isActive());
+		tHotKeyOne.setText(Application.getInstance().SLOT_ONE().getKey());
+		tKeyTimerOne.setText(String.valueOf(Application.getInstance().SLOT_ONE().getDelay()));
 		
 		cbTelegram.setSelected(Application.getInstance().TELEGRAM());
 		tTelegramKey.setText(Application.getInstance().TELEGRAM_KEY());

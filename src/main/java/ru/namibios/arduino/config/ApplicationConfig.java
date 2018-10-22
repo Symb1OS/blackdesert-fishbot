@@ -16,6 +16,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("")
 	String PORT();
 
+
 	///////////////////////////////////////////////////////////////////////////
 	// RODS
 	///////////////////////////////////////////////////////////////////////////
@@ -52,6 +53,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("15000")
 	int DELAY_AFTER_CHANGE_ROD();
 
+
 	///////////////////////////////////////////////////////////////////////////
 	//	CAPTCHA
 	///////////////////////////////////////////////////////////////////////////
@@ -74,6 +76,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("{1561,616};{1608,616}")
 	@ConverterClass(LootTouchConverter.class)
 	Touch[] LOOT_TOUCH();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// LOOT FILTER
@@ -107,6 +110,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	boolean SAVE_UNSORT();
 
+
 	///////////////////////////////////////////////////////////////////////////
 	// TASKS
 	///////////////////////////////////////////////////////////////////////////
@@ -118,6 +122,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.autouse.minigame")
 	@DefaultValue("false")
 	boolean MINIGAME();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// STATE DELAYS
@@ -179,6 +184,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("0")
 	int DELAY_AFTER_FILTER_LOOT();
 
+
 	///////////////////////////////////////////////////////////////////////////
 	// NOTIFICATION
 	///////////////////////////////////////////////////////////////////////////
@@ -212,66 +218,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 
 	///////////////////////////////////////////////////////////////////////////
-	// FIRST SLOT
-	///////////////////////////////////////////////////////////////////////////
-
-	@Key("bot.slot.first")
-	@DefaultValue("false")
-	boolean FIRST_SLOT();
-	
-	@Key("bot.slot.first.key")
-	@DefaultValue("9")
-	String FIRST_KEY_NUMBER();
-	
-	@Key("bot.slot.first.delay")
-	@DefaultValue("0")
-	int FIRST_SLOT_USE_DELAY();
-
-	@Key("bot.slot.first.period")
-	@DefaultValue("5460000")
-	int FIRST_SLOT_USE_PERIOD();
-
-	///////////////////////////////////////////////////////////////////////////
-	// SECOND SLOT
-	///////////////////////////////////////////////////////////////////////////
-
-	@Key("bot.slot.second")
-	@DefaultValue("false")
-	boolean SECOND_SLOT();
-
-	@Key("bot.slot.second.key")
-	@DefaultValue("8")
-	String SECOND_KEY_NUMBER();
-
-	@Key("bot.slot.second.delay")
-	@DefaultValue("1860000")
-	int SECOND_SLOT_USE_DELAY();
-
-	@Key("bot.slot.second.period")
-	@DefaultValue("6660000")
-	int SECOND_SLOT_USE_PERIOD();
-
-	///////////////////////////////////////////////////////////////////////////
-	// THIRD SLOT
-	///////////////////////////////////////////////////////////////////////////
-
-	@Key("bot.slot.third")
-	@DefaultValue("false")
-	boolean THIRD_SLOT();
-
-	@Key("bot.slot.third.key")
-	@DefaultValue("7")
-	String THIRD_KEY_NUMBER();
-
-	@Key("bot.slot.third.delay")
-	@DefaultValue("3720000")
-	int THIRD_SLOT_USE_DELAY();
-
-	@Key("bot.slot.third.period")
-	@DefaultValue("5460000")
-	int THIRD_SLOT_USE_PERIOD();
-
-	///////////////////////////////////////////////////////////////////////////
 	// NOTIFICATION
 	///////////////////////////////////////////////////////////////////////////
 
@@ -290,6 +236,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.pm.event.nothing")
 	@DefaultValue("true")
 	boolean PM_NOTHING();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// SCREEN
