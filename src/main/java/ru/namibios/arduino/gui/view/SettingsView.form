@@ -34,7 +34,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Сохранить"/>
+                  <text resource-bundle="locale" key="preference.button.save"/>
                 </properties>
               </component>
               <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
@@ -42,7 +42,7 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Отмена"/>
+                  <text resource-bundle="locale" key="preference.button.cancel"/>
                 </properties>
               </component>
             </children>
@@ -72,7 +72,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Порт:"/>
+                  <text resource-bundle="locale" key="preference.label.port"/>
                 </properties>
               </component>
               <grid id="716e3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -113,7 +113,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Лут:"/>
+                  <text resource-bundle="locale" key="preference.label.loot"/>
                 </properties>
               </component>
               <grid id="214b" binding="lootContent" layout-manager="GridLayoutManager" row-count="1" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -129,7 +129,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Fish"/>
+                      <text resource-bundle="locale" key="preference.label.fish"/>
                     </properties>
                   </component>
                   <component id="b6d60" class="javax.swing.JCheckBox" binding="cbEvent">
@@ -137,7 +137,7 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Event"/>
+                      <text resource-bundle="locale" key="preference.label.event"/>
                     </properties>
                   </component>
                   <component id="79af3" class="javax.swing.JCheckBox" binding="cbRock">
@@ -145,7 +145,7 @@
                       <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Rock"/>
+                      <text resource-bundle="locale" key="preference.label.rock"/>
                     </properties>
                   </component>
                   <component id="67ccf" class="javax.swing.JCheckBox" binding="cbKey">
@@ -153,7 +153,7 @@
                       <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Key"/>
+                      <text resource-bundle="locale" key="preference.label.keys"/>
                     </properties>
                   </component>
                   <component id="61ade" class="javax.swing.JCheckBox" binding="cbUnknown">
@@ -161,7 +161,7 @@
                       <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Unknow"/>
+                      <text resource-bundle="locale" key="preference.label.unknow"/>
                     </properties>
                   </component>
                   <hspacer id="b152">
@@ -188,7 +188,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Задачи:"/>
+                  <text resource-bundle="locale" key="preference.label.autouse"/>
                 </properties>
               </component>
               <grid id="5dfc2" binding="taskContent" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -208,7 +208,7 @@
                     <properties>
                       <horizontalAlignment value="10"/>
                       <horizontalTextPosition value="11"/>
-                      <text value="Beer"/>
+                      <text resource-bundle="locale" key="preference.label.beer"/>
                     </properties>
                   </component>
                   <component id="80e69" class="javax.swing.JCheckBox" binding="cbMinigame">
@@ -220,7 +220,7 @@
                     <properties>
                       <horizontalAlignment value="10"/>
                       <horizontalTextPosition value="11"/>
-                      <text value="Minigame"/>
+                      <text resource-bundle="locale" key="preference.label.minigame"/>
                     </properties>
                   </component>
                   <hspacer id="a5fb8">
@@ -247,7 +247,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Слоты:"/>
+                  <text resource-bundle="locale" key="preference.label.slot"/>
                 </properties>
               </component>
               <grid id="da0e" binding="slotContent" layout-manager="GridLayoutManager" row-count="3" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -273,7 +273,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Клавиша:"/>
+                      <text resource-bundle="locale" key="preference.label.digital"/>
                     </properties>
                   </component>
                   <component id="72916" class="javax.swing.JTextField" binding="tfFirstSlotKey">
@@ -291,7 +291,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Задержка:"/>
+                      <text resource-bundle="locale" key="preference.label.delay"/>
                     </properties>
                   </component>
                   <component id="77989" class="javax.swing.JTextField" binding="tfFirstSlotDelay">
@@ -309,7 +309,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Период"/>
+                      <text resource-bundle="locale" key="preference.label.period"/>
                     </properties>
                   </component>
                   <component id="5784e" class="javax.swing.JTextField" binding="tfFirstSlotPeriod">
@@ -335,7 +335,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Клавиша:"/>
+                      <text resource-bundle="locale" key="preference.label.digital"/>
                     </properties>
                   </component>
                   <component id="ea6a3" class="javax.swing.JTextField" binding="tfSecondSlotKey">
@@ -353,7 +353,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Задержка:"/>
+                      <text resource-bundle="locale" key="preference.label.delay"/>
                     </properties>
                   </component>
                   <component id="f6900" class="javax.swing.JTextField" binding="tfSecondSlotDelay">
@@ -371,7 +371,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Период"/>
+                      <text resource-bundle="locale" key="preference.label.period"/>
                     </properties>
                   </component>
                   <component id="192a" class="javax.swing.JTextField" binding="tfSecondSlotPeriod">
@@ -397,7 +397,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Клавиша:"/>
+                      <text resource-bundle="locale" key="preference.label.digital"/>
                     </properties>
                   </component>
                   <component id="e961a" class="javax.swing.JTextField" binding="tfThirdSlotKey">
@@ -415,7 +415,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Задержка:"/>
+                      <text resource-bundle="locale" key="preference.label.delay"/>
                     </properties>
                   </component>
                   <component id="15b3e" class="javax.swing.JTextField" binding="tfThirdSlotDelay">
@@ -433,7 +433,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Период"/>
+                      <text resource-bundle="locale" key="preference.label.period"/>
                     </properties>
                   </component>
                   <component id="33d39" class="javax.swing.JTextField" binding="tfThirdSlotPeriod">
@@ -463,7 +463,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Удочки:"/>
+                  <text resource-bundle="locale" key="preference.label.rod"/>
                 </properties>
               </component>
               <grid id="f7616" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -481,7 +481,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Количество удочек"/>
+                      <text resource-bundle="locale" key="preference.label.rod.count"/>
                     </properties>
                   </component>
                   <component id="4a01a" class="javax.swing.JTextField" binding="tfRodCount">
@@ -499,7 +499,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Время ожидания"/>
+                      <text resource-bundle="locale" key="preference.label.waittime"/>
                     </properties>
                   </component>
                   <component id="fd339" class="javax.swing.JTextField" binding="tfRodChange">
@@ -529,7 +529,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Оповещения:"/>
+                  <text resource-bundle="locale" key="preference.label.notification"/>
                 </properties>
               </component>
               <grid id="89b6f" binding="notificationContent" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -545,7 +545,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Телеграм"/>
+                      <text resource-bundle="locale" key="preference.label.telegram"/>
                     </properties>
                   </component>
                   <component id="57123" class="javax.swing.JLabel">
@@ -553,7 +553,7 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Ключ:"/>
+                      <text resource-bundle="locale" key="preference.label.key"/>
                     </properties>
                   </component>
                   <component id="8d789" class="javax.swing.JTextField" binding="tfTelegramKey">
@@ -583,7 +583,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="ПМ:"/>
+                  <text resource-bundle="locale" key="preference.label.wrotepm"/>
                 </properties>
               </component>
               <grid id="ee30f" binding="pmContent" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -599,7 +599,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Авто-рыбалка"/>
+                      <text resource-bundle="locale" key="preference.label.autofish"/>
                     </properties>
                   </component>
                   <component id="e195e" class="javax.swing.JRadioButton" binding="rbExitGame">
@@ -607,7 +607,7 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Выход из игры"/>
+                      <text resource-bundle="locale" key="preference.label.exitgame"/>
                     </properties>
                   </component>
                   <component id="5666b" class="javax.swing.JRadioButton" binding="rbNothing">
@@ -615,7 +615,8 @@
                       <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Ничего"/>
+                      <selected value="false"/>
+                      <text resource-bundle="locale" key="preference.label.nothing"/>
                     </properties>
                   </component>
                   <hspacer id="a348">
@@ -642,7 +643,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Задержки:"/>
+                  <text resource-bundle="locale" key="preference.label.delays"/>
                 </properties>
               </component>
               <grid id="1a44f" binding="delayContent" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -660,7 +661,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Старт:"/>
+                      <text resource-bundle="locale" key="preference.label.start"/>
                     </properties>
                   </component>
                   <component id="1eb69" class="javax.swing.JTextField" binding="tfBeforeStart">
@@ -686,7 +687,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Ожидание:"/>
+                      <text resource-bundle="locale" key="preference.label.wait"/>
                     </properties>
                   </component>
                   <component id="613e8" class="javax.swing.JTextField" binding="tfBeforeWait">
@@ -712,7 +713,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Смена удочки:"/>
+                      <text resource-bundle="locale" key="preference.label.changerod"/>
                     </properties>
                   </component>
                   <component id="a0397" class="javax.swing.JTextField" binding="tfBeforeChangeRod">
@@ -738,7 +739,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Капча:"/>
+                      <text resource-bundle="locale" key="preference.label.captcha"/>
                     </properties>
                   </component>
                   <component id="c66e6" class="javax.swing.JTextField" binding="tfBeforeCaptcha">
@@ -764,7 +765,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Фильтр:"/>
+                      <text resource-bundle="locale" key="preference.label.filter"/>
                     </properties>
                   </component>
                   <component id="80fd" class="javax.swing.JTextField" binding="tfBeforeFilterLoot">
