@@ -4,6 +4,10 @@ import com.fazecast.jSerialComm.SerialPort;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
+import ru.namibios.arduino.config.converter.HotSlotConverter;
+import ru.namibios.arduino.config.converter.LootTouchConverter;
+import ru.namibios.arduino.config.converter.RectangleConverter;
+import ru.namibios.arduino.config.converter.SerialPortConverter;
 import ru.namibios.arduino.model.HotSlot;
 import ru.namibios.arduino.model.Touch;
 

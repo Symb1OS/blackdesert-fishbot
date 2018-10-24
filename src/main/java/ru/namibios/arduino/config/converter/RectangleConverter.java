@@ -1,4 +1,4 @@
-package ru.namibios.arduino.config;
+package ru.namibios.arduino.config.converter;
 
 import org.aeonbits.owner.Converter;
 

@@ -1,6 +1,7 @@
 package ru.namibios.arduino.config;
 
 import org.junit.Test;
+import ru.namibios.arduino.config.converter.HotSlotConverter;
 import ru.namibios.arduino.model.HotSlot;
 
 import static org.junit.Assert.assertEquals;

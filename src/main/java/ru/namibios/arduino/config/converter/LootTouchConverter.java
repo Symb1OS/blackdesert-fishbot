@@ -1,10 +1,9 @@
-package ru.namibios.arduino.config;
-
-import java.lang.reflect.Method;
+package ru.namibios.arduino.config.converter;
 
 import org.aeonbits.owner.Converter;
-
 import ru.namibios.arduino.model.Touch;
+
+import java.lang.reflect.Method;
 
 public class LootTouchConverter implements Converter<Touch>{
 
