@@ -20,4 +20,15 @@ public class HotSlotConverterTest {
         assertEquals(30 * 60 * 1000, hotSlot.getPeriod());
 
     }
+
+    @Test
+    public void testWithoutFormat() {
+        HotSlotConverter hotSlotConverter = new HotSlotConverter();
+        HotSlot hotSlot = hotSlotConverter.convert(null, "false, 1, 1000, 3000");
+
+        assertEquals(false, hotSlot.isActive());
+        assertEquals("1", hotSlot.getKey());
+        assertEquals(1000, hotSlot.getDelay());
+        assertEquals(3000, hotSlot.getPeriod());
+    }
 }

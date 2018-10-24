@@ -18,4 +18,26 @@ public class HotSlotTest {
         assertEquals(100 * 1000, hotSlot.getDelay());
 
     }
+
+    @Test
+    public void testStringLong() {
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setDelay("10000");
+        hotSlot.setPeriod("20000");
+
+        assertEquals(10000, hotSlot.getDelay());
+        assertEquals(20000, hotSlot.getPeriod());
+    }
+
+    @Test
+    public void testOneLong() {
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setDelay("0");
+        hotSlot.setPeriod("5");
+
+        assertEquals(0, hotSlot.getDelay());
+        assertEquals(5, hotSlot.getPeriod());
+    }
 }
