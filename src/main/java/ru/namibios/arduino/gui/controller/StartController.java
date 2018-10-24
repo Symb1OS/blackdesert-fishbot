@@ -2,7 +2,7 @@ package ru.namibios.arduino.gui.controller;
 
 import ru.namibios.arduino.Transfer;
 import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.gui.view.NRootView;
+import ru.namibios.arduino.gui.view.RootView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,11 +10,11 @@ import java.awt.event.ActionListener;
 
 public class StartController implements ActionListener {
 	
-	private NRootView view;
+	private RootView view;
 
 	private Transfer threadTransfer;
 	
-	public StartController(Transfer threadTransfer, NRootView view) {
+	public StartController(Transfer threadTransfer, RootView view) {
 		this.view = view;
 		this.threadTransfer = threadTransfer;
 	}

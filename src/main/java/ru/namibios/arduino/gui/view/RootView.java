@@ -4,6 +4,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.PatternLayout;
 import ru.namibios.arduino.Transfer;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.config.TextAreaAppender;
 import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.SettingsController;
@@ -14,7 +15,7 @@ import ru.namibios.arduino.utils.ExecUtils;
 import javax.swing.*;
 import java.awt.*;
 
-public class NRootView extends JFrame {
+public class RootView extends JFrame {
 
     private JPanel contentPane;
     private JButton buttonStart;
@@ -23,15 +24,19 @@ public class NRootView extends JFrame {
     private JScrollPane scrollPane;
     private JPanel buttonPanel;
 
-    public NRootView() {
+    public RootView() {
 
         Transfer transfer = null;
 
         setTitle("Fish bot");
         setContentPane(contentPane);
+        setAlwaysOnTop(true);
         setLocation(0, 400);
         setSize(new Dimension(520, 300));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Image im = new ImageIcon(Path.ROOT_ICON).getImage();
+        setIconImage(im);
 
         getRootPane().setDefaultButton(buttonStart);
 

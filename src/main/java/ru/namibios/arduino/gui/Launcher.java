@@ -2,7 +2,7 @@ package ru.namibios.arduino.gui;
 
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.gui.view.NRootView;
+import ru.namibios.arduino.gui.view.RootView;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
@@ -42,7 +42,7 @@ public class Launcher {
 
 		try {
 
-			SwingUtilities.invokeLater( () -> new NRootView() );
+			SwingUtilities.invokeLater( () -> new RootView() );
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
