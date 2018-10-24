@@ -183,11 +183,9 @@ public class SettingsView extends JDialog {
         init();
 
         buttonSave.setIcon(new ImageIcon(UI.IMG_SAVE));
-        buttonSave.setBackground(UI.BUTTON_STYLE);
         buttonSave.addActionListener(new SaveController(this));
 
         buttonCancel.setIcon(new ImageIcon(UI.IMG_CLOSE));
-        buttonCancel.setBackground(UI.BUTTON_STYLE);
         buttonCancel.addActionListener(new CancelController(this));
 
         this.setModal(true);

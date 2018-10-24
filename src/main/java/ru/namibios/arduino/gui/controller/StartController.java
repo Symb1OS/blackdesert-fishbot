@@ -1,21 +1,20 @@
 package ru.namibios.arduino.gui.controller;
 
+import ru.namibios.arduino.Transfer;
+import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.gui.view.NRootView;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-
-import ru.namibios.arduino.Transfer;
-import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.gui.view.RootView;
-
 public class StartController implements ActionListener {
 	
-	private RootView view;
+	private NRootView view;
 
 	private Transfer threadTransfer;
 	
-	public StartController(Transfer threadTransfer, RootView view) {
+	public StartController(Transfer threadTransfer, NRootView view) {
 		this.view = view;
 		this.threadTransfer = threadTransfer;
 	}
@@ -29,12 +28,18 @@ public class StartController implements ActionListener {
 		
 		boolean isInit = threadTransfer != null ;
 		boolean isRunned = isInit && threadTransfer.getFishBot().isRunned();
-		if( !isInit || !isRunned ){
+		if( !isInit){
 			threadTransfer = new Transfer();
 			threadTransfer.start();
-		}else{
-			showMessageDialog(Message.ALREADY_WORK);
-		} 
+
+        } else if (!isRunned) {
+		    threadTransfer.getFishBot().setRunned(true);
+            threadTransfer = new Transfer(threadTransfer.getFishBot());
+            threadTransfer.start();
+
+        } else {
+            showMessageDialog(Message.ALREADY_WORK);
+        }
 		
 	}
 	

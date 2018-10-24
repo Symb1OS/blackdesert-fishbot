@@ -13,6 +13,10 @@ public class Transfer extends Thread{
 	public Transfer() {
 		this.fishBot = new FishBot();
 	}
+
+	public Transfer(FishBot fishBot) {
+		this.fishBot = fishBot;
+	}
 	
 	public FishBot getFishBot() {
 		return fishBot;
@@ -36,6 +40,7 @@ public class Transfer extends Thread{
 		
 		if(!fishBot.getCommandSender().isOpen()) {
 			LOG.info("Port is closed. Check you port in settings");
+			fishBot.setRunned(false);
 			return;
 		} 
 		
