@@ -21,14 +21,14 @@ public class Screen {
 	public static final Color WHITE = new Color(120,120,120);
 	public static final Color GRAY = new Color(40,40,40);
 	
-	public BufferedImage screenShot;
+	private BufferedImage screenShot;
 	private Noise noise;
 	
 	public Screen(String filename) throws IOException{
 		this.screenShot = ImageIO.read(new File(filename));
 		makeGray();
 	}
-	
+
 	public Screen(Rectangle zone, boolean gray) throws AWTException {
 		Robot robot = new Robot();
 		screenShot = robot.createScreenCapture(zone);
@@ -42,7 +42,11 @@ public class Screen {
 		makeGray();
 		noise = new Noise(screenShot);
 	}
-	
+
+	public void toZone(Rectangle zone) throws IOException {
+		this.screenShot = screenShot.getSubimage(zone.x, zone.y, zone.width, zone.height);
+	}
+
 	public void clearNoise(int iteration) throws AWTException {
 		logger.info("Clean the noise...");
 		int cnt = 0;

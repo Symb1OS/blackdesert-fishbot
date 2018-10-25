@@ -291,12 +291,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle STATUS_KAPCHA();
 
 	@Key("bot.screen.lootslotone")
-	@DefaultValue("1537, 592, 47, 48")
+	@DefaultValue("1537, 595, 47, 48")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_ONE();
 
 	@Key("bot.screen.lootslottwo")
-	@DefaultValue("1584, 592, 47, 48")
+	@DefaultValue("1584, 595, 47, 48")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_TWO();
 
