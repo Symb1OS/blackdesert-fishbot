@@ -169,7 +169,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_KAPCHA();
 	
 	@Key("bot.delay.kapcha.after")
-	@DefaultValue("10000")
+	@DefaultValue("5000")
 	int DELAY_AFTER_KAPCHA();
 	
 	@Key("bot.delay.statuskapcha.before")

@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.state;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Slot;
 import ru.namibios.arduino.model.state.service.CommandSender;
@@ -13,11 +14,11 @@ import java.util.List;
 
 public class FishBot {
 
-    private State state;
-	
-	private List<Slot> slots;
+    private static final Logger LOG = Logger.getLogger(FishBot.class);
 
-	private boolean isRunned;
+    private State state;
+
+    private boolean isRunned;
 	
 	private boolean isRestart;
 	
@@ -31,22 +32,22 @@ public class FishBot {
 
 	public FishBot() {
 
-        this.slots = Arrays.asList(
-        		new Slot(Application.getInstance().SLOT_ONE().isActive(),
-						Application.getInstance().SLOT_ONE().getKey(),
-						Application.getInstance().SLOT_ONE().getDelay(),
-						Application.getInstance().SLOT_ONE().getPeriod()),
+        List<Slot> slots = Arrays.asList(
+                new Slot(Application.getInstance().SLOT_ONE().isActive(),
+                        Application.getInstance().SLOT_ONE().getKey(),
+                        Application.getInstance().SLOT_ONE().getDelay(),
+                        Application.getInstance().SLOT_ONE().getPeriod()),
 
-				new Slot(Application.getInstance().SLOT_TWO().isActive(),
-						Application.getInstance().SLOT_TWO().getKey(),
-						Application.getInstance().SLOT_TWO().getDelay(),
-						Application.getInstance().SLOT_TWO().getPeriod()),
+                new Slot(Application.getInstance().SLOT_TWO().isActive(),
+                        Application.getInstance().SLOT_TWO().getKey(),
+                        Application.getInstance().SLOT_TWO().getDelay(),
+                        Application.getInstance().SLOT_TWO().getPeriod()),
 
-				new Slot(Application.getInstance().SLOT_THREE().isActive(),
-						Application.getInstance().SLOT_THREE().getKey(),
-						Application.getInstance().SLOT_THREE().getDelay(),
-						Application.getInstance().SLOT_THREE().getPeriod())
-				);
+                new Slot(Application.getInstance().SLOT_THREE().isActive(),
+                        Application.getInstance().SLOT_THREE().getKey(),
+                        Application.getInstance().SLOT_THREE().getDelay(),
+                        Application.getInstance().SLOT_THREE().getPeriod())
+        );
 
         this.slotService = new SlotService(slots);
 
@@ -68,6 +69,7 @@ public class FishBot {
 	void notifyUser(String message){
 			
 		if(Application.getInstance().TELEGRAM()) {
+            LOG.info("Send telegram notification.");
 			Notification telegram = new TelegramNotification(message);
 			telegram.notifyUser();
 		}

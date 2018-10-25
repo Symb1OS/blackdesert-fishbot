@@ -31,7 +31,9 @@ public class StatusCutState extends State{
 
 	@Override
 	public void onStep() {
-		
+
+		LOG.info("Check status cut fish");
+
 		try{
 
 			StatusCutTemplate status = statusService.getTemplate(new StatusCut());

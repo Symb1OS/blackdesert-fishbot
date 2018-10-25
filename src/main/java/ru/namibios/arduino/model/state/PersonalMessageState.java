@@ -30,10 +30,10 @@ public class PersonalMessageState extends State {
 		try {
 
 			if(pm.isDetected() && !fishBot.isPmDetected()) {
-				
-				LOG.info("Reseived a private message. Send telegram notification.");
+
+				LOG.info("Received a private message.");
 				fishBot.notifyUser(Message.RECEIVED_PRIVATE_MESSAGE);
-				
+
 				if (Application.getInstance().PM_AUTOFISH()) {
 					LOG.info("Received a private message. Switch to autofish...");
 					fishBot.notifyUser(Message.TURN_AUTOFISH);

@@ -20,7 +20,7 @@ public class KapchaState extends State {
 	@Override
 	public void onStep() {
 	
-		LOG.info("Parsing Captcha...");
+		LOG.info("Parsing captcha...");
 		
 		try{
 

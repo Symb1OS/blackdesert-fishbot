@@ -32,7 +32,9 @@ public class StatusKapchaState extends State{
 
 	@Override
 	public void onStep() {
-	
+
+		LOG.info("Check status parsing captcha");
+
 		try {
 
 			StatusKapchaTemplate status = statusService.getTemplate(new StatusKapcha());
@@ -44,7 +46,7 @@ public class StatusKapchaState extends State{
 
 				switch (status) {
 					case SUCCESS: {
-						LOG.info("Kapcha parsed success. Go filter loot...");
+						LOG.info("Captcha parsed success. Go filter loot...");
 						fishBot.setState(new FilterLootState(fishBot));
 						break;
 					}
