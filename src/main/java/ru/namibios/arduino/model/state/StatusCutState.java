@@ -21,6 +21,8 @@ public class StatusCutState extends State{
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_CUT();
 
 		this.statusService = new StatusService<>();
+
+        LOG.info("Check status cut fish");
 	}
 
 	@Override
@@ -31,8 +33,6 @@ public class StatusCutState extends State{
 
 	@Override
 	public void onStep() {
-
-		LOG.info("Check status cut fish");
 
 		try{
 

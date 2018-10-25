@@ -48,7 +48,7 @@ public class Screen {
 	}
 
 	public void clearNoise(int iteration) throws AWTException {
-		logger.info("Clean the noise...");
+		logger.info("Cleaning captcha...");
 		int cnt = 0;
 		while(cnt < iteration){
 			BufferedImage noiseImage = new Screen(Application.getInstance().KAPCHA()).getScreenShot();
@@ -56,7 +56,7 @@ public class Screen {
 			cnt++;
 		}
 		screenShot = noise.clear();
-		logger.info("Clean ended...");
+		logger.info("Cleaning ended...");
 	}
 
 	private void makeGray(){

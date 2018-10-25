@@ -22,6 +22,7 @@ public class StatusKapchaState extends State{
 
 		this.statusService = new StatusService<>();
 
+        LOG.info("Check status parsing captcha");
 	}
 
 	@Override
@@ -32,8 +33,6 @@ public class StatusKapchaState extends State{
 
 	@Override
 	public void onStep() {
-
-		LOG.info("Check status parsing captcha");
 
 		try {
 
