@@ -1,26 +1,23 @@
 package ru.namibios.arduino.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.template.Loot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Looter {
 
 	private static final int UNKNOW = -1;
 
 	private List<LootType> lootTypeList;
+
+    private LootCount count;
 	
-	private List<Integer> lootOk;
-	private List<Integer> lootTrash;
-	
-	private LootCount count;
-	
-	public Looter(String[] slots, boolean isTakeUnknow) {
-		
-		this.lootOk = new ArrayList<>();
-		this.lootTrash = new ArrayList<>();
+	public Looter(String[] slots, boolean isTakeUnknown) {
+
+        List<Integer> lootOk = new ArrayList<>();
+        List<Integer> lootTrash = new ArrayList<>();
 		this.lootTypeList = new ArrayList<>();
 		
 		if(Application.getInstance().ROCK())  lootOk.add(Loot.SCALA.ordinal()); else lootTrash.add(Loot.SCALA.ordinal());
@@ -31,38 +28,37 @@ public class Looter {
 		lootTrash.add(Loot.TRASH.ordinal());
 
 		for (int index = 0; index < slots.length; index++) {
-			
+
 			int slot = Integer.parseInt(slots[index]);
-		
+
 			LootType lootType = new LootType(index);
 			for (Integer okIndex : lootOk) {
 				if(slot == okIndex) lootType.setOk(true);
 			}
-			
+
 			for (Integer trashIndex : lootTrash) {
 				if(slot == trashIndex) lootType.setTrash(true);
 			}
-			
+
 			if (slot  == UNKNOW) {
-				if(isTakeUnknow) {
+				if(isTakeUnknown) {
 					lootType.setOk(true);
 				}else {
 					lootType.setTrash(true);
 				}
-			} 
-			
+			}
+
 			if(slot == Loot.EMPTY.ordinal()) lootType.setEmpty(true);
 			lootTypeList.add(lootType);
 		}
 		
 		int length = lootTypeList.size();
 		count = new LootCount(length);
-		for(int index = 0; index < length; index++) {
-			LootType lootType = lootTypeList.get(index);
-			if(lootType.isOk()) count.incOk();;
-			if(lootType.isEmpty()) count.incEmpty();
-			if(lootType.isTrash()) count.incTrash();
-			if(lootType.isUnknow()) count.incUnknow();
+		for (LootType lootType : lootTypeList) {
+			if (lootType.isOk()) count.incOk();
+			if (lootType.isEmpty()) count.incEmpty();
+			if (lootType.isTrash()) count.incTrash();
+			if (lootType.isUnknow()) count.incUnknow();
 		}
 		
 	}

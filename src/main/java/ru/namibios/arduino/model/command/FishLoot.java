@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.*;
 import ru.namibios.arduino.model.template.Loot;
-import ru.namibios.arduino.utils.Keyboard;
 
 import java.awt.*;
 import java.io.IOException;
@@ -51,7 +50,7 @@ public class FishLoot implements Command{
 			imageParser.parse(Screen.GRAY);
 			loots+= imageParser.getKey();
 		}
-		System.out.println(loots);
+		LOG.debug("Loot indexes: " + loots);
 		return loots.split(",");
 	}
 	
@@ -59,18 +58,18 @@ public class FishLoot implements Command{
 	public String getKey(){
 		
 		String[] arrayLoots = getLootIndices();
-		
-		boolean isTakeUnknow = Application.getInstance().TAKE_UNKNOWN();
-		Looter looter = new Looter(arrayLoots, isTakeUnknow);
+
+		boolean isTakeUnknown = Application.getInstance().TAKE_UNKNOWN();
+		Looter looter = new Looter(arrayLoots, isTakeUnknown);
 		
 		if(looter.isTakeAll()) {
 			LOG.info("Loot ok. Take all..");
-			return Keyboard.Keys.TAKE;
+			return ShortCommand.TAKE.getKey();
 		}
 		
 		if(looter.isIgnoreAll()) {
 			LOG.info("Trash. Throw out all..");
-			return Keyboard.Keys.IGNORE;
+			return ShortCommand.IGNORE.getKey();
 		}
 		
 		if(looter.isTakeByIndex()) {
@@ -85,7 +84,7 @@ public class FishLoot implements Command{
 		}
 		
 		LOG.info("Strategy is not defined. Take..");
-		return Keyboard.Keys.TAKE;
+		return ShortCommand.TAKE.getKey();
 	}
 
 	public Screen getOne() {

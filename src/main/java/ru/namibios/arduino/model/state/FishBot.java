@@ -106,10 +106,6 @@ public class FishBot {
 		this.isPmDetected = isPmDetected;
 	}
 
-	public List<Slot> getSlots() {
-		return slots;
-	}
-
     public RodService getRodService() {
         return rodService;
     }

@@ -4,7 +4,6 @@ package ru.namibios.arduino.model.command;
 import org.junit.Before;
 import org.junit.Test;
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.utils.Keyboard;
 
 import java.io.IOException;
 
@@ -30,7 +29,7 @@ public class FishLootTest {
 		FishLoot fishLoot = new FishLoot("resources/loot/ok/scala/scala.jpg", "resources/loot/ok/empty/empty.jpg");
 		String key = fishLoot.getKey();
 
-		assertEquals(Keyboard.Keys.TAKE, key);
+		assertEquals(ShortCommand.TAKE.getKey(), key);
 
 	}
 
@@ -39,7 +38,7 @@ public class FishLootTest {
 		FishLoot fishLoot = new FishLoot("resources/loot/ok/fish/xarius.jpg", "resources/loot/ok/fish/losos.jpg");
 		String key = fishLoot.getKey();
 
-		assertEquals(Keyboard.Keys.TAKE, key);
+		assertEquals(ShortCommand.TAKE.getKey(), key);
 	}
 
 
@@ -68,7 +67,7 @@ public class FishLootTest {
 		FishLoot fishLoot = new FishLoot("resources/loot/trash/boot.jpg", "resources/loot/trash/mechenosec.jpg");
 		String key = fishLoot.getKey();
 		
-		assertEquals(Keyboard.Keys.IGNORE, key);
+		assertEquals(ShortCommand.IGNORE.getKey(), key);
 	}
 	
 	
@@ -77,7 +76,7 @@ public class FishLootTest {
 		FishLoot fishLoot = new FishLoot("resources/loot/trash/gorchak.jpg","resources/loot/ok/empty/empty.jpg");
 		String key = fishLoot.getKey();
 		
-		assertEquals(Keyboard.Keys.IGNORE, key);
+		assertEquals(ShortCommand.IGNORE.getKey(), key);
 	}
 
 }
