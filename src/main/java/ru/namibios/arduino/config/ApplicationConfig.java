@@ -34,11 +34,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int TIME_CHANGE_ROD();
 	
 	@Key("bot.rod.x")
-	@DefaultValue("1532")
+	@DefaultValue("1484")
 	int ROD_START_X();
 	
 	@Key("bot.rod.y")
-	@DefaultValue("355")
+	@DefaultValue("350")
 	int ROD_START_Y();
 	
 	@Key("bot.rod.dx")
@@ -169,7 +169,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_KAPCHA();
 	
 	@Key("bot.delay.kapcha.after")
-	@DefaultValue("5000")
+	@DefaultValue("0")
 	int DELAY_AFTER_KAPCHA();
 	
 	@Key("bot.delay.statuskapcha.before")
@@ -286,19 +286,19 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle KAPCHA();
 
 	@Key("bot.screen.statuscaptcha")
-	@DefaultValue("810, 495, 295, 85")
+	@DefaultValue("760,  485, 390, 105")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_KAPCHA();
 
 //	java.awt.Rectangle[x=1539,y=597,width=44,height=44]
 	@Key("bot.screen.lootslotone")
-	@DefaultValue("1537, 595, 47, 48")
+	@DefaultValue("1539, 597, 43, 43")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_ONE();
 
 //	java.awt.Rectangle[x=1586,y=597,width=44,height=44]
 	@Key("bot.screen.lootslottwo")
-	@DefaultValue("1584, 595, 47, 48")
+	@DefaultValue("1586, 597, 43, 43")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_TWO();
 
