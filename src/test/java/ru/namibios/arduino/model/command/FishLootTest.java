@@ -24,18 +24,10 @@ public class FishLootTest {
 	// ------------------------------ALL FILTER TRUE------------------------------//
 
 	// --------------------TAKE ALL--------------------//
-	@Test
-	public void testOkEmpty() throws IOException{
-		FishLoot fishLoot = new FishLoot("resources/loot/ok/scala/scala.jpg", "resources/loot/ok/empty/empty.jpg");
-		String key = fishLoot.getKey();
-
-		assertEquals(ShortCommand.TAKE.getKey(), key);
-
-	}
 
 	@Test
 	public void testOkOk() throws IOException{
-		FishLoot fishLoot = new FishLoot("resources/loot/ok/fish/xarius.jpg", "resources/loot/ok/fish/losos.jpg");
+		FishLoot fishLoot = new FishLoot("resources/loot/ok/scala/scala.jpg", "resources/loot/ok/event/1.jpg");
 		String key = fishLoot.getKey();
 
 		assertEquals(ShortCommand.TAKE.getKey(), key);
@@ -45,7 +37,7 @@ public class FishLootTest {
 	// --------------------TAKE BY INDEX--------------------//
 	@Test
 	public void testOkTrash() throws IOException{
-		FishLoot fishLoot = new FishLoot("resources/loot/ok/fish/zerex.jpg","resources/loot/trash/macropod.jpg");
+		FishLoot fishLoot = new FishLoot("resources/loot/ok/key/key.jpg","resources/loot/trash/1.jpg");
 		String key = fishLoot.getKey();
 
 		assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot(), key);
@@ -53,7 +45,7 @@ public class FishLootTest {
 	
 	@Test
 	public void testTrashOk() throws IOException{
-		FishLoot fishLoot = new FishLoot("resources/loot/trash/boot.jpg","resources/loot/ok/fish/ersh.jpg");
+		FishLoot fishLoot = new FishLoot("resources/loot/trash/2.jpg","resources/loot/ok/scala/scala.jpg");
 		String key = fishLoot.getKey();
 		
 		assertEquals(Application.getInstance().LOOT_TOUCH()[1].toCommandLoot(), key);
@@ -64,16 +56,7 @@ public class FishLootTest {
 	
 	@Test
 	public void testTrashTrash() throws IOException{
-		FishLoot fishLoot = new FishLoot("resources/loot/trash/boot.jpg", "resources/loot/trash/mechenosec.jpg");
-		String key = fishLoot.getKey();
-		
-		assertEquals(ShortCommand.IGNORE.getKey(), key);
-	}
-	
-	
-	@Test
-	public void testTrashEmpty() throws IOException {
-		FishLoot fishLoot = new FishLoot("resources/loot/trash/gorchak.jpg","resources/loot/ok/empty/empty.jpg");
+		FishLoot fishLoot = new FishLoot("resources/loot/trash/1.jpg", "resources/loot/trash/2.jpg");
 		String key = fishLoot.getKey();
 		
 		assertEquals(ShortCommand.IGNORE.getKey(), key);

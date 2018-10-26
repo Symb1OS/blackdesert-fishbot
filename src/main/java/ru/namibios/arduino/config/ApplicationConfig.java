@@ -290,13 +290,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_KAPCHA();
 
-//	java.awt.Rectangle[x=1539,y=597,width=44,height=44]
 	@Key("bot.screen.lootslotone")
 	@DefaultValue("1539, 597, 43, 43")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_ONE();
 
-//	java.awt.Rectangle[x=1586,y=597,width=44,height=44]
 	@Key("bot.screen.lootslottwo")
 	@DefaultValue("1586, 597, 43, 43")
 	@ConverterClass(RectangleConverter.class)
