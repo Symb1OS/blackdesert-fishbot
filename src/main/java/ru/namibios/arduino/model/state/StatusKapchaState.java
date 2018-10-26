@@ -50,7 +50,7 @@ public class StatusKapchaState extends State{
 						break;
 					}
 
-					case FAILURE: {
+					case FAILED: {
 						LOG.info("Captcha parsed failure. Back to start...");
 						fishBot.setState(new StartFishState(fishBot));
 						break;

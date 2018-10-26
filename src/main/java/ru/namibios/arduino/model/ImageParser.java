@@ -1,12 +1,13 @@
 package ru.namibios.arduino.model;
 
-import java.awt.Color;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.model.template.MatrixTemplate;
+import ru.namibios.arduino.utils.Matrix;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.template.MatrixTemplate;
 
 public class ImageParser {
 	
@@ -66,7 +67,49 @@ public class ImageParser {
 		
 		keyList.add(screenMatrix);
 	}
-		
+
+	public int findSubImage(){
+
+		int index = 0;
+		for (MatrixTemplate templates : collectionTemplate) {
+			List<int[][]> subTemplates = templates.getTemplates();
+			for (int[][] template : subTemplates) {
+				Coefficient coefficient = subCompare(index, template);
+				if (coefficient.isFound()) {
+					return coefficient.getRezultIndex();
+				}
+			}
+			index++;
+		}
+
+		return -1;
+	}
+
+	private Coefficient subCompare(int index, int[][] template) {
+
+		Coefficient coefficient = new Coefficient(coefIdentification);
+
+		int rowTemlate = template.length;
+		int columnTemplate = template[0].length;
+
+		int row = screenMatrix.length;
+		int column = screenMatrix[0].length;
+
+		int nRow = row - rowTemlate;
+		int nColumn = column - columnTemplate;
+
+		Matrix matrix = new Matrix(screenMatrix);
+		for (int i = 0; i < nRow; i++) {
+			for (int j = 0; j < nColumn; j++) {
+				int[][] subMatrix = matrix.getSubMatrix(i, j, rowTemlate, columnTemplate).get();
+				coefficient.init(subMatrix, template);
+				coefficient.calculate(index);
+			}
+		}
+
+		return coefficient;
+	}
+
 	private int compare(int[][] numberMatrix) {
 	
 		Coefficient coef = new Coefficient(coefIdentification);
@@ -129,6 +172,12 @@ public class ImageParser {
 			}
 		}
 		return null;
+	}
+
+	public MatrixTemplate getNameTemplateBySubImage() {
+
+		int subImage = findSubImage();
+		return subImage != -1 ? collectionTemplate[subImage] : null;
 	}
 	
 	class Coefficient{

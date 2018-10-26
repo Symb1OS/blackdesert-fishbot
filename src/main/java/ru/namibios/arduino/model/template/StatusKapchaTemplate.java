@@ -1,5 +1,8 @@
 package ru.namibios.arduino.model.template;
 
+import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.utils.MatrixUtils;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -8,19 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ru.namibios.arduino.config.Path;
-import ru.namibios.arduino.utils.MatrixUtils;
-
 public enum StatusKapchaTemplate implements MatrixTemplate{
 
-	/**
-		Картинка постоянно меняет свою положение, потому сложно распознавать программно, гораздо проще
-		обучить нейронную сеть на опознание. Но эта функция несильно нужна, поэтому как-нибудь потом.
-	*/
-	
-	SUCCESS("SUCCESS"),
-	
-	FAILURE("FAILURE");
+	SUCCESS("SUCCESS_EU"),
+
+	FAILED("FAILED_EU");
 	
 	private final List<int[][]> templates;
 	
@@ -28,17 +23,19 @@ public enum StatusKapchaTemplate implements MatrixTemplate{
 	public List<int[][]> getTemplates() {
 		return templates;
 	}
-	
-	private StatusKapchaTemplate(String filename) {
-		this.templates = new ArrayList<int[][]>();
+
+	StatusKapchaTemplate(String... filenames) {
+		this.templates = new ArrayList<>();
 
 		try {
-			
-			List<String> list = Files.lines(Paths.get(Path.STATUS_KAPCHA, filename), StandardCharsets.UTF_8)
-					.collect(Collectors.toCollection(ArrayList::new));
-			
-			templates.add(MatrixUtils.importTemplate(list));
-			
+
+			for (String filename : filenames) {
+				List<String> list = Files.lines(Paths.get(Path.STATUS_KAPCHA, filename), StandardCharsets.UTF_8)
+						.collect(Collectors.toCollection(ArrayList::new));
+
+				templates.add(MatrixUtils.importTemplate(list));
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

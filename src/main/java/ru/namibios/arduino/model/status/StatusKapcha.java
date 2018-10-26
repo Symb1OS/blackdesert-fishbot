@@ -28,7 +28,7 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 		ImageParser parser = new ImageParser(screen, StatusKapchaTemplate.values());
 		parser.parse(Screen.GRAY);
 		
-		return (StatusKapchaTemplate) parser.getNameTemplate();
+		return (StatusKapchaTemplate) parser.getNameTemplateBySubImage();
 	}
-	
+
 }

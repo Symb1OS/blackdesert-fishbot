@@ -47,7 +47,7 @@ public class StatusKapchaStateTest {
     @Test
     public void testFailure() {
 
-        Mockito.when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.FAILURE);
+        Mockito.when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.FAILED);
 
         statusKapchaState.onStep();
 

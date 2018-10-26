@@ -29,7 +29,7 @@ public class WaitFish implements Command{
 		return "";
 	}
 
-	public String getRegionKey(Rectangle region) throws AWTException {
+	private String getRegionKey(Rectangle region) throws AWTException {
 
 		screen = new Screen(region);
 		imageParser = new ImageParser(screen, Chars.values());

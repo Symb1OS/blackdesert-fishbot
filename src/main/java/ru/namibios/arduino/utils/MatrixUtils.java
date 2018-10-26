@@ -5,6 +5,7 @@ import ru.namibios.arduino.model.template.StatusKapchaTemplate;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class MatrixUtils {
 
@@ -68,7 +69,23 @@ public class MatrixUtils {
 		
 		return mas;
 	}
-	
+
+	public static void export(int[][] sub) {
+        try(FileWriter writer = new FileWriter("resources/templates/statuskapcha/tmp/" + UUID.randomUUID(), false)){
+
+            for (int row = 0; row < sub.length; row++) {
+                for (int column = 0; column < sub[0].length; column++) {
+                    writer.write(String.valueOf(sub[row][column]));
+                }
+                writer.write(System.lineSeparator());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 	public static void export(String path, StatusKapchaTemplate[] statusCutTemplates) throws IOException {
 		
 		for (StatusKapchaTemplate template : StatusKapchaTemplate.values()) {
@@ -88,3 +105,4 @@ public class MatrixUtils {
 	}
 
 }
+
