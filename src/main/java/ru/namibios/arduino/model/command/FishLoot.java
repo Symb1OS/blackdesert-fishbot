@@ -48,8 +48,21 @@ public class FishLoot implements Command{
 		for (Screen screen : scrins) {
 			imageParser = new ImageParser(screen, Loot.values());
 			imageParser.parse(Screen.GRAY);
-			loots+= imageParser.getKey();
+
+			String key = imageParser.getKey();
+			if (key.equals("-1,")) {
+				double coefWhite = imageParser.getCoefWhite();
+				LOG.debug("Loot cell is not defined");
+				if (coefWhite == 0) {
+					LOG.debug("CoefWhite = " + coefWhite + ". Replaced on empty cell");
+					key = Loot.EMPTY.ordinal() + ",";
+				}
+			}
+
+			loots+= key;
+
 		}
+
 		LOG.debug("Loot indexes: " + loots);
 		return loots.split(",");
 	}

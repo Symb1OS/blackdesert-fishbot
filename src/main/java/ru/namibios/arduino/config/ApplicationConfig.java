@@ -181,7 +181,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_AFTER_STATUS_KAPCHA();
 
 	@Key("bot.delay.filterloot.before")
-	@DefaultValue("5000")
+	@DefaultValue("4000")
 	int DELAY_BEFORE_FILTER_LOOT();
 	
 	@Key("bot.delay.filterloot.after")

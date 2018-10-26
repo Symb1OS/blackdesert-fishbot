@@ -54,7 +54,7 @@ public class ImageParserTest {
 	@Test
 	public void testSubImageFailed() throws IOException {
 
-		File[] files = new File("resources/test/statuscaptcha/failed").listFiles();
+		File[] files = new File("resources/test/statuscaptcha/failded").listFiles();
 		for (File file : files) {
 
 			Screen screen = new Screen(file.getAbsolutePath());

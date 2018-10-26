@@ -26,6 +26,14 @@ public class FishLootTest {
 	// --------------------TAKE ALL--------------------//
 
 	@Test
+	public void testOkEmpty() throws IOException{
+		FishLoot fishLoot = new FishLoot("resources/loot/ok/scala/scala.jpg", "resources/loot/ok/empty/empty.jpg");
+		String key = fishLoot.getKey();
+
+		assertEquals(ShortCommand.TAKE.getKey(), key);
+	}
+
+	@Test
 	public void testOkOk() throws IOException{
 		FishLoot fishLoot = new FishLoot("resources/loot/ok/scala/scala.jpg", "resources/loot/ok/event/1.jpg");
 		String key = fishLoot.getKey();
