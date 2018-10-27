@@ -10,6 +10,7 @@ import ru.namibios.arduino.gui.controller.SaveController;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class SettingsView extends JDialog {
 
@@ -102,6 +103,9 @@ public class SettingsView extends JDialog {
         initPm();
         initNotification();
         initDelay();
+
+        Image im = new ImageIcon(UI.IMG_SETTINGS).getImage();
+        setIconImage(im);
 
     }
 
