@@ -62,6 +62,11 @@ public class RootView extends JFrame {
 
         JMenu help = new JMenu(UIManager.getString("rootview.menu.help"));
 
+        JMenuItem wiki = new JMenuItem(UIManager.getString("rootview.menu.help.wiki"));
+        wiki.setIcon(new ImageIcon(UI.IMG_WIKI));
+        wiki.addActionListener((e) -> ExecUtils.openUri(Message.URI_WIKI));
+        help.add(wiki);
+
         JMenuItem feedback = new JMenuItem(UIManager.getString("rootview.menu.help.feedback"));
         feedback.setIcon(new ImageIcon(UI.IMG_FEEDBACK));
         feedback.addActionListener((e) -> ExecUtils.openUri(Message.URI_REPORT_PROBLEM));
