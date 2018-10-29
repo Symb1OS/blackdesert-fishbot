@@ -1,15 +1,14 @@
 # Black Desert Online fishbot
  
- Бот работает на RU, EU серверах. 
+ Bot working on EU and RU servers.
  
- Основные функции:
-- авто ловля рыбы;
-- авто смена удочек;
-- автоюз слотов;
-- фильтрация лута;
-- оповещения в телеграмм;
-- реакция на сообщение в ПМ;
-- автоюз пива, миниигры.
+ Features:
+ 
+- auto fishing;
+- changing fishing rods;
+- using hot keys;
+- loot filtering;
+- telegram notifications.
 
 
 ### Navigation
@@ -26,48 +25,46 @@
 
 ### Requirements
 
-- Разрешение экрана 1920x1080 (полноэкранный режим или в окне без рамки. При необходимости можно добавить поддержку других разрешений)
-- [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) (с поддежкой эмуляции клавиатуры и мыши).
-
-
+- Screen resolution 1920x1080 (full screen or in window without frame)
+- [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) (with support emulation keyboard and mouse)
 - [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Arduino IDE](https://www.arduino.cc/en/main/software)
-- [Python 3.5](https://www.python.org/downloads/release/python-360/)
+- [Python 3.5](https://www.python.org/downloads/release/python-350/)
 - [Pytorch](https://pytorch.org/)
 
 ### Presets
 
-- Скачиваем и устанавливаем [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+- Download and install [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 
-- Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
+- Download last version [bot](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
 
 ### Building
-- Распаковываем архив, переходим в папку с ботом.
+- Unzip archive, move to bot folder.
 ![build](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/build.png)
 
-- Запускам `build.bat`, ждем окончания сборки.
+- run `build.bat`.
 
 
 ### Installing
 
-Переходим в директорию `target/blackdesert-fishbot`
+Change dir to `target/blackdesert-fishbot`
 ![install](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/install.png)
 
-Запускаем `install.bat`, устанавливаем все необходимые зависимости для корректной работы.
+Run `install.bat`, installing all necessary dependencies for correct operation.
 
 
 ### Running
-Запускаем `run.bat`
+Run `run.bat`
 
 
 ### Tests
-Запускаем `test.bat`
+Run `test.bat`
 
 
 ### Wiki
-[Для дальнейшей настройки воспользуетесь документацией](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
+[Wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
 
 
 ### Donation
-[Поддержать](https://money.yandex.ru/to/410014569437812)
+[Donation](https://money.yandex.ru/to/410014569437812)
