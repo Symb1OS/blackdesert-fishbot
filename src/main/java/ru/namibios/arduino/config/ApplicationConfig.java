@@ -252,7 +252,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle FULL_SCREEN();
 
 	@Key("bot.screen.space")
-//	@DefaultValue("928, 194, 63, 25")
 	@DefaultValue("928, 210, 63, 25")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle SPACE();

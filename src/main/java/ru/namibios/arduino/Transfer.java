@@ -46,7 +46,7 @@ public class Transfer extends Thread{
 		
 		LOG.info("Port is open...");
 		
-		while (fishBot.isRunned()) fishBot.getState().start();
+		while (fishBot.isRunned()) fishBot.getState().process();
 		
 		fishBot.getCommandSender().closePort();
 		

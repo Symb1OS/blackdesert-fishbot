@@ -37,7 +37,7 @@ public abstract class State {
 		}
 	}
 
-	public void start(){
+	public void process(){
 		DelayUtils.delay(beforeStart);
 		onStep();
 		DelayUtils.delay(afterStart);

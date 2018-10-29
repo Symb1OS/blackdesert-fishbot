@@ -131,7 +131,7 @@ public class Noise {
 		
 		private List<BufferedImage> noises;
 		
-		public Noise(BufferedImage image) {
+		Noise(BufferedImage image) {
 			this.image = image;
 			this.height = this.image.getHeight();
 			this.width = this.image.getWidth();
@@ -139,11 +139,11 @@ public class Noise {
 			
 		}
 		
-		public void addNois(BufferedImage image){
+		void addNois(BufferedImage image){
 			this.noises.add(image);
 		}
 		
-		public BufferedImage clear(){
+		BufferedImage clear(){
 			
 			for (BufferedImage bufferedImage : noises) {
 				for (int i = 0; i < height; i++) {
