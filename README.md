@@ -54,12 +54,11 @@ Change dir to `target/blackdesert-fishbot`
 Run `install.bat`, installing all necessary dependencies for correct operation.
 
 
-### Running
-Run `run.bat`
-
-
 ### Tests
-Run `test.bat`
+On root folder run `test.bat`
+
+### Running
+On `target/blackdesert-fishbot` run `run.bat`
 
 
 ### Wiki
