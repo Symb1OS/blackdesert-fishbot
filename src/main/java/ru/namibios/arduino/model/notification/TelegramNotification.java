@@ -1,4 +1,4 @@
-package ru.namibios.arduino.notification;
+package ru.namibios.arduino.model.notification;
 
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.utils.Http;

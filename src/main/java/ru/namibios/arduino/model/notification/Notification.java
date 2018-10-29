@@ -1,4 +1,4 @@
-package ru.namibios.arduino.notification;
+package ru.namibios.arduino.model.notification;
 
 public abstract class Notification {
 	

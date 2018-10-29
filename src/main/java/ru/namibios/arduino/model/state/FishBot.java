@@ -3,11 +3,11 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Slot;
+import ru.namibios.arduino.model.notification.Notification;
+import ru.namibios.arduino.model.notification.TelegramNotification;
 import ru.namibios.arduino.model.state.service.CommandSender;
 import ru.namibios.arduino.model.state.service.RodService;
 import ru.namibios.arduino.model.state.service.SlotService;
-import ru.namibios.arduino.notification.Notification;
-import ru.namibios.arduino.notification.TelegramNotification;
 
 import java.util.Arrays;
 import java.util.List;

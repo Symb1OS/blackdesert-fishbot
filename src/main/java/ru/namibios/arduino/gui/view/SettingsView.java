@@ -4,6 +4,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.gui.CustomVerifier;
 import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.CancelController;
 import ru.namibios.arduino.gui.controller.SaveController;
@@ -11,10 +12,16 @@ import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.charset.StandardCharsets;
 
 public class SettingsView extends JDialog {
 
     private static final Logger LOG = Logger.getLogger(SettingsView.class);
+
+    private static final String REGEX_DELAY_OR_PERIOD = "[0-9]+[m|s]{0,1}";
+    private static final String REGEX_DELAY = "[0-9]+";
+    private static final String REGEX_SLOT = "[a-z0-9-=]{1}";
+    private static final String REGEX_ROD_COUNT = "[0-8]{1}";
 
     private JPanel contentPane;
     private JButton buttonSave;
@@ -75,13 +82,18 @@ public class SettingsView extends JDialog {
     private JRadioButton rbNothing;
     private JPanel pmContent;
 
+    private CustomVerifier slotKeyVerifier;
+    private CustomVerifier delayPeriodVerifier;
+    private CustomVerifier delayVerifier;
+    private CustomVerifier rodCountVerifier;
+
 
     private void init(){
 
         SerialPort[] portNames = SerialPort.getCommPorts();
         for(int i = 0; i < portNames.length; i++){
             try{
-                cbPort.addItem(new String(portNames[i].getDescriptivePortName().getBytes("ISO-8859-1"), "Cp1251"));
+                cbPort.addItem(new String(portNames[i].getDescriptivePortName().getBytes(StandardCharsets.ISO_8859_1), "Cp1251"));
 
             }catch (Exception e) {
                 LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
@@ -95,6 +107,11 @@ public class SettingsView extends JDialog {
                 cbPort.setSelectedItem(cbPort.getItemAt(index));
             }
         }
+
+        slotKeyVerifier = new CustomVerifier(UIManager.getString("err.format.slotkey"), REGEX_SLOT);
+        delayPeriodVerifier = new CustomVerifier(UIManager.getString("err.format.slotdelayperiod"), REGEX_DELAY_OR_PERIOD);
+        delayVerifier = new CustomVerifier(UIManager.getString("err.format.delay"), REGEX_DELAY);
+        rodCountVerifier = new CustomVerifier(UIManager.getString("err.format.rodcount"), REGEX_ROD_COUNT);
 
         initLootFilter();
         initTask();
@@ -121,8 +138,12 @@ public class SettingsView extends JDialog {
     }
 
     private void initRod() {
+
         tfRodChange.setText(String.valueOf(Application.getInstance().TIME_CHANGE_ROD()));
+        tfRodChange.setInputVerifier(delayVerifier);
+
         tfRodCount.setText(String.valueOf(Application.getInstance().COUNT_ROD()));
+        tfRodCount.setInputVerifier(rodCountVerifier);
     }
 
     private void initNotification() {
@@ -131,20 +152,36 @@ public class SettingsView extends JDialog {
     }
 
     private void initDelay() {
+
         tfBeforeStart.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_START()));
+        tfBeforeStart.setInputVerifier(delayVerifier);
+
         tfAfterStart.setText(String.valueOf(Application.getInstance().DELAY_AFTER_START()));
+        tfAfterStart.setInputVerifier(delayVerifier);
 
         tfBeforeWait.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_WAIT_FISH()));
+        tfBeforeWait.setInputVerifier(delayVerifier);
+
         tfAfterWait.setText(String.valueOf(Application.getInstance().DELAY_AFTER_WAIT_FISH()));
+        tfAfterWait.setInputVerifier(delayVerifier);
 
         tfBeforeChangeRod.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_CHANGE_ROD()));
+        tfBeforeChangeRod.setInputVerifier(delayVerifier);
+
         tfAfterChangeRod.setText(String.valueOf(Application.getInstance().DELAY_AFTER_CHANGE_ROD()));
+        tfAfterChangeRod.setInputVerifier(delayVerifier);
 
         tfBeforeCaptcha.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_KAPCHA()));
+        tfBeforeCaptcha.setInputVerifier(delayVerifier);
+
         tfAfterCaptcha.setText(String.valueOf(Application.getInstance().DELAY_AFTER_KAPCHA()));
+        tfAfterCaptcha.setInputVerifier(delayVerifier);
 
         tfBeforeFilterLoot.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_FILTER_LOOT()));
+        tfBeforeFilterLoot.setInputVerifier(delayVerifier);
+
         tfAfterFilterLoot.setText(String.valueOf(Application.getInstance().DELAY_AFTER_FILTER_LOOT()));
+        tfAfterFilterLoot.setInputVerifier(delayVerifier);
 
     }
 
@@ -163,6 +200,18 @@ public class SettingsView extends JDialog {
         tfThirdSlotKey.setText(Application.getInstance().SLOT_THREE().getKey());
         tfThirdSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_THREE().getDelay()));
         tfThirdSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_THREE().getPeriod()));
+
+        tfFirstSlotKey.setInputVerifier(slotKeyVerifier);
+        tfFirstSlotDelay.setInputVerifier(delayPeriodVerifier);
+        tfFirstSlotPeriod.setInputVerifier(delayPeriodVerifier);
+
+        tfSecondSlotKey.setInputVerifier(slotKeyVerifier);
+        tfSecondSlotDelay.setInputVerifier(delayPeriodVerifier);
+        tfSecondSlotPeriod.setInputVerifier(delayPeriodVerifier);
+
+        tfThirdSlotKey.setInputVerifier(slotKeyVerifier);
+        tfThirdSlotDelay.setInputVerifier(delayPeriodVerifier);
+        tfThirdSlotPeriod.setInputVerifier(delayPeriodVerifier);
 
     }
 
@@ -357,6 +406,9 @@ public class SettingsView extends JDialog {
     }
 
     public static void main(String[] args) {
+
+        UIManager.getDefaults().addResourceBundle("locale");
+
         SettingsView dialog = new SettingsView();
         dialog.pack();
         dialog.setVisible(true);

@@ -26,7 +26,7 @@ public class WaitFish implements Command{
 			e.printStackTrace();
 		}
 
-		return "";
+		return ShortCommand.IGNORE.getKey();
 	}
 
 	private String getRegionKey(Rectangle region) throws AWTException {
