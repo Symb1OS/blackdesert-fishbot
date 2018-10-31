@@ -25,7 +25,7 @@ public class WarmUpJvmState extends State {
 
         try {
 
-            LOG.debug("Start warm up");
+            LOG.info("Start warm up..");
 
             File[] files = new File(Path.TEST_RESOURCES + "parsing/captcha").listFiles();
 
