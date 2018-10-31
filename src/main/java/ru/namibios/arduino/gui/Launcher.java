@@ -22,9 +22,12 @@ public class Launcher {
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
-		
+
+		LOG.info("Start program..");
+
 		Locale currentLocale = Locale.getDefault();
-		
+		LOG.debug("Locale: " + currentLocale);
+
 		if(!LOCALES.contains(currentLocale.toString())) {
 			Locale.setDefault(new Locale("en", "US"));
 		}
@@ -42,7 +45,7 @@ public class Launcher {
 
 		try {
 
-			SwingUtilities.invokeLater( () -> new RootView() );
+			SwingUtilities.invokeLater(RootView::new);
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

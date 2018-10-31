@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.state.service;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Touch;
 
@@ -8,7 +9,9 @@ import java.util.List;
 
 public class RodService {
 
-    public static final int MAX_RODS = 8;
+    private static final Logger LOG = Logger.getLogger(RodService.class);
+
+    private static final int MAX_RODS = 8;
 
     private List<Touch> rots;
 
@@ -16,6 +19,7 @@ public class RodService {
 
     public RodService(int count) {
 
+        LOG.debug("Fishing rods count: " + count);
         if(count > MAX_RODS){
             throw new IllegalArgumentException("Rod count " + count + ". Max rod count = 8");
         }

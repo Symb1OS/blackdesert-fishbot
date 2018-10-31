@@ -1,22 +1,27 @@
 package ru.namibios.arduino.utils;
 
+import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Path;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
-
-import ru.namibios.arduino.config.Path;
+import java.util.Arrays;
 
 public class PythonExec {
+
+	private static final Logger LOG = Logger.getLogger(PythonExec.class);
 
 	private PythonExec() {}
 	
 	private static String[] getParams(String filename, String os) {
 		String[] cmd = new String[3];
 		
-		File file = null;
+		File file;
 		if (os.indexOf("win") >= 0) {
+
 			file = new File(Path.SCRIPT_PATH_WIN);
 			String absolute = file.getAbsolutePath();
 			
@@ -39,11 +44,14 @@ public class PythonExec {
 	
 	public static String exec(String fileKapcha) throws IOException {
 		
-		String[] cmd = new String[3];
+		String[] cmd;
 		
 		String os = System.getProperty("os.name").toLowerCase();
+		LOG.debug("os: " + os);
+
 		cmd = getParams(fileKapcha, os);
-		
+		LOG.debug("cmd: " + Arrays.toString(cmd));
+
 		Runtime rt = Runtime.getRuntime();
 		Process pr = rt.exec(cmd);
 
@@ -57,9 +65,9 @@ public class PythonExec {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		System.out.println(exec("D:/work/test/blackdesert-fishbot_0.1.9/resources/model/13.jpg"));
-		System.out.println(exec("/home/symbios/git/blackdesert-fishbot/resources/model/13.jpg"));
-		
+//		System.out.println(exec("D:/work/test/blackdesert-fishbot_0.1.9/resources/model/13.jpg"));
+		System.out.println(exec("/home/symbios/work/java-idea/github/blackdesert-fishbot/resources/model/13.jpg"));
+
 	}
 	
 }

@@ -31,7 +31,7 @@ public class PersonalMessageState extends State {
 
 			if(pm.isDetected() && !fishBot.isPmDetected()) {
 
-				LOG.info("Received a private message.");
+				LOG.info("Chat activity detected.");
 				fishBot.notifyUser(Message.RECEIVED_PRIVATE_MESSAGE);
 
 				if (Application.getInstance().PM_AUTOFISH()) {

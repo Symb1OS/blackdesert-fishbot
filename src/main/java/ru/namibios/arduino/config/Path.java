@@ -13,5 +13,6 @@ public class Path {
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String STATUS_CUT = TEMPLATES + "statuscut/";
 	public static final String STATUS_KAPCHA = TEMPLATES + "statuskapcha/";
-	
+
+	public static final String TEST_RESOURCES = "src/test/resources/";
 }
