@@ -2,6 +2,7 @@ package ru.namibios.arduino.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.template.Loot;
 import ru.namibios.arduino.model.template.MatrixTemplate;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
@@ -14,7 +15,7 @@ public class ImageParserTest {
 	@Test
 	public void testGetNumber() throws IOException {
 		
-		Screen screen = new Screen("resources/loot/ok/key/key.jpg");
+		Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/loot/ok/key/key.jpg");
 		ImageParser parser = new ImageParser(screen, Loot.values());
 		
 		parser.parse(Screen.GRAY);
@@ -26,7 +27,7 @@ public class ImageParserTest {
 	@Test
 	public void testGetKey() throws IOException {
 		
-		Screen screen = new Screen("resources/loot/ok/key/key.jpg");
+		Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/loot/ok/key/key.jpg");
 		ImageParser parser = new ImageParser(screen, Loot.values());
 		
 		parser.parse(Screen.GRAY);
@@ -37,7 +38,7 @@ public class ImageParserTest {
 	@Test
 	public void testSubImageSuccess() throws IOException {
 
-		File[] files = new File("resources/test/statuscaptcha/success").listFiles();
+		File[] files = new File(Path.TEST_RESOURCES + "parsing/statuscaptcha/success").listFiles();
 		for (File file : files) {
 
 			Screen screen = new Screen(file.getAbsolutePath());
@@ -54,7 +55,7 @@ public class ImageParserTest {
 	@Test
 	public void testSubImageFailed() throws IOException {
 
-		File[] files = new File("resources/test/statuscaptcha/failded").listFiles();
+		File[] files = new File(Path.TEST_RESOURCES + "parsing/statuscaptcha/failded").listFiles();
 		for (File file : files) {
 
 			Screen screen = new Screen(file.getAbsolutePath());

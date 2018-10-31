@@ -1,20 +1,24 @@
 package ru.namibios.arduino.utils;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 public class PythonExecTest {
 
 	@Test
 	public void parseCaptcha() throws IOException {
 		
-		File file = new File("resources/model/13.jpg");
-		String absolute = file.getAbsolutePath();
-		
-		Assert.assertEquals("1111044444", PythonExec.exec(absolute));
+		File[] files = new File("src/test/resources/parsing/captcha/").listFiles();
+		for (File file : files) {
+
+			String absolute = file.getAbsolutePath();
+            String expected = file.getName().substring(0, file.getName().indexOf('.'));
+            Assert.assertEquals(expected, PythonExec.exec(absolute));
+
+		}
 	}
 	
 }
