@@ -212,7 +212,7 @@
                             <goal>wget</goal>
                         </goals>
                         <configuration>
-                            <url>https://www.python.org/ftp/python/3.5.4/python-3.5.4.exe</url>
+                            <url>https://www.python.org/ftp/python/3.5.0/python-3.5.0-amd64.exe</url>
                             <outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft
                             </outputDirectory>
                         </configuration>
