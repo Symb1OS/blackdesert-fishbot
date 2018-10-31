@@ -1,5 +1,9 @@
 package ru.namibios.arduino.model.template;
 
+import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.utils.MatrixUtils;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -7,10 +11,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import ru.namibios.arduino.config.Path;
-import ru.namibios.arduino.model.status.StatusCut;
-import ru.namibios.arduino.utils.MatrixUtils;
 
 public enum StatusCutTemplate implements MatrixTemplate{
 	
@@ -21,6 +21,8 @@ public enum StatusCutTemplate implements MatrixTemplate{
 	BAD("BAD_RU", "BAD_EN");
 
 	private final List<int[][]> templates;
+
+	private final Logger LOG = Logger.getLogger(StatusCutTemplate.class);
 	
 	@Override
 	public List<int[][]> getTemplates() {
@@ -35,6 +37,11 @@ public enum StatusCutTemplate implements MatrixTemplate{
             for (String filename : filenames) {
                 List<String> list = Files.lines(Paths.get(Path.STATUS_CUT, filename), StandardCharsets.UTF_8)
                         .collect(Collectors.toCollection(ArrayList::new));
+
+				if(list.isEmpty()){
+					LOG.error("Empty template, please check " + filename);
+					System.exit(1);
+				}
 
                 templates.add(MatrixUtils.importTemplate(list));
             }

@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.template;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.utils.MatrixUtils;
 
 import java.io.File;
@@ -16,6 +17,8 @@ public enum Chars implements MatrixTemplate{
 	space("resources/templates/space");
 	
 	private final List<int[][]> templates;
+
+	private final Logger LOG = Logger.getLogger(Chars.class);
 	
 	public List<int[][]> getTemplates() {
 		return templates;
@@ -27,13 +30,18 @@ public enum Chars implements MatrixTemplate{
 		try {
 
 			File[] filenames = new File(fileFolderName).listFiles();
+			if (filenames != null && filenames.length == 0) {
+				LOG.error("Folder is empty: " + fileFolderName);
+				System.exit(1);
+			}
 
 			for (File filename : filenames) {
 				List<String> list = Files.lines(Paths.get(filename.getPath()), StandardCharsets.UTF_8)
 						.collect(Collectors.toCollection(ArrayList::new));
 
 				if(list.isEmpty()){
-					throw new IOException("Empty template, please check " + filename);
+					LOG.error("Empty template, please check " + filename);
+					System.exit(1);
 				}
 
 				templates.add(MatrixUtils.importTemplate(list));

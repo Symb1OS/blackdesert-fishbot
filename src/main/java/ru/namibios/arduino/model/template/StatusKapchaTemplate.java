@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.template;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.utils.MatrixUtils;
 
@@ -18,6 +19,8 @@ public enum StatusKapchaTemplate implements MatrixTemplate{
 	FAILED("FAILED_EU");
 	
 	private final List<int[][]> templates;
+
+	private final Logger LOG = Logger.getLogger(StatusKapchaTemplate.class);
 	
 	@Override
 	public List<int[][]> getTemplates() {
@@ -32,6 +35,11 @@ public enum StatusKapchaTemplate implements MatrixTemplate{
 			for (String filename : filenames) {
 				List<String> list = Files.lines(Paths.get(Path.STATUS_KAPCHA, filename), StandardCharsets.UTF_8)
 						.collect(Collectors.toCollection(ArrayList::new));
+
+				if(list.isEmpty()){
+					LOG.error("Empty template, please check " + filename);
+					System.exit(1);
+				}
 
 				templates.add(MatrixUtils.importTemplate(list));
 			}
