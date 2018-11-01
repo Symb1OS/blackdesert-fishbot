@@ -27,7 +27,7 @@ public abstract class State {
 		this.afterStart = afterStart;
 	}
 
-	private static final int OVERFLOW = 300;
+	private static final int OVERFLOW = 50;
 	private int step = 0;
 
 	protected void ifBreak() {

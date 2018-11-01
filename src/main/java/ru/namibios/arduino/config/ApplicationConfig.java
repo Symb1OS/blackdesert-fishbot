@@ -165,7 +165,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_STATUS_CUT();
 	
 	@Key("bot.delay.statuscut.after")
-	@DefaultValue("1500")
+	@DefaultValue("1000")
 	int DELAY_AFTER_STATUS_CUT();
 
 	@Key("bot.delay.kapcha.before")
