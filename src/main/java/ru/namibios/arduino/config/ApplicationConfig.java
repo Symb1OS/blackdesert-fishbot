@@ -210,17 +210,17 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.slot.one")
-	@DefaultValue("true, 0, 0s, 91m")
+	@DefaultValue("false, 0, 0s, 91m")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_ONE();
 
 	@Key("bot.slot.two")
-	@DefaultValue("true, 9, 31m, 111m")
+	@DefaultValue("false, 9, 31m, 111m")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_TWO();
 
 	@Key("bot.slot.three")
-	@DefaultValue("true, 8, 62m, 91m")
+	@DefaultValue("false, 8, 62m, 91m")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_THREE();
 

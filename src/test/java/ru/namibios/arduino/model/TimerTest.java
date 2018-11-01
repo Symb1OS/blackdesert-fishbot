@@ -9,21 +9,21 @@ public class TimerTest {
     @Test
     public void testHasDelayAndPeriod() throws InterruptedException {
 
-        Timer timer = new Timer(50, 100);
+        Timer timer = new Timer(1000, 2000);
 
         assertEquals(false, timer.hasReady());
 
-        Thread.sleep(51);
+        Thread.sleep(1001);
 
         assertEquals(true, timer.hasReady());
 
         timer.resetTimeLastRun();
 
-        Thread.sleep(90);
+        Thread.sleep(1500);
 
         assertEquals(false, timer.hasReady());
 
-        Thread.sleep(11);
+        Thread.sleep(1000);
 
         assertEquals(true, timer.hasReady());
     }
@@ -49,12 +49,12 @@ public class TimerTest {
     public void testDefaultTimer() throws InterruptedException {
 
         Timer timer = new Timer();
-        long period = 15;
+        long period = 500;
 
-        Thread.sleep(10);
+        Thread.sleep(300);
         assertEquals(false, timer.isOver(period));
 
-        Thread.sleep(10);
+        Thread.sleep(400);
         assertEquals(true, timer.isOver(period));
 
     }
