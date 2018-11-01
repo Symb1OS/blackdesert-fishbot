@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.namibios.arduino</groupId>
     <artifactId>blackdesert-fishbot</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -205,18 +205,6 @@
                 <artifactId>download-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <executions>
-                    <execution>
-                        <id>install-python</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>https://www.python.org/ftp/python/3.5.0/python-3.5.0-amd64.exe</url>
-                            <outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft
-                            </outputDirectory>
-                        </configuration>
-                    </execution>
 
                     <execution>
                         <id>install-arduino</id>

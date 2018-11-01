@@ -1,11 +1,14 @@
 package ru.namibios.arduino.utils;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 
+// Парсинг капчи перенесен с отдельный сервис
+@Ignore
 public class PythonExecTest {
 
 	@Test

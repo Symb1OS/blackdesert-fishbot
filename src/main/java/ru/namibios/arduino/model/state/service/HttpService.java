@@ -1,7 +1,8 @@
-package ru.namibios.arduino.utils;
+package ru.namibios.arduino.model.state.service;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -12,28 +13,32 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import ru.namibios.arduino.model.Screen;
+import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.model.command.ShortCommand;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-public class Http {
+public class HttpService {
+
+	private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
-	private static final String TELEGRAM_ALARMER_BOT_URL = "https://alarmerbot.ru";
-	private static final String BYTE_KAPCHA_URL = "http://%s/fishingserver/captcha/byte";
+	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
+	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/byte";
 
 	private HttpClient httpClient;
 	
 	private HttpResponse response;
 
-	public Http() {
+	public HttpService() {
 		httpClient = HttpClients.createDefault();
 	}
 	
 	public String sendTelegram(String key, String message) throws ClientProtocolException, IOException{
 		
-		HttpPost post = Builder.config().setUrl(TELEGRAM_ALARMER_BOT_URL)
+		HttpPost post = Builder.config().setUrl(TELEGRAM_ALARMER_URL)
 				.setParameter(new BasicNameValuePair("key", key))
 				.setParameter(new BasicNameValuePair("message", message))
 				.build();
@@ -43,9 +48,9 @@ public class Http {
 		return EntityUtils.toString(entity, "UTF-8").trim();
 	}
 
-	public String parseByteKapcha(String key, byte[] captcha) throws IOException{
+	public String parseByteCaptcha(String key, byte[] captcha) throws IOException{
 
-		HttpPost post = new HttpPost(String.format(BYTE_KAPCHA_URL, "192.168.0.220:8080"));
+		HttpPost post = new HttpPost(String.format(BYTE_CAPTCHA_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
 		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -56,9 +61,19 @@ public class Http {
 		post.setEntity(entity);
 
 		response = httpClient.execute(post);
-		entity = response.getEntity();
 
-		return EntityUtils.toString(entity, "UTF-8").trim();
+		int statusCode = response.getStatusLine().getStatusCode();
+		if (statusCode == HttpStatus.SC_OK) {
+
+			LOG.debug("Status code: " + statusCode );
+			entity = response.getEntity();
+			return EntityUtils.toString(entity, "UTF-8").trim();
+		} else {
+
+			LOG.error("Status code: " + statusCode );
+			return ShortCommand.IGNORE.getKey();
+		}
+
 	}
 	
 	private static class Builder {
@@ -90,14 +105,4 @@ public class Http {
 		} 
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		Screen screen = new Screen("resources/kapcha/20181020_195950_313.jpg");
-
-		Http http = new Http();
-
-		String key = http.parseByteKapcha(System.getProperty("user.name"), ImageUtils.imageToBytes(screen.getScreenShot()));
-		System.out.println("key = " + key);
-
-	}
 }
