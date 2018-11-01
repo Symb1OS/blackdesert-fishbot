@@ -58,7 +58,7 @@ public class FishBot {
 		this.isRunned = true;
 		this.isPmDetected = false;
 
-		this.state = new WarmUpJvmState(this);
+		this.state = new UseSlotState(this);
 	}
 	
 	void restart(){

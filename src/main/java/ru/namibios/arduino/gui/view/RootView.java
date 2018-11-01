@@ -184,4 +184,5 @@ public class RootView extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
