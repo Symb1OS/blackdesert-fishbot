@@ -17,7 +17,7 @@ import java.awt.*;
 public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.http")
-	@DefaultValue("127.0.0.1:9090")
+	@DefaultValue("23.95.61.97:9090")
 	String URL_CAPTCHA_SERVICE();
 
 	@Key("bot.port")
