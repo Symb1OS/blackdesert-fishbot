@@ -58,7 +58,7 @@ public class StatusCaptchaStateTest {
     @Test
     public void testOverflow() {
 
-        int overflow = 60;
+        int overflow = 51;
 
         when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 
