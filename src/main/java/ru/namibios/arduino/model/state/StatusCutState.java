@@ -50,7 +50,7 @@ public class StatusCutState extends State{
 					}
 					case GOOD: {
 						LOG.info("GOOD. Go parse captcha");
-						fishBot.setState(new KapchaState(fishBot));
+						fishBot.setState(new CaptchaState(fishBot));
 						break;
 					}
 					case BAD: {
@@ -66,7 +66,7 @@ public class StatusCutState extends State{
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
 			
-			fishBot.setState(new KapchaState(fishBot));
+			fishBot.setState(new CaptchaState(fishBot));
 		}
 		
 	}

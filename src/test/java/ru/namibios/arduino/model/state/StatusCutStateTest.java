@@ -51,7 +51,7 @@ public class StatusCutStateTest {
 
         statusCutState.onStep();
 
-        verify(fishBot).setState(isA(KapchaState.class));
+        verify(fishBot).setState(isA(CaptchaState.class));
         verify(statusService).getTemplate(isA(Status.class));
 
     }
@@ -91,7 +91,7 @@ public class StatusCutStateTest {
 
         statusCutState.onStep();
 
-        verify(fishBot).setState(isA(KapchaState.class));
+        verify(fishBot).setState(isA(CaptchaState.class));
 
     }
 

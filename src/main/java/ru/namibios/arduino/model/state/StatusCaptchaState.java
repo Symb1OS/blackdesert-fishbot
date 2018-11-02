@@ -8,13 +8,13 @@ import ru.namibios.arduino.model.status.StatusKapcha;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
-public class StatusKapchaState extends State{
+public class StatusCaptchaState extends State{
 
-	private static final Logger LOG = Logger.getLogger(StatusKapchaState.class);
+	private static final Logger LOG = Logger.getLogger(StatusCaptchaState.class);
 
 	private StatusService<StatusKapchaTemplate> statusService;
 
-	StatusKapchaState(FishBot fishBot) {
+	StatusCaptchaState(FishBot fishBot) {
 
 		super(fishBot);
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA();

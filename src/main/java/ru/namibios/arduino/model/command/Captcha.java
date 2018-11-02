@@ -12,22 +12,22 @@ import ru.namibios.arduino.utils.PythonExec;
 import java.awt.*;
 import java.io.IOException;
 
-public class Kapcha implements Command{
+public class Captcha implements Command{
 
-	private final static Logger LOG = Logger.getLogger(Kapcha.class);
+	private final static Logger LOG = Logger.getLogger(Captcha.class);
 
 	private Screen screen;
 	private String key;
 	private String filename;
 	
-	public Kapcha() throws AWTException  {
+	public Captcha() throws AWTException  {
 		this.screen = new Screen(Application.getInstance().KAPCHA());
 		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
 		this.filename = screen.saveImage("kapcha");
 		this.key = "";
 	}
 	
-	public Kapcha(String file) throws IOException{
+	public Captcha(String file) throws IOException{
 		this.screen = new Screen(file);
 	}
 	

@@ -1,19 +1,11 @@
 package ru.namibios.arduino.utils.debug;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.GridLayout;
-import java.io.File;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import ru.namibios.arduino.model.command.Kapcha;
+import ru.namibios.arduino.model.command.Captcha;
 import ru.namibios.arduino.utils.DelayUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 public class DebugKapcha extends JFrame{
 	
@@ -41,7 +33,7 @@ public class DebugKapcha extends JFrame{
 	
 	public DebugKapcha() {
 		
-		super("Debug Kapcha");
+		super("Debug Captcha");
 	    
 	    setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	    setLocationRelativeTo(null);  
@@ -80,8 +72,8 @@ public class DebugKapcha extends JFrame{
 							System.out.println(file.getName());
 							kapchaimage.setIcon(new ImageIcon(file.toString()));
 							
-							Kapcha kapcha = new Kapcha(file.toString());
-							String key = kapcha.getKey();
+							Captcha captcha = new Captcha(file.toString());
+							String key = captcha.getKey();
 							kapchaParse.setText(key);	
 							
 							while(true){

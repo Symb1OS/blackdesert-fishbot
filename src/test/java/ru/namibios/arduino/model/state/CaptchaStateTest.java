@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.namibios.arduino.model.command.Kapcha;
+import ru.namibios.arduino.model.command.Captcha;
 import ru.namibios.arduino.model.state.service.CommandSender;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 
 @RunWith(MockitoJUnitRunner.class)
-public class KapchaStateTest {
+public class CaptchaStateTest {
 
     @Mock
     private CommandSender commandSender;
@@ -26,7 +26,7 @@ public class KapchaStateTest {
     private FishBot fishBot;
 
     @InjectMocks
-    private KapchaState kapchaState;
+    private CaptchaState captchaState;
 
     @Before
     public void setUp() throws Exception {
@@ -36,23 +36,23 @@ public class KapchaStateTest {
     @Test
     public void testSendToInput() throws IOException {
 
-        Mockito.when(commandSender.send(any(Kapcha.class))).thenReturn(true);
+        Mockito.when(commandSender.send(any(Captcha.class))).thenReturn(true);
 
-        kapchaState.onStep();
+        captchaState.onStep();
 
-        Mockito.verify(commandSender).send(isA(Kapcha.class));
-        Mockito.verify(fishBot).setState(isA(StatusKapchaState.class));
+        Mockito.verify(commandSender).send(isA(Captcha.class));
+        Mockito.verify(fishBot).setState(isA(StatusCaptchaState.class));
 
     }
 
     @Test
     public void testReturnToStart() throws IOException {
 
-        Mockito.when(commandSender.send(any(Kapcha.class))).thenReturn(false);
+        Mockito.when(commandSender.send(any(Captcha.class))).thenReturn(false);
 
-        kapchaState.onStep();
+        captchaState.onStep();
 
-        Mockito.verify(commandSender).send(isA(Kapcha.class));
+        Mockito.verify(commandSender).send(isA(Captcha.class));
         Mockito.verify(fishBot).setState(isA(StartFishState.class));
 
     }

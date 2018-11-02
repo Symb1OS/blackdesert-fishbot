@@ -15,7 +15,7 @@ import ru.namibios.arduino.model.template.StatusKapchaTemplate;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StatusKapchaStateTest {
+public class StatusCaptchaStateTest {
 
     @Mock
     private FishBot fishBot;
@@ -24,7 +24,7 @@ public class StatusKapchaStateTest {
     private StatusService statusService;
 
     @InjectMocks
-    private StatusKapchaState statusKapchaState;
+    private StatusCaptchaState statusCaptchaState;
 
     @Before
     public void setUp(){
@@ -37,7 +37,7 @@ public class StatusKapchaStateTest {
 
         Mockito.when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.SUCCESS);
 
-        statusKapchaState.onStep();
+        statusCaptchaState.onStep();
 
         Mockito.verify(statusService).getTemplate(isA(Status.class));
         Mockito.verify(fishBot).setState(isA(FilterLootState.class));
@@ -49,7 +49,7 @@ public class StatusKapchaStateTest {
 
         Mockito.when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.FAILED);
 
-        statusKapchaState.onStep();
+        statusCaptchaState.onStep();
 
         Mockito.verify(statusService).getTemplate(isA(Status.class));
         Mockito.verify(fishBot).setState(isA(StartFishState.class));
@@ -63,7 +63,7 @@ public class StatusKapchaStateTest {
         when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 
         for (int i = 0; i < overflow; i++) {
-            statusKapchaState.onStep();
+            statusCaptchaState.onStep();
         }
 
         verify(statusService, times(overflow)).getTemplate(isA(Status.class));
@@ -75,7 +75,7 @@ public class StatusKapchaStateTest {
 
         when(statusService.getTemplate(any(Status.class))).thenThrow(new NullPointerException("Test Exception"));
 
-        statusKapchaState.onStep();
+        statusCaptchaState.onStep();
 
         verify(fishBot).setState(isA(FilterLootState.class));
     }

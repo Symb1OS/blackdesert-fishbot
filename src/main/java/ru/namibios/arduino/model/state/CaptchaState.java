@@ -3,14 +3,14 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.model.command.Kapcha;
+import ru.namibios.arduino.model.command.Captcha;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
-public class KapchaState extends State {
+public class CaptchaState extends State {
 
-	private static final Logger LOG = Logger.getLogger(KapchaState.class);
+	private static final Logger LOG = Logger.getLogger(CaptchaState.class);
 
-	KapchaState(FishBot fishBot) {
+	CaptchaState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_KAPCHA();
@@ -24,9 +24,9 @@ public class KapchaState extends State {
 		
 		try{
 
-			if(commandSender.send(new Kapcha())){
+			if(commandSender.send(new Captcha())){
 				LOG.info("Captcha send to input. Go to check status...");
-				fishBot.setState(new StatusKapchaState(fishBot));
+				fishBot.setState(new StatusCaptchaState(fishBot));
 			}
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");
