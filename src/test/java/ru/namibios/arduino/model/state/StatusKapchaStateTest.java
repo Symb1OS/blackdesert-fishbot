@@ -73,7 +73,7 @@ public class StatusKapchaStateTest {
     @Test
     public void testThrowException(){
 
-        when(statusService.getTemplate(any(Status.class))).thenThrow(new NullPointerException());
+        when(statusService.getTemplate(any(Status.class))).thenThrow(new NullPointerException("Test Exception"));
 
         statusKapchaState.onStep();
 

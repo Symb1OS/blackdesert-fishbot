@@ -87,7 +87,7 @@ public class StatusCutStateTest {
     @Test
     public void testThrowException(){
 
-        when(statusService.getTemplate(any(Status.class))).thenThrow(new NullPointerException());
+        when(statusService.getTemplate(any(Status.class))).thenThrow(new NullPointerException("Test Exception"));
 
         statusCutState.onStep();
 
