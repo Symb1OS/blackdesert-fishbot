@@ -36,6 +36,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.rod.changetime")
 	@DefaultValue("180000")
 	int TIME_CHANGE_ROD();
+
+	@Key("bot.calendar.skip.time")
+	@DefaultValue("150000")
+	int TIME_CALENDAR_SKIP();
 	
 	@Key("bot.rod.x")
 	@DefaultValue("1484")

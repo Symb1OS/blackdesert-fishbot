@@ -139,12 +139,16 @@ void exitGame(){
   pressKey(0xB1);
 }
 
+void skipCalendar(){
+  pressKey(0xB1);
+  pressKey(0xB1);
+}
+
 void loop() {
 
   String input = Serial.readString();
   int length = input.length();
   if (length != 0) {
-//    Serial.println(input);
     if (input.startsWith("space")) {
       pressKey(0x20);
     } else if (input.startsWith("Rod")) {
@@ -159,6 +163,8 @@ void loop() {
       personalMessage(input);
     }else if (input.startsWith("Exit")) {
       exitGame();
+    }else if (input.startsWith("Skip_calendar")) {
+      skipCalendar();
     }else {
       for (int i = 0; i < length; i++) {
         delay(random(130, 210));

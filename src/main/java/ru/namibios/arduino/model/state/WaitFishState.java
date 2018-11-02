@@ -3,6 +3,7 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.model.command.WaitFish;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
@@ -24,11 +25,15 @@ public class WaitFishState extends State {
 		
 		try {
 
-			if (commandSender.send(new WaitFish())){
+			if (commandSender.send(new WaitFish())) {
 				LOG.info("Fish detected..");
 				fishBot.setState(new CutFishState(fishBot));
 
-			} else if (timer.isOver(Application.getInstance().TIME_CHANGE_ROD())){
+			} else if (timer.isOver(Application.getInstance().TIME_CALENDAR_SKIP())) {
+				LOG.info("Try skip calendar..");
+				commandSender.send(ShortCommand.SKIP_CALENDAR);
+
+			} else if (timer.isOver(Application.getInstance().TIME_CHANGE_ROD())) {
 				LOG.info("Waiting time for fish is out..");
 				fishBot.setState(new ChangeRodState(fishBot));
 			}
