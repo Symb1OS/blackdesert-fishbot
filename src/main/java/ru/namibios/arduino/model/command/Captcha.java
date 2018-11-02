@@ -19,11 +19,10 @@ public class Captcha implements Command{
 	private Screen screen;
 	private String key;
 	private String filename;
-	
+
 	public Captcha() throws AWTException  {
 		this.screen = new Screen(Application.getInstance().KAPCHA());
 		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
-		this.filename = screen.saveImage("kapcha");
 		this.key = "";
 	}
 	

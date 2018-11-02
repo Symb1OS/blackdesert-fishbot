@@ -26,7 +26,7 @@ public class HttpService {
 	private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
-	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/byte";
+	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
 
 	private HttpClient httpClient;
 	
