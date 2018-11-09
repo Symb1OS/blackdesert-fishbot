@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.state.service.sender;
 
+
 import ru.namibios.arduino.utils.DelayUtils;
 
 import java.awt.*;
@@ -24,28 +25,30 @@ public class RobotSender implements Sender{
 
     @Override
     public void sendInput(int input) {
-       pressKey(input);
+        pressKey(input);
     }
 
     @Override
     public void clickLeft(int x, int y) {
         moveMouse(x, y);
+        DelayUtils.delay(200);
         pressMouse(KeyEvent.BUTTON1_MASK);
     }
 
     @Override
     public void clickRight(int x, int y) {
         moveMouse(x, y);
-        pressMouse(KeyEvent.BUTTON2_MASK);
+        DelayUtils.delay(200);
+        pressMouse(KeyEvent.BUTTON3_MASK);
     }
 
-    public void moveMouse(int x, int y){
+    private void moveMouse(int x, int y){
         robot.mouseMove(x, y);
     }
 
     private void pressMouse(int button){
         robot.mousePress(button);
-        DelayUtils.delay(100);
+        DelayUtils.delay(120);
         robot.mouseRelease(button);
     }
 
