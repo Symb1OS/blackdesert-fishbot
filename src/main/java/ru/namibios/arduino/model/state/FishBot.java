@@ -6,8 +6,10 @@ import ru.namibios.arduino.model.Slot;
 import ru.namibios.arduino.model.notification.Notification;
 import ru.namibios.arduino.model.notification.TelegramNotification;
 import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.GameService;
 import ru.namibios.arduino.model.state.service.RodService;
 import ru.namibios.arduino.model.state.service.SlotService;
+import ru.namibios.arduino.model.state.service.sender.RobotSender;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +31,8 @@ public class FishBot {
 	private SlotService slotService;
 
 	private CommandSender commandSender;
+
+	private GameService gameService;
 
 	public FishBot() {
 
@@ -54,6 +58,7 @@ public class FishBot {
         this.rodService = new RodService(Application.getInstance().COUNT_ROD());
 
         this.commandSender = new CommandSender();
+        this.gameService = new GameService(new RobotSender());
 
 		this.isRunned = true;
 		this.isPmDetected = false;
@@ -76,7 +81,11 @@ public class FishBot {
 			
 	}
 
-    public void setRestart(boolean isRestart) {
+	public GameService getGameService() {
+		return gameService;
+	}
+
+	public void setRestart(boolean isRestart) {
 		this.isRestart = isRestart;
 	}
 	
