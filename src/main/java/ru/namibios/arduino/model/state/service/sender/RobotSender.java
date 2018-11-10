@@ -1,61 +1,40 @@
 package ru.namibios.arduino.model.state.service.sender;
 
-
 import ru.namibios.arduino.utils.DelayUtils;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
-public class RobotSender implements Sender{
+public class RobotSender extends AbstractSender {
 
-    private final Robot robot;
+    private Robot robot;
 
-    public RobotSender() throws AWTException {
-        robot = new Robot();
-    }
-
-    @Override
-    public void sendInput(String input) {
-        input = input.toUpperCase();
-
-        for (char key : input.toCharArray()) {
-            pressKey(key);
+    public RobotSender() {
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void sendInput(int input) {
-        pressKey(input);
-    }
-
-    @Override
-    public void clickLeft(int x, int y) {
-        moveMouse(x, y);
-        DelayUtils.delay(200);
-        pressMouse(KeyEvent.BUTTON1_MASK);
-    }
-
-    @Override
-    public void clickRight(int x, int y) {
-        moveMouse(x, y);
-        DelayUtils.delay(200);
-        pressMouse(KeyEvent.BUTTON3_MASK);
-    }
-
-    private void moveMouse(int x, int y){
+    public void moveMouse(int x, int y) {
         robot.mouseMove(x, y);
     }
 
-    private void pressMouse(int button){
+    @Override
+    public void pressMouse(int button) {
         robot.mousePress(button);
-        DelayUtils.delay(120);
+        DelayUtils.delay(200);
         robot.mouseRelease(button);
+        DelayUtils.delay(200);
     }
 
-    private void pressKey(int key){
+    @Override
+    public void pressKey(int key) {
         robot.keyPress(key);
-        DelayUtils.delay(100);
+        DelayUtils.delay(200);
         robot.keyRelease(key);
+
     }
 
 }
