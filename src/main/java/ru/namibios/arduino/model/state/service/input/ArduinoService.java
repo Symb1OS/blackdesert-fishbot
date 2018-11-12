@@ -1,4 +1,4 @@
-package ru.namibios.arduino.model.state.service;
+package ru.namibios.arduino.model.state.service.input;
 
 import com.fazecast.jSerialComm.SerialPort;
 import org.apache.log4j.Logger;
@@ -9,15 +9,15 @@ import ru.namibios.arduino.model.command.Command;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class CommandSender {
+public class ArduinoService implements InputService{
 
-    private static final Logger LOG = Logger.getLogger(CommandSender.class);
+    private static final Logger LOG = Logger.getLogger(ArduinoService.class);
 
     private static final String COMPLETE_COMMAND = "END";
 
     private SerialPort serialPort;
 
-    public CommandSender() {
+    public ArduinoService() {
 
         serialPort = SerialPort.getCommPort(Application.getInstance().PORT());
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
@@ -87,12 +87,12 @@ public class CommandSender {
 
     public static void main(String[] args) throws IOException {
 
-        CommandSender commandSender = new CommandSender();
-        commandSender.openPort();
+        ArduinoService arduinoService = new ArduinoService();
+        arduinoService.openPort();
 
-        if (commandSender.isOpen()) {
+        if (arduinoService.isOpen()) {
             System.out.println("Port is open");
-            boolean send = commandSender.send(() -> "wadsdawdsdawdsdasdwads");
+            boolean send = arduinoService.send(() -> "wadsdawdsdawdsdasdwads");
             if (send) {
                 System.out.println("Command complete!");
             }
@@ -100,7 +100,7 @@ public class CommandSender {
             System.out.println("Port is closed");
         }
 
-        commandSender.closePort();
+        arduinoService.closePort();
     }
 
 }

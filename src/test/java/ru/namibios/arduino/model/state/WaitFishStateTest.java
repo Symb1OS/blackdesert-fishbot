@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Timer;
 import ru.namibios.arduino.model.command.WaitFish;
-import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.input.InputService;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class WaitFishStateTest {
     private Timer timer;
 
     @Mock
-    private CommandSender commandSender;
+    private InputService inputService;
 
     @InjectMocks
     private WaitFishState waitFishState;
@@ -41,11 +41,11 @@ public class WaitFishStateTest {
     @Test
     public void testBite() throws IOException {
 
-        Mockito.when(commandSender.send(any(WaitFish.class))).thenReturn(true);
+        Mockito.when(inputService.send(any(WaitFish.class))).thenReturn(true);
 
         waitFishState.onStep();
 
-        Mockito.verify(commandSender).send(isA(WaitFish.class));
+        Mockito.verify(inputService).send(isA(WaitFish.class));
         Mockito.verify(fishBot).setState(isA(CutFishState.class));
 
     }
@@ -53,12 +53,12 @@ public class WaitFishStateTest {
     @Test
     public void testChangeRod() throws IOException {
 
-        Mockito.when(commandSender.send(any(WaitFish.class))).thenReturn(false);
+        Mockito.when(inputService.send(any(WaitFish.class))).thenReturn(false);
         Mockito.when(timer.isOver(Application.getInstance().TIME_CHANGE_ROD())).thenReturn(true);
 
         waitFishState.onStep();
 
-        Mockito.verify(commandSender).send(isA(WaitFish.class));
+        Mockito.verify(inputService).send(isA(WaitFish.class));
         Mockito.verify(timer).isOver(Application.getInstance().TIME_CHANGE_ROD());
         Mockito.verify(fishBot).setState(isA(ChangeRodState.class));
 

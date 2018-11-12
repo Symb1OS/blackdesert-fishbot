@@ -23,7 +23,7 @@ public class FilterLootState extends State{
 		
 		try {
 
-			commandSender.send(new FishLoot());
+			inputService.send(new FishLoot());
 			fishBot.setState(new UseSlotState(fishBot));
 			
 		}catch (Exception e) {

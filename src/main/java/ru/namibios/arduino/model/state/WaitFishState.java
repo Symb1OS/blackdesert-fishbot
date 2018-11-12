@@ -24,7 +24,7 @@ public class WaitFishState extends State {
 		
 		try {
 
-			if (commandSender.send(new WaitFish())) {
+			if (inputService.send(new WaitFish())) {
 				LOG.info("Fish detected..");
 				fishBot.setState(new CutFishState(fishBot));
 

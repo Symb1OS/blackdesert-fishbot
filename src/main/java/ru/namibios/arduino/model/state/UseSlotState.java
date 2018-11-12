@@ -30,7 +30,7 @@ public class UseSlotState extends State {
 				LOG.info("Slot ready.. Use");
 
 				String key = slotService.getKey();
-				commandSender.send(() -> key);
+				inputService.send(() -> key);
 			}
 
 			fishBot.setState(new StartFishState(fishBot));

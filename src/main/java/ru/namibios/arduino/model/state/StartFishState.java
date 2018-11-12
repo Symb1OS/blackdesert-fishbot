@@ -23,7 +23,7 @@ public class StartFishState extends State{
 
 		try {
 
-			if(commandSender.send(ShortCommand.SPACE)){
+			if(inputService.send(ShortCommand.SPACE)){
 				fishBot.setState(new PersonalMessageState(fishBot));
 			}
 

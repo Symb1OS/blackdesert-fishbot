@@ -24,7 +24,7 @@ public class CaptchaState extends State {
 		
 		try{
 
-			if(commandSender.send(new Captcha())){
+			if(inputService.send(new Captcha())){
 				LOG.info("Captcha send to input. Go to check status...");
 				fishBot.setState(new StatusCaptchaState(fishBot));
 			}

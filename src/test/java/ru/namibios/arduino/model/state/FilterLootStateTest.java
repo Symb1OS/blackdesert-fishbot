@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.FishLoot;
-import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.input.InputService;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class FilterLootStateTest {
     private FishBot fishBot;
 
     @Mock
-    private CommandSender commandSender;
+    private InputService inputService;
 
     @InjectMocks
     private FilterLootState filterLootState;
@@ -38,14 +38,14 @@ public class FilterLootStateTest {
 
         filterLootState.onStep();
 
-        verify(commandSender).send(isA(FishLoot.class));
+        verify(inputService).send(isA(FishLoot.class));
         verify(fishBot).setState(isA(UseSlotState.class));
     }
 
     @Test
     public void testException() throws IOException {
 
-        doThrow(NullPointerException.class).when(commandSender).send(isA(FishLoot.class));
+        doThrow(NullPointerException.class).when(inputService).send(isA(FishLoot.class));
 
         filterLootState.onStep();
 

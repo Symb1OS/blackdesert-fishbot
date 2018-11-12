@@ -1,10 +1,10 @@
-package ru.namibios.arduino.model.state.service.sender;
+package ru.namibios.arduino.model.state.service.input.emulation;
 
 import ru.namibios.arduino.utils.DelayUtils;
 
 import java.awt.event.KeyEvent;
 
-abstract public class AbstractSender {
+abstract public class AbstractEmulationInput {
 
     public void sendInput(String input){
         input = input.toUpperCase();

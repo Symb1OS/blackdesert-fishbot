@@ -11,7 +11,7 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.PersonalMessage;
-import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.input.InputService;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class PersonalMessageStateTest {
     private PersonalMessage pm;
 
     @Mock
-    private CommandSender commandSender;
+    private InputService inputService;
 
     @InjectMocks
     private PersonalMessageState personalMessageState;
@@ -72,7 +72,7 @@ public class PersonalMessageStateTest {
         verify(fishBot).notifyUser(Message.RECEIVED_PRIVATE_MESSAGE);
         verify(fishBot).notifyUser(Message.EXIT_GAME);
         verify(fishBot).setRunned(false);
-        verify(commandSender).send(any(Command.class));
+        verify(inputService).send(any(Command.class));
 
         verify(fishBot).setPmDetected(true);
         verify(fishBot).setState(isA(WaitFishState.class));

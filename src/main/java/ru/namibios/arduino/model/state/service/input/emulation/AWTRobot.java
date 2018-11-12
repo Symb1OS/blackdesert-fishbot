@@ -1,14 +1,14 @@
-package ru.namibios.arduino.model.state.service.sender;
+package ru.namibios.arduino.model.state.service.input.emulation;
 
 import ru.namibios.arduino.utils.DelayUtils;
 
 import java.awt.*;
 
-public class RobotSender extends AbstractSender {
+public class AWTRobot extends AbstractEmulationInput {
 
     private Robot robot;
 
-    public RobotSender() {
+    public AWTRobot() {
         try {
             robot = new Robot();
         } catch (AWTException e) {

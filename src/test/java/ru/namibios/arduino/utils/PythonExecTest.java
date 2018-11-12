@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-// Парсинг капчи перенесен с отдельный сервис
+// Парсинг капчи перенесен в отдельный сервис
 @Ignore
 public class PythonExecTest {
 

@@ -8,8 +8,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.model.command.Command;
-import ru.namibios.arduino.model.state.service.CommandSender;
 import ru.namibios.arduino.model.state.service.RodService;
+import ru.namibios.arduino.model.state.service.input.InputService;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class ChangeRodStateTest {
     private FishBot fishBot;
 
     @Mock
-    private CommandSender commandSender;
+    private InputService inputService;
 
     @Mock
     private RodService rodService;
@@ -59,14 +59,14 @@ public class ChangeRodStateTest {
         when(rodService.hasNext()).thenReturn(true);
 
         when(rodService.getNext()).thenReturn(touch.toCommandRod());
-        when(commandSender.send(any(Command.class))).thenReturn(true);
+        when(inputService.send(any(Command.class))).thenReturn(true);
 
         changeRodState.onStep();
 
         verify(rodService).hasNext();
         verify(rodService).getNext();
 
-        verify(commandSender).send(commandCaptor.capture());
+        verify(inputService).send(commandCaptor.capture());
 
         assertEquals(new Touch(1,1).toCommandRod(), commandCaptor.getValue().getKey());
 

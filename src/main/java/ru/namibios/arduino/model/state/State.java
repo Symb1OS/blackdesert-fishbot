@@ -1,26 +1,24 @@
 package ru.namibios.arduino.model.state;
 
 import ru.namibios.arduino.model.Timer;
-import ru.namibios.arduino.model.state.service.CommandSender;
-import ru.namibios.arduino.model.state.service.GameService;
+import ru.namibios.arduino.model.state.service.input.InputService;
 import ru.namibios.arduino.utils.DelayUtils;
 
 public abstract class State {
 	
-	public FishBot fishBot;
+	FishBot fishBot;
 	
-	protected long beforeStart;
-	protected long afterStart;
+	long beforeStart;
+	long afterStart;
 
-	protected Timer timer;
-	protected CommandSender commandSender;
-	protected GameService gameService;
+	InputService inputService;
+
+	Timer timer;
 
 	public State(FishBot fishBot) {
 		this.fishBot = fishBot;
 		this.timer = new Timer();
-		this.commandSender = fishBot.getCommandSender();
-		this.gameService = fishBot.getGameService();
+		this.inputService = fishBot.getInputService();
 	}
 	
 	public State(FishBot fishBot, long beforeStart, long afterStart) {
@@ -32,7 +30,7 @@ public abstract class State {
 	private static final int OVERFLOW = 50;
 	private int step = 0;
 
-	protected void ifBreak() {
+	void ifBreak() {
 		step++;
 		if(step >= OVERFLOW){
 			onOverflow();

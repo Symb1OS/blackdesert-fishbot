@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Command;
-import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.input.InputService;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class StartFishStateTest {
     private FishBot fishBot;
 
     @Mock
-    private CommandSender commandSender;
+    private InputService inputService;
 
     @InjectMocks
     private StartFishState startFishState;
@@ -37,11 +37,11 @@ public class StartFishStateTest {
     @Test
     public void testStart() throws IOException {
 
-        Mockito.when(commandSender.send(any(Command.class))).thenReturn(true);
+        Mockito.when(inputService.send(any(Command.class))).thenReturn(true);
 
         startFishState.onStep();
 
-        Mockito.verify(commandSender).send(any(Command.class));
+        Mockito.verify(inputService).send(any(Command.class));
         Mockito.verify(fishBot).setState(isA(PersonalMessageState.class));
 
     }

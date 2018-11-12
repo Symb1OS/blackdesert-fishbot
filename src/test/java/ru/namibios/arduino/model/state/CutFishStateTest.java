@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Line;
-import ru.namibios.arduino.model.state.service.CommandSender;
+import ru.namibios.arduino.model.state.service.input.InputService;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class CutFishStateTest {
     private FishBot fishBot;
 
     @Mock
-    private CommandSender commandSender;
+    private InputService inputService;
 
     @InjectMocks
     private CutFishState cutFishState;
@@ -38,11 +38,11 @@ public class CutFishStateTest {
     @Test
     public void testCutFish() throws IOException {
 
-        when(commandSender.send(any(Line.class))).thenReturn(true);
+        when(inputService.send(any(Line.class))).thenReturn(true);
 
         cutFishState.onStep();
 
-        verify(commandSender).send(isA(Line.class));
+        verify(inputService).send(isA(Line.class));
         verify(fishBot).setState(isA(StatusCutState.class));
 
     }

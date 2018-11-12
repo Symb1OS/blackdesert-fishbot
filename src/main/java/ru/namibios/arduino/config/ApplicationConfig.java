@@ -24,6 +24,9 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("")
 	String PORT();
 
+	@Key("bot.input.mode")
+	@DefaultValue("ROBOT")
+    InputMode INPUT_MODE();
 
 	///////////////////////////////////////////////////////////////////////////
 	// RODS

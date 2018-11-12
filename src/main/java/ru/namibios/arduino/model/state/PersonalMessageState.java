@@ -43,7 +43,7 @@ public class PersonalMessageState extends State {
 					LOG.info("Received a private message. Exit game...");
 					fishBot.notifyUser(Message.EXIT_GAME);
 					fishBot.setRunned(false);
-					commandSender.send(ShortCommand.EXIT);
+					inputService.send(ShortCommand.EXIT);
 				}
 				
 				fishBot.setPmDetected(true);

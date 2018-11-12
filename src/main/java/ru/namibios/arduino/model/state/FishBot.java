@@ -5,11 +5,12 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Slot;
 import ru.namibios.arduino.model.notification.Notification;
 import ru.namibios.arduino.model.notification.TelegramNotification;
-import ru.namibios.arduino.model.state.service.CommandSender;
-import ru.namibios.arduino.model.state.service.GameService;
 import ru.namibios.arduino.model.state.service.RodService;
 import ru.namibios.arduino.model.state.service.SlotService;
-import ru.namibios.arduino.model.state.service.sender.RobotSender;
+import ru.namibios.arduino.model.state.service.input.ArduinoService;
+import ru.namibios.arduino.model.state.service.input.EmulationService;
+import ru.namibios.arduino.model.state.service.input.InputService;
+import ru.namibios.arduino.model.state.service.input.emulation.AWTRobot;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,9 +31,7 @@ public class FishBot {
 
 	private SlotService slotService;
 
-	private CommandSender commandSender;
-
-	private GameService gameService;
+	private InputService inputService;
 
 	public FishBot() {
 
@@ -57,8 +56,16 @@ public class FishBot {
 
         this.rodService = new RodService(Application.getInstance().COUNT_ROD());
 
-        this.commandSender = new CommandSender();
-        this.gameService = new GameService(new RobotSender());
+		switch (Application.getInstance().INPUT_MODE()) {
+			case ARDUINO:
+				this.inputService = new ArduinoService();
+				break;
+			case ROBOT:
+				this.inputService = new EmulationService(new AWTRobot());
+				break;
+			default:
+				throw new IllegalArgumentException("Unknown input mode. Check settings.");
+		}
 
 		this.isRunned = true;
 		this.isPmDetected = false;
@@ -81,8 +88,8 @@ public class FishBot {
 			
 	}
 
-	public GameService getGameService() {
-		return gameService;
+	public InputService getInputService() {
+		return inputService;
 	}
 
 	public void setRestart(boolean isRestart) {
@@ -119,10 +126,6 @@ public class FishBot {
 
     public RodService getRodService() {
         return rodService;
-    }
-
-    public CommandSender getCommandSender() {
-        return commandSender;
     }
 
     public SlotService getSlotService() {

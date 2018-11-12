@@ -22,7 +22,7 @@ public class CutFishState extends State {
 		
 		try{
 
-			if(commandSender.send(new Line())) {
+			if(inputService.send(new Line())) {
 				LOG.info("Cut the fish...");
 				fishBot.setState(new StatusCutState(fishBot));
 			}
