@@ -1,8 +1,11 @@
 package ru.namibios.arduino;
 
+import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.state.FishBot;
+import ru.namibios.arduino.utils.DelayUtils;
+import ru.namibios.arduino.utils.WinAPI;
 
 public class Transfer extends Thread{ 
 	
@@ -27,7 +30,16 @@ public class Transfer extends Thread{
 		
 		LOG.info("Start...");
 
-        AbstractStarter starter;
+		WinDef.HWND windowGame = WinAPI.findWindow("Black Desert");
+		if (windowGame == null) {
+			LOG.info("The game is not running");
+			return;
+		}
+
+		DelayUtils.delay(2000);
+		WinAPI.activateWindow(windowGame);
+
+		AbstractStarter starter;
 
         switch (Application.getInstance().INPUT_MODE()) {
             case ARDUINO: starter = new ArduinoStarter(fishBot); break;

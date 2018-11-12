@@ -35,6 +35,8 @@ public class WaitFish implements Command{
 		imageParser = new ImageParser(screen, Chars.values());
 		imageParser.parse(Screen.GRAY);
 
+//		MatrixUtils.printMatrix(imageParser.getImageMatrix(), "0");
+
 		return imageParser.getNumber();
 	}
 
