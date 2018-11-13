@@ -28,11 +28,7 @@ public class StartController implements ActionListener {
 		
 		boolean isInit = threadTransfer != null ;
 		boolean isRunned = isInit && threadTransfer.getFishBot().isRunned();
-		if( !isInit){
-			threadTransfer = new Transfer();
-			threadTransfer.start();
-
-        } else if (!isRunned) {
+		if (!isRunned) {
 		    threadTransfer.getFishBot().setRunned(true);
             threadTransfer = new Transfer(threadTransfer.getFishBot());
             threadTransfer.start();

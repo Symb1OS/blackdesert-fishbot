@@ -29,7 +29,7 @@ public class RootView extends JFrame {
 
     public RootView() {
 
-        Transfer transfer = null;
+        Transfer transfer = new Transfer();
 
         setTitle("Fish bot");
         setContentPane(contentPane);

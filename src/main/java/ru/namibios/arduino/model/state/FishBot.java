@@ -67,7 +67,7 @@ public class FishBot {
 				throw new IllegalArgumentException("Unknown input mode. Check settings.");
 		}
 
-		this.isRunned = true;
+		this.isRunned = false;
 		this.isPmDetected = false;
 
 		this.state = new UseSlotState(this);
