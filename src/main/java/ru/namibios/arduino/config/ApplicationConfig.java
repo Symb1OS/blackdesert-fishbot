@@ -72,7 +72,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 	//	CAPTCHA
 	///////////////////////////////////////////////////////////////////////////
-	
+
+	@DefaultValue("false")
+	@Key("bot.kapcha.stored")
+	boolean STORED_CAPTCHA();
+
 	@DefaultValue("50")
 	@Key("bot.kapcha.noise.iteration")
 	int CNT_KAPCHA();
@@ -293,7 +297,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.captcha")
 	@DefaultValue("780, 350, 372, 58")
 	@ConverterClass(RectangleConverter.class)
-	Rectangle KAPCHA();
+	Rectangle CAPTCHA();
 
 	@Key("bot.screen.statuscaptcha")
 	@DefaultValue("760,  485, 390, 105")

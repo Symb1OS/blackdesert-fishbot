@@ -11,6 +11,7 @@ import ru.namibios.arduino.utils.PythonExec;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Date;
 
 public class Captcha implements Command{
 
@@ -21,8 +22,13 @@ public class Captcha implements Command{
 	private String filename;
 
 	public Captcha() throws AWTException  {
-		this.screen = new Screen(Application.getInstance().KAPCHA());
+
+		String name = String.valueOf(new Date().getTime());
+
+		this.screen = new Screen(Application.getInstance().CAPTCHA());
+		this.screen.saveDirty(name);
 		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
+		this.screen.saveClean(name);
 		this.key = "";
 	}
 	

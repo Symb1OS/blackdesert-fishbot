@@ -51,7 +51,7 @@ public class Screen {
 		logger.info("Cleaning captcha...");
 		int cnt = 0;
 		while(cnt < iteration){
-			BufferedImage noiseImage = new Screen(Application.getInstance().KAPCHA()).getScreenShot();
+			BufferedImage noiseImage = new Screen(Application.getInstance().CAPTCHA()).getScreenShot();
 			noise.addNois(noiseImage);
 			cnt++;
 		}
@@ -81,7 +81,25 @@ public class Screen {
 			logger.error("Exception " + e);
 		}
 	}
-	
+
+	private void saveToStore(String name, String folder){
+		if (Application.getInstance().STORED_CAPTCHA()){
+			try {
+				ImageIO.write(screenShot, "jpg", new File(folder + name + ".jpg"));
+			} catch (IOException e) {
+				logger.error("Exception " + e);
+			}
+		}
+	}
+
+	public void saveDirty(String name){
+		saveToStore(name, Path.STORE_CAPTCHA_DIRTY);
+	}
+
+	public void saveClean(String name){
+		saveToStore(name, Path.STORE_CAPTCHA_CLEAN);
+	}
+
 	public String saveImage(String folder) {
 		
 		try {
