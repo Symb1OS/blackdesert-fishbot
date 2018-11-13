@@ -22,6 +22,13 @@ public class ArduinoService implements InputService{
         serialPort = SerialPort.getCommPort(Application.getInstance().PORT());
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
+        if (serialPort.openPort()) {
+            LOG.info("Port is open..");
+        } else {
+            LOG.error("Port is closed. Check you port in settings or change mode work on application.properties.");
+            System.exit(-1);
+        }
+
     }
 
     private boolean isComplete() throws IOException {
@@ -47,7 +54,7 @@ public class ArduinoService implements InputService{
                 }
 
             } else {
-                LOG.debug("Port is closed");
+                LOG.error("Port is closed. Check you port in settings");
                 return  false;
             }
         }
@@ -71,36 +78,6 @@ public class ArduinoService implements InputService{
         }
 
         return false;
-    }
-
-    public boolean isOpen(){
-        return serialPort.isOpen();
-    }
-
-    public boolean openPort(){
-        return serialPort.openPort();
-    }
-
-    public boolean closePort() {
-        return serialPort.closePort();
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        ArduinoService arduinoService = new ArduinoService();
-        arduinoService.openPort();
-
-        if (arduinoService.isOpen()) {
-            System.out.println("Port is open");
-            boolean send = arduinoService.send(() -> "wadsdawdsdawdsdasdwads");
-            if (send) {
-                System.out.println("Command complete!");
-            }
-        } else {
-            System.out.println("Port is closed");
-        }
-
-        arduinoService.closePort();
     }
 
 }

@@ -2,7 +2,6 @@ package ru.namibios.arduino;
 
 import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
-import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.state.FishBot;
 import ru.namibios.arduino.utils.DelayUtils;
 import ru.namibios.arduino.utils.WinAPI;
@@ -24,31 +23,36 @@ public class Transfer extends Thread{
 	public FishBot getFishBot() {
 		return fishBot;
 	}
-	
+
+	private void restart(){
+		LOG.info("Need Restart. Restarted after 10 second...");
+		DelayUtils.delay(10000);
+		fishBot.setRunned(true);
+		fishBot.setRestart(false);
+		run();
+	}
+
 	@Override
 	public void run() {
 		
 		LOG.info("Start...");
 
-		WinDef.HWND windowGame = WinAPI.findWindow("Black Desert");
+		WinDef.HWND windowGame = WinAPI.findWindow("BLACK DESERT");
 		if (windowGame == null) {
 			LOG.info("The game is not running");
 			return;
 		}
 
-		DelayUtils.delay(2000);
+		DelayUtils.delay(1000);
 		WinAPI.activateWindow(windowGame);
 
-		AbstractStarter starter;
+		DelayUtils.delay(3000);
 
-        switch (Application.getInstance().INPUT_MODE()) {
-            case ARDUINO: starter = new ArduinoStarter(fishBot); break;
-            case ROBOT  : starter = new EmulationStarter(fishBot); break;
+		while (fishBot.isRunned()) fishBot.getState().process();
 
-            default: throw new IllegalArgumentException("Unknown starter. Check input mode in settings");
-        }
+		LOG.info("Thread stop.");
 
-        starter.run();
+		if(fishBot.isRestart()) restart();
 
 	}
 
