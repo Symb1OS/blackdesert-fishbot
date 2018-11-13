@@ -803,7 +803,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Режим:"/>
+                  <text resource-bundle="locale" key="preference.label.inputmode"/>
                 </properties>
               </component>
               <grid id="7ccd7" binding="modeContent" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
