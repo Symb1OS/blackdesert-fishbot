@@ -26,9 +26,11 @@
 ### Requirements
 
 - Screen resolution 1920x1080 (full screen or in window without frame)
-- [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) (with support emulation keyboard and mouse)
 - [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- [Arduino IDE](https://www.arduino.cc/en/main/software)
+
+- [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) `(Optional)`
+- [Arduino IDE](https://www.arduino.cc/en/main/software) `(Optional)`
+
 
 ### Presets
 
