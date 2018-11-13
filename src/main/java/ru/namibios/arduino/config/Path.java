@@ -29,10 +29,9 @@ public class Path {
 		File storeCaptchaClean = new File(STORE_CAPTCHA_CLEAN);
 
 		if (!storeCaptcha.exists()) {
-			storeCaptcha.mkdir();
-			storeCaptchaDirty.mkdir();
-			storeCaptchaClean.mkdir();
+			storeCaptcha.mkdirs();
+			storeCaptchaDirty.mkdirs();
+			storeCaptchaClean.mkdirs();
 		}
 	}
-
 }
