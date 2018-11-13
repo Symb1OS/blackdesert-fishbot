@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.namibios.arduino</groupId>
     <artifactId>blackdesert-fishbot</artifactId>
-    <version>1.6.3-RC</version>
+    <version>1.7.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,12 +17,6 @@
     </repositories>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.glassfish.tyrus</groupId>
-            <artifactId>tyrus-container-jdk-client</artifactId>
-            <version>1.8.3</version>
-        </dependency>
 
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
