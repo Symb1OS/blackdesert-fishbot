@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 
 public class Application {
 
-	public static final String PROPERTY_FILE_NAME = "resources/application.properties";
+	private static final String PROPERTY_FILE_NAME = "resources/application.properties";
 	
 	private static ApplicationConfig config;
 	

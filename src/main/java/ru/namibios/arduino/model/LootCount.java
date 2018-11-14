@@ -9,7 +9,7 @@ public class LootCount {
 	
 	private int length;
 
-	public LootCount(int length) {
+	LootCount(int length) {
 		this.length = length;
 		ok = 0;
 		trash = 0;
@@ -17,19 +17,19 @@ public class LootCount {
 		unknow = 0;
 	}
 
-	public void incOk() {
+	void incOk() {
 		ok++;
 	}
 
-	public void incTrash() {
+	void incTrash() {
 		trash++;
 	}
 
-	public void incEmpty() {
+	void incEmpty() {
 		empty++;
 	}
 
-	public void incUnknow() {
+	void incUnknow() {
 		unknow++;
 	}
 	

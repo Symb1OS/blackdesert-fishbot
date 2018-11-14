@@ -68,7 +68,7 @@ public class ImageParser {
 		keyList.add(screenMatrix);
 	}
 
-	public int findSubImage(){
+	private int findSubImage(){
 
 		int index = 0;
 		for (MatrixTemplate templates : collectionTemplate) {
