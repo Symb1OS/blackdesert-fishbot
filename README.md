@@ -38,7 +38,9 @@
 
 - Download last version [bot](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
-[![Installing](http://img.youtube.com/vi/CsaE7CvNHSk&t=5s/0.jpg)](http://www.youtube.com/watch?v=CsaE7CvNHSk&t=5s)
+
+### Build and install on YouTube
+- [YouTube](http://www.youtube.com/watch?v=CsaE7CvNHSk&t=5s)
 
 
 ### Building

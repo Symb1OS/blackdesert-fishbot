@@ -38,6 +38,8 @@
 
 - Скачиваем последнюю версию [бота](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
+### Build and install on YouTube
+- [YouTube](http://www.youtube.com/watch?v=CsaE7CvNHSk&t=5s)
 
 ### Building
 - Распаковываем архив, переходим в папку с ботом.
