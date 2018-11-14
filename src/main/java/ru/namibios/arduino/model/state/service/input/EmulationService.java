@@ -82,6 +82,16 @@ public class EmulationService implements InputService{
         emulationInput.sendInput(KeyEvent.VK_R);
     }
 
+
+    private void skipCalendar() {
+        LOG.info("Skip calendar");
+
+        emulationInput.sendInput(KeyEvent.VK_ESCAPE);
+        DelayUtils.delay(1000);
+        emulationInput.sendInput(KeyEvent.VK_ESCAPE);
+
+    }
+
     @Override
     public boolean send(Command command) throws IOException {
 
@@ -104,7 +114,9 @@ public class EmulationService implements InputService{
             useSlot(key);
         } else if (key.startsWith(ShortCommand.TAKE.getKey())) {
             takeAll();
-        } else {
+        } else if (key.startsWith(ShortCommand.SKIP_CALENDAR.getKey())) {
+            skipCalendar();
+        }else {
             inputCaptcha(key);
         }
 
@@ -113,7 +125,8 @@ public class EmulationService implements InputService{
 
     public static void main(String[] args) throws IOException {
         InputService gameService = new EmulationService(new AWTRobot());
-        gameService.send(() -> "Slot[1]");
+//        gameService.send(() -> "Slot[1]");
+
     }
 
 }
