@@ -38,6 +38,8 @@
 
 - Download last version [bot](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
+[![Installing](http://img.youtube.com/vi/CsaE7CvNHSk&t=5s/0.jpg)](http://www.youtube.com/watch?v=CsaE7CvNHSk&t=5s)
+
 
 ### Building
 - Unzip archive, move to bot folder.
@@ -61,9 +63,9 @@ Run `test.bat`
 
 ### Running
 Change dir to `target/blackdesert-fishbot`
- 
-Run `run.bat`
 
+
+Right click at `run.bat` and *Run as administrator*(`!!IMPORTANT!!`)
 
 ### Wiki
 [Wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki)
