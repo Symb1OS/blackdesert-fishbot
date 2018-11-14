@@ -1,4 +1,6 @@
-@echo off 
+@echo off
 
-set jarname="blackdesert-fishbot.jar"
-java -jar %jarname%
+set paths=%~dp0
+set jarname="%paths%blackdesert-fishbot.jar"
+
+java -jar "%jarname%"
