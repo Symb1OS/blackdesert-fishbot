@@ -33,7 +33,7 @@ public class FishBot {
 
 	private InputService inputService;
 
-	public FishBot() {
+    public FishBot(boolean start) {
 
         List<Slot> slots = Arrays.asList(
                 new Slot(Application.getInstance().SLOT_ONE().isActive(),
@@ -67,7 +67,7 @@ public class FishBot {
 				throw new IllegalArgumentException("Unknown input mode. Check settings.");
 		}
 
-		this.isRunned = false;
+		this.isRunned = start;
 		this.isPmDetected = false;
 
 		this.state = new UseSlotState(this);

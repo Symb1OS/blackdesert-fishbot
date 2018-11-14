@@ -19,7 +19,8 @@ public class SaveController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		Application.getInstance().setProperty("bot.port", getPortName(view.getCbPort().getSelectedItem().toString()));
+		Application.getInstance().setProperty("bot.port", getPortName(String.valueOf(view.getCbPort().getSelectedItem())));
+		Application.getInstance().setProperty("bot.input.mode", String.valueOf(view.getCbMode().getSelectedItem()));
 
 		Application.getInstance().setProperty("bot.loot.key",   String.valueOf(view.getCbKey().isSelected()));
 		Application.getInstance().setProperty("bot.loot.rock",  String.valueOf(view.getCbRock().isSelected()));
@@ -60,10 +61,10 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.delay.filterloot.after", view.getTfAfterFilterLoot().getText().trim());
 		
 		Application.record();
-		
+
 		view.dispose();
 	}
-	
+
 	private String getPortName(String descriptionPort){
 		return descriptionPort.indexOf(")") != -1 
 				? descriptionPort.substring(descriptionPort.indexOf("(") + 1, descriptionPort.indexOf(")"))

@@ -3,6 +3,7 @@ package ru.namibios.arduino.gui.controller;
 import ru.namibios.arduino.Transfer;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.gui.view.RootView;
+import ru.namibios.arduino.model.state.FishBot;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,16 +28,26 @@ public class StartController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		boolean isInit = threadTransfer != null ;
-		boolean isRunned = isInit && threadTransfer.getFishBot().isRunned();
-		if (!isRunned) {
-		    threadTransfer.getFishBot().setRunned(true);
-            threadTransfer = new Transfer(threadTransfer.getFishBot());
-            threadTransfer.start();
 
-        } else {
-            showMessageDialog(Message.ALREADY_WORK);
+        if (isInit) {
+
+            FishBot fishBot = threadTransfer.getFishBot();
+
+            if (fishBot != null) {
+
+               if (!fishBot.isRunned()) {
+                   fishBot.setRunned(true);
+                   threadTransfer = new Transfer(fishBot);
+                   threadTransfer.start();
+
+                } else {
+                   showMessageDialog(Message.ALREADY_WORK);
+                }
+
+            } else {
+                threadTransfer.start();
+            }
+
         }
-		
 	}
-	
 }

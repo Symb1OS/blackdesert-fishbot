@@ -12,9 +12,7 @@ public class Transfer extends Thread{
 
 	private FishBot fishBot;
 	
-	public Transfer() {
-		this.fishBot = new FishBot();
-	}
+	public Transfer() {}
 
 	public Transfer(FishBot fishBot) {
 		this.fishBot = fishBot;
@@ -41,6 +39,10 @@ public class Transfer extends Thread{
 		if (windowGame == null) {
 			LOG.info("The game is not running");
 			return;
+		}
+
+		if (fishBot == null) {
+			fishBot = new FishBot(true);
 		}
 
 		DelayUtils.delay(1000);

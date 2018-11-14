@@ -25,7 +25,7 @@ public class ArduinoService implements InputService{
         if (serialPort.openPort()) {
             LOG.info("Port is open..");
         } else {
-            LOG.error("Port is closed. Check you port in settings or change mode work on application.properties.");
+            LOG.info("Port is closed. Check your port in settings or change the mode work");
             System.exit(-1);
         }
 
