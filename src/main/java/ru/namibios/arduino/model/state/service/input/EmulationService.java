@@ -3,7 +3,6 @@ package ru.namibios.arduino.model.state.service.input;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.ShortCommand;
-import ru.namibios.arduino.model.state.service.input.emulation.AWTRobot;
 import ru.namibios.arduino.model.state.service.input.emulation.AbstractEmulationInput;
 import ru.namibios.arduino.utils.DelayUtils;
 
@@ -87,7 +86,7 @@ public class EmulationService implements InputService{
         LOG.info("Skip calendar");
 
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
-        DelayUtils.delay(1000);
+        DelayUtils.delay(200);
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
 
     }
@@ -121,12 +120,6 @@ public class EmulationService implements InputService{
         }
 
         return true;
-    }
-
-    public static void main(String[] args) throws IOException {
-        InputService gameService = new EmulationService(new AWTRobot());
-//        gameService.send(() -> "Slot[1]");
-
     }
 
 }
