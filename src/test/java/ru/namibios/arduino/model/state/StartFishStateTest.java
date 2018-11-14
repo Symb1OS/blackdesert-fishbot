@@ -41,7 +41,7 @@ public class StartFishStateTest {
 
         startFishState.onStep();
 
-        Mockito.verify(inputService).send(any(Command.class));
+        Mockito.verify(inputService, Mockito.times(2)).send(any(Command.class));
         Mockito.verify(fishBot).setState(isA(PersonalMessageState.class));
 
     }
