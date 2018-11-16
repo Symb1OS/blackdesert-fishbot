@@ -33,7 +33,7 @@ public class WaitFish implements Command{
 
 		screen = new Screen(region);
 		imageParser = new ImageParser(screen, Chars.values());
-		imageParser.parse(Screen.GRAY);
+		imageParser.parse(Screen.WHITE);
 
 //		MatrixUtils.printMatrix(imageParser.getImageMatrix(), "0");
 
