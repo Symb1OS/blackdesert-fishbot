@@ -32,6 +32,9 @@ public class ChangeRodState extends State{
 			if (rodService.hasNext()) {
 
 				LOG.info("New fishing rod found. Use..");
+				LOG.info("Available: " + rodService.getCountAvailableRods() + "/" + RodService.MAX_RODS);
+
+				fishBot.notifyUser("Started change fishing rod. Available: " + rodService.getCountAvailableRods() + "/" + RodService.MAX_RODS);
 
 				String nextFree = rodService.getNext();
 				inputService.send( () -> nextFree);

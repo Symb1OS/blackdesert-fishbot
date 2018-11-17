@@ -8,6 +8,8 @@ public class Message {
 
 	public static final String OUT_RODS = "Fishing rods ended. Process end.";
 
+	public static final String END_WORK = "Bot ended work";
+
 	public static final String RECEIVED_PRIVATE_MESSAGE = "Received personal message";
 	public static final String TURN_AUTOFISH = "Switch to auto fishing mode";
 	public static final String EXIT_GAME = "Exit game..";

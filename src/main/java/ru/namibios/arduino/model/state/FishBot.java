@@ -78,7 +78,7 @@ public class FishBot {
 		setRunned(false);
 	}
 	
-	void notifyUser(String message){
+	public void notifyUser(String message){
 			
 		if(Application.getInstance().TELEGRAM()) {
             LOG.info("Send telegram notification.");

@@ -11,9 +11,9 @@ public class RodService {
 
     private static final Logger LOG = Logger.getLogger(RodService.class);
 
-    private static final int MAX_RODS = 8;
+    public static final int MAX_RODS = 8;
 
-    private List<Touch> rots;
+    private List<Touch> rods;
 
     private int current;
 
@@ -26,24 +26,28 @@ public class RodService {
 
         current = 0;
 
-        this.rots = new ArrayList<>();
+        this.rods = new ArrayList<>();
 
         int x = Application.getInstance().ROD_START_X();
         int y = Application.getInstance().ROD_START_Y();
 
         for (int i = 0; i < count; i++) {
-            rots.add(new Touch(x, y));
+            rods.add(new Touch(x, y));
 
             x += Application.getInstance().ROD_DX();
         }
     }
 
+    public int getCountAvailableRods(){
+        return MAX_RODS - current;
+    }
+
     public boolean hasNext(){
-        return current < rots.size();
+        return current < rods.size();
     }
 
     public String getNext(){
-        Touch touch = rots.get(current);
+        Touch touch = rods.get(current);
         current++;
 
         return touch.toCommandRod();

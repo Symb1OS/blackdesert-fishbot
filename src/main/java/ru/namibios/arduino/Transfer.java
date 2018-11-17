@@ -2,6 +2,7 @@ package ru.namibios.arduino;
 
 import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.state.FishBot;
 import ru.namibios.arduino.utils.DelayUtils;
 import ru.namibios.arduino.utils.WinAPI;
@@ -55,6 +56,8 @@ public class Transfer extends Thread{
 		LOG.info("Thread stop.");
 
 		if(fishBot.isRestart()) restart();
+
+		fishBot.notifyUser(Message.END_WORK);
 
 	}
 

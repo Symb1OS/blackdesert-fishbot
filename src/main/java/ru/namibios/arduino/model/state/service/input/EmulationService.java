@@ -83,7 +83,7 @@ public class EmulationService implements InputService{
 
 
     private void skipCalendar() {
-        LOG.info("Skip calendar");
+        LOG.info("Close pop-up windows");
 
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
         DelayUtils.delay(200);
