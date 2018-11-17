@@ -39,7 +39,7 @@ public class RodService {
     }
 
     public int getCountAvailableRods(){
-        return MAX_RODS - current;
+        return Application.getInstance().COUNT_ROD() - current;
     }
 
     public boolean hasNext(){

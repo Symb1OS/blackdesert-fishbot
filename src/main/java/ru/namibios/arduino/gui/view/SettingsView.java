@@ -89,7 +89,7 @@ public class SettingsView extends JDialog {
     private JPanel pmContent;
     private JPanel mode;
     private JPanel modeContent;
-    private JComboBox cbMode;
+    private JComboBox<InputMode> cbMode;
     private JPanel language;
     private JPanel localeContent;
     private JComboBox<String> cbLanguage;
@@ -147,6 +147,8 @@ public class SettingsView extends JDialog {
 
         Image im = new ImageIcon(UI.IMG_SETTINGS).getImage();
         setIconImage(im);
+
+        this.setResizable(false);
 
     }
 

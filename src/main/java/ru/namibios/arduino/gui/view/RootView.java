@@ -92,6 +92,7 @@ public class RootView extends JFrame {
         buttonStop.setIcon(new ImageIcon(UI.IMG_STOP));
 
         setVisible(true);
+        setResizable(false);
 
     }
 
