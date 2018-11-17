@@ -1,36 +1,41 @@
 package ru.namibios.arduino.gui;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.gui.view.RootView;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Locale;
-import java.util.Set;
+import java.util.Map;
 
 public class Launcher {
 	
 	private static final Logger LOG = Logger.getLogger(Launcher.class);
 
-	private static final Set<String> LOCALES = new HashSet<>();
-	
+	public static final Map<String, Locale> LOCALES = new HashMap<>();
+
 	static {
-		LOCALES.add("ru_RU");
-		LOCALES.add("en_US");
+		LOCALES.put("English", new Locale("en", "US"));
+		LOCALES.put("Русский", new Locale("ru", "RU"));
 	}
-	
+
 	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 
 		LOG.info("Start program..");
 
-		Locale currentLocale = Locale.getDefault();
-		LOG.debug("Locale: " + currentLocale);
+        String language = Application.getInstance().LANGUAGE();
+        LOG.debug("Language: " + language);
 
-		if(!LOCALES.contains(currentLocale.toString())) {
-			Locale.setDefault(new Locale("en", "US"));
-		}
+        Locale locale = LOCALES.get(language);
+        if (locale == null) {
+            locale = LOCALES.get("English");
+            LOG.debug("Unknown locale. Setting by default");
+        }
+
+        Locale.setDefault(locale);
 
         try {
 
