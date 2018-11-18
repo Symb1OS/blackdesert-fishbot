@@ -29,9 +29,8 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.loot.fish",  String.valueOf(view.getCbFish().isSelected()));
 		Application.getInstance().setProperty("bot.loot.event", String.valueOf(view.getCbEvent().isSelected()));
 		Application.getInstance().setProperty("bot.loot.unknown", String.valueOf(view.getCbUnknown().isSelected()));
-		
-		Application.getInstance().setProperty("bot.autouse.beer",  String.valueOf(view.getCbBeer().isSelected()));
-		Application.getInstance().setProperty("bot.autouse.minigame", String.valueOf(view.getCbMinigame().isSelected()));
+
+		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, view.getBeerPeriod().getText()));
 
 		Application.getInstance().setProperty("bot.slot.one", String.format(FORMAT_SLOT, view.getCbFirstSlotActive().isSelected(), view.getTfFirstSlotKey().getText(), view.getTfFirstSlotDelay().getText(), view.getTfFirstSlotPeriod().getText()));
 		Application.getInstance().setProperty("bot.slot.two", String.format(FORMAT_SLOT, view.getCbSecondSlotActive().isSelected(),view.getTfSecondSlotKey().getText(), view.getTfSecondSlotDelay().getText(), view.getTfSecondSlotPeriod().getText()));

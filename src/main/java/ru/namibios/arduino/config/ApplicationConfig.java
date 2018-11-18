@@ -137,11 +137,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 	// TASKS
 	///////////////////////////////////////////////////////////////////////////
-	
-	@Key("bot.autouse.beer")
-	@DefaultValue("false")
-	boolean BEER();
-	
+
+    @Key("bot.autouse.beer")
+    @DefaultValue("true, 7, 0m, 120m")
+    @ConverterClass(HotSlotConverter.class)
+    HotSlot SLOT_BEER();
+
 	@Key("bot.autouse.minigame")
 	@DefaultValue("false")
 	boolean MINIGAME();

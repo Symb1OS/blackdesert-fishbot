@@ -3,7 +3,7 @@
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="831" height="841"/>
+      <xy x="48" y="54" width="831" height="895"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -191,7 +191,7 @@
                   <text resource-bundle="locale" key="preference.label.autouse"/>
                 </properties>
               </component>
-              <grid id="5dfc2" binding="taskContent" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="5dfc2" binding="taskContent" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="5" left="5" bottom="5" right="5"/>
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -199,35 +199,60 @@
                 <properties/>
                 <border type="bevel-lowered"/>
                 <children>
-                  <component id="4abbc" class="javax.swing.JCheckBox" binding="cbBeer">
+                  <grid id="2df82" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="25" height="-1"/>
-                      </grid>
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties>
-                      <horizontalAlignment value="10"/>
-                      <horizontalTextPosition value="11"/>
-                      <text resource-bundle="locale" key="preference.label.beer"/>
-                    </properties>
-                  </component>
-                  <component id="80e69" class="javax.swing.JCheckBox" binding="cbMinigame">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="25" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <horizontalAlignment value="10"/>
-                      <horizontalTextPosition value="11"/>
-                      <text resource-bundle="locale" key="preference.label.minigame"/>
-                    </properties>
-                  </component>
-                  <hspacer id="a5fb8">
-                    <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </hspacer>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="4abbc" class="javax.swing.JCheckBox" binding="cbBeer">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                            <preferred-size width="25" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <horizontalAlignment value="10"/>
+                          <horizontalTextPosition value="11"/>
+                          <text resource-bundle="locale" key="preference.label.beer"/>
+                        </properties>
+                      </component>
+                      <component id="5c54c" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.digital"/>
+                        </properties>
+                      </component>
+                      <component id="8a42e" class="javax.swing.JTextField" binding="beerKey">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="80" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                      <component id="8363" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.period"/>
+                        </properties>
+                      </component>
+                      <component id="8f466" class="javax.swing.JTextField" binding="beerPeriod">
+                        <constraints>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="80" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                    </children>
+                  </grid>
                 </children>
               </grid>
             </children>
