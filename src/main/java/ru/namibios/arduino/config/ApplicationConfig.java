@@ -143,6 +143,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @ConverterClass(HotSlotConverter.class)
     HotSlot SLOT_BEER();
 
+    @Key("bot.autouse.beer.touchs")
+    @Separator(";")
+    @DefaultValue("{1507,847};{1192,494};{1646,844}")
+    @ConverterClass(LootTouchConverter.class)
+    Touch[] BEER_TOUCHS();
+
 	@Key("bot.autouse.minigame")
 	@DefaultValue("false")
 	boolean MINIGAME();

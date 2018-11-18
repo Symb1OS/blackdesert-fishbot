@@ -1,6 +1,8 @@
 package ru.namibios.arduino.model.state.service.input;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.model.state.service.input.emulation.AbstractEmulationInput;
@@ -52,6 +54,19 @@ public class EmulationService implements InputService{
         clickByIndex(command);
         DelayUtils.delay(1000);
         emulationInput.sendInput(KeyEvent.VK_I);
+    }
+
+    private void beer(String command){
+
+        useSlot(command);
+        DelayUtils.delay(2000);
+
+        for (Touch touch : Application.getInstance().BEER_TOUCHS()) {
+            emulationInput.clickLeft(touch.getX(),touch.getY());
+            DelayUtils.delay(2000);
+        }
+
+        emulationInput.sendInput(KeyEvent.VK_ESCAPE);
     }
 
     private void takeLootByIndex(String command){
