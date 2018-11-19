@@ -36,8 +36,7 @@ public class StartController implements ActionListener {
             if (fishBot != null) {
 
                if (!fishBot.isRunned()) {
-                   fishBot.setRunned(true);
-                   threadTransfer = new Transfer(fishBot);
+                   threadTransfer = new Transfer();
                    threadTransfer.start();
 
                 } else {
