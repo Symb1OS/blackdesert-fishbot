@@ -140,7 +140,7 @@ void loop() {
     } else if (input.startsWith("Loot")) {
       takeLoot(input);
     } else if (input.startsWith("Beer")) {
-      useSlot(input);
+      beer(input);
     } else if (input.startsWith("Slot")) {
       useSlot(input);
     } else if (input.startsWith("test")) {
