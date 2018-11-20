@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 
 public class SaveController implements ActionListener{
 
-	public static final String FORMAT_SLOT = "%s,%s,%s,%s";
+	private static final String FORMAT_SLOT = "%s,%s,%s,%s";
+	private static final String FORMAT_SLOT_TASK = "%s,%s,%s,%s, %s";
 
 	private SettingsView view;
 
@@ -30,7 +31,7 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.loot.event", String.valueOf(view.getCbEvent().isSelected()));
 		Application.getInstance().setProperty("bot.loot.unknown", String.valueOf(view.getCbUnknown().isSelected()));
 
-		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, view.getBeerPeriod().getText()));
+		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT_TASK, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, view.getBeerPeriod().getText(), "Beer"));
 
 		Application.getInstance().setProperty("bot.slot.one", String.format(FORMAT_SLOT, view.getCbFirstSlotActive().isSelected(), view.getTfFirstSlotKey().getText(), view.getTfFirstSlotDelay().getText(), view.getTfFirstSlotPeriod().getText()));
 		Application.getInstance().setProperty("bot.slot.two", String.format(FORMAT_SLOT, view.getCbSecondSlotActive().isSelected(),view.getTfSecondSlotKey().getText(), view.getTfSecondSlotDelay().getText(), view.getTfSecondSlotPeriod().getText()));
