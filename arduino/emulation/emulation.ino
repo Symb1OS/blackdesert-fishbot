@@ -69,6 +69,25 @@ void useSlot(String slot){
   pressKey(key);
 }
 
+void beer(String beer){
+
+    useSlot(beer);
+
+    delay(2000);
+
+    moveTo(1507, 847, MOUSE_LEFT);
+    delay(2000);
+
+    moveTo(1192,494, MOUSE_LEFT);
+    delay(2000);
+
+    moveTo(1646,844, MOUSE_LEFT);
+    delay(2000);
+
+    pressKey(0xB1);
+
+}
+
 void takeLoot(String loot){
 
   pressKey(0x80); 
@@ -96,44 +115,9 @@ char getKey(char key) {
   }
 }
 
-void personalMessage(String pm){
-  
-  int usernameStart = pm.indexOf('[') + 1;
-  int usernameEnd = pm.indexOf(',');
-  int messageEnd = pm.indexOf(']');
-  
-  String username = pm.substring(usernameStart, usernameEnd);
-  String message = pm.substring(usernameEnd + 1,messageEnd);
-
-  delay(1000);
-  pressKey(0xB0);
-
-  pressKey(0x82, '3');
-
-  //print message
-  for (int index = 0; index < message.length(); index++){
-    pressKey(message[index]);  
-  }
-
-  pressKey(0xB3);
-
-  // clear username
-  for (int index = 0; index < 20; index++){
-    pressKey(0xB2);  
-  }
-
-  //print TO
-  for (int index = 0; index < username.length(); index++){
-    pressKey(username[index]);  
-  }
-
-  pressKey(0xB3);
-  pressKey(0xB0);
-}
-
 void exitGame(){
-	pressKey(0xB1);
-	moveTo(820, 757, MOUSE_LEFT );
+  pressKey(0xB1);
+  moveTo(820, 757, MOUSE_LEFT );
   moveTo(961, 296, MOUSE_LEFT );
   moveTo(917, 587, MOUSE_LEFT );
   pressKey(0xB1);
@@ -155,13 +139,13 @@ void loop() {
       changeRod(input);
     } else if (input.startsWith("Loot")) {
       takeLoot(input);
+    } else if (input.startsWith("Beer")) {
+      useSlot(input);
     } else if (input.startsWith("Slot")) {
       useSlot(input);
     } else if (input.startsWith("test")) {
       test();
-    } else if (input.startsWith("PM")) {
-      personalMessage(input);
-    }else if (input.startsWith("Exit")) {
+    } else if (input.startsWith("Exit")) {
       exitGame();
     }else if (input.startsWith("Skip_calendar")) {
       skipCalendar();
