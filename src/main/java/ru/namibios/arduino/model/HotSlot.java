@@ -2,6 +2,8 @@ package ru.namibios.arduino.model;
 
 public class HotSlot {
 
+    private String command;
+
     private boolean active;
 
     private String key;
@@ -9,6 +11,14 @@ public class HotSlot {
     private long delay;
 
     private long period;
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
 
     public boolean isActive() {
         return active;
@@ -73,11 +83,11 @@ public class HotSlot {
     @Override
     public String toString() {
         return "HotSlot{" +
-                "active=" + active +
+                "command='" + command + '\'' +
+                ", active=" + active +
                 ", key='" + key + '\'' +
                 ", delay=" + delay +
                 ", period=" + period +
                 '}';
     }
-
 }

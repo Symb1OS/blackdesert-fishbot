@@ -36,20 +36,10 @@ public class FishBot {
     public FishBot(boolean start) {
 
         List<Slot> slots = Arrays.asList(
-                new Slot(Application.getInstance().SLOT_ONE().isActive(),
-                        Application.getInstance().SLOT_ONE().getKey(),
-                        Application.getInstance().SLOT_ONE().getDelay(),
-                        Application.getInstance().SLOT_ONE().getPeriod()),
-
-                new Slot(Application.getInstance().SLOT_TWO().isActive(),
-                        Application.getInstance().SLOT_TWO().getKey(),
-                        Application.getInstance().SLOT_TWO().getDelay(),
-                        Application.getInstance().SLOT_TWO().getPeriod()),
-
-                new Slot(Application.getInstance().SLOT_THREE().isActive(),
-                        Application.getInstance().SLOT_THREE().getKey(),
-                        Application.getInstance().SLOT_THREE().getDelay(),
-                        Application.getInstance().SLOT_THREE().getPeriod())
+                new Slot(Application.getInstance().SLOT_ONE()),
+                new Slot(Application.getInstance().SLOT_TWO()),
+                new Slot(Application.getInstance().SLOT_THREE()),
+                new Slot(Application.getInstance().SLOT_BEER())
         );
 
         this.slotService = new SlotService(slots);

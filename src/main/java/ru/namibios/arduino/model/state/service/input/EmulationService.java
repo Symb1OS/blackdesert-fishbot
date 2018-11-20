@@ -124,6 +124,8 @@ public class EmulationService implements InputService{
             takeLootByIndex(key);
         } else if (key.startsWith(ShortCommand.ROD.getKey())) {
             changeRod(key);
+        } else if (key.startsWith(ShortCommand.BEER.getKey())) {
+            beer(key);
         } else if (key.startsWith(ShortCommand.SLOT.getKey())) {
             useSlot(key);
         } else if (key.startsWith(ShortCommand.TAKE.getKey())) {
