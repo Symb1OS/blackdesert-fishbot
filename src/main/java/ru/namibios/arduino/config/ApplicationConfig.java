@@ -28,6 +28,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("ROBOT")
     InputMode INPUT_MODE();
 
+	@Key("bot.input.timeout")
+	@DefaultValue("25000")
+	long INPUT_TIMEOUT();
+
 	@Key("bot.language")
 	@DefaultValue("English")
 	String LANGUAGE();

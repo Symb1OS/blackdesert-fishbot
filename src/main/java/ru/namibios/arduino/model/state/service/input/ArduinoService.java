@@ -35,7 +35,7 @@ public class ArduinoService implements InputService{
 
         Timer timer = new Timer();
 
-        while (!timer.isOver(1000 * 25)) {
+        while (!timer.isOver(Application.getInstance().INPUT_TIMEOUT())) {
 
             if (serialPort.isOpen()) {
                 if (serialPort.getInputStream().available() > 0) {
