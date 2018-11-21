@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.namibios.arduino</groupId>
     <artifactId>blackdesert-fishbot</artifactId>
-    <version>1.7.4</version>
+    <version>1.7.5</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -114,6 +114,14 @@
 
         <finalName>blackdesert-fishbot</finalName>
         <resources>
+            <resource>
+                <directory>./</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>version</include>
+                </includes>
+                <targetPath>../${project.artifactId}_${project.version}</targetPath>
+            </resource>
             <resource>
                 <directory>src/main/resources</directory>
             </resource>

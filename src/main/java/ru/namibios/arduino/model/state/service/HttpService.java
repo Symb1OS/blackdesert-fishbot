@@ -6,6 +6,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -14,23 +15,27 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.command.ShortCommand;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class HttpService {
 
-	private static final Logger LOG = Logger.getLogger(HttpService.class);
+    private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
 	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
+    private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
 
-	private HttpClient httpClient;
+    private HttpClient httpClient;
 	
-	private HttpResponse response;
+	private HttpResponse httpResponse;
 
 	public HttpService() {
 		httpClient = HttpClients.createDefault();
@@ -43,10 +48,26 @@ public class HttpService {
 				.setParameter(new BasicNameValuePair("message", message))
 				.build();
 
-		response = httpClient.execute(post);
-		HttpEntity entity = response.getEntity();
+		httpResponse = httpClient.execute(post);
+		HttpEntity entity = httpResponse.getEntity();
 		return EntityUtils.toString(entity, "UTF-8").trim();
 	}
+
+	public String getLastReleaseTag() throws IOException {
+
+        HttpGet get = new HttpGet(LAST_RELEASE_URL);
+
+        httpResponse = httpClient.execute(get);
+        HttpEntity entity = httpResponse.getEntity();
+
+        String response = EntityUtils.toString(entity, "UTF-8");
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map map = mapper.readValue(response, new TypeReference<Map<String, Object>>(){});
+        String tag = (String) map.get("tag_name");
+
+        return tag;
+    }
 
 	public String parseByteCaptcha(String key, byte[] captcha) throws IOException{
 
@@ -60,13 +81,13 @@ public class HttpService {
 		HttpEntity entity = builder.build();
 		post.setEntity(entity);
 
-		response = httpClient.execute(post);
+		httpResponse = httpClient.execute(post);
 
-		int statusCode = response.getStatusLine().getStatusCode();
+		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (statusCode == HttpStatus.SC_OK) {
 
 			LOG.debug("Status code: " + statusCode );
-			entity = response.getEntity();
+			entity = httpResponse.getEntity();
 			return EntityUtils.toString(entity, "UTF-8").trim();
 		} else {
 
@@ -75,7 +96,7 @@ public class HttpService {
 		}
 
 	}
-	
+
 	private static class Builder {
 		
 		private HttpPost post;

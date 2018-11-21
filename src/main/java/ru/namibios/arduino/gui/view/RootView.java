@@ -4,11 +4,13 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import ru.namibios.arduino.Transfer;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.config.TextAreaAppender;
+import ru.namibios.arduino.gui.CheckUpdate;
 import ru.namibios.arduino.gui.DynamicData;
 import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.SettingsController;
@@ -21,6 +23,8 @@ import java.awt.*;
 import java.util.ResourceBundle;
 
 public class RootView extends JFrame {
+
+    private static final Logger LOG = Logger.getLogger(RootView.class);
 
     private JPanel contentPane;
     private JButton buttonStart;
@@ -90,6 +94,8 @@ public class RootView extends JFrame {
 
         buttonStop.addActionListener(new StopController(transfer));
         buttonStop.setIcon(new ImageIcon(UI.IMG_STOP));
+
+        addWindowListener(new CheckUpdate(this));
 
         setVisible(true);
         setResizable(false);
