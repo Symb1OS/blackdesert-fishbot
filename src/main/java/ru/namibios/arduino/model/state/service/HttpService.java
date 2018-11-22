@@ -3,7 +3,6 @@ package ru.namibios.arduino.model.state.service;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -19,9 +18,19 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.command.ShortCommand;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -38,22 +47,39 @@ public class HttpService {
 	private HttpResponse httpResponse;
 
 	public HttpService() {
-		httpClient = HttpClients.createDefault();
-	}
-	
-	public String sendTelegram(String key, String message) throws ClientProtocolException, IOException{
+
+        SSLContext tls = getSSLContext();
+
+        httpClient = HttpClients.custom().setSSLContext(tls).build();
+    }
+
+    private SSLContext getSSLContext() {
+
+        SSLContext ctx = null;
+
+        try {
+
+            ctx = SSLContext.getInstance("TLS");
+            ctx.init(new KeyManager[0], new TrustManager[]{new DefaultTrustManager()}, new SecureRandom());
+
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            LOG.error(ExceptionUtils.getString(e));
+        }
+
+        return ctx;
+    }
+
+	public void sendTelegram(String key, String message) throws IOException{
 		
 		HttpPost post = Builder.config().setUrl(TELEGRAM_ALARMER_URL)
 				.setParameter(new BasicNameValuePair("key", key))
 				.setParameter(new BasicNameValuePair("message", message))
 				.build();
 
-		httpResponse = httpClient.execute(post);
-		HttpEntity entity = httpResponse.getEntity();
-		return EntityUtils.toString(entity, "UTF-8").trim();
+		httpClient.execute(post);
 	}
 
-	public String getLastReleaseTag() throws IOException {
+	public String getLastReleaseTag() throws IOException{
 
         HttpGet get = new HttpGet(LAST_RELEASE_URL);
 
@@ -97,7 +123,22 @@ public class HttpService {
 
 	}
 
-	private static class Builder {
+    private static class DefaultTrustManager implements X509TrustManager {
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+
+    }
+
+    private static class Builder {
 		
 		private HttpPost post;
 		private ArrayList<BasicNameValuePair> postParameters;

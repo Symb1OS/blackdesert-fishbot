@@ -143,7 +143,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
     @Key("bot.autouse.beer")
-    @DefaultValue("true, 7, 0m, 120m, Beer")
+    @DefaultValue("false, 7, 0m, 120m, Beer")
     @ConverterClass(HotSlotConverter.class)
     HotSlot SLOT_BEER();
 

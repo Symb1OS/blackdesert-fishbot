@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class CheckUpdate extends WindowAdapter {
+public class CheckUpdate extends WindowAdapter{
 
     private static final Logger LOG = Logger.getLogger(CheckUpdate.class);
 
@@ -19,7 +19,6 @@ public class CheckUpdate extends WindowAdapter {
     private RootView rootView;
 
     public CheckUpdate(RootView rootView) {
-
         this.rootView = rootView;
     }
 
@@ -47,14 +46,23 @@ public class CheckUpdate extends WindowAdapter {
 
     @Override
     public void windowOpened(WindowEvent e) {
-
-        boolean oldVersion = checkUpdate();
-        if (oldVersion) {
-            int code = JOptionPane.showConfirmDialog(rootView, "You want download new version?", "Available update", JOptionPane.YES_NO_OPTION);
-            if (code == JOptionPane.YES_OPTION) {
-                ExecUtils.openUri(LATEST_RELEASE_URL);
-            }
-        }
-
+        new CheckUpdateTask().start();
     }
+
+    private final class CheckUpdateTask extends Thread {
+
+        @Override
+        public void run() {
+
+            boolean oldVersion = checkUpdate();
+            if (oldVersion) {
+                int code = JOptionPane.showConfirmDialog(rootView, "You want download new version?", "Available update", JOptionPane.YES_NO_OPTION);
+                if (code == JOptionPane.YES_OPTION) {
+                    ExecUtils.openUri(LATEST_RELEASE_URL);
+                }
+            }
+
+        }
+    }
+
 }
