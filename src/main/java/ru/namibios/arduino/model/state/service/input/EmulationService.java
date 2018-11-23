@@ -15,7 +15,7 @@ public class EmulationService implements InputService{
 
     private static final Logger LOG = Logger.getLogger(EmulationService.class);
 
-    private static final String TOUCH_MATCHER = "[a-zA-Z]{3,}\\[{1}[0-9]{1,}[,]{1}[0-9]{1,}\\]{1}";
+    private static final String TOUCH_MATCHER = "\\[{1}[0-9]{1,}[,]{1}[0-9]{1,}\\]{1}";
     private static final String SLOT_MATCHER = "[a-zA-Z]{4}\\[{1}[0-9]{1}\\]{1}";
 
     private AbstractEmulationInput emulationInput;
@@ -62,8 +62,10 @@ public class EmulationService implements InputService{
         DelayUtils.delay(2000);
 
         for (Touch touch : Application.getInstance().BEER_TOUCHS()) {
-            emulationInput.clickLeft(touch.getX(),touch.getY());
-            DelayUtils.delay(2000);
+            if (touch.isActive()) {
+                emulationInput.clickLeft(touch.getX(),touch.getY());
+                DelayUtils.delay(2000);
+            }
         }
 
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
@@ -71,7 +73,10 @@ public class EmulationService implements InputService{
 
     private void takeLootByIndex(String command){
         emulationInput.sendInput(KeyEvent.VK_CONTROL);
-        clickByIndex(command);
+        for (String touch : command.split(ShortCommand.LOOT.getKey())) {
+            clickByIndex(touch);
+            DelayUtils.delay(2000);
+        }
         emulationInput.sendInput(KeyEvent.VK_CONTROL);
     }
 
@@ -95,7 +100,6 @@ public class EmulationService implements InputService{
         LOG.info("Take all loot");
         emulationInput.sendInput(KeyEvent.VK_R);
     }
-
 
     private void skipCalendar() {
         LOG.info("Close pop-up windows");
