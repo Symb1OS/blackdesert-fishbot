@@ -8,11 +8,11 @@ public class LootType {
 	
 	private boolean isTrash;
 	
-	private boolean isUnknow;
+	private boolean isUnknown;
 	
 	private boolean isEmpty;
 
-	public LootType(int index) {
+	LootType(int index) {
 		this.index = index;
 	}
 
@@ -40,12 +40,12 @@ public class LootType {
 		this.isTrash = isTrash;
 	}
 
-	public boolean isUnknow() {
-		return isUnknow;
+	public boolean isUnknown() {
+		return isUnknown;
 	}
 
-	public void setUnknow(boolean isUnknow) {
-		this.isUnknow = isUnknow;
+	public void setUnknown(boolean isUnknow) {
+		this.isUnknown = isUnknow;
 	}
 
 	public boolean isEmpty() {
@@ -58,7 +58,7 @@ public class LootType {
 
 	@Override
 	public String toString() {
-		return "LootIndex [index=" + index + ", isOk=" + isOk + ", isTrash=" + isTrash + ", isUnknow=" + isUnknow
+		return "LootIndex [index=" + index + ", isOk=" + isOk + ", isTrash=" + isTrash + ", isUnknown=" + isUnknown
 				+ ", isEmpty=" + isEmpty + "]";
 	}
 	

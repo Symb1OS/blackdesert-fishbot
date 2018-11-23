@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Looter {
 
-	private static final int UNKNOW = -1;
+	private static final int UNKNOWN = -1;
 
 	private List<LootType> lootTypeList;
 
@@ -40,7 +40,7 @@ public class Looter {
 				if(slot == trashIndex) lootType.setTrash(true);
 			}
 
-			if (slot  == UNKNOW) {
+			if (slot  == UNKNOWN) {
 				if(isTakeUnknown) {
 					lootType.setOk(true);
 				}else {
@@ -58,7 +58,7 @@ public class Looter {
 			if (lootType.isOk()) count.incOk();
 			if (lootType.isEmpty()) count.incEmpty();
 			if (lootType.isTrash()) count.incTrash();
-			if (lootType.isUnknow()) count.incUnknow();
+			if (lootType.isUnknown()) count.incUnknow();
 		}
 
 	}
