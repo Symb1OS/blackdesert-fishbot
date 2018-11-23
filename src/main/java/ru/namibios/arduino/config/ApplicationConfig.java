@@ -100,7 +100,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	
 	@Key("bot.loot.touch")
 	@Separator(";")
-	@DefaultValue("{1561,616};{1608,616}")
+	@DefaultValue("{1561,616};{1608,616};{1655,616}")
 	@ConverterClass(LootTouchConverter.class)
 	Touch[] LOOT_TOUCH();
 

@@ -22,53 +22,134 @@ public class FishLootTest {
 
 	}
 
-	// ------------------------------ALL FILTER TRUE------------------------------//
+    private String ok;
+    private String empty;
+    private String trash;
+
+    @Before
+    public void before() {
+        ok    = Path.TEST_RESOURCES + "parsing/loot/ok/scala/scala.jpg";
+        empty = Path.TEST_RESOURCES + "parsing/loot/ok/empty/empty.jpg";
+        trash = Path.TEST_RESOURCES + "parsing/loot/trash/1.jpg";
+
+    }
+
+    // ------------------------------ALL FILTER TRUE------------------------------//
 
 	// --------------------TAKE ALL--------------------//
 
-	@Test
-	public void testOkEmpty() throws IOException{
-		FishLoot fishLoot = new FishLoot(Path.TEST_RESOURCES + "parsing/loot/ok/scala/scala.jpg", Path.TEST_RESOURCES + "parsing/loot/ok/empty/empty.jpg");
-		String key = fishLoot.getKey();
+    @Test
+    public void testOkEmptyEmpty() throws IOException{
+        FishLoot fishLoot = new FishLoot(ok, empty, empty);
+        String key = fishLoot.getKey();
 
-		assertEquals(ShortCommand.TAKE.getKey(), key);
-	}
+        assertEquals(ShortCommand.TAKE.getKey(), key);
+    }
 
-	@Test
-	public void testOkOk() throws IOException{
-		FishLoot fishLoot = new FishLoot(Path.TEST_RESOURCES + "parsing/loot/ok/scala/scala.jpg", Path.TEST_RESOURCES + "parsing/loot/ok/event/1.jpg");
-		String key = fishLoot.getKey();
+    @Test
+    public void testOkOkEmpty() throws IOException{
+        FishLoot fishLoot = new FishLoot(ok, ok, empty);
+        String key = fishLoot.getKey();
 
-		assertEquals(ShortCommand.TAKE.getKey(), key);
-	}
+        assertEquals(ShortCommand.TAKE.getKey(), key);
+    }
+
+    @Test
+    public void testOkOkOK() throws IOException {
+        FishLoot fishLoot = new FishLoot(ok, ok, ok);
+        String key = fishLoot.getKey();
+
+        assertEquals(ShortCommand.TAKE.getKey(), key);
+    }
 
 
-	// --------------------TAKE BY INDEX--------------------//
-	@Test
-	public void testOkTrash() throws IOException{
-		FishLoot fishLoot = new FishLoot(Path.TEST_RESOURCES + "parsing/loot/ok/key/key.jpg", Path.TEST_RESOURCES + "parsing/loot/trash/1.jpg");
-		String key = fishLoot.getKey();
+    // --------------------TAKE BY INDEX--------------------//
 
-		assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot(), key);
-	}
+    @Test
+    public void testOkTrashEmpty() throws IOException{
+        FishLoot fishLoot = new FishLoot(ok, trash, empty);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot(), key);
+    }
 	
 	@Test
-	public void testTrashOk() throws IOException{
-		FishLoot fishLoot = new FishLoot(Path.TEST_RESOURCES + "parsing/loot/trash/2.jpg", Path.TEST_RESOURCES + "parsing/loot/ok/scala/scala.jpg");
+	public void testTrashOkEmpty() throws IOException{
+		FishLoot fishLoot = new FishLoot(trash, ok, empty);
 		String key = fishLoot.getKey();
 		
 		assertEquals(Application.getInstance().LOOT_TOUCH()[1].toCommandLoot(), key);
 	}
+
+
+    @Test
+    public void testOkOkTrash() throws IOException {
+        FishLoot fishLoot = new FishLoot(ok, ok, trash);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot()
+                + Application.getInstance().LOOT_TOUCH()[1].toCommandLoot(), key);
+    }
+
+    @Test
+    public void testOkTrashTrash() throws IOException {
+        FishLoot fishLoot = new FishLoot(ok, trash, trash);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot(), key);
+    }
+
+    @Test
+    public void testTrashOkTrash() throws IOException {
+        FishLoot fishLoot = new FishLoot(trash, ok, trash);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[1].toCommandLoot(), key);
+    }
+
+    @Test
+    public void testOkTrashOk() throws IOException {
+        FishLoot fishLoot = new FishLoot(ok, trash, ok);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot() +
+                Application.getInstance().LOOT_TOUCH()[2].toCommandLoot(), key);
+    }
+
+    @Test
+    public void testTrashOkOk() throws IOException {
+        FishLoot fishLoot = new FishLoot(trash, ok, ok);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[1].toCommandLoot() +
+                Application.getInstance().LOOT_TOUCH()[2].toCommandLoot(), key);
+    }
 	
 	
 	// --------------------IGNORE ALL--------------------//
-	
-	@Test
-	public void testTrashTrash() throws IOException{
-		FishLoot fishLoot = new FishLoot(Path.TEST_RESOURCES + "parsing/loot/trash/1.jpg", Path.TEST_RESOURCES + "parsing/loot/trash/2.jpg");
-		String key = fishLoot.getKey();
-		
-		assertEquals(ShortCommand.IGNORE.getKey(), key);
-	}
+
+    @Test
+    public void testTrashEmptyEmpty() throws IOException{
+        FishLoot fishLoot = new FishLoot(trash, empty, empty);
+        String key = fishLoot.getKey();
+
+        assertEquals(ShortCommand.IGNORE.getKey(), key);
+    }
+
+    @Test
+    public void testTrashTrashEmpty() throws IOException{
+        FishLoot fishLoot = new FishLoot(trash, trash, empty);
+        String key = fishLoot.getKey();
+
+        assertEquals(ShortCommand.IGNORE.getKey(), key);
+    }
+
+    @Test
+    public void testTrashTrashTrash() throws IOException {
+        FishLoot fishLoot = new FishLoot(trash, trash, trash);
+        String key = fishLoot.getKey();
+
+        assertEquals(ShortCommand.IGNORE.getKey(), key);
+    }
 
 }

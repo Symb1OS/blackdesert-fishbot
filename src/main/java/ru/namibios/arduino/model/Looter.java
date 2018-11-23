@@ -60,7 +60,7 @@ public class Looter {
 			if (lootType.isTrash()) count.incTrash();
 			if (lootType.isUnknow()) count.incUnknow();
 		}
-		
+
 	}
 	
 	public List<LootType> getLootTypeList() {
@@ -68,14 +68,14 @@ public class Looter {
 	}
 	
 	public boolean isTakeAll() {
-		return ((count.getOk() > 0 && count.getEmpty() > 0) || (count.getOk() == count.getLength()));
+		return (count.getOk() + count.getEmpty() == count.getLength());
 	}
-	
+
 	public boolean isIgnoreAll(){
-		return ((count.getTrash() > 0 && count.getEmpty() > 0) || (count.getTrash() == count.getLength()));
+		return (count.getTrash() + count.getEmpty() == count.getLength());
 	}
 
 	public boolean isTakeByIndex() {
-		return (count.getOk() > 0 && count.getTrash() > 0);
+		return (count.getOk() > 0 && count.getOk() < count.getLength());
 	}
 }

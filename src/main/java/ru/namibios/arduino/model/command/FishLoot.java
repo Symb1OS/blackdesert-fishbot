@@ -26,6 +26,14 @@ public class FishLoot implements Command{
 		this.scrins.add(new Screen(fileLootTwo));
 		
 	}
+
+	public FishLoot(String fileLootOne, String fileLootTwo, String fileLootThree) throws IOException {
+		this.scrins = new ArrayList<>();
+		this.scrins.add(new Screen(fileLootOne));
+		this.scrins.add(new Screen(fileLootTwo));
+		this.scrins.add(new Screen(fileLootThree));
+
+	}
 	
 	public FishLoot() throws AWTException {
 		this.scrins = new ArrayList<>();
@@ -79,22 +87,24 @@ public class FishLoot implements Command{
 			LOG.info("Loot ok. Take all..");
 			return ShortCommand.TAKE.getKey();
 		}
-		
-		if(looter.isIgnoreAll()) {
-			LOG.info("Trash. Throw out all..");
-			return ShortCommand.IGNORE.getKey();
-		}
-		
-		if(looter.isTakeByIndex()) {
-			LOG.info("Take by index");
-			for(LootType type : looter.getLootTypeList()) {
-				if(type.isOk()) {
-					int index = type.getIndex();
-					Touch touch = Application.getInstance().LOOT_TOUCH()[index];
-					return touch.toCommandLoot();
-				}
-			}
-		}
+
+        if(looter.isIgnoreAll()) {
+            LOG.info("Trash. Throw out all..");
+            return ShortCommand.IGNORE.getKey();
+        }
+
+        if(looter.isTakeByIndex()) {
+            LOG.info("Take by index");
+            String command = "";
+            for(LootType type : looter.getLootTypeList()) {
+                if(type.isOk()) {
+                    int index = type.getIndex();
+                    Touch touch = Application.getInstance().LOOT_TOUCH()[index];
+                    command+= touch.toCommandLoot();
+                }
+            }
+            return command;
+        }
 		
 		LOG.info("Strategy is not defined. Take..");
 		return ShortCommand.TAKE.getKey();
