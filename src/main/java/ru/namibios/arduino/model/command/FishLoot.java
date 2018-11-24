@@ -17,7 +17,8 @@ public class FishLoot implements Command{
 	private List<Screen> scrins;
 	private Screen one;
 	private Screen two;
-	
+	private Screen three;
+
 	private ImageParser imageParser;
 	
 	public FishLoot(String fileLootOne, String fileLootTwo) throws IOException {
@@ -40,10 +41,12 @@ public class FishLoot implements Command{
 		
 		this.one = new Screen(Application.getInstance().LOOT_SLOT_ONE());
 		this.two = new Screen(Application.getInstance().LOOT_SLOT_TWO());
-		
+		this.three = new Screen(Application.getInstance().LOOT_SLOT_THREE());
+
 		if(Application.getInstance().SAVE_UNSORT()) {
 			this.one.saveImage("loot/unsort");
 			this.two.saveImage("loot/unsort");
+			this.three.saveImage("loot/unsort");
 		}
 		
 		this.scrins.add(one);
