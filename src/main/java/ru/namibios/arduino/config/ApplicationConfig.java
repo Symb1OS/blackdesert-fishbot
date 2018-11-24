@@ -5,9 +5,9 @@ import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
 import ru.namibios.arduino.config.converter.HotSlotConverter;
-import ru.namibios.arduino.config.converter.LootTouchConverter;
 import ru.namibios.arduino.config.converter.RectangleConverter;
 import ru.namibios.arduino.config.converter.SerialPortConverter;
+import ru.namibios.arduino.config.converter.TouchConverter;
 import ru.namibios.arduino.model.HotSlot;
 import ru.namibios.arduino.model.Touch;
 
@@ -101,7 +101,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.loot.touch")
 	@Separator(";")
 	@DefaultValue("{1561,616};{1608,616};{1655,616}")
-	@ConverterClass(LootTouchConverter.class)
+	@ConverterClass(TouchConverter.class)
 	Touch[] LOOT_TOUCH();
 
 
@@ -150,7 +150,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @Key("bot.autouse.beer.touchs")
     @Separator(";")
     @DefaultValue("{1507,847};{1192,494};{1646,844}")
-    @ConverterClass(LootTouchConverter.class)
+    @ConverterClass(TouchConverter.class)
     Touch[] BEER_TOUCHS();
 
 	@Key("bot.autouse.minigame")
@@ -328,6 +328,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("1586, 597, 43, 43")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_TWO();
+
+	@Key("bot.screen.lootslotthree")
+	@DefaultValue("1633, 597, 43, 43")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_SLOT_THREE();
 
 	@Key("bot.screen.chat")
 	@DefaultValue("5, 1000, 355, 40")

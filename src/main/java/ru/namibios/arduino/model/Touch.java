@@ -2,15 +2,29 @@ package ru.namibios.arduino.model;
 
 public class Touch {
 
+    private boolean isActive;
+
 	private int x;
 	private int y;
 
 	public Touch(int x, int y) {
-		this.x = x;
+
+	    isActive = true;
+
+	    this.x = x;
 		this.y = y;
+
 	}
 
-	public int getX() {
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public int getX() {
 		return x;
 	}
 
@@ -26,17 +40,29 @@ public class Touch {
 		this.y = y;
 	}
 
-	@Override
-	public String toString() {
-		return "[" + x + "," + y + "]";
-	}
+    @Override
+    public String toString() {
+        return "Touch{" +
+                "isActive=" + isActive +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 
-	public String toCommandRod(){
-		return "Rod" + toString();
+    private String toTouch(){
+        return "[" + x + "," + y + "]";
+    }
+
+    public String toCommandRod(){
+		return "Rod" + toTouch();
 	}
 
 	public String toCommandLoot(){
-		return "Loot" + toString();
+		return "Loot" + toTouch();
 	}
+
+	public String toSettingTouch(){
+        return String.format("%s{%s,%s}", isActive ? "" : "!", x, y);
+    }
 
 }

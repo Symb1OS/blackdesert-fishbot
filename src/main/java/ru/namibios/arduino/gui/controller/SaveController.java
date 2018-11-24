@@ -2,6 +2,7 @@ package ru.namibios.arduino.gui.controller;
 
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.gui.view.SettingsView;
+import ru.namibios.arduino.model.Touch;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ public class SaveController implements ActionListener{
 
 	private static final String FORMAT_SLOT = "%s,%s,%s,%s";
 	private static final String FORMAT_SLOT_TASK = "%s,%s,%s,%s, %s";
+	private static final String FORMAT_BEER_TOUCHS = "%s;%s;%s";
 
 	private SettingsView view;
 
@@ -32,6 +34,13 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.loot.unknown", String.valueOf(view.getCbUnknown().isSelected()));
 
 		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT_TASK, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, view.getBeerPeriod().getText(), "Beer"));
+
+		Touch[] touches = Application.getInstance().BEER_TOUCHS();
+		touches[2].setActive(view.getCbRepeatWork().isSelected());
+        Application.getInstance().setProperty("bot.autouse.beer.touchs", String.format(FORMAT_BEER_TOUCHS,
+                touches[0].toSettingTouch(),
+                touches[1].toSettingTouch(),
+                touches[2].toSettingTouch()));
 
 		Application.getInstance().setProperty("bot.slot.one", String.format(FORMAT_SLOT, view.getCbFirstSlotActive().isSelected(), view.getTfFirstSlotKey().getText(), view.getTfFirstSlotDelay().getText(), view.getTfFirstSlotPeriod().getText()));
 		Application.getInstance().setProperty("bot.slot.two", String.format(FORMAT_SLOT, view.getCbSecondSlotActive().isSelected(),view.getTfSecondSlotKey().getText(), view.getTfSecondSlotDelay().getText(), view.getTfSecondSlotPeriod().getText()));
