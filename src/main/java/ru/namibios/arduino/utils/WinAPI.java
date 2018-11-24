@@ -12,7 +12,7 @@ public class WinAPI {
     public static WinDef.HWND findWindow(String name){
         Map<WinDef.HWND, String> windows = Windows.getWindows();
         for (WinDef.HWND hwnd : windows.keySet()) {
-            if (Windows.getWindowTitle(hwnd).startsWith(name)) {
+            if (Windows.getWindowTitle(hwnd).toLowerCase().startsWith(name.toLowerCase())) {
                 return hwnd;
             }
         }

@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 public enum StatusKapchaTemplate implements MatrixTemplate{
 
-	SUCCESS("SUCCESS_EU"),
+	SUCCESS("SUCCESS_EU", "SUCCESS_RU"),
 
-	FAILED("FAILED_EU");
+	FAILED("FAILED_EU", "FAILED_RU");
 	
 	private final List<int[][]> templates;
 
