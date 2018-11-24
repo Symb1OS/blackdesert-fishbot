@@ -51,7 +51,8 @@ public class FishLoot implements Command{
 		
 		this.scrins.add(one);
 		this.scrins.add(two);
-		
+		this.scrins.add(three);
+
 	}
 	
 	private String[] getLootIndices() {
@@ -111,14 +112,6 @@ public class FishLoot implements Command{
 		
 		LOG.info("Strategy is not defined. Take..");
 		return ShortCommand.TAKE.getKey();
-	}
-
-	public Screen getOne() {
-		return one;
-	}
-
-	public Screen getTwo() {
-		return two;
 	}
 
 }
