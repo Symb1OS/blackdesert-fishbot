@@ -7,7 +7,6 @@ import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.ImageUtils;
-import ru.namibios.arduino.utils.PythonExec;
 
 import java.awt.*;
 import java.io.IOException;
@@ -19,7 +18,6 @@ public class Captcha implements Command{
 
 	private Screen screen;
 	private String key;
-	private String filename;
 
 	public Captcha() throws AWTException  {
 
@@ -40,29 +38,6 @@ public class Captcha implements Command{
 		return screen;
 	}
 	
-	public String getRezultKey() {
-		return key;
-	}
-
-	public String localParsing(){
-
-		try {
-
-			key = PythonExec.exec(filename);
-			key = key.replaceAll("0", "w")
-					.replaceAll("1", "s")
-					.replaceAll("2", "a")
-					.replaceAll("3", "d")
-					.replaceAll("4", "");
-
-		}catch (IOException e) {
-			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
-			LOG.error(ExceptionUtils.getString(e));
-		}
-
-		return key;
-	}
-
 	@Override
 	public String getKey(){
 

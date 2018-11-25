@@ -26,7 +26,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.input.mode")
 	@DefaultValue("ROBOT")
-    InputMode INPUT_MODE();
+	InputMode INPUT_MODE();
 
 	@Key("bot.input.timeout")
 	@DefaultValue("25000")
@@ -142,16 +142,16 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	// TASKS
 	///////////////////////////////////////////////////////////////////////////
 
-    @Key("bot.autouse.beer")
-    @DefaultValue("false, 7, 0m, 120m, Beer")
-    @ConverterClass(HotSlotConverter.class)
-    HotSlot SLOT_BEER();
+	@Key("bot.autouse.beer")
+	@DefaultValue("false, 7, 0m, 120m, Beer")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot SLOT_BEER();
 
-    @Key("bot.autouse.beer.touchs")
-    @Separator(";")
-    @DefaultValue("{1507,847};{1192,494};{1646,844}")
-    @ConverterClass(TouchConverter.class)
-    Touch[] BEER_TOUCHS();
+	@Key("bot.autouse.beer.touchs")
+	@Separator(";")
+	@DefaultValue("{1507,847};{1192,494};{1646,844}")
+	@ConverterClass(TouchConverter.class)
+	Touch[] BEER_TOUCHS();
 
 	@Key("bot.autouse.minigame")
 	@DefaultValue("false")
@@ -287,12 +287,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle SPACE();
 
 	@Key("bot.screen.space.offset.x")
-    @DefaultValue("0")
+	@DefaultValue("0")
 	int SPACE_OFFSET_X();
 
-    @Key("bot.screen.space.offset.y")
-    @DefaultValue("20")
-    int SPACE_OFFSET_Y();
+	@Key("bot.screen.space.offset.y")
+	@DefaultValue("20")
+	int SPACE_OFFSET_Y();
 
 	@Key("bot.screen.line")
 	@DefaultValue("820, 402, 278, 25")
