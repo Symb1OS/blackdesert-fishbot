@@ -24,7 +24,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("9999")
     int LOCAL_PORT();
 
-	@Key("bot.port")
+	@Key("bot.comport")
 	@DefaultValue("")
 	String COM_PORT();
 
