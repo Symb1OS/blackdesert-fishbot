@@ -20,9 +20,13 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("23.95.61.97:9090")
 	String URL_CAPTCHA_SERVICE();
 
+    @Key("bot.local.port")
+    @DefaultValue("9999")
+    int LOCAL_PORT();
+
 	@Key("bot.port")
 	@DefaultValue("")
-	String PORT();
+	String COM_PORT();
 
 	@Key("bot.input.mode")
 	@DefaultValue("ROBOT")
@@ -338,4 +342,9 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("5, 1000, 355, 40")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CHAT();
+
+    @Key("bot.screen.debug.waitfish")
+    @DefaultValue("false")
+    boolean DEBUG_WAITFISH();
+
 }

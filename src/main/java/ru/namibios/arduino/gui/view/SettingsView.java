@@ -128,7 +128,7 @@ public class SettingsView extends JDialog {
 
         int count = cbPort.getItemCount();
         for (int index = 0; index < count; index++) {
-            if (cbPort.getItemAt(index).contains(Application.getInstance().PORT())) {
+            if (cbPort.getItemAt(index).contains(Application.getInstance().COM_PORT())) {
                 cbPort.setSelectedItem(cbPort.getItemAt(index));
             }
         }

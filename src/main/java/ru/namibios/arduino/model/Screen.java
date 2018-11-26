@@ -52,7 +52,7 @@ public class Screen {
 		int cnt = 0;
 		while(cnt < iteration){
 			BufferedImage noiseImage = new Screen(Application.getInstance().CAPTCHA()).getScreenShot();
-			noise.addNois(noiseImage);
+			noise.addNoise(noiseImage);
 			cnt++;
 		}
 		screenShot = noise.clear();
@@ -73,7 +73,7 @@ public class Screen {
 	        screenShot.setRGB(x, y, gray);
 	    }
 	}
-	
+
 	public void saveDebugImage(){
 		try {
 			ImageIO.write(screenShot, "jpg", new File(Path.DEBUG + DateUtils.getYYYY_MM_DD_HH_MM_SS_S() + ".jpg"));
@@ -100,18 +100,21 @@ public class Screen {
 		saveToStore(name, Path.STORE_CAPTCHA_CLEAN);
 	}
 
-	public String saveImage(String folder) {
+	public void saveImage(String folder) {
 		
 		try {
+
 			String filename = Path.RESOURCES + folder + "/" + DateUtils.getYYYY_MM_DD_HH_MM_SS_S() + ".jpg";
 			File file = new File(filename);
+            file.mkdirs();
+
 			ImageIO.write(screenShot, "jpg", file);
-			return file.getAbsolutePath();
-		} catch (IOException e) {
+            file.getAbsolutePath();
+
+        } catch (IOException e) {
 			logger.error("Exception " + e);
 		}
-		return null;
-	}
+    }
 	
 	public BufferedImage getScreenShot() {
 		return screenShot;
@@ -139,7 +142,7 @@ public class Screen {
 		return imageInByte;
 	}
 	
-public class Noise {
+private class Noise {
 		
 		private BufferedImage image;
 		
@@ -157,7 +160,7 @@ public class Noise {
 			
 		}
 		
-		void addNois(BufferedImage image){
+		void addNoise(BufferedImage image){
 			this.noises.add(image);
 		}
 		

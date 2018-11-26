@@ -19,7 +19,7 @@ public class ArduinoService implements InputService{
 
     public ArduinoService() {
 
-        serialPort = SerialPort.getCommPort(Application.getInstance().PORT());
+        serialPort = SerialPort.getCommPort(Application.getInstance().COM_PORT());
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
         if (serialPort.openPort()) {
