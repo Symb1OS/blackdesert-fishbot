@@ -1,6 +1,7 @@
 package ru.namibios.arduino.model.command;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.Chars;
@@ -9,7 +10,7 @@ import java.awt.*;
 
 public class WaitFish implements Command{
 
-	private Screen screen;
+    private Screen screen;
 	
 	private ImageParser imageParser;
 
@@ -35,8 +36,8 @@ public class WaitFish implements Command{
 		imageParser = new ImageParser(screen, Chars.values());
 		imageParser.parse(Screen.WHITE);
 
-        if (Application.getInstance().DEBUG_WAITFISH()) {
-            screen.saveImage("debug/waitfish");
+        if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_WAITFISH()) {
+            screen.saveImage(Path.DEBUG_WAITFISH);
         }
 
 //		MatrixUtils.printMatrix(imageParser.getImageMatrix(), "0");

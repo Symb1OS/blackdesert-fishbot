@@ -3,6 +3,7 @@ package ru.namibios.arduino.config;
 import java.io.File;
 
 public class Path {
+
 	public static final String RESOURCES = "resources/";
 	public static final String SCRIPT_PATH_WIN = RESOURCES + "model/parsing.bat";
 	public static final String SCRIPT_PATH_LINUX = RESOURCES + "model/parsing.sh";
@@ -10,7 +11,13 @@ public class Path {
 	public static final String ROOT_ICON = RESOURCES + "icon.png";
 	
 	public static final String DEBUG = "resources/debug/";
+
 	public static final String DEBUG_LINE = "debug/line/";
+
+    public static final String DEBUG_WAITFISH = "debug/waitfish";
+    public static final String DEBUG_SUBLINE = "debug/subline";
+    public static final String DEBUG_STATUSCAPTCHA = "debug/statuscaptcha";
+    public static final String DEBUG_STATUSCUT = "debug/statuscut";
 
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String STATUS_CUT = TEMPLATES + "statuscut/";
@@ -22,7 +29,7 @@ public class Path {
 	public static final String STORE_CAPTCHA_DIRTY = System.getProperty("user.home") + "/bdo/captcha/store/dirty/";
 	public static final String STORE_CAPTCHA_CLEAN = System.getProperty("user.home") + "/bdo/captcha/store/clean/";
 
-	static {
+    static {
 
 		File storeCaptcha = new File(STORE_CAPTCHA);
 		File storeCaptchaDirty = new File(STORE_CAPTCHA_DIRTY);

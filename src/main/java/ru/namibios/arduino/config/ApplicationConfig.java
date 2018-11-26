@@ -343,8 +343,28 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CHAT();
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    // DEBUG
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Key("bot.screen.debug")
+    @DefaultValue("false")
+    boolean DEBUG_SCREEN();
+
     @Key("bot.screen.debug.waitfish")
     @DefaultValue("false")
     boolean DEBUG_WAITFISH();
 
+    @Key("bot.screen.debug.statuscaptcha")
+    @DefaultValue("false")
+    boolean DEBUG_STATUS_CAPTCHA();
+
+    @Key("bot.screen.debug.statuscut")
+    @DefaultValue("false")
+    boolean DEBUG_STATUS_CUT();
+
+    @Key("bot.screen.debug.subline")
+    @DefaultValue("false")
+    boolean DEBUG_SUBLINE();
 }
