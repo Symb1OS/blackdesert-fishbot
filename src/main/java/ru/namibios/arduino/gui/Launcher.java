@@ -37,6 +37,7 @@ public class Launcher {
 		}
 
 		catch (BindException e) {
+            JOptionPane.showMessageDialog(null, "Program already running on port: " + Application.getInstance().LOCAL_PORT(), "Warning", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Program already running on port: " + Application.getInstance().LOCAL_PORT());
 			LOG.error(ExceptionUtils.getString(e));
 			System.exit(1);
