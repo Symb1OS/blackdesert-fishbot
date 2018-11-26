@@ -2,6 +2,7 @@ package ru.namibios.arduino.model.command;
 
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.*;
 import ru.namibios.arduino.model.template.Loot;
 
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FishLoot implements Command{
-	
+
 	private final static Logger LOG = Logger.getLogger(FishLoot.class);
 
-	private List<Screen> scrins;
+	private List<Screen> screens;
 	private Screen one;
 	private Screen two;
 	private Screen three;
@@ -22,42 +23,48 @@ public class FishLoot implements Command{
 	private ImageParser imageParser;
 	
 	public FishLoot(String fileLootOne, String fileLootTwo) throws IOException {
-		this.scrins = new ArrayList<>();
-		this.scrins.add(new Screen(fileLootOne));
-		this.scrins.add(new Screen(fileLootTwo));
+		this.screens = new ArrayList<>();
+		this.screens.add(new Screen(fileLootOne));
+		this.screens.add(new Screen(fileLootTwo));
 		
 	}
 
 	public FishLoot(String fileLootOne, String fileLootTwo, String fileLootThree) throws IOException {
-		this.scrins = new ArrayList<>();
-		this.scrins.add(new Screen(fileLootOne));
-		this.scrins.add(new Screen(fileLootTwo));
-		this.scrins.add(new Screen(fileLootThree));
+		this.screens = new ArrayList<>();
+		this.screens.add(new Screen(fileLootOne));
+		this.screens.add(new Screen(fileLootTwo));
+		this.screens.add(new Screen(fileLootThree));
 
 	}
 	
 	public FishLoot() throws AWTException {
-		this.scrins = new ArrayList<>();
+		this.screens = new ArrayList<>();
 		
 		this.one = new Screen(Application.getInstance().LOOT_SLOT_ONE());
 		this.two = new Screen(Application.getInstance().LOOT_SLOT_TWO());
 		this.three = new Screen(Application.getInstance().LOOT_SLOT_THREE());
 
-		if(Application.getInstance().SAVE_UNSORT()) {
-			this.one.saveImage("loot/unsort");
-			this.two.saveImage("loot/unsort");
-			this.three.saveImage("loot/unsort");
+		this.screens.add(one);
+		this.screens.add(two);
+		this.screens.add(three);
+
+		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
+			for (Screen screen : screens) {
+				screen.saveImage(Path.DEBUG_FILTERLOOT);
+			}
 		}
-		
-		this.scrins.add(one);
-		this.scrins.add(two);
-		this.scrins.add(three);
+
+		if(Application.getInstance().SAVE_UNSORT()) {
+			for (Screen screen : screens) {
+				screen.saveImage(Path.LOOT_UNSORT);
+			}
+		}
 
 	}
 	
 	private String[] getLootIndices() {
 		String loots = "";
-		for (Screen screen : scrins) {
+		for (Screen screen : screens) {
 			imageParser = new ImageParser(screen, Loot.values());
 			imageParser.parse(Screen.GRAY);
 

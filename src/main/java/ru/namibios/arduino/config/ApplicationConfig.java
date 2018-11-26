@@ -367,4 +367,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @Key("bot.screen.debug.subline")
     @DefaultValue("false")
     boolean DEBUG_SUBLINE();
+
+    @Key("bot.screen.debug.captcha")
+    @DefaultValue("false")
+    boolean DEBUG_CAPTCHA();
+
+    @Key("bot.screen.debug.filterloot")
+    @DefaultValue("false")
+    boolean DEBUG_FILTER_LOOT();
 }

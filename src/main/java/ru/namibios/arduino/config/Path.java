@@ -16,8 +16,12 @@ public class Path {
 
     public static final String DEBUG_WAITFISH = "debug/waitfish";
     public static final String DEBUG_SUBLINE = "debug/subline";
+    public static final String DEBUG_CAPTCHA = "debug/captcha";
     public static final String DEBUG_STATUSCAPTCHA = "debug/statuscaptcha";
     public static final String DEBUG_STATUSCUT = "debug/statuscut";
+    public static final String DEBUG_FILTERLOOT = "debug/filterloot";
+
+    public static final String LOOT_UNSORT = "loot/unsort";
 
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String STATUS_CUT = TEMPLATES + "statuscut/";

@@ -3,6 +3,7 @@ package ru.namibios.arduino.model.command;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
@@ -28,6 +29,10 @@ public class Captcha implements Command{
 		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
 		this.screen.saveClean(name);
 		this.key = "";
+
+		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_CAPTCHA()) {
+			screen.saveImage(Path.DEBUG_CAPTCHA);
+		}
 	}
 	
 	public Captcha(String file) throws IOException{
