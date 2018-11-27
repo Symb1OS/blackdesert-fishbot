@@ -51,7 +51,7 @@ public class EmulationService implements InputService{
 
     private void changeRod(String command){
         emulationInput.sendInput(KeyEvent.VK_I);
-        clickByIndex(command);
+        clickByIndex(command.replace(ShortCommand.ROD.getKey(), ""));
         DelayUtils.delay(1000);
         emulationInput.sendInput(KeyEvent.VK_I);
     }
