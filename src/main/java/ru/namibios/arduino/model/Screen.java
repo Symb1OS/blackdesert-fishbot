@@ -43,8 +43,16 @@ public class Screen {
 		noise = new Noise(screenShot);
 	}
 
-	public void toZone(Rectangle zone) throws IOException {
+    public Screen(BufferedImage screenShot) throws AWTException {
+        this.screenShot = screenShot;
+    }
+
+	public void toZone(Rectangle zone) {
 		this.screenShot = screenShot.getSubimage(zone.x, zone.y, zone.width, zone.height);
+	}
+
+	public BufferedImage getScreenZone(Rectangle zone) {
+		return screenShot.getSubimage(zone.x, zone.y, zone.width, zone.height);
 	}
 
 	public void clearNoise(int iteration) throws AWTException {
