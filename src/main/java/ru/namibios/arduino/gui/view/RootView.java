@@ -16,6 +16,7 @@ import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.SettingsController;
 import ru.namibios.arduino.gui.controller.StartController;
 import ru.namibios.arduino.gui.controller.StopController;
+import ru.namibios.arduino.utils.AppUtils;
 import ru.namibios.arduino.utils.ExecUtils;
 
 import javax.swing.*;
@@ -38,7 +39,8 @@ public class RootView extends JFrame {
 
         Transfer transfer = new Transfer();
 
-        setTitle("Fish bot");
+        setTitle("Fish bot_" + AppUtils.getVersion());
+
         setContentPane(contentPane);
         setAlwaysOnTop(true);
         setLocation(0, 400);
