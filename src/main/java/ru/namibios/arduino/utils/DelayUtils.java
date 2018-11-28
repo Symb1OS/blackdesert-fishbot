@@ -1,6 +1,6 @@
 package ru.namibios.arduino.utils;
 
-public class DelayUtils{
+public final class DelayUtils{
 	
 	private DelayUtils() {}
 	

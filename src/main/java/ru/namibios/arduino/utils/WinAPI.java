@@ -5,7 +5,7 @@ import me.coley.simplejna.Windows;
 
 import java.util.Map;
 
-public class WinAPI {
+public final class WinAPI {
 
     private WinAPI(){}
 

@@ -1,11 +1,11 @@
 package ru.namibios.arduino.utils;
 
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class ExecUtils {
+public final class ExecUtils {
 
 	private ExecUtils() {}
 	

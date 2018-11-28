@@ -3,7 +3,7 @@ package ru.namibios.arduino.utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class ExceptionUtils {
+public final class ExceptionUtils {
 
 	private ExceptionUtils() {}
 	

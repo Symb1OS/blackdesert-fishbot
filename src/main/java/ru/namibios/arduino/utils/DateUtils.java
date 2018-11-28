@@ -3,7 +3,7 @@ package ru.namibios.arduino.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtils {
+public final class DateUtils {
 
 	private DateUtils(){}
 

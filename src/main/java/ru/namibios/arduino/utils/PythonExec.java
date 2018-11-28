@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 
-public class PythonExec {
+public final class PythonExec {
 
 	private static final Logger LOG = Logger.getLogger(PythonExec.class);
 

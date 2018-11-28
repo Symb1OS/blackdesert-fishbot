@@ -1,6 +1,6 @@
 package ru.namibios.arduino.utils;
 
-public class Matrix {
+public final class Matrix {
 
     private int[][] data;
 
