@@ -24,7 +24,7 @@ public class SaveController implements ActionListener{
 
 		Application.getInstance().setProperty("bot.language", String.valueOf(view.getCbLanguage().getSelectedItem()));
 
-		Application.getInstance().setProperty("bot.port", getPortName(String.valueOf(view.getCbPort().getSelectedItem())));
+		Application.getInstance().setProperty("bot.comport", getPortName(String.valueOf(view.getCbPort().getSelectedItem())));
 		Application.getInstance().setProperty("bot.input.mode", String.valueOf(view.getCbMode().getSelectedItem()));
 
 		Application.getInstance().setProperty("bot.loot.key",   String.valueOf(view.getCbKey().isSelected()));
