@@ -141,6 +141,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	boolean SAVE_UNSORT();
 
+	@Key("bot.loot.save_unknown")
+	@DefaultValue("true")
+	boolean SAVE_UNKNOWN();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// TASKS
@@ -384,4 +388,5 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @Key("bot.screen.debug.filterloot")
     @DefaultValue("false")
     boolean DEBUG_FILTER_LOOT();
+
 }

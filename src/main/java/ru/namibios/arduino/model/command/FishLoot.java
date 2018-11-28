@@ -15,6 +15,8 @@ public class FishLoot implements Command{
 
 	private final static Logger LOG = Logger.getLogger(FishLoot.class);
 
+	private static final String UNKNOWN_INDEX = "-1";
+
 	private List<Screen> screens;
 	private Screen one;
 	private Screen two;
@@ -48,18 +50,6 @@ public class FishLoot implements Command{
 		this.screens.add(two);
 		this.screens.add(three);
 
-		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
-			for (Screen screen : screens) {
-				screen.saveImage(Path.DEBUG_FILTERLOOT);
-			}
-		}
-
-		if(Application.getInstance().SAVE_UNSORT()) {
-			for (Screen screen : screens) {
-				screen.saveImage(Path.LOOT_UNSORT);
-			}
-		}
-
 	}
 	
 	private String[] getLootIndices() {
@@ -85,15 +75,37 @@ public class FishLoot implements Command{
 		LOG.debug("Loot indexes: " + loots);
 		return loots.split(",");
 	}
+
+	private void saveLoot(String[] arrayLoots){
+
+		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
+			screens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));
+		}
+
+		if(Application.getInstance().SAVE_UNSORT()) {
+			screens.forEach(screen -> screen.saveImage(Path.LOOT_UNSORT));
+		}
+
+		if (Application.getInstance().SAVE_UNKNOWN()) {
+			for (int i = 0; i < arrayLoots.length; i++) {
+				if (arrayLoots[i].equals(UNKNOWN_INDEX)) {
+					screens.get(i).saveImage(Path.LOOT_UNKNOWN);
+				}
+			}
+		}
+
+	}
 	
 	@Override
 	public String getKey(){
 		
 		String[] arrayLoots = getLootIndices();
 
+		saveLoot(arrayLoots);
+
 		boolean isTakeUnknown = Application.getInstance().TAKE_UNKNOWN();
 		Looter looter = new Looter(arrayLoots, isTakeUnknown);
-		
+
 		if(looter.isTakeAll()) {
 			LOG.info("Loot ok. Take all..");
 			return ShortCommand.TAKE.getKey();

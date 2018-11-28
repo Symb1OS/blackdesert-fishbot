@@ -22,6 +22,7 @@ public class Path {
     public static final String DEBUG_FILTERLOOT = "debug/filterloot";
 
     public static final String LOOT_UNSORT = "loot/unsort";
+    public static final String LOOT_UNKNOWN = "loot/unknown";
 
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String STATUS_CUT = TEMPLATES + "statuscut/";
