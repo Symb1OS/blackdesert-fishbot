@@ -29,6 +29,12 @@ public class Screen {
 		makeGray();
 	}
 
+	public Screen(String filename, Rectangle zone) throws IOException{
+		this.screenShot = ImageIO.read(new File(filename));
+		this.screenShot = getScreenZone(zone);
+		makeGray();
+	}
+
 	public Screen(Rectangle zone, boolean gray) throws AWTException {
 		Robot robot = new Robot();
 		screenShot = robot.createScreenCapture(zone);
@@ -117,7 +123,6 @@ public class Screen {
             file.mkdirs();
 
 			ImageIO.write(screenShot, "jpg", file);
-            file.getAbsolutePath();
 
         } catch (IOException e) {
 			logger.error("Exception " + e);

@@ -7,14 +7,21 @@ import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.template.Chars;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class WaitFish implements Command{
 
+    private String file;
     private Screen screen;
-	
+
 	private ImageParser imageParser;
 
 	public WaitFish() {}
+
+	public WaitFish(String file) {
+        this.file = file;
+
+    }
 
 	@Override
 	public String getKey() {
@@ -23,16 +30,21 @@ public class WaitFish implements Command{
 
 			return getKeyByRegion(Application.getInstance().SPACE_OFFSET_X(), Application.getInstance().SPACE_OFFSET_Y());
 
-		} catch (AWTException e) {
+		} catch (AWTException | IOException e) {
 			e.printStackTrace();
 		}
 
 		return ShortCommand.IGNORE.getKey();
 	}
 
-	private String getRegionKey(Rectangle region) throws AWTException {
+	private String getRegionKey(Rectangle region) throws AWTException, IOException {
 
-		screen = new Screen(region);
+        if (file != null) {
+            screen = new Screen(file, region);
+        } else {
+            screen = new Screen(region);
+        }
+
 		imageParser = new ImageParser(screen, Chars.values());
 		imageParser.parse(Screen.WHITE);
 
@@ -45,7 +57,7 @@ public class WaitFish implements Command{
 		return imageParser.getNumber();
 	}
 
-	private String getKeyByRegion(int offsetX, int offsetY) throws AWTException {
+	private String getKeyByRegion(int offsetX, int offsetY) throws AWTException, IOException {
 
 		Rectangle region = Application.getInstance().SPACE();
 
