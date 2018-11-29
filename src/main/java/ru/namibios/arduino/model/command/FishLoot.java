@@ -32,13 +32,18 @@ public class FishLoot implements Command{
 	}
 
 	public FishLoot(String fileLootOne, String fileLootTwo, String fileLootThree) throws IOException {
-		this.screens = new ArrayList<>();
-		this.screens.add(new Screen(fileLootOne));
-		this.screens.add(new Screen(fileLootTwo));
+        this(fileLootOne, fileLootTwo);
 		this.screens.add(new Screen(fileLootThree));
-
 	}
-	
+
+	public FishLoot(String file) throws IOException {
+		this.screens = new ArrayList<>();
+
+		this.screens.add(new Screen(file, Application.getInstance().LOOT_SLOT_ONE()));
+		this.screens.add(new Screen(file, Application.getInstance().LOOT_SLOT_TWO()));
+		this.screens.add(new Screen(file, Application.getInstance().LOOT_SLOT_THREE()));
+	}
+
 	public FishLoot() throws AWTException {
 		this.screens = new ArrayList<>();
 		
@@ -51,7 +56,7 @@ public class FishLoot implements Command{
 		this.screens.add(three);
 
 	}
-	
+
 	private String[] getLootIndices() {
 		String loots = "";
 		for (Screen screen : screens) {

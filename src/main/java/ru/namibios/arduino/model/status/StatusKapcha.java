@@ -22,8 +22,8 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 
 	}
 
-	public StatusKapcha(String filename) throws IOException {
-		this.screen = new Screen(filename);
+	public StatusKapcha(String filename, Rectangle zone) throws IOException {
+		this.screen = new Screen(filename, zone);
 	}
 
 	public StatusKapchaTemplate getNameTemplate() {
