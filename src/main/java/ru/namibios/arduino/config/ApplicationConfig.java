@@ -323,7 +323,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle CAPTCHA();
 
 	@Key("bot.screen.statuscaptcha")
-	@DefaultValue("760,  485, 390, 105")
+	@DefaultValue("760, 485, 390, 105")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_KAPCHA();
 

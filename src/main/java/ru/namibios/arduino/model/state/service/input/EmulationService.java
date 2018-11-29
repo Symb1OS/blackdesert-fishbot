@@ -52,7 +52,7 @@ public class EmulationService implements InputService{
     private void changeRod(String command){
         emulationInput.sendInput(KeyEvent.VK_I);
         clickByIndex(command.replace(ShortCommand.ROD.getKey(), ""));
-        DelayUtils.delay(1000);
+        DelayUtils.delay(1500);
         emulationInput.sendInput(KeyEvent.VK_I);
     }
 
