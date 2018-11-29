@@ -25,6 +25,10 @@ public class CutFishState extends State {
 			if(inputService.send(new Line())) {
 				LOG.info("Cut the fish...");
 				fishBot.setState(new StatusCutState(fishBot));
+
+			} else if (timer.isOver(Application.getInstance().TIME_CHANGE_ROD())) {
+				LOG.info("Waiting time for fish is out..");
+				fishBot.setState(new ChangeRodState(fishBot));
 			}
 			
 		}catch (Exception e) {
