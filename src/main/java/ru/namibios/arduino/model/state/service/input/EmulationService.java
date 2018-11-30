@@ -56,17 +56,21 @@ public class EmulationService implements InputService{
         emulationInput.sendInput(KeyEvent.VK_I);
     }
 
-    private void beer(String command){
-
-        useSlot(command);
-        DelayUtils.delay(2000);
-
-        for (Touch touch : Application.getInstance().BEER_TOUCHS()) {
+    private void clickSequence(Touch[] touches){
+        for (Touch touch : touches) {
             if (touch.isActive()) {
                 emulationInput.clickLeft(touch.getX(),touch.getY());
                 DelayUtils.delay(2000);
             }
         }
+    }
+
+    private void beer(String command){
+
+        useSlot(command);
+        DelayUtils.delay(2000);
+
+        clickSequence(Application.getInstance().BEER_TOUCHS());
 
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
     }
@@ -99,6 +103,15 @@ public class EmulationService implements InputService{
     private void takeAll() {
         LOG.info("Take all loot");
         emulationInput.sendInput(KeyEvent.VK_R);
+    }
+
+    private void exit() {
+        LOG.info("Exit game");
+
+        emulationInput.sendInput(KeyEvent.VK_ESCAPE);
+        DelayUtils.delay(200);
+
+        clickSequence(Application.getInstance().EXIT_TOUCHS());
     }
 
     private void skipCalendar() {
@@ -136,7 +149,9 @@ public class EmulationService implements InputService{
             takeAll();
         } else if (key.startsWith(ShortCommand.SKIP_CALENDAR.getKey())) {
             skipCalendar();
-        }else {
+        } else if (key.startsWith(ShortCommand.EXIT.getKey())) {
+            exit();
+        } else {
             inputCaptcha(key);
         }
 

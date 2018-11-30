@@ -39,7 +39,9 @@ public class FishBot {
                 new Slot(Application.getInstance().SLOT_ONE()),
                 new Slot(Application.getInstance().SLOT_TWO()),
                 new Slot(Application.getInstance().SLOT_THREE()),
-                new Slot(Application.getInstance().SLOT_BEER())
+                new Slot(Application.getInstance().SLOT_BEER()),
+				new Slot(Application.getInstance().TASK_STOP()),
+				new Slot(Application.getInstance().TASK_EXIT_GAME())
         );
 
         this.slotService = new SlotService(slots);

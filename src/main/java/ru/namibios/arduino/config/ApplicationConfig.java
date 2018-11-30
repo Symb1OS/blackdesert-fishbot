@@ -161,19 +161,21 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(TouchConverter.class)
 	Touch[] BEER_TOUCHS();
 
-	@Key("bot.autouse.minigame")
-	@DefaultValue("false")
-	boolean MINIGAME();
-
 	@Key("bot.autouse.stop")
-	@DefaultValue("true, 3s, Stop")
+	@DefaultValue("false, 180m, Stop")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot TASK_STOP();
 
-	@Key("bot.autouse.exit")
-	@DefaultValue("false, 120m, Exit")
-	@ConverterClass(HotSlotConverter.class)
-	HotSlot TASK_EXIT_GAME();
+    @Key("bot.autouse.exit")
+    @DefaultValue("false, 120m, Exit")
+    @ConverterClass(HotSlotConverter.class)
+    HotSlot TASK_EXIT_GAME();
+
+    @Key("bot.autouse.exit.touchs")
+    @Separator(";")
+    @DefaultValue("!{1,1}")
+    @ConverterClass(TouchConverter.class)
+    Touch[] EXIT_TOUCHS();
 
 
 	///////////////////////////////////////////////////////////////////////////

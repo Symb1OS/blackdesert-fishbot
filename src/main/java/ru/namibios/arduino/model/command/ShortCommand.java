@@ -11,11 +11,9 @@ public class ShortCommand {
     public static final Command ROD = () -> "Rod";
 
     public static final Command SKIP_CALENDAR = () -> "Skip_calendar";
-    public static final Command STOP = () -> "Stop";
-    public static final Command EXIT = () -> "Exit";
 
     public static final Command BEER = () -> "Beer";
-    public static final Command MINIGAME = () -> "Minigame";
-
+    public static final Command STOP = () -> "Stop";
+    public static final Command EXIT = () -> "Exit";
 
 }
