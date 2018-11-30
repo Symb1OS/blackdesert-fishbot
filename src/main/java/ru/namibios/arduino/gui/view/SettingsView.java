@@ -146,6 +146,7 @@ public class SettingsView extends JDialog {
         setIconImage(im);
 
         this.setResizable(false);
+        this.setAlwaysOnTop(true);
 
     }
 
