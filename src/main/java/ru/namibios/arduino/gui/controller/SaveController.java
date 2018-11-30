@@ -12,6 +12,7 @@ public class SaveController implements ActionListener{
 	private static final String FORMAT_SLOT = "%s,%s,%s,%s";
 	private static final String FORMAT_SLOT_TASK = "%s,%s,%s,%s, %s";
 	private static final String FORMAT_BEER_TOUCHS = "%s;%s;%s";
+	private static final String FORMAT_SMART_TASK = "%s,%s,%s";
 
 	private SettingsView view;
 
@@ -51,7 +52,10 @@ public class SaveController implements ActionListener{
 
 		Application.getInstance().setProperty("bot.notification.telegram", String.valueOf(view.getCbTelegram().isSelected()));
 		Application.getInstance().setProperty("bot.notification.telegram.key", view.getTfTelegramKey().getText().trim());
-		
+
+		Application.getInstance().setProperty("bot.autouse.stop", String.format(FORMAT_SMART_TASK, view.getCbStopBot().isSelected(), view.getTfStopBot().getText() , "Stop"));
+		Application.getInstance().setProperty("bot.autouse.exit", String.format(FORMAT_SMART_TASK, view.getCbExitGame().isSelected(), view.getTfExitGame().getText(), "Exit"));
+
 		Application.getInstance().setProperty("bot.delay.start.before", view.getTfBeforeStart().getText().trim());
 		Application.getInstance().setProperty("bot.delay.start.after", view.getTfAfterStart().getText().trim());
 		

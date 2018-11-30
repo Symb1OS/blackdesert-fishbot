@@ -96,6 +96,10 @@ public class SettingsView extends JDialog {
     private JTextField beerKey;
     private JTextField beerPeriod;
     private JCheckBox cbRepeatWork;
+    private JCheckBox cbStopBot;
+    private JTextField tfStopBot;
+    private JCheckBox cbExitGame;
+    private JTextField tfExitGame;
 
     private CustomVerifier slotKeyVerifier;
     private CustomVerifier delayPeriodVerifier;
@@ -114,6 +118,7 @@ public class SettingsView extends JDialog {
         cbMode.addItemListener(e -> {
             cbPort.setEnabled(e.getItem() == InputMode.ARDUINO);
         });
+
 
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (int i = 0; i < portNames.length; i++) {
@@ -147,6 +152,7 @@ public class SettingsView extends JDialog {
         initPm();
         initNotification();
         initDelay();
+        initAutoEnd();
 
         Image im = new ImageIcon(UI.IMG_SETTINGS).getImage();
         setIconImage(im);
@@ -265,6 +271,31 @@ public class SettingsView extends JDialog {
 
     }
 
+    private void initAutoEnd() {
+
+        cbStopBot.setSelected(Application.getInstance().TASK_STOP().isActive());
+        cbStopBot.addItemListener(e -> {
+            JCheckBox item = (JCheckBox) e.getItem();
+            if (item.isSelected()) {
+                cbExitGame.setSelected(false);
+            }
+        });
+
+        tfStopBot.setText(String.valueOf(Application.getInstance().TASK_STOP().getDelay()));
+        tfStopBot.setInputVerifier(delayPeriodVerifier);
+
+        cbExitGame.setSelected(Application.getInstance().TASK_EXIT_GAME().isActive());
+        cbExitGame.addItemListener(e -> {
+            JCheckBox item = (JCheckBox) e.getItem();
+            if (item.isSelected()) {
+                cbStopBot.setSelected(false);
+            }
+        });
+        tfExitGame.setText(String.valueOf(Application.getInstance().TASK_EXIT_GAME().getDelay()));
+        tfExitGame.setInputVerifier(delayPeriodVerifier);
+
+    }
+
     public SettingsView() {
         setContentPane(contentPane);
 
@@ -280,6 +311,22 @@ public class SettingsView extends JDialog {
 
         this.setModal(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    public JCheckBox getCbStopBot() {
+        return cbStopBot;
+    }
+
+    public JTextField getTfStopBot() {
+        return tfStopBot;
+    }
+
+    public JCheckBox getCbExitGame() {
+        return cbExitGame;
+    }
+
+    public JTextField getTfExitGame() {
+        return tfExitGame;
     }
 
     public JCheckBox getCbRepeatWork() {
@@ -504,7 +551,7 @@ public class SettingsView extends JDialog {
         this.$$$loadButtonText$$$(buttonCancel, ResourceBundle.getBundle("locale").getString("preference.button.cancel"));
         buttonPanel.add(buttonCancel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         settings = new JPanel();
-        settings.setLayout(new GridLayoutManager(10, 1, new Insets(0, 0, 0, 0), -1, -1));
+        settings.setLayout(new GridLayoutManager(11, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(settings, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         portContent = new JPanel();
         portContent.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -519,7 +566,7 @@ public class SettingsView extends JDialog {
         cbPort = new JComboBox();
         panel1.add(cbPort, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        settings.add(spacer2, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        settings.add(spacer2, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         loot = new JPanel();
         loot.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         settings.add(loot, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -564,7 +611,7 @@ public class SettingsView extends JDialog {
         cbBeer.setHorizontalAlignment(10);
         cbBeer.setHorizontalTextPosition(11);
         this.$$$loadButtonText$$$(cbBeer, ResourceBundle.getBundle("locale").getString("preference.label.beer"));
-        panel2.add(cbBeer, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(25, -1), null, 0, false));
+        panel2.add(cbBeer, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(25, -1), null, 0, false));
         final JLabel label3 = new JLabel();
         this.$$$loadLabelText$$$(label3, ResourceBundle.getBundle("locale").getString("preference.label.digital"));
         panel2.add(label3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -704,7 +751,7 @@ public class SettingsView extends JDialog {
         pmContent.add(spacer4, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         delay = new JPanel();
         delay.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        settings.add(delay, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        settings.add(delay, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label21 = new JLabel();
         this.$$$loadLabelText$$$(label21, ResourceBundle.getBundle("locale").getString("preference.label.delays"));
         delay.add(label21, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
@@ -761,12 +808,38 @@ public class SettingsView extends JDialog {
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         cbMode.setModel(defaultComboBoxModel1);
         modeContent.add(cbMode, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        settings.add(panel4, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label28 = new JLabel();
+        this.$$$loadLabelText$$$(label28, ResourceBundle.getBundle("locale").getString("preference.label.timer"));
+        panel4.add(label28, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
+        final JPanel panel5 = new JPanel();
+        panel5.setLayout(new GridLayoutManager(2, 3, new Insets(5, 5, 5, 5), -1, -1));
+        panel4.add(panel5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel5.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        cbStopBot = new JCheckBox();
+        this.$$$loadButtonText$$$(cbStopBot, ResourceBundle.getBundle("locale").getString("preference.label.autofish"));
+        panel5.add(cbStopBot, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label29 = new JLabel();
+        this.$$$loadLabelText$$$(label29, ResourceBundle.getBundle("locale").getString("preference.label.delay"));
+        panel5.add(label29, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfStopBot = new JTextField();
+        panel5.add(tfStopBot, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        cbExitGame = new JCheckBox();
+        this.$$$loadButtonText$$$(cbExitGame, ResourceBundle.getBundle("locale").getString("preference.label.exitgame"));
+        panel5.add(cbExitGame, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label30 = new JLabel();
+        this.$$$loadLabelText$$$(label30, ResourceBundle.getBundle("locale").getString("preference.label.delay"));
+        panel5.add(label30, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfExitGame = new JTextField();
+        panel5.add(tfExitGame, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         language = new JPanel();
         language.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(language, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label28 = new JLabel();
-        this.$$$loadLabelText$$$(label28, ResourceBundle.getBundle("locale").getString("preference.language"));
-        language.add(label28, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
+        final JLabel label31 = new JLabel();
+        this.$$$loadLabelText$$$(label31, ResourceBundle.getBundle("locale").getString("preference.language"));
+        language.add(label31, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         localeContent = new JPanel();
         localeContent.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         language.add(localeContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
