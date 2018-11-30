@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.model.command.Command;
+import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.model.state.service.SlotService;
 import ru.namibios.arduino.model.state.service.input.InputService;
 
@@ -15,8 +16,7 @@ import java.io.IOException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UseSlotStateTest {
@@ -55,4 +55,19 @@ public class UseSlotStateTest {
 
     }
 
+    @Test
+    public void testStop() {
+
+        when(slotService.isReady()).thenReturn(true);
+        when(slotService.getKey()).thenReturn(ShortCommand.STOP.getKey());
+        doNothing().when(fishBot).setRunned(false);
+
+        useSlotState.onStep();
+
+        verify(slotService).isReady();
+        verify(slotService).getKey();
+        verify(fishBot).setRunned(false);
+        verify(fishBot).setState(isA(StartFishState.class));
+
+    }
 }

@@ -165,6 +165,16 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("false")
 	boolean MINIGAME();
 
+	@Key("bot.autouse.stop")
+	@DefaultValue("true, 3s, Stop")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot TASK_STOP();
+
+	@Key("bot.autouse.exit")
+	@DefaultValue("false, 120m, Exit")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot TASK_EXIT_GAME();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// STATE DELAYS

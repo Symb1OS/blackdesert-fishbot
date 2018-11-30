@@ -10,24 +10,58 @@ public class HotSlotConverter implements Converter<HotSlot> {
 
     private static final Logger LOG = Logger.getLogger(HotSlotConverter.class);
 
+    private HotSlot getSlot(String [] params){
+
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setKey(params[1]);
+        hotSlot.setDelay(params[2]);
+        hotSlot.setPeriod(params[3]);
+        hotSlot.setCommand("Slot");
+
+        return hotSlot;
+    }
+
+    private HotSlot getSlotTask(String [] params){
+
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setKey(params[1]);
+        hotSlot.setDelay(params[2]);
+        hotSlot.setPeriod(params[3]);
+        hotSlot.setCommand(params[4]);
+
+        return hotSlot;
+    }
+
+    private HotSlot getSmartTask(String [] params){
+
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setDelay(params[1]);
+        hotSlot.setCommand(params[2]);
+
+        return hotSlot;
+    }
+
     @Override
     public HotSlot convert(Method method, String input) {
 
         HotSlot hotSlot = new HotSlot();
 
         String[] split = input.replaceAll("\\s", "").split(",");
-        if (split.length == 4 || split.length == 5 ) {
+        switch (split.length) {
+            case 3: hotSlot = getSmartTask(split); break;
+            case 4: hotSlot = getSlot(split); break;
+            case 5: hotSlot = getSlotTask(split); break;
 
-            hotSlot.setActive(Boolean.valueOf(split[0]));
-            hotSlot.setKey(split[1]);
-            hotSlot.setDelay(split[2]);
-            hotSlot.setPeriod(split[3]);
-
-            String command = split.length == 5 ? split[4] : "Slot";
-            hotSlot.setCommand(command);
-
-        } else {
-            LOG.error("Expected length: 4-5. Actual: " + split.length);
+            default: {
+                LOG.error("Unknown constructor. Check: " + input);
+                hotSlot = null;
+            }
         }
 
         return hotSlot;
