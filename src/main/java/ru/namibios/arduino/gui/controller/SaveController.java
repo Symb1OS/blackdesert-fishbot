@@ -53,28 +53,13 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.notification.telegram", String.valueOf(view.getCbTelegram().isSelected()));
 		Application.getInstance().setProperty("bot.notification.telegram.key", view.getTfTelegramKey().getText().trim());
 
+        Application.getInstance().setProperty("bot.pm.event.exitgame", String.valueOf(view.getRbExitGame().isSelected()));
+        Application.getInstance().setProperty("bot.pm.event.autofish", String.valueOf(view.getRbAutoFish().isSelected()));
+        Application.getInstance().setProperty("bot.pm.event.nothing",  String.valueOf(view.getRbNothing().isSelected()));
+
 		Application.getInstance().setProperty("bot.autouse.stop", String.format(FORMAT_SMART_TASK, view.getCbStopBot().isSelected(), view.getTfStopBot().getText() , "Stop"));
 		Application.getInstance().setProperty("bot.autouse.exit", String.format(FORMAT_SMART_TASK, view.getCbExitGame().isSelected(), view.getTfExitGame().getText(), "Exit"));
 
-		Application.getInstance().setProperty("bot.delay.start.before", view.getTfBeforeStart().getText().trim());
-		Application.getInstance().setProperty("bot.delay.start.after", view.getTfAfterStart().getText().trim());
-		
-		Application.getInstance().setProperty("bot.delay.waitfish.before", view.getTfBeforeWait().getText().trim());
-		Application.getInstance().setProperty("bot.delay.waitfish.after", view.getTfAfterWait().getText().trim());
-		
-		Application.getInstance().setProperty("bot.delay.rod.before", view.getTfBeforeChangeRod().getText().trim());
-		Application.getInstance().setProperty("bot.delay.rod.after", view.getTfAfterChangeRod().getText().trim());
-
-		Application.getInstance().setProperty("bot.pm.event.exitgame", String.valueOf(view.getRbExitGame().isSelected()));
-		Application.getInstance().setProperty("bot.pm.event.autofish", String.valueOf(view.getRbAutoFish().isSelected()));
-		Application.getInstance().setProperty("bot.pm.event.nothing",  String.valueOf(view.getRbNothing().isSelected()));
-		
-		Application.getInstance().setProperty("bot.delay.kapcha.before", view.getTfBeforeCaptcha().getText().trim());
-		Application.getInstance().setProperty("bot.delay.kapcha.after", view.getTfAfterCaptcha().getText().trim());
-		
-		Application.getInstance().setProperty("bot.delay.filterloot.before", view.getTfBeforeFilterLoot().getText().trim());
-		Application.getInstance().setProperty("bot.delay.filterloot.after", view.getTfAfterFilterLoot().getText().trim());
-		
 		Application.record();
 
 		view.dispose();
