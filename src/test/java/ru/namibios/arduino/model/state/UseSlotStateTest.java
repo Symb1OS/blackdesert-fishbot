@@ -70,4 +70,23 @@ public class UseSlotStateTest {
         verify(fishBot).setState(isA(StartFishState.class));
 
     }
+
+    @Test
+    public void testExit() throws IOException {
+
+        when(slotService.isReady()).thenReturn(true);
+        when(slotService.getKey()).thenReturn(ShortCommand.EXIT.getKey());
+        doNothing().when(fishBot).setRunned(false);
+
+        useSlotState.onStep();
+
+        verify(slotService).isReady();
+        verify(slotService).getKey();
+
+        verify(inputService).send(any(Command.class));
+
+        verify(fishBot).setRunned(false);
+        verify(fishBot).setState(isA(StartFishState.class));
+
+    }
 }

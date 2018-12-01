@@ -117,9 +117,9 @@ char getKey(char key) {
 
 void exitGame(){
   pressKey(0xB1);
-  moveTo(820, 757, MOUSE_LEFT );
-  moveTo(961, 296, MOUSE_LEFT );
-  moveTo(917, 587, MOUSE_LEFT );
+  moveTo(373, 169, MOUSE_LEFT );
+  moveTo(1227,626, MOUSE_LEFT );
+  moveTo(1000,650, MOUSE_LEFT );
   pressKey(0xB1);
 }
 

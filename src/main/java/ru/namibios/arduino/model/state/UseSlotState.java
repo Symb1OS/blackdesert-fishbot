@@ -20,6 +20,18 @@ public class UseSlotState extends State {
 		slotService = fishBot.getSlotService();
 	}
 
+	private void stop(){
+		LOG.info("Task: auto stop complete");
+		fishBot.setRunned(false);
+		fishBot.notifyUser(Message.AUTO_STOP);
+	}
+
+	private void exit(){
+		LOG.info("Task: auto exit");
+		fishBot.setRunned(false);
+		fishBot.notifyUser(Message.EXIT_GAME);
+	}
+
 	@Override
 	public void onStep() {
 
@@ -32,8 +44,10 @@ public class UseSlotState extends State {
 
 				String key = slotService.getKey();
 				if (key.startsWith(ShortCommand.STOP.getKey())) {
-					LOG.info("Task stop");
-					fishBot.setRunned(false);
+					stop();
+				} else if (key.startsWith(ShortCommand.EXIT.getKey())) {
+					exit();
+					inputService.send(() -> key);
 				} else {
 					inputService.send(() -> key);
 				}

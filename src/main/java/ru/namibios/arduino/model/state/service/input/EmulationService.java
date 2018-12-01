@@ -5,6 +5,8 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Touch;
 import ru.namibios.arduino.model.command.Command;
 import ru.namibios.arduino.model.command.ShortCommand;
+import ru.namibios.arduino.model.state.service.RodService;
+import ru.namibios.arduino.model.state.service.input.emulation.AWTRobot;
 import ru.namibios.arduino.model.state.service.input.emulation.AbstractEmulationInput;
 import ru.namibios.arduino.utils.DelayUtils;
 
@@ -59,9 +61,21 @@ public class EmulationService implements InputService{
     private void clickSequence(Touch[] touches){
         for (Touch touch : touches) {
             if (touch.isActive()) {
+                LOG.debug(touch);
                 emulationInput.clickLeft(touch.getX(),touch.getY());
                 DelayUtils.delay(2000);
             }
+        }
+    }
+
+    private static void testChangeRods() throws IOException {
+
+        InputService emulationService = new EmulationService(new AWTRobot());
+        RodService rodService = new RodService(8);
+
+        while (rodService.hasNext()) {
+            DelayUtils.delay(1000);
+            emulationService.send(() -> rodService.getNext());
         }
     }
 

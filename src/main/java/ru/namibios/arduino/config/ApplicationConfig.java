@@ -173,7 +173,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
     @Key("bot.autouse.exit.touchs")
     @Separator(";")
-    @DefaultValue("!{1,1}")
+    @DefaultValue("{373,169};{1227,626};{1000,650}")
     @ConverterClass(TouchConverter.class)
     Touch[] EXIT_TOUCHS();
 
