@@ -61,7 +61,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int ROD_START_X();
 	
 	@Key("bot.rod.y")
-	@DefaultValue("350")
+	@DefaultValue("360")
 	int ROD_START_Y();
 	
 	@Key("bot.rod.dx")

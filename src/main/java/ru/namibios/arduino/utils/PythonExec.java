@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
-import java.util.Arrays;
 
 public final class PythonExec {
 
@@ -47,10 +46,8 @@ public final class PythonExec {
 		String[] cmd;
 		
 		String os = System.getProperty("os.name").toLowerCase();
-		LOG.debug("os: " + os);
 
 		cmd = getParams(fileKapcha, os);
-		LOG.debug("cmd: " + Arrays.toString(cmd));
 
 		Runtime rt = Runtime.getRuntime();
 		Process pr = rt.exec(cmd);
