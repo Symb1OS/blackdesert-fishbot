@@ -205,6 +205,7 @@ public class ImageParser {
 				for (int j = 0; j < template[0].length; j++) {
 					if(template[i][j] == 1) templateKoef++;
 					if(value[i][j] == template[i][j] && template[i][j] != 0) valueKoef++;
+					if(value[i][j] != template[i][j] && value[i][j] != 0) valueKoef--;
 				}
 			}
 		}
