@@ -40,6 +40,7 @@ public class HttpService {
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
 	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
+    private static final String MARK_FAILURE_STATUS_URL = "http://%s/fishingserver/captcha/status";
     private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
 
     private HttpClient httpClient;
@@ -95,7 +96,7 @@ public class HttpService {
         return tag;
     }
 
-	public String parseByteCaptcha(String key, byte[] captcha) throws IOException{
+	public String parseByteCaptcha(String key, String name,  byte[] captcha) throws IOException {
 
 		HttpPost post = new HttpPost(String.format(BYTE_CAPTCHA_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
@@ -103,6 +104,8 @@ public class HttpService {
 		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 		builder.addTextBody("USER", key, ContentType.TEXT_PLAIN);
 		builder.addBinaryBody("SCREEN", captcha, ContentType.DEFAULT_BINARY, "file.ext");
+
+		if (name != null) builder.addTextBody("NAME", name, ContentType.TEXT_PLAIN);
 
 		HttpEntity entity = builder.build();
 		post.setEntity(entity);
@@ -120,6 +123,19 @@ public class HttpService {
 			LOG.error("Status code: " + statusCode );
 			return ShortCommand.IGNORE.getKey();
 		}
+
+	}
+
+	public void markFail(String name, String status) throws IOException{
+
+		HttpPost post = new HttpPost(MARK_FAILURE_STATUS_URL);
+
+		ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
+		postParameters.add(new BasicNameValuePair("NAME", name));
+		postParameters.add(new BasicNameValuePair("STATUS", status));
+		post.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
+
+		httpResponse = httpClient.execute(post);
 
 	}
 

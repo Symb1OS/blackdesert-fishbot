@@ -6,6 +6,9 @@ import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Captcha;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
+import java.util.Date;
+import java.util.UUID;
+
 public class CaptchaState extends State {
 
 	private static final Logger LOG = Logger.getLogger(CaptchaState.class);
@@ -24,9 +27,11 @@ public class CaptchaState extends State {
 		
 		try{
 
-			if(inputService.send(new Captcha())){
+			String name = String.valueOf(new Date().getTime()) + "_" + UUID.randomUUID();
+
+			if(inputService.send(new Captcha(name))){
 				LOG.info("Captcha send to input. Go to check status...");
-				fishBot.setState(new StatusCaptchaState(fishBot));
+				fishBot.setState(new StatusCaptchaState(fishBot, name));
 			}
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");
@@ -41,5 +46,5 @@ public class CaptchaState extends State {
 		}
 		
 	}
-	
+
 }
