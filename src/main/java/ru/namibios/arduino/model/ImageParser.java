@@ -122,6 +122,9 @@ public class ImageParser {
 				if(!isCorrectrDimension(numberMatrix, template)) continue;
 				coef.init(numberMatrix, template);
 				coef.calculate(index);
+				if (coef.isFullMatch()) {
+					return coef.getRezultIndex();
+				}
 			}
 			index++;
 		}
@@ -222,7 +225,11 @@ public class ImageParser {
 				maxCalcKoef = calcKoef;
 			}
 		}
-		
+
+		boolean isFullMatch(){
+			return maxCalcKoef == 1;
+		}
+
 		boolean isFound() {
 			return maxCalcKoef > minKoef;
 		}
