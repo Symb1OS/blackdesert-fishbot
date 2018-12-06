@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.Status;
@@ -68,7 +69,7 @@ public class StatusCaptchaStateTest {
     @Test
     public void testOverflow() {
 
-        int overflow = 11;
+        int overflow = Application.getInstance().STATE_OVERFLOW() + 1;
 
         when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 
