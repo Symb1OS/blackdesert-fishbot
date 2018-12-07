@@ -92,6 +92,7 @@ public class EmulationService implements InputService{
     private void takeLootByIndex(String command){
         emulationInput.sendInput(KeyEvent.VK_CONTROL);
         for (String touch : command.split(ShortCommand.LOOT.getKey())) {
+            LOG.debug("Loot" + touch + "");
             clickByIndex(touch);
             DelayUtils.delay(2000);
         }
