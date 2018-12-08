@@ -131,6 +131,7 @@ public class FishLoot implements Command{
                     command+= touch.toCommandLoot();
                 }
             }
+            LOG.info(command);
             return command;
         }
 		

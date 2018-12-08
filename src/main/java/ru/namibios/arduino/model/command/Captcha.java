@@ -17,10 +17,14 @@ public class Captcha implements Command{
 
 	private final static Logger LOG = Logger.getLogger(Captcha.class);
 
+	private String filename;
+
 	private Screen screen;
 	private String key;
 
-	public Captcha() throws AWTException  {
+	public Captcha(String filename) throws AWTException  {
+
+		this.filename = filename;
 
 		String name = String.valueOf(new Date().getTime());
 
@@ -35,10 +39,6 @@ public class Captcha implements Command{
 		}
 	}
 	
-	public Captcha(String file) throws IOException{
-		this.screen = new Screen(file);
-	}
-	
 	public Screen getScreen() {
 		return screen;
 	}
@@ -50,7 +50,7 @@ public class Captcha implements Command{
 
 		try {
 
-			key = http.parseByteCaptcha(System.getProperty("user.name"), ImageUtils.imageToBytes(screen.getScreenShot()));
+			key = http.parseByteCaptcha(System.getProperty("user.name"), filename, ImageUtils.imageToBytes(screen.getScreenShot()));
 
 		} catch (IOException e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

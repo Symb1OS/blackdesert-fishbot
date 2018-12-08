@@ -81,7 +81,6 @@ public class FishLootTest {
 		assertEquals(Application.getInstance().LOOT_TOUCH()[1].toCommandLoot(), key);
 	}
 
-
     @Test
     public void testOkOkTrash() throws IOException {
         FishLoot fishLoot = new FishLoot(ok, ok, trash);
@@ -105,6 +104,14 @@ public class FishLootTest {
         String key = fishLoot.getKey();
 
         assertEquals(Application.getInstance().LOOT_TOUCH()[1].toCommandLoot(), key);
+    }
+
+    @Test
+    public void testTrashTrashOk() throws IOException {
+        FishLoot fishLoot = new FishLoot(trash, trash, ok);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[2].toCommandLoot(), key);
     }
 
     @Test

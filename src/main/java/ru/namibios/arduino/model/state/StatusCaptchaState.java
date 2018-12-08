@@ -3,6 +3,7 @@ package ru.namibios.arduino.model.state;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.StatusKapcha;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
@@ -12,20 +13,29 @@ public class StatusCaptchaState extends State{
 
 	private static final Logger LOG = Logger.getLogger(StatusCaptchaState.class);
 
+	private HttpService httpService = new HttpService();
 	private StatusService<StatusKapchaTemplate> statusService;
 
-	StatusCaptchaState(FishBot fishBot) {
+	private String filename;
+
+	StatusCaptchaState(FishBot fishBot, String name) {
 
 		super(fishBot);
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_KAPCHA();
+
+		this.filename = name;
 
 		this.statusService = new StatusService<>();
 
         LOG.info("Check status parsing captcha");
 	}
 
-	@Override
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    @Override
 	public void onOverflow() {
 		LOG.info("Status not identified. Go filter loot...");
 		fishBot.setState(new FilterLootState(fishBot));
@@ -53,6 +63,7 @@ public class StatusCaptchaState extends State{
 					case FAILED: {
 						LOG.info("Captcha parsed failure. Back to start...");
 						fishBot.setState(new StartFishState(fishBot));
+						httpService.markFail(filename, StatusKapchaTemplate.FAILED.name());
 						break;
 					}
 				}

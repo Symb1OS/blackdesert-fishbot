@@ -5,12 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.Status;
 import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+
+import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
@@ -22,6 +25,9 @@ public class StatusCaptchaStateTest {
 
     @Mock
     private StatusService statusService;
+
+    @Mock
+    private HttpService httpService;
 
     @InjectMocks
     private StatusCaptchaState statusCaptchaState;
@@ -35,30 +41,35 @@ public class StatusCaptchaStateTest {
     @Test
     public void testSuccess() {
 
-        Mockito.when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.SUCCESS);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.SUCCESS);
 
         statusCaptchaState.onStep();
 
-        Mockito.verify(statusService).getTemplate(isA(Status.class));
-        Mockito.verify(fishBot).setState(isA(FilterLootState.class));
+        verify(statusService).getTemplate(isA(Status.class));
+        verify(fishBot).setState(isA(FilterLootState.class));
 
     }
 
     @Test
-    public void testFailure() {
+    public void testFailure() throws IOException {
 
-        Mockito.when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.FAILED);
+        String name = "file";
 
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.FAILED);
+
+        statusCaptchaState.setFilename(name);
         statusCaptchaState.onStep();
 
-        Mockito.verify(statusService).getTemplate(isA(Status.class));
-        Mockito.verify(fishBot).setState(isA(StartFishState.class));
+        verify(statusService).getTemplate(isA(Status.class));
+        verify(fishBot).setState(isA(StartFishState.class));
+        verify(httpService).markFail(name, StatusKapchaTemplate.FAILED.name());
+
     }
 
     @Test
     public void testOverflow() {
 
-        int overflow = 51;
+        int overflow = Application.getInstance().STATE_OVERFLOW() + 1;
 
         when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 
