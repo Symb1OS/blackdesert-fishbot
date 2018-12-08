@@ -41,7 +41,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String LANGUAGE();
 
 	@Key("bot.state.overflow")
-	@DefaultValue("10")
+	@DefaultValue("5")
 	int STATE_OVERFLOW();
 
 

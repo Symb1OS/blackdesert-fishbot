@@ -45,6 +45,7 @@ public class FishLoot implements Command{
 	}
 
 	public FishLoot() throws AWTException {
+		LOG.info("Init filter");
 		this.screens = new ArrayList<>();
 		
 		this.one = new Screen(Application.getInstance().LOOT_SLOT_ONE());
