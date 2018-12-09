@@ -128,7 +128,7 @@ public class HttpService {
 
 	public void markFail(String name, String status) throws IOException{
 
-		HttpPost post = new HttpPost(MARK_FAILURE_STATUS_URL);
+		HttpPost post = new HttpPost(String.format(MARK_FAILURE_STATUS_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
 		ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
 		postParameters.add(new BasicNameValuePair("NAME", name));
