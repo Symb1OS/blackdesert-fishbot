@@ -23,7 +23,7 @@ public class HttpServiceTest {
     public void parseByteCaptcha() throws IOException {
 
         Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/captcha/0303244444.jpg");
-        String key = http.parseByteCaptcha(System.getProperty("user.name"), null, ImageUtils.imageToBytes(screen.getScreenShot()));
+        String key = http.parseByteCaptcha(null, ImageUtils.imageToBytes(screen.getScreenShot()));
         Assert.assertEquals("wdwda", key);
 
     }
@@ -32,10 +32,9 @@ public class HttpServiceTest {
     public void parseByteCaptchaByName() throws IOException {
 
         Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/captcha/0303244444.jpg");
-        String key = http.parseByteCaptcha(System.getProperty("user.name"), UUID.randomUUID() + "_test", ImageUtils.imageToBytes(screen.getScreenShot()));
+        String key = http.parseByteCaptcha(UUID.randomUUID() + "_test", ImageUtils.imageToBytes(screen.getScreenShot()));
         Assert.assertEquals("wdwda", key);
 
     }
-
 
 }

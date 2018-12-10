@@ -39,6 +39,8 @@ public class HttpService {
     private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
+
+	private static final String INFO_URL = "http://%s/fishingserver/info";
 	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
     private static final String MARK_FAILURE_STATUS_URL = "http://%s/fishingserver/captcha/status";
     private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
@@ -96,13 +98,14 @@ public class HttpService {
         return tag;
     }
 
-	public String parseByteCaptcha(String key, String name,  byte[] captcha) throws IOException {
+	public String parseByteCaptcha(String name,  byte[] captcha) throws IOException {
 
 		HttpPost post = new HttpPost(String.format(BYTE_CAPTCHA_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
 		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-		builder.addTextBody("USER", key, ContentType.TEXT_PLAIN);
+		builder.addTextBody("HASH", Application.getHash(), ContentType.TEXT_PLAIN);
+		builder.addTextBody("USER", System.getProperty("user.name"), ContentType.TEXT_PLAIN);
 		builder.addBinaryBody("SCREEN", captcha, ContentType.DEFAULT_BINARY, "file.ext");
 
 		if (name != null) builder.addTextBody("NAME", name, ContentType.TEXT_PLAIN);
@@ -131,6 +134,7 @@ public class HttpService {
 		HttpPost post = new HttpPost(String.format(MARK_FAILURE_STATUS_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
 		ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
+		postParameters.add(new BasicNameValuePair("HASH", Application.getHash()));
 		postParameters.add(new BasicNameValuePair("NAME", name));
 		postParameters.add(new BasicNameValuePair("STATUS", status));
 		post.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
@@ -139,7 +143,17 @@ public class HttpService {
 
 	}
 
-    private static class DefaultTrustManager implements X509TrustManager {
+	public String getInfo() throws IOException {
+
+		HttpGet get = new HttpGet(String.format(INFO_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
+
+		httpResponse = httpClient.execute(get);
+		HttpEntity entity = httpResponse.getEntity();
+
+		return EntityUtils.toString(entity, "UTF-8");
+	}
+
+	private static class DefaultTrustManager implements X509TrustManager {
 
         @Override
         public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}

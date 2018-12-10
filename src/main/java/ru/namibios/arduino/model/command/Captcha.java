@@ -50,7 +50,7 @@ public class Captcha implements Command{
 
 		try {
 
-			key = http.parseByteCaptcha(System.getProperty("user.name"), filename, ImageUtils.imageToBytes(screen.getScreenShot()));
+			key = http.parseByteCaptcha(filename, ImageUtils.imageToBytes(screen.getScreenShot()));
 
 		} catch (IOException e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

@@ -19,6 +19,8 @@ public class Application {
 
 	private static String HASH;
 
+	private static String VERSION;
+
 	private static ApplicationConfig config;
 
 	public static ApplicationConfig getInstance() {
@@ -29,10 +31,6 @@ public class Application {
 
 		return config;
 	}
-
-    public static void main(String[] args) {
-        getHash();
-    }
 
 	public static String getHash(){
 
@@ -45,26 +43,27 @@ public class Application {
 			if (!Files.exists(Paths.get(home))) {
 				LOG.debug("File does not exist");
 
-				String uuid = UUID.randomUUID().toString();
-				LOG.debug("New key: " + uuid);
+				HASH = UUID.randomUUID().toString();
+				LOG.debug("New key: " + HASH);
 
 				try {
 
 					LOG.debug("Load hash " + home);
-					Files.write(Paths.get(home), uuid.getBytes());
+					Files.write(Paths.get(home), HASH.getBytes());
 
 				} catch (IOException e) {
 				    LOG.error(ExceptionUtils.getString(e));
 				}
 
-				return uuid;
+				return HASH;
 
 			} else {
 
 				LOG.debug("Load hash");
 				try {
 
-					return Files.readAllLines(Paths.get(home)).get(0);
+					HASH = Files.readAllLines(Paths.get(home)).get(0);
+					return HASH;
 
 				} catch (IOException e) {
                     LOG.error(ExceptionUtils.getString(e));
@@ -82,10 +81,16 @@ public class Application {
 
         try {
 
-            return Files.readAllLines(Paths.get("version")).get(0);
+			if (VERSION != null) {
+				return VERSION;
+			} else {
+
+				VERSION = Files.readAllLines(Paths.get("version")).get(0);
+				return VERSION;
+			}
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(ExceptionUtils.getString(e));
         }
 
         return null;
@@ -95,7 +100,8 @@ public class Application {
 		try {
 			Application.config.store(new FileOutputStream(new File(PROPERTY_FILE_NAME)), "");
 		}catch (Exception e) {
-			e.printStackTrace();
+            LOG.error(ExceptionUtils.getString(e));
 		}
 	}
+
 }
