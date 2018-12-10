@@ -22,6 +22,9 @@ public class AWTRobot extends AbstractEmulationInput {
 
     @Override
     public void moveMouse(int x, int y) {
+        x *= Application.getInstance().MOUSE_CORRECTION_FACTOR();
+        y *= Application.getInstance().MOUSE_CORRECTION_FACTOR();
+
         robot.mouseMove(x, y);
     }
 

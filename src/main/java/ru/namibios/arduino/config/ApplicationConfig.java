@@ -381,6 +381,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("150")
     int PRESS_KEY_DELAY();
 
+	@Key("bot.mouse.correction_factor")
+	@DefaultValue("1")
+    double MOUSE_CORRECTION_FACTOR();
+
 
     ///////////////////////////////////////////////////////////////////////////
     // DEBUG
