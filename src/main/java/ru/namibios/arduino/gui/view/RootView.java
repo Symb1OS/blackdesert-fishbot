@@ -16,6 +16,7 @@ import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.SettingsController;
 import ru.namibios.arduino.gui.controller.StartController;
 import ru.namibios.arduino.gui.controller.StopController;
+import ru.namibios.arduino.gui.controller.TestController;
 import ru.namibios.arduino.utils.AppUtils;
 import ru.namibios.arduino.utils.ExecUtils;
 
@@ -34,6 +35,7 @@ public class RootView extends JFrame {
     private JScrollPane scrollPane;
     private JPanel buttonPanel;
     private JLabel mouseXY;
+    private JButton buttonTest;
 
     public RootView() {
 
@@ -97,7 +99,10 @@ public class RootView extends JFrame {
         buttonStop.addActionListener(new StopController(transfer));
         buttonStop.setIcon(new ImageIcon(UI.IMG_STOP));
 
+        buttonTest.addActionListener(new TestController());
+
         addWindowListener(new CheckUpdate(this));
+//        addWindowListener(new Info(this));
 
         setVisible(true);
         setResizable(false);
@@ -125,7 +130,7 @@ public class RootView extends JFrame {
         panel1.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        buttonPanel.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(buttonPanel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonStart = new JButton();
         this.$$$loadButtonText$$$(buttonStart, ResourceBundle.getBundle("locale").getString("rootview.button.start"));
@@ -133,6 +138,9 @@ public class RootView extends JFrame {
         buttonStop = new JButton();
         this.$$$loadButtonText$$$(buttonStop, ResourceBundle.getBundle("locale").getString("rootview.button.stop"));
         buttonPanel.add(buttonStop, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonTest = new JButton();
+        buttonTest.setText("Тест");
+        buttonPanel.add(buttonTest, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         mouseXY = new JLabel();
         mouseXY.setText("Point");
         panel1.add(mouseXY, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
