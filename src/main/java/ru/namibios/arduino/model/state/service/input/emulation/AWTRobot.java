@@ -22,10 +22,54 @@ public class AWTRobot extends AbstractEmulationInput {
 
     @Override
     public void moveMouse(int x, int y) {
-        x *= Application.getInstance().MOUSE_CORRECTION_FACTOR();
-        y *= Application.getInstance().MOUSE_CORRECTION_FACTOR();
 
-        robot.mouseMove(x, y);
+        double correctionX = 1;
+        double correctionY = 1;
+
+        while (true) {
+
+            robot.mouseMove(x, y);
+
+            int cX = (int) MouseInfo.getPointerInfo().getLocation().getLocation().getX();
+            int cY = (int) MouseInfo.getPointerInfo().getLocation().getLocation().getY();
+
+            int dx = cX - x;
+            int dy = cY - y;
+
+            boolean okX = (dx >= -2) && (dx <= 2);
+            boolean okY = (dy >= -2) && (dy <= 2);
+
+            if (okX && okY) {
+                return;
+            }
+
+            if (!okX) {
+                if (dx > 0) {
+                    correctionX -= 0.01;
+                    x *= correctionX;
+                }
+
+                if (dx < 0) {
+                    correctionX += 0.01;
+                    x *= correctionX;
+                }
+            }
+
+            if (!okY) {
+                if (dy > 0) {
+                    correctionY -= 0.01;
+                    y *= correctionY;
+                }
+
+                if (dy < 0) {
+                    correctionY += 0.01;
+                    y *= correctionY;
+                }
+            }
+
+            DelayUtils.delay(20);
+        }
+
     }
 
     @Override

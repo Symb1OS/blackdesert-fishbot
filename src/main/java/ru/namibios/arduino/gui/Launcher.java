@@ -7,6 +7,7 @@ import ru.namibios.arduino.gui.view.RootView;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.InetAddress;
@@ -49,9 +50,25 @@ public class Launcher {
 		}
 	}
 
+	private static void checkResolution() {
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int width = gd.getDisplayMode().getWidth();
+		int height = gd.getDisplayMode().getHeight();
+
+		LOG.debug("width = " + width);
+		LOG.debug("height = " + height);
+
+		if (width != 1920 || height != 1080) {
+			LOG.error("Unsupported resolution: " + width + "x" + height);
+			JOptionPane.showMessageDialog(null, "Supporting only 1920x1080", "Unsupported resolution", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+	}
+
 	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 
 		checkIfRunning();
+		checkResolution();
 
 		LOG.info("Start program..");
 
@@ -86,4 +103,5 @@ public class Launcher {
 			LOG.error(ExceptionUtils.getString(e));
 		}
 	}
+
 }
