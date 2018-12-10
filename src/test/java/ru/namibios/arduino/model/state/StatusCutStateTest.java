@@ -72,7 +72,7 @@ public class StatusCutStateTest {
     @Test
     public void testOverflow() {
 
-        int overflow = Application.getInstance().STATE_OVERFLOW() + 1;
+        int overflow = Application.getInstance().STATE_CUT_OVERFLOW() + 1;
 
         when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 

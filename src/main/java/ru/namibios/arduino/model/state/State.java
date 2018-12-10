@@ -28,12 +28,12 @@ public abstract class State {
 		this.afterStart = afterStart;
 	}
 
-	private static final int OVERFLOW = Application.getInstance().STATE_OVERFLOW();
+	int overflow = Application.getInstance().STATE_OVERFLOW();
 	private int step = 0;
 
 	void ifBreak() {
 		step++;
-		if(step >= OVERFLOW){
+		if(step >= overflow){
 			onOverflow();
 		}
 	}

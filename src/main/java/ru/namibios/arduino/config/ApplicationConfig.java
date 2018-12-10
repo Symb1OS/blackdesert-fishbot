@@ -44,6 +44,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("10")
 	int STATE_OVERFLOW();
 
+	@Key("bot.state.overflow.captcha")
+	@DefaultValue("10")
+	int STATE_STATUS_CAPTCHA_OVERFLOW();
+
+	@Key("bot.state.overflow.cut")
+	@DefaultValue("10")
+	int STATE_CUT_OVERFLOW();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// RODS

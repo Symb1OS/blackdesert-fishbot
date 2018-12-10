@@ -69,7 +69,7 @@ public class StatusCaptchaStateTest {
     @Test
     public void testOverflow() {
 
-        int overflow = Application.getInstance().STATE_OVERFLOW() + 1;
+        int overflow = Application.getInstance().STATE_STATUS_CAPTCHA_OVERFLOW() + 1;
 
         when(statusService.getTemplate(any(Status.class))).thenReturn(null);
 
