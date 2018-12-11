@@ -51,6 +51,10 @@ public class EmulationService implements InputService{
         emulationInput.sendInput(Character.forDigit(hotKey, 16));
     }
 
+    public static void main(String[] args) throws IOException {
+        testChangeRods();
+    }
+
     private void changeRod(String command){
         emulationInput.sendInput(KeyEvent.VK_I);
         DelayUtils.delay(1000);

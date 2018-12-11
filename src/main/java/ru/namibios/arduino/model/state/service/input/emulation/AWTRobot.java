@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.state.service.input.emulation;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.utils.DelayUtils;
 
@@ -7,6 +8,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class AWTRobot extends AbstractEmulationInput {
+
+    private static final Logger LOG = Logger.getLogger(AWTRobot.class);
 
     private Robot robot;
 
@@ -23,51 +26,24 @@ public class AWTRobot extends AbstractEmulationInput {
     @Override
     public void moveMouse(int x, int y) {
 
-        double correctionX = 1;
-        double correctionY = 1;
-
-        while (true) {
+        int overflow = 0;
+        while (overflow < 250) {
 
             robot.mouseMove(x, y);
 
             int cX = (int) MouseInfo.getPointerInfo().getLocation().getLocation().getX();
             int cY = (int) MouseInfo.getPointerInfo().getLocation().getLocation().getY();
 
-            int dx = cX - x;
-            int dy = cY - y;
+            LOG.debug(String.format("Destination[%s, %s]; Position[%s, %s]", x, y, cX, cY));
 
-            boolean okX = (dx >= -2) && (dx <= 2);
-            boolean okY = (dy >= -2) && (dy <= 2);
-
-            if (okX && okY) {
+            if (cX == x && cY == y) {
+                LOG.debug("Mouse move success");
                 return;
             }
 
-            if (!okX) {
-                if (dx > 0) {
-                    correctionX -= 0.01;
-                    x *= correctionX;
-                }
-
-                if (dx < 0) {
-                    correctionX += 0.01;
-                    x *= correctionX;
-                }
-            }
-
-            if (!okY) {
-                if (dy > 0) {
-                    correctionY -= 0.01;
-                    y *= correctionY;
-                }
-
-                if (dy < 0) {
-                    correctionY += 0.01;
-                    y *= correctionY;
-                }
-            }
-
             DelayUtils.delay(20);
+            overflow++;
+
         }
 
     }
