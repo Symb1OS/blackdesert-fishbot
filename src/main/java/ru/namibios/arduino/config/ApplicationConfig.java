@@ -4,10 +4,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
-import ru.namibios.arduino.config.converter.HotSlotConverter;
-import ru.namibios.arduino.config.converter.RectangleConverter;
-import ru.namibios.arduino.config.converter.SerialPortConverter;
-import ru.namibios.arduino.config.converter.TouchConverter;
+import ru.namibios.arduino.config.converter.*;
 import ru.namibios.arduino.model.HotSlot;
 import ru.namibios.arduino.model.Touch;
 
@@ -15,6 +12,11 @@ import java.awt.*;
 
 @Sources("file:resources/application.properties")
 public interface ApplicationConfig extends Accessible, Mutable{
+
+	@Key("bot.ui.theme")
+	@DefaultValue("NIMBUS")
+	@ConverterClass(UiThemeConverter.class)
+	String THEME();
 
 	@Key("bot.http")
 	@DefaultValue("23.95.61.97:9090")
