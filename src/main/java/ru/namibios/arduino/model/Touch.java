@@ -61,6 +61,10 @@ public class Touch {
 		return "Loot" + toTouch();
 	}
 
+	public String toCommandConfirmLoot(){
+		return "Loot" + toTouch() + "!";
+	}
+
 	public String toSettingTouch(){
         return String.format("%s{%s,%s}", isActive ? "" : "!", x, y);
     }

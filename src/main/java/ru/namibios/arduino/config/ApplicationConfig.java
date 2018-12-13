@@ -143,6 +143,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.loot.event")
 	@DefaultValue("true")
 	boolean EVENT();
+
+	@Key("bot.loot.confirm")
+	@DefaultValue("true")
+	boolean CONFIRM();
 	
 	@Key("bot.loot.trash")
 	@DefaultValue("false")

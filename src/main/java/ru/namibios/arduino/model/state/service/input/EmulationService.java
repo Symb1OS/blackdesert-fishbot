@@ -21,6 +21,7 @@ public class EmulationService implements InputService{
     private static final String SLOT_MATCHER = "[a-zA-Z]{4}\\[{1}[0-9]{1}\\]{1}";
 
     private static final int TWO_SECONDS = 2000;
+    private static final String CONFIRM_FLAG = "!";
 
     private AbstractEmulationInput emulationInput;
 
@@ -51,10 +52,6 @@ public class EmulationService implements InputService{
         LOG.debug("HotKey: " + hotKey);
 
         emulationInput.sendInput(Character.forDigit(hotKey, 16));
-    }
-
-    public static void main(String[] args) throws IOException {
-        testChangeRods();
     }
 
     private void changeRod(String command){
@@ -96,16 +93,33 @@ public class EmulationService implements InputService{
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
     }
 
+    public static void main(String[] args) throws IOException {
+        EmulationService emulationService = new EmulationService(new AWTRobot());
+        emulationService.takeLootByIndex("Loot[1608,616]Loot[1655,616]!");
+
+    }
+
     private void takeLootByIndex(String command){
         emulationInput.sendInput(KeyEvent.VK_CONTROL);
         for (String touch : command.split(ShortCommand.LOOT.getKey())) {
+
             LOG.debug("Loot" + touch + "");
+            if (touch.isEmpty()) continue;
+
+            boolean isConfirm = touch.endsWith("!");
+            touch = touch.replaceAll(CONFIRM_FLAG, "");
+
             clickByIndex(touch);
             DelayUtils.delay(TWO_SECONDS);
-            emulationInput.sendInput(KeyEvent.VK_F);
-            DelayUtils.delay(TWO_SECONDS);
-            emulationInput.sendInput(KeyEvent.VK_ENTER);
-            DelayUtils.delay(TWO_SECONDS);
+
+            if (isConfirm) {
+                LOG.debug("Loot confirm..");
+                emulationInput.sendInput(KeyEvent.VK_F);
+                DelayUtils.delay(TWO_SECONDS);
+
+                emulationInput.sendInput(KeyEvent.VK_ENTER);
+                DelayUtils.delay(TWO_SECONDS);
+            }
 
         }
         emulationInput.sendInput(KeyEvent.VK_CONTROL);
@@ -145,7 +159,7 @@ public class EmulationService implements InputService{
         LOG.info("Close pop-up windows");
 
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
-        DelayUtils.delay(200);
+        DelayUtils.delay(500);
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
 
     }

@@ -5,7 +5,9 @@ public class LootType {
 	private int index;
 	
 	private boolean isOk;
-	
+
+	private boolean isConfirm;
+
 	private boolean isTrash;
 	
 	private boolean isUnknown;
@@ -30,6 +32,14 @@ public class LootType {
 
 	public void setOk(boolean isOk) {
 		this.isOk = isOk;
+	}
+
+	public boolean isConfirm() {
+		return isConfirm;
+	}
+
+	public void setConfirm(boolean confirm) {
+		isConfirm = confirm;
 	}
 
 	public boolean isTrash() {

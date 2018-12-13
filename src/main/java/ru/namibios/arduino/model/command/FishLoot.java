@@ -126,10 +126,10 @@ public class FishLoot implements Command{
             LOG.info("Take by index");
             String command = "";
             for(LootType type : looter.getLootTypeList()) {
-                if(type.isOk()) {
+                if(type.isOk() || type.isConfirm()) {
                     int index = type.getIndex();
                     Touch touch = Application.getInstance().LOOT_TOUCH()[index];
-                    command+= touch.toCommandLoot();
+                    command+= type.isOk() ? touch.toCommandLoot() : touch.toCommandConfirmLoot();
                 }
             }
             LOG.info(command);

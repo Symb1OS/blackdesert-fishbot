@@ -19,18 +19,21 @@ public class FishLootTest {
 		Application.getInstance().setProperty("bot.loot.key",  "true");
 		Application.getInstance().setProperty("bot.loot.fish", "true");
 		Application.getInstance().setProperty("bot.loot.event","true");
+		Application.getInstance().setProperty("bot.loot.confirm","true");
 
 	}
 
     private String ok;
+    private String confirm;
     private String empty;
     private String trash;
 
     @Before
     public void before() {
-        ok    = Path.TEST_RESOURCES + "parsing/loot/ok/scala/scala.jpg";
-        empty = Path.TEST_RESOURCES + "parsing/loot/ok/empty/empty.jpg";
-        trash = Path.TEST_RESOURCES + "parsing/loot/trash/1.jpg";
+        ok      = Path.TEST_RESOURCES + "parsing/loot/ok/scala/scala.jpg";
+        empty   = Path.TEST_RESOURCES + "parsing/loot/ok/empty/empty.jpg";
+        confirm = Path.TEST_RESOURCES + "parsing/loot/ok/confirm/archer_seal_2.jpg";
+        trash   = Path.TEST_RESOURCES + "parsing/loot/trash/1.jpg";
 
     }
 
@@ -64,6 +67,24 @@ public class FishLootTest {
 
 
     // --------------------TAKE BY INDEX--------------------//
+
+    @Test
+    public void testOkConfirmTrash() throws IOException {
+        FishLoot fishLoot = new FishLoot(ok, confirm, trash);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandLoot() +
+                Application.getInstance().LOOT_TOUCH()[1].toCommandConfirmLoot(), key);
+    }
+
+    @Test
+    public void testConfirmTrashOk() throws IOException {
+        FishLoot fishLoot = new FishLoot(confirm, trash, ok);
+        String key = fishLoot.getKey();
+
+        assertEquals(Application.getInstance().LOOT_TOUCH()[0].toCommandConfirmLoot() +
+                Application.getInstance().LOOT_TOUCH()[2].toCommandLoot(), key);
+    }
 
     @Test
     public void testOkTrashEmpty() throws IOException{

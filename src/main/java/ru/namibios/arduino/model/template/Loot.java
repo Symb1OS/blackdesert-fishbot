@@ -22,6 +22,8 @@ public enum Loot implements MatrixTemplate {
 	
 	EVENT("resources/loot/ok/event"),
 
+	CONFIRM("resources/loot/ok/confirm"),
+
 	EMPTY("resources/loot/ok/empty");
 	
 	private final List<int[][]> templates;
