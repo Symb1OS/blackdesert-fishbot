@@ -107,8 +107,7 @@ public class HttpService {
 		builder.addTextBody("HASH", Application.getHash(), ContentType.TEXT_PLAIN);
 		builder.addTextBody("USER", System.getProperty("user.name"), ContentType.TEXT_PLAIN);
 		builder.addBinaryBody("SCREEN", captcha, ContentType.DEFAULT_BINARY, "file.ext");
-
-		if (name != null) builder.addTextBody("NAME", name, ContentType.TEXT_PLAIN);
+        builder.addTextBody("NAME", name, ContentType.TEXT_PLAIN);
 
 		HttpEntity entity = builder.build();
 		post.setEntity(entity);

@@ -20,15 +20,6 @@ public class HttpServiceTest {
     }
 
     @Test
-    public void parseByteCaptcha() throws IOException {
-
-        Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/captcha/0303244444.jpg");
-        String key = http.parseByteCaptcha(null, ImageUtils.imageToBytes(screen.getScreenShot()));
-        Assert.assertEquals("wdwda", key);
-
-    }
-
-    @Test
     public void parseByteCaptchaByName() throws IOException {
 
         Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/captcha/0303244444.jpg");
