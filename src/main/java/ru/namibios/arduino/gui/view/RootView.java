@@ -100,6 +100,7 @@ public class RootView extends JFrame {
         buttonStop.setIcon(new ImageIcon(UI.IMG_STOP));
 
         buttonTest.addActionListener(new TestController());
+        buttonTest.setVisible(false);
 
         addWindowListener(new CheckUpdate(this));
 //        addWindowListener(new Info(this));
