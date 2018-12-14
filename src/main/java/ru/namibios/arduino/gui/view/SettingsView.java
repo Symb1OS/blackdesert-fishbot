@@ -89,6 +89,7 @@ public class SettingsView extends JDialog {
     private JTextField tfStopBot;
     private JCheckBox cbExitGame;
     private JTextField tfExitGame;
+    private JCheckBox cbConfirm;
 
     private CustomVerifier slotKeyVerifier;
     private CustomVerifier delayPeriodVerifier;
@@ -209,6 +210,7 @@ public class SettingsView extends JDialog {
         cbFish.setSelected(Application.getInstance().FISH());
         cbKey.setSelected(Application.getInstance().KEY());
         cbEvent.setSelected(Application.getInstance().EVENT());
+        cbConfirm.setSelected(Application.getInstance().CONFIRM());
         cbRock.setSelected(Application.getInstance().ROCK());
         cbUnknown.setSelected(Application.getInstance().TAKE_UNKNOWN());
     }
@@ -266,6 +268,14 @@ public class SettingsView extends JDialog {
 
         this.setModal(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    public JCheckBox getCbConfirm() {
+        return cbConfirm;
+    }
+
+    public void setCbConfirm(JCheckBox cbConfirm) {
+        this.cbConfirm = cbConfirm;
     }
 
     public JCheckBox getCbStopBot() {
@@ -475,7 +485,7 @@ public class SettingsView extends JDialog {
         this.$$$loadLabelText$$$(Loot, ResourceBundle.getBundle("locale").getString("preference.label.loot"));
         loot.add(Loot, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         lootContent = new JPanel();
-        lootContent.setLayout(new GridLayoutManager(1, 6, new Insets(5, 5, 5, 5), -1, -1));
+        lootContent.setLayout(new GridLayoutManager(1, 7, new Insets(5, 5, 5, 5), -1, -1));
         loot.add(lootContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lootContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbFish = new JCheckBox();
@@ -486,15 +496,18 @@ public class SettingsView extends JDialog {
         lootContent.add(cbEvent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbRock = new JCheckBox();
         this.$$$loadButtonText$$$(cbRock, ResourceBundle.getBundle("locale").getString("preference.label.rock"));
-        lootContent.add(cbRock, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lootContent.add(cbRock, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbKey = new JCheckBox();
         this.$$$loadButtonText$$$(cbKey, ResourceBundle.getBundle("locale").getString("preference.label.keys"));
-        lootContent.add(cbKey, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lootContent.add(cbKey, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbUnknown = new JCheckBox();
         this.$$$loadButtonText$$$(cbUnknown, ResourceBundle.getBundle("locale").getString("preference.label.unknow"));
-        lootContent.add(cbUnknown, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lootContent.add(cbUnknown, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        lootContent.add(spacer2, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        lootContent.add(spacer2, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        cbConfirm = new JCheckBox();
+        this.$$$loadButtonText$$$(cbConfirm, ResourceBundle.getBundle("locale").getString("preference.label.stack"));
+        lootContent.add(cbConfirm, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         task = new JPanel();
         task.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         settings.add(task, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

@@ -32,6 +32,7 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.loot.rock",  String.valueOf(view.getCbRock().isSelected()));
 		Application.getInstance().setProperty("bot.loot.fish",  String.valueOf(view.getCbFish().isSelected()));
 		Application.getInstance().setProperty("bot.loot.event", String.valueOf(view.getCbEvent().isSelected()));
+		Application.getInstance().setProperty("bot.loot.confirm", String.valueOf(view.getCbConfirm().isSelected()));
 		Application.getInstance().setProperty("bot.loot.unknown", String.valueOf(view.getCbUnknown().isSelected()));
 
 		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT_TASK, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, view.getBeerPeriod().getText(), "Beer"));

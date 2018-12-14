@@ -47,7 +47,7 @@ public class Info extends WindowAdapter {
             LOG.debug("Task info");
 
             String info = getInfo();
-            if (info != null){
+            if (info != null && !info.isEmpty()){
                 JOptionPane.showMessageDialog(rootView, info, "Information", JOptionPane.INFORMATION_MESSAGE);
             }
 
