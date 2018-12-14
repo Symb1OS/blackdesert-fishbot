@@ -54,6 +54,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("10")
 	int STATE_CUT_OVERFLOW();
 
+	@Key("bot.state.skip_calendar")
+	@DefaultValue("false")
+	boolean SKIP_CALENDAR();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// RODS
@@ -67,10 +71,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("180000")
 	int TIME_CHANGE_ROD();
 
-	@Key("bot.calendar.skip.time")
-	@DefaultValue("150000")
-	int TIME_CALENDAR_SKIP();
-	
 	@Key("bot.rod.x")
 	@DefaultValue("1484")
 	int ROD_START_X();

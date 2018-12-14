@@ -23,7 +23,9 @@ public class StartFishState extends State{
 
 		try {
 
-			inputService.send(ShortCommand.SKIP_CALENDAR);
+			if (Application.getInstance().SKIP_CALENDAR()) {
+				inputService.send(ShortCommand.SKIP_CALENDAR);
+			}
 
 			if(inputService.send(ShortCommand.SPACE)){
 				fishBot.setState(new PersonalMessageState(fishBot));
