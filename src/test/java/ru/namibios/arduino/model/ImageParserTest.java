@@ -5,7 +5,7 @@ import org.junit.Test;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.template.Loot;
 import ru.namibios.arduino.model.template.MatrixTemplate;
-import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+import ru.namibios.arduino.model.template.StatusCaptchaTemplate;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,11 +43,11 @@ public class ImageParserTest {
 
 			Screen screen = new Screen(file.getAbsolutePath());
 
-			ImageParser imageParser = new ImageParser(screen, StatusKapchaTemplate.values());
+			ImageParser imageParser = new ImageParser(screen, StatusCaptchaTemplate.values());
 			imageParser.parse(Screen.GRAY);
 
 			MatrixTemplate nameTemplateBySubImage = imageParser.getNameTemplateBySubImage();
-			Assert.assertEquals(StatusKapchaTemplate.SUCCESS, nameTemplateBySubImage);
+			Assert.assertEquals(StatusCaptchaTemplate.SUCCESS, nameTemplateBySubImage);
 		}
 
 	}
@@ -60,11 +60,11 @@ public class ImageParserTest {
 
 			Screen screen = new Screen(file.getAbsolutePath());
 
-			ImageParser imageParser = new ImageParser(screen, StatusKapchaTemplate.values());
+			ImageParser imageParser = new ImageParser(screen, StatusCaptchaTemplate.values());
 			imageParser.parse(Screen.GRAY);
 
 			MatrixTemplate nameTemplateBySubImage = imageParser.getNameTemplateBySubImage();
-			Assert.assertEquals(StatusKapchaTemplate.FAILED, nameTemplateBySubImage);
+			Assert.assertEquals(StatusCaptchaTemplate.FAILED, nameTemplateBySubImage);
 		}
 
 	}

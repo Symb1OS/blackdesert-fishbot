@@ -4,17 +4,17 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+import ru.namibios.arduino.model.template.StatusCaptchaTemplate;
 
 import java.awt.*;
 import java.io.IOException;
 
-public class StatusKapcha implements Status<StatusKapchaTemplate>{
+public class StatusCaptcha implements Status<StatusCaptchaTemplate>{
 
 	private Screen screen;
 
-	public StatusKapcha() throws AWTException {
-		this.screen = new Screen(Application.getInstance().STATUS_KAPCHA());
+	public StatusCaptcha() throws AWTException {
+		this.screen = new Screen(Application.getInstance().STATUS_CAPTCHA());
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_STATUS_CAPTCHA()) {
 			screen.saveImage(Path.DEBUG_STATUSCAPTCHA);
@@ -22,15 +22,15 @@ public class StatusKapcha implements Status<StatusKapchaTemplate>{
 
 	}
 
-	public StatusKapcha(String filename, Rectangle zone) throws IOException {
+	public StatusCaptcha(String filename, Rectangle zone) throws IOException {
 		this.screen = new Screen(filename, zone);
 	}
 
-	public StatusKapchaTemplate getNameTemplate() {
-		ImageParser parser = new ImageParser(screen, StatusKapchaTemplate.values());
+	public StatusCaptchaTemplate getNameTemplate() {
+		ImageParser parser = new ImageParser(screen, StatusCaptchaTemplate.values());
 		parser.parse(Screen.GRAY);
 		
-		return (StatusKapchaTemplate) parser.getNameTemplateBySubImage();
+		return (StatusCaptchaTemplate) parser.getNameTemplateBySubImage();
 	}
 
 }

@@ -356,7 +356,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.statuscaptcha")
 	@DefaultValue("760, 485, 390, 105")
 	@ConverterClass(RectangleConverter.class)
-	Rectangle STATUS_KAPCHA();
+	Rectangle STATUS_CAPTCHA();
 
 	@Key("bot.screen.lootslotone")
 	@DefaultValue("1539, 597, 43, 43")

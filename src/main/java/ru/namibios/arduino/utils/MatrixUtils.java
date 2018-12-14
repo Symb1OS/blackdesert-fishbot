@@ -1,6 +1,6 @@
 package ru.namibios.arduino.utils;
 
-import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+import ru.namibios.arduino.model.template.StatusCaptchaTemplate;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -86,9 +86,9 @@ public final class MatrixUtils {
 
     }
 
-	public static void export(String path, StatusKapchaTemplate[] statusCutTemplates) throws IOException {
+	public static void export(String path, StatusCaptchaTemplate[] statusCutTemplates) throws IOException {
 		
-		for (StatusKapchaTemplate template : StatusKapchaTemplate.values()) {
+		for (StatusCaptchaTemplate template : StatusCaptchaTemplate.values()) {
 			List<int[][]> list = template.getTemplates();
 			for (int[][] mas : list) {
 				try(FileWriter writer = new FileWriter(path + template.name(), false)){

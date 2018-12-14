@@ -5,8 +5,8 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.StatusService;
-import ru.namibios.arduino.model.status.StatusKapcha;
-import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+import ru.namibios.arduino.model.status.StatusCaptcha;
+import ru.namibios.arduino.model.template.StatusCaptchaTemplate;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 public class StatusCaptchaState extends State{
@@ -14,7 +14,7 @@ public class StatusCaptchaState extends State{
 	private static final Logger LOG = Logger.getLogger(StatusCaptchaState.class);
 
 	private HttpService httpService = new HttpService();
-	private StatusService<StatusKapchaTemplate> statusService;
+	private StatusService<StatusCaptchaTemplate> statusService;
 
 	private String filename;
 
@@ -47,7 +47,7 @@ public class StatusCaptchaState extends State{
 
 		try {
 
-			StatusKapchaTemplate status = statusService.getTemplate(new StatusKapcha());
+			StatusCaptchaTemplate status = statusService.getTemplate(new StatusCaptcha());
 			
 			if(status == null) {
 				ifBreak();
@@ -64,7 +64,7 @@ public class StatusCaptchaState extends State{
 					case FAILED: {
 						LOG.info("Captcha parsed failure. Back to start...");
 						fishBot.setState(new StartFishState(fishBot));
-						httpService.markFail(filename, StatusKapchaTemplate.FAILED.name());
+						httpService.markFail(filename, StatusCaptchaTemplate.FAILED.name());
 						break;
 					}
 				}

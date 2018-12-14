@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum StatusKapchaTemplate implements MatrixTemplate{
+public enum StatusCaptchaTemplate implements MatrixTemplate{
 
 	SUCCESS("SUCCESS_EU", "SUCCESS_RU"),
 
@@ -20,14 +20,14 @@ public enum StatusKapchaTemplate implements MatrixTemplate{
 	
 	private final List<int[][]> templates;
 
-	private final Logger LOG = Logger.getLogger(StatusKapchaTemplate.class);
+	private final Logger LOG = Logger.getLogger(StatusCaptchaTemplate.class);
 	
 	@Override
 	public List<int[][]> getTemplates() {
 		return templates;
 	}
 
-	StatusKapchaTemplate(String... filenames) {
+	StatusCaptchaTemplate(String... filenames) {
 		this.templates = new ArrayList<>();
 
 		try {

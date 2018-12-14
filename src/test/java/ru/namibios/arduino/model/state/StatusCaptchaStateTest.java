@@ -11,7 +11,7 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.StatusService;
 import ru.namibios.arduino.model.status.Status;
-import ru.namibios.arduino.model.template.StatusKapchaTemplate;
+import ru.namibios.arduino.model.template.StatusCaptchaTemplate;
 
 import java.io.IOException;
 
@@ -41,7 +41,7 @@ public class StatusCaptchaStateTest {
     @Test
     public void testSuccess() {
 
-        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.SUCCESS);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusCaptchaTemplate.SUCCESS);
 
         statusCaptchaState.onStep();
 
@@ -55,14 +55,14 @@ public class StatusCaptchaStateTest {
 
         String name = "file";
 
-        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusKapchaTemplate.FAILED);
+        when(statusService.getTemplate(any(Status.class))).thenReturn(StatusCaptchaTemplate.FAILED);
 
         statusCaptchaState.setFilename(name);
         statusCaptchaState.onStep();
 
         verify(statusService).getTemplate(isA(Status.class));
         verify(fishBot).setState(isA(StartFishState.class));
-        verify(httpService).markFail(name, StatusKapchaTemplate.FAILED.name());
+        verify(httpService).markFail(name, StatusCaptchaTemplate.FAILED.name());
 
     }
 
