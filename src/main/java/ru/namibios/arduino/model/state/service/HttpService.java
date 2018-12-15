@@ -17,8 +17,11 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.User;
+import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.utils.ExceptionUtils;
+import ru.namibios.arduino.utils.JSON;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -44,6 +47,8 @@ public class HttpService {
 	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
     private static final String MARK_FAILURE_STATUS_URL = "http://%s/fishingserver/captcha/status";
     private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
+
+    private static final String TEST_URL = "http://%s/fishingserver/captcha/test";
 
     private HttpClient httpClient;
 	
@@ -104,8 +109,10 @@ public class HttpService {
 
 		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-		builder.addTextBody("HASH", Application.getHash(), ContentType.TEXT_PLAIN);
-		builder.addTextBody("USER", System.getProperty("user.name"), ContentType.TEXT_PLAIN);
+
+		User user = Application.getUser();
+
+		builder.addTextBody("USER", JSON.getInstance().writeValueAsString(user));
 		builder.addBinaryBody("SCREEN", captcha, ContentType.DEFAULT_BINARY, "file.ext");
         builder.addTextBody("NAME", name, ContentType.TEXT_PLAIN);
 
@@ -128,12 +135,34 @@ public class HttpService {
 
 	}
 
+	public void test() throws IOException {
+
+        HttpGet get = new HttpGet(String.format(TEST_URL,Application.getInstance().URL_CAPTCHA_SERVICE()) + "?status=bad");
+
+        httpResponse = httpClient.execute(get);
+
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
+        System.out.println("statusCode = " + statusCode);
+
+        HttpEntity entity = httpResponse.getEntity();
+        String response = EntityUtils.toString(entity, "UTF-8");
+        System.out.println("response = " + response);
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        HttpService httpService = new HttpService();
+
+		httpService.parseByteCaptcha("test", new Screen("resources/1.jpg").toByteArray());
+
+    }
+
 	public void markFail(String name, String status) throws IOException{
 
 		HttpPost post = new HttpPost(String.format(MARK_FAILURE_STATUS_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
 		ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
-		postParameters.add(new BasicNameValuePair("HASH", Application.getHash()));
+		postParameters.add(new BasicNameValuePair("USER", JSON.getInstance().writeValueAsString(Application.getUser())));
 		postParameters.add(new BasicNameValuePair("NAME", name));
 		postParameters.add(new BasicNameValuePair("STATUS", status));
 		post.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));

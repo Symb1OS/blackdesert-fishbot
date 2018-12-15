@@ -29,7 +29,7 @@ public class CheckUpdate extends WindowAdapter{
             HttpService httpService = new HttpService();
 
             String lastReleaseTag = httpService.getLastReleaseTag().replaceAll("\\D", "");
-            String curVersion = Application.getVersion().replaceAll("\\D", "");
+            String curVersion = Application.getUser().getVersion().replaceAll("\\D", "");
 
             LOG.debug("Current version: " + curVersion);
             LOG.debug("Last available version: " + lastReleaseTag);
