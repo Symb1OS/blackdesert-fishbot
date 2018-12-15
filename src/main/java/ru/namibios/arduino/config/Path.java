@@ -20,6 +20,7 @@ public class Path {
     public static final String DEBUG_STATUSCAPTCHA = "debug/statuscaptcha";
     public static final String DEBUG_STATUSCUT = "debug/statuscut";
     public static final String DEBUG_FILTERLOOT = "debug/filterloot";
+	public static final String DEBUG_PM_MESSAGE = "debug/pm";
 
     public static final String LOOT_UNSORT = "loot/unsort";
     public static final String LOOT_UNKNOWN = "loot/unknown";

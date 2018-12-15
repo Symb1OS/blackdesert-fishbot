@@ -424,4 +424,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("false")
     boolean DEBUG_FILTER_LOOT();
 
+	@Key("bot.screen.debug.pmmessage")
+	@DefaultValue("false")
+    boolean DEBUG_PM_MESSAGE();
 }
