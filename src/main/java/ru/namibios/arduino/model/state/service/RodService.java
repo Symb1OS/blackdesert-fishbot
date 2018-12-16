@@ -11,7 +11,8 @@ public class RodService {
 
     private static final Logger LOG = Logger.getLogger(RodService.class);
 
-    public static final int MAX_RODS = 8;
+    public static final int MAX_RODS = 16;
+    public static final int LENGTH_ROW_INVENTORY = 8;
 
     private List<Touch> rods;
 
@@ -21,7 +22,7 @@ public class RodService {
 
         LOG.debug("Fishing rods count: " + count);
         if(count > MAX_RODS){
-            throw new IllegalArgumentException("Rod count " + count + ". Max rod count = 8");
+            throw new IllegalArgumentException("Rod count " + count + ". Max rod count = " + MAX_RODS);
         }
 
         current = 0;
@@ -31,10 +32,15 @@ public class RodService {
         int x = Application.getInstance().ROD_START_X();
         int y = Application.getInstance().ROD_START_Y();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < MAX_RODS; i++) {
             rods.add(new Touch(x, y));
 
             x += Application.getInstance().ROD_DX();
+            if ((i > 0) && (((i + 1) % LENGTH_ROW_INVENTORY) == 0)) {
+                x = Application.getInstance().ROD_START_X();
+                y += Application.getInstance().ROD_DY();
+            }
+
         }
     }
 

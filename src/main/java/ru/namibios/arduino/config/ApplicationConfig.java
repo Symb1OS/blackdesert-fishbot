@@ -84,7 +84,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int ROD_DX();
 	
 	@Key("bot.rod.dy")
-	@DefaultValue("0")
+	@DefaultValue("54")
 	int ROD_DY();
 	
 	@Key("bot.delay.rod.before")
