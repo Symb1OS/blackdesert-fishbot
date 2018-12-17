@@ -1,11 +1,11 @@
 package ru.namibios.arduino.config;
 
-import javax.swing.JTextArea;
-
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
+
+import javax.swing.*;
 
 public class TextAreaAppender extends AppenderSkeleton {
 	
@@ -22,7 +22,7 @@ public class TextAreaAppender extends AppenderSkeleton {
 		 if(layout == null)
 			 return;
 		 
-		if (event.getLevel().equals(Level.INFO)) {
+		if (event.getLevel().equals(Level.INFO) || event.getLevel().equals(Level.ERROR)) {
 			jTextA.append(layout.format(event));
 			jTextA.setCaretPosition(jTextA.getDocument().getLength());
 		}

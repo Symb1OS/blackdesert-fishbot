@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -37,9 +38,11 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static ru.namibios.arduino.config.Message.SERVER_NOT_AVAILABLE;
+
 public class HttpService {
 
-    private static final Logger LOG = Logger.getLogger(HttpService.class);
+	private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
 
@@ -50,7 +53,7 @@ public class HttpService {
 
     private static final String TEST_URL = "http://%s/fishingserver/captcha/test";
 
-    private HttpClient httpClient;
+	private HttpClient httpClient;
 	
 	private HttpResponse httpResponse;
 
@@ -119,17 +122,28 @@ public class HttpService {
 		HttpEntity entity = builder.build();
 		post.setEntity(entity);
 
-		httpResponse = httpClient.execute(post);
+        try {
+
+            httpResponse = httpClient.execute(post);
+
+        } catch (HttpHostConnectException e) {
+
+            LOG.error(SERVER_NOT_AVAILABLE);
+
+            return ShortCommand.IGNORE.getKey();
+        }
 
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
+		entity = httpResponse.getEntity();
+		String response = EntityUtils.toString(entity, "UTF-8").trim();
 		if (statusCode == HttpStatus.SC_OK) {
 
-			LOG.debug("Status code: " + statusCode );
-			entity = httpResponse.getEntity();
-			return EntityUtils.toString(entity, "UTF-8").trim();
+		    return response;
 		} else {
 
 			LOG.error("Status code: " + statusCode );
+			LOG.error(response);
+
 			return ShortCommand.IGNORE.getKey();
 		}
 
@@ -154,6 +168,7 @@ public class HttpService {
         HttpService httpService = new HttpService();
 
 		httpService.parseByteCaptcha("test", new Screen("resources/1.jpg").toByteArray());
+
 
     }
 

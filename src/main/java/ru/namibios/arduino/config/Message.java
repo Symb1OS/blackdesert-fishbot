@@ -6,6 +6,8 @@ public class Message {
 
 	public static final String ALREADY_WORK = "Program already running";
 
+	public static final String SERVER_NOT_AVAILABLE = "Сервер не доступен";
+
 	public static final String OUT_RODS = "Fishing rods ended. Process end.";
 
 	public static final String END_WORK = "Bot ended work";

@@ -7,7 +7,6 @@ import ru.namibios.arduino.model.command.Captcha;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.util.Date;
-import java.util.UUID;
 
 public class CaptchaState extends State {
 
@@ -27,7 +26,7 @@ public class CaptchaState extends State {
 		
 		try{
 
-			String name = String.valueOf(new Date().getTime()) + "_" + UUID.randomUUID();
+			String name = String.valueOf(new Date().getTime()) + "_" + Application.getUser().getHash();
 
 			if(inputService.send(new Captcha(name))){
 				LOG.info("Captcha send to input. Go to check status...");

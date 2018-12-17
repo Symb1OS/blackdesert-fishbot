@@ -12,6 +12,7 @@ import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.config.TextAreaAppender;
 import ru.namibios.arduino.gui.CheckUpdate;
 import ru.namibios.arduino.gui.DynamicData;
+import ru.namibios.arduino.gui.Info;
 import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.SettingsController;
 import ru.namibios.arduino.gui.controller.StartController;
@@ -103,7 +104,7 @@ public class RootView extends JFrame {
         buttonTest.setVisible(false);
 
         addWindowListener(new CheckUpdate(this));
-//        addWindowListener(new Info(this));
+        addWindowListener(new Info(this));
 
         setVisible(true);
         setResizable(false);
