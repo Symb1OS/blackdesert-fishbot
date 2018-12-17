@@ -28,18 +28,17 @@ public class Transfer extends Thread{
 		DelayUtils.delay(10000);
 		fishBot.setRunned(true);
 		fishBot.setRestart(false);
-		run();
+		process();
 	}
 
-	@Override
-	public void run() {
-		
+	private void process(){
+
 		LOG.info("Start...");
 
 		WinDef.HWND windowGame = WinAPI.findWindow("BLACK DESERT");
 		if (windowGame == null) {
 			LOG.info("The game is not running");
-			return;
+			System.exit(1);
 		}
 
 		if (fishBot == null) {
@@ -57,6 +56,14 @@ public class Transfer extends Thread{
 
 		if(fishBot.isRestart()) restart();
 
+	}
+
+	@Override
+	public void run() {
+		
+		process();
+
+		LOG.info("End work.");
 		fishBot.notifyUser(Message.END_WORK);
 
 	}
