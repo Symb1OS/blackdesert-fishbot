@@ -10,4 +10,10 @@ public class UI {
     public static final String IMG_PLAY = "resources/img/play.png";
     public static final String IMG_STOP = "resources/img/stop.png";
 
+    public static final String IMG_PAYMENT = "resources/img/payment.png";
+    public static final String SMALL_PAYMENT = "resources/img/payment_16.png";
+
+    public static final String IMG_PREMIUM = "resources/img/premium.png";
+    public static final String SMALL_PREMIUM = "resources/img/premium_16.png";
+
 }

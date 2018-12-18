@@ -7,11 +7,16 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.UUID;
 
 public class User {
 
     private static final Logger LOG = Logger.getLogger(User.class);
+
+    private boolean premium;
+    private Date premiumStart;
+    private Date premiumEnd;
 
     private String hash;
     private String name;
@@ -28,6 +33,7 @@ public class User {
     }
 
     public User() {
+
         this.hash = initHash();
         this.version = initVersion();
         this.name = new String(System.getProperty("user.name").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
@@ -37,6 +43,7 @@ public class User {
         this.osArch = System.getProperty("os.arch");
         this.osVersion = System.getProperty("os.version");
         this.country = System.getProperty("user.country");
+
     }
 
     private String initVersion(){
@@ -103,6 +110,18 @@ public class User {
         return hash;
     }
 
+    public Date getPremiumStart() {
+        return premiumStart;
+    }
+
+    public Date getPremiumEnd() {
+        return premiumEnd;
+    }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
     public String getHash() {
         return hash;
     }
@@ -142,7 +161,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "hash='" + hash + '\'' +
+                "premium=" + premium +
+                ", hash='" + hash + '\'' +
                 ", name='" + name + '\'' +
                 ", home='" + home + '\'' +
                 ", encoding='" + encoding + '\'' +

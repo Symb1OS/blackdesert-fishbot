@@ -17,4 +17,9 @@ public final class DateUtils {
 		return format.format(new Date());
 	}
 
+	public static String getDDMMYYYY(Date date){
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		return format.format(date);
+	}
+
 }

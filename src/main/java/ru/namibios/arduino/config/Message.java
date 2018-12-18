@@ -16,7 +16,9 @@ public class Message {
 	public static final String RECEIVED_PRIVATE_MESSAGE = "Received personal message";
 	public static final String TURN_AUTOFISH = "Switch to auto fishing mode";
 	public static final String EXIT_GAME = "Exit game..";
-	
+
+	public static final String URI_PREMIUM_INFO = "http://%s/fishingserver/static/payment.pdf";
+
 	public static final String URI_REPORT_PROBLEM = "https://github.com/Symb1OS/blackdesert-fishbot/issues";
 	public static final String URI_WIKI = "https://github.com/Symb1OS/blackdesert-fishbot/wiki";
 

@@ -25,6 +25,11 @@ public class ChangeRodState extends State{
 	public void onStep() {
 
 		LOG.info("Start change rod...");
+		if (!Application.getUser().isPremium()) {
+			LOG.info("Change rod available only for premium user");
+			fishBot.setRunned(false);
+			return;
+		}
 
 		try {
 

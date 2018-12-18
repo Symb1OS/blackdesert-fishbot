@@ -7,6 +7,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import ru.namibios.arduino.Transfer;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.config.TextAreaAppender;
@@ -14,10 +15,7 @@ import ru.namibios.arduino.gui.CheckUpdate;
 import ru.namibios.arduino.gui.DynamicData;
 import ru.namibios.arduino.gui.Info;
 import ru.namibios.arduino.gui.UI;
-import ru.namibios.arduino.gui.controller.SettingsController;
-import ru.namibios.arduino.gui.controller.StartController;
-import ru.namibios.arduino.gui.controller.StopController;
-import ru.namibios.arduino.gui.controller.TestController;
+import ru.namibios.arduino.gui.controller.*;
 import ru.namibios.arduino.utils.AppUtils;
 import ru.namibios.arduino.utils.ExecUtils;
 
@@ -37,6 +35,7 @@ public class RootView extends JFrame {
     private JPanel buttonPanel;
     private JLabel mouseXY;
     private JButton buttonTest;
+    private JLabel premiumLabel;
 
     public RootView() {
 
@@ -75,6 +74,18 @@ public class RootView extends JFrame {
         exit.addActionListener((e) -> System.exit(1));
         file.add(exit);
 
+        JMenu premium = new JMenu(UIManager.getString("rootview.menu.premium"));
+
+        JMenuItem premiumItem = new JMenuItem(UIManager.getString("rootview.menu.premium.info"));
+        premiumItem.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
+        premiumItem.addActionListener(new PremiumController());
+        premium.add(premiumItem);
+
+        JMenuItem payInfo = new JMenuItem(UIManager.getString("rootview.menu.premium.payinfo"));
+        payInfo.setIcon(new ImageIcon(UI.SMALL_PAYMENT));
+        payInfo.addActionListener((e) -> ExecUtils.openUri(String.format(Message.URI_PREMIUM_INFO, Application.getInstance().URL_CAPTCHA_SERVICE())));
+        premium.add(payInfo);
+
         JMenu help = new JMenu(UIManager.getString("rootview.menu.help"));
 
         JMenuItem wiki = new JMenuItem(UIManager.getString("rootview.menu.help.wiki"));
@@ -88,9 +99,15 @@ public class RootView extends JFrame {
         help.add(feedback);
 
         menuBar.add(file);
+        menuBar.add(premium);
         menuBar.add(help);
 
         setJMenuBar(menuBar);
+
+        if (Application.getUser().isPremium()) {
+            LOG.debug("Premium user");
+            premiumLabel.setIcon(new ImageIcon(UI.IMG_PREMIUM));
+        }
 
         new DynamicData(mouseXY).start();
 
@@ -129,11 +146,11 @@ public class RootView extends JFrame {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(buttonPanel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(buttonPanel, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonStart = new JButton();
         this.$$$loadButtonText$$$(buttonStart, ResourceBundle.getBundle("locale").getString("rootview.button.start"));
         buttonPanel.add(buttonStart, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -144,10 +161,14 @@ public class RootView extends JFrame {
         buttonTest.setText("Тест");
         buttonPanel.add(buttonTest, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         mouseXY = new JLabel();
+        mouseXY.setEnabled(false);
         mouseXY.setText("Point");
-        panel1.add(mouseXY, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(mouseXY, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        panel1.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel1.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        premiumLabel = new JLabel();
+        premiumLabel.setText("");
+        panel1.add(premiumLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -30,6 +31,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -45,6 +48,8 @@ public class HttpService {
 	private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
+
+    private static final String USER_STATUS_URL = "http://%s/fishingserver/user/status";
 
 	private static final String INFO_URL = "http://%s/fishingserver/info";
 	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
@@ -169,7 +174,6 @@ public class HttpService {
 
 		httpService.parseByteCaptcha("test", new Screen("resources/1.jpg").toByteArray());
 
-
     }
 
 	public void markFail(String name, String status) throws IOException{
@@ -196,7 +200,25 @@ public class HttpService {
 		return EntityUtils.toString(entity, "UTF-8");
 	}
 
-	private static class DefaultTrustManager implements X509TrustManager {
+    public User getUserStatus(User user) throws IOException, URISyntaxException {
+
+        HttpGet get = new HttpGet(String.format(USER_STATUS_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
+
+        URI uri = new URIBuilder(get.getURI())
+                .addParameter("USER", JSON.getInstance().writeValueAsString(user))
+                .build();
+
+        get.setURI(uri);
+
+        httpResponse = httpClient.execute(get);
+        HttpEntity entity = httpResponse.getEntity();
+        String response = EntityUtils.toString(entity, "UTF-8");
+
+        return JSON.getInstance().readValue(response, User.class);
+
+    }
+
+    private static class DefaultTrustManager implements X509TrustManager {
 
         @Override
         public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
