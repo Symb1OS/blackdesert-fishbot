@@ -64,7 +64,7 @@ public class StatusCaptchaState extends State{
 					case FAILED: {
 						LOG.info("Captcha parsed failure. Back to start...");
 						fishBot.setState(new StartFishState(fishBot));
-						httpService.markFail(filename, StatusCaptchaTemplate.FAILED.name());
+						httpService.markFail(filename);
 						break;
 					}
 				}

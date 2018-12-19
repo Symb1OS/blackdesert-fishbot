@@ -5,6 +5,7 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.Slot;
 import ru.namibios.arduino.model.notification.Notification;
 import ru.namibios.arduino.model.notification.TelegramNotification;
+import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.RodService;
 import ru.namibios.arduino.model.state.service.SlotService;
 import ru.namibios.arduino.model.state.service.input.ArduinoService;
@@ -12,6 +13,7 @@ import ru.namibios.arduino.model.state.service.input.EmulationService;
 import ru.namibios.arduino.model.state.service.input.InputService;
 import ru.namibios.arduino.model.state.service.input.emulation.AWTRobot;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,6 +35,8 @@ public class FishBot {
 
 	private InputService inputService;
 
+	private HttpService httpService;
+
     public FishBot(boolean start) {
 
         List<Slot> slots = Arrays.asList(
@@ -43,6 +47,8 @@ public class FishBot {
 				new Slot(Application.getInstance().TASK_STOP()),
 				new Slot(Application.getInstance().TASK_EXIT_GAME())
         );
+
+		this.httpService = new HttpService();
 
         this.slotService = new SlotService(slots);
 
@@ -69,6 +75,17 @@ public class FishBot {
 		setRestart(true);
 		setRunned(false);
 	}
+
+	void call(){
+
+    	try {
+
+			httpService.call(state.getClass().getName());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void notifyUser(String message){
 			
@@ -78,6 +95,10 @@ public class FishBot {
 			telegram.notifyUser();
 		}
 			
+	}
+
+	public HttpService getHttpService() {
+		return httpService;
 	}
 
 	public InputService getInputService() {

@@ -62,7 +62,7 @@ public class StatusCaptchaStateTest {
 
         verify(statusService).getTemplate(isA(Status.class));
         verify(fishBot).setState(isA(StartFishState.class));
-        verify(httpService).markFail(name, StatusCaptchaTemplate.FAILED.name());
+        verify(httpService).markFail(name);
 
     }
 

@@ -40,6 +40,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 import static ru.namibios.arduino.config.Message.SERVER_NOT_AVAILABLE;
 
@@ -57,6 +58,7 @@ public class HttpService {
     private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
 
     private static final String TEST_URL = "http://%s/fishingserver/captcha/test";
+	private static final String CALL_URL = "http://%s/fishingserver/call";
 
 	private HttpClient httpClient;
 	
@@ -169,21 +171,28 @@ public class HttpService {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        HttpService httpService = new HttpService();
+    private void testCaptcha() throws IOException {
+		HttpService httpService = new HttpService();
 
-		httpService.parseByteCaptcha("test", new Screen("resources/1.jpg").toByteArray());
+		String name = UUID.randomUUID().toString();
+		httpService.parseByteCaptcha(name, new Screen("resources/1.jpg").toByteArray());
+		httpService.markFail(name);
+	}
+
+    public static void main(String[] args) throws IOException {
+		HttpService httpService = new HttpService();
+
+		httpService.call("ChangeRodState");
 
     }
 
-	public void markFail(String name, String status) throws IOException{
+	public void markFail(String name) throws IOException{
 
 		HttpPost post = new HttpPost(String.format(MARK_FAILURE_STATUS_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
 		ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
 		postParameters.add(new BasicNameValuePair("USER", JSON.getInstance().writeValueAsString(Application.getUser())));
 		postParameters.add(new BasicNameValuePair("NAME", name));
-		postParameters.add(new BasicNameValuePair("STATUS", status));
 		post.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
 
 		httpResponse = httpClient.execute(post);
@@ -218,7 +227,18 @@ public class HttpService {
 
     }
 
-    private static class DefaultTrustManager implements X509TrustManager {
+	public void call(String name) throws IOException {
+
+		HttpPost post = Builder.config().setUrl(String.format(CALL_URL, Application.getInstance().URL_CAPTCHA_SERVICE()))
+				.setParameter(new BasicNameValuePair("USER", JSON.getInstance().writeValueAsString(Application.getUser())))
+				.setParameter(new BasicNameValuePair("NAME", name))
+				.build();
+
+		httpResponse = httpClient.execute(post);
+
+	}
+
+	private static class DefaultTrustManager implements X509TrustManager {
 
         @Override
         public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
