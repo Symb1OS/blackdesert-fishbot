@@ -68,7 +68,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="От:"/>
+              <text resource-bundle="locale" key="premium.label.from"/>
             </properties>
           </component>
           <component id="90848" class="javax.swing.JLabel">
@@ -78,7 +78,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="До:"/>
+              <text resource-bundle="locale" key="premium.label.to"/>
             </properties>
           </component>
           <grid id="f3a37" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
