@@ -40,8 +40,12 @@ public abstract class State {
 
 	public void process(){
 		DelayUtils.delay(beforeStart);
-		onStep();
+		if (onPremium()) onStep();
 		DelayUtils.delay(afterStart);
+	}
+
+	public boolean onPremium(){
+		return true;
 	}
 
 	public void onOverflow() {

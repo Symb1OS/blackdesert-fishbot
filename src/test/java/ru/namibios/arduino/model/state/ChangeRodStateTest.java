@@ -70,6 +70,7 @@ public class ChangeRodStateTest {
 
         assertEquals(new Touch(1,1).toCommandRod(), commandCaptor.getValue().getKey());
 
+        verify(fishBot).call();
         verify(fishBot).setState(isA(StartFishState.class));
         verify(fishBot).restart();
 

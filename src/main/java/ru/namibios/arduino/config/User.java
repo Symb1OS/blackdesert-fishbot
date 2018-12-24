@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -36,8 +35,8 @@ public class User {
 
         this.hash = initHash();
         this.version = initVersion();
-        this.name = new String(System.getProperty("user.name").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        this.home = new String(System.getProperty("user.home").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        this.name = System.getProperty("user.name");
+        this.home = System.getProperty("user.home");
         this.encoding = System.getProperty("file.encoding");
         this.os = System.getProperty("os.name");
         this.osArch = System.getProperty("os.arch");

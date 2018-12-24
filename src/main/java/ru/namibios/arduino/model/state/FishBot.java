@@ -62,6 +62,7 @@ public class FishBot {
 				this.inputService = new EmulationService(new AWTRobot());
 				break;
 			default:
+				LOG.error("Unknown input mode. Check settings.");
 				throw new IllegalArgumentException("Unknown input mode. Check settings.");
 		}
 

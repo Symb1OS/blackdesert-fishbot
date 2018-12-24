@@ -1,6 +1,7 @@
 package ru.namibios.arduino.model.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.model.state.service.SlotService;
@@ -33,6 +34,17 @@ public class UseSlotState extends State {
 	}
 
 	@Override
+	public boolean onPremium() {
+		if (!Application.getUser().isPremium()) {
+			LOG.info("Use slots available only for premium user");
+			fishBot.setState(new StartFishState(fishBot));
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void onStep() {
 
 	    LOG.info("Check slots..");
@@ -41,6 +53,7 @@ public class UseSlotState extends State {
 
 			if (slotService.isReady()) {
 				LOG.info("Slot ready.. Use");
+				fishBot.call();
 
 				String key = slotService.getKey();
 				if (key.startsWith(ShortCommand.STOP.getKey())) {
