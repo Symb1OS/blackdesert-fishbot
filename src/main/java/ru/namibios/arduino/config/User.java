@@ -17,6 +17,8 @@ public class User {
     private Date premiumStart;
     private Date premiumEnd;
 
+    private boolean blocked;
+
     private String hash;
     private String name;
     private String home;
@@ -109,6 +111,10 @@ public class User {
         return hash;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
     public Date getPremiumStart() {
         return premiumStart;
     }
@@ -161,6 +167,9 @@ public class User {
     public String toString() {
         return "User{" +
                 "premium=" + premium +
+                ", premiumStart=" + premiumStart +
+                ", premiumEnd=" + premiumEnd +
+                ", blocked=" + blocked +
                 ", hash='" + hash + '\'' +
                 ", name='" + name + '\'' +
                 ", home='" + home + '\'' +

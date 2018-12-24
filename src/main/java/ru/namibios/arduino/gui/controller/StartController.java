@@ -1,6 +1,8 @@
 package ru.namibios.arduino.gui.controller;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.Transfer;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.gui.view.RootView;
 import ru.namibios.arduino.model.state.FishBot;
@@ -10,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartController implements ActionListener {
-	
+
+    private static final Logger LOG = Logger.getLogger(StartController.class);
+
 	private RootView view;
 
 	private Transfer threadTransfer;
@@ -28,6 +32,12 @@ public class StartController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		boolean isInit = threadTransfer != null ;
+
+		if (Application.getUser().isBlocked()){
+            LOG.info(Message.USER_IS_BLOCKED);
+            showMessageDialog(Message.USER_IS_BLOCKED);
+            return;
+        }
 
         if (isInit) {
 

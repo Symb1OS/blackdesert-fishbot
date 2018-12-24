@@ -4,6 +4,8 @@ public class Message {
 
 	public static final String LOG_FORMAT_ERROR = "Error %s. Details in error.log";
 
+	public static final String USER_IS_BLOCKED = "User is blocked";
+
 	public static final String ALREADY_WORK = "Program already running";
 
 	public static final String SERVER_NOT_AVAILABLE = "Сервер не доступен";
