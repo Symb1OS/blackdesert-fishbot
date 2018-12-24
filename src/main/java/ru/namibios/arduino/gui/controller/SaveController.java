@@ -68,7 +68,7 @@ public class SaveController implements ActionListener{
 
 		try {
 
-			if (Application.getUser().getVersion().equals("${pom.version}")) {
+			if (!Application.getUser().getVersion().equals("${pom.version}")) {
 				restartApplication();
 			}
 

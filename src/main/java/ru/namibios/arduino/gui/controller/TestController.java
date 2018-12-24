@@ -1,6 +1,8 @@
 package ru.namibios.arduino.gui.controller;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.model.Screen;
+import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.model.state.service.RodService;
 import ru.namibios.arduino.model.state.service.input.EmulationService;
 import ru.namibios.arduino.model.state.service.input.emulation.AWTRobot;
@@ -26,7 +28,8 @@ public class TestController implements ActionListener{
 
             try {
 
-                testRods();
+//                testRods();
+                testCapctha();
 
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -40,6 +43,23 @@ public class TestController implements ActionListener{
     private static void printFact(){
 	    LOG.info(String.format("Position [%s, %s]", (int) MouseInfo.getPointerInfo().getLocation().getLocation().getX(),
                 (int) MouseInfo.getPointerInfo().getLocation().getLocation().getY()));
+    }
+
+    private static void testCapctha() throws IOException {
+
+        HttpService httpService = new HttpService();
+        httpService.parseByteCaptcha("test", new Screen("resources/1.jpg").toByteArray());
+    }
+
+    private static void restartApplication() throws IOException {
+
+        StringBuilder cmd = new StringBuilder();
+
+        cmd.append("run.bat");
+
+        Runtime.getRuntime().exec(cmd.toString());
+        System.exit(0);
+
     }
 
     private static void testRods() throws IOException {

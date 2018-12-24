@@ -175,14 +175,25 @@ public class HttpService {
 		HttpService httpService = new HttpService();
 
 		String name = UUID.randomUUID().toString();
-		httpService.parseByteCaptcha(name, new Screen("resources/1.jpg").toByteArray());
-		httpService.markFail(name);
+        String s = httpService.parseByteCaptcha(name, new Screen("resources/1.jpg").toByteArray());
+        if (!s.isEmpty()) {
+            httpService.markFail(name);
+        }
+
 	}
 
     public static void main(String[] args) throws IOException {
+//		HttpService httpService = new HttpService();
+
+//		httpService.call(ChangeRodState.class.getName());
+
 		HttpService httpService = new HttpService();
 
-		httpService.call("ChangeRodState");
+		String name = UUID.randomUUID().toString();
+        String s = httpService.parseByteCaptcha(name, new Screen("resources/1.jpg").toByteArray());
+        if (!s.isEmpty()) {
+            httpService.markFail(name);
+        }
 
     }
 
