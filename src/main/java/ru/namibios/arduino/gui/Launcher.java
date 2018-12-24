@@ -65,6 +65,17 @@ public class Launcher {
 		}
 	}
 
+	public static void close(){
+
+		try {
+
+			socket.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 
 		checkIfRunning();

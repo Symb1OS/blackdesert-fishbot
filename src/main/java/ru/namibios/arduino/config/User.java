@@ -1,6 +1,7 @@
 package ru.namibios.arduino.config;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.IOException;
@@ -109,6 +110,11 @@ public class User {
         }
 
         return hash;
+    }
+
+    @JsonIgnore
+    public boolean isWin(){
+        return os.startsWith("Win");
     }
 
     public boolean isBlocked() {

@@ -1,11 +1,14 @@
 package ru.namibios.arduino.gui.controller;
 
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.gui.Launcher;
 import ru.namibios.arduino.gui.view.SettingsView;
 import ru.namibios.arduino.model.Touch;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class SaveController implements ActionListener{
 
@@ -63,7 +66,32 @@ public class SaveController implements ActionListener{
 
 		Application.record();
 
+		try {
+
+			if (Application.getUser().getVersion().equals("${pom.version}")) {
+				restartApplication();
+			}
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 		view.dispose();
+	}
+
+	private static void restartApplication() throws IOException {
+
+		Launcher.close();
+
+		StringBuilder cmd = new StringBuilder();
+		String dir = System.getProperty("user.dir");
+		cmd.append(dir);
+		cmd.append(File.separator);
+		cmd.append(Application.getUser().isWin() ? "run.bat" : "run.sh");
+		Runtime.getRuntime().exec(cmd.toString());
+
+		System.exit(0);
+
 	}
 
 	private String getPortName(String descriptionPort){
