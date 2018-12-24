@@ -17,6 +17,8 @@ public class Captcha implements Command{
 
 	private final static Logger LOG = Logger.getLogger(Captcha.class);
 
+	public static final String REGEX = "[awsd]{0,10}";
+
 	private String filename;
 
 	private Screen screen;
