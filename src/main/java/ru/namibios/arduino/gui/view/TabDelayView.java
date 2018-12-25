@@ -1,12 +1,21 @@
 package ru.namibios.arduino.gui.view;
 
+import com.fazecast.jSerialComm.SerialPort;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.config.InputMode;
+import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.gui.CustomVerifier;
+import ru.namibios.arduino.gui.Launcher;
 import ru.namibios.arduino.gui.UI;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 public class TabDelayView extends JDialog {
@@ -26,7 +35,7 @@ public class TabDelayView extends JDialog {
     private JCheckBox cbUnknown;
     private JCheckBox cbConfirm;
     private JPanel portContent;
-    private JComboBox cbPort;
+    private JComboBox<String> cbPort;
     private JPanel task;
     private JPanel taskContent;
     private JCheckBox cbBeer;
@@ -198,7 +207,19 @@ public class TabDelayView extends JDialog {
     private JTextField tfFullscreenWidth;
     private JTextField tfFullscreenHeight;
 
-    TabDelayView(){
+    private CustomVerifier slotKeyVerifier;
+    private CustomVerifier delayPeriodVerifier;
+    private CustomVerifier delayVerifier;
+    private CustomVerifier rodCountVerifier;
+
+    private static final Logger LOG = Logger.getLogger(TabDelayView.class);
+
+    private static final String REGEX_DELAY_OR_PERIOD = "[0-9]+[m|s]{0,1}";
+    private static final String REGEX_DELAY = "[0-9]+";
+    private static final String REGEX_SLOT = "[a-z0-9-=]{1}";
+    private static final String REGEX_ROD_COUNT = "[0-8]{1}";
+
+    public TabDelayView(){
 
         setContentPane(content);
 
@@ -227,11 +248,51 @@ public class TabDelayView extends JDialog {
     }
 
     private void init() {
+        Launcher.LOCALES.keySet().forEach(s -> cbLanguage.addItem(s));
+        cbLanguage.setSelectedItem(Application.getInstance().LANGUAGE());
+
+        cbMode.addItem(InputMode.ROBOT);
+        cbMode.addItem(InputMode.ARDUINO);
+        cbMode.setSelectedItem(Application.getInstance().INPUT_MODE());
+        cbMode.addItemListener(e -> {
+            cbPort.setEnabled(e.getItem() == InputMode.ARDUINO);
+        });
+
+
+        SerialPort[] portNames = SerialPort.getCommPorts();
+        for (int i = 0; i < portNames.length; i++) {
+            try {
+                cbPort.addItem(new String(portNames[i].getDescriptivePortName().getBytes(StandardCharsets.ISO_8859_1), "Cp1251"));
+
+            } catch (Exception e) {
+                LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
+                LOG.error(ExceptionUtils.getString(e));
+            }
+        }
+
+        int count = cbPort.getItemCount();
+        for (int index = 0; index < count; index++) {
+            if (cbPort.getItemAt(index).contains(Application.getInstance().COM_PORT())) {
+                cbPort.setSelectedItem(cbPort.getItemAt(index));
+            }
+        }
+
+        cbPort.setEnabled(cbMode.getSelectedItem() == InputMode.ARDUINO);
+
+        slotKeyVerifier = new CustomVerifier(UIManager.getString("err.format.slotkey"), REGEX_SLOT);
+        delayPeriodVerifier = new CustomVerifier(UIManager.getString("err.format.slotdelayperiod"), REGEX_DELAY_OR_PERIOD);
+        delayVerifier = new CustomVerifier(UIManager.getString("err.format.delay"), REGEX_DELAY);
+        rodCountVerifier = new CustomVerifier(UIManager.getString("err.format.rodcount"), REGEX_ROD_COUNT);
+
 
     }
 
     public static void main(String[] args) {
-        TabDelayView tabDelayView = new TabDelayView();
+
+//        UIManager.getDefaults().addResourceBundle("locale");
+
+        SwingUtilities.invokeLater(TabDelayView::new);
+
     }
 
     {
@@ -255,7 +316,7 @@ public class TabDelayView extends JDialog {
         content.add(tabPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
         generalTab = new JPanel();
         generalTab.setLayout(new GridLayoutManager(10, 1, new Insets(0, 0, 0, 0), -1, -1));
-        tabPane.addTab("Основное", generalTab);
+        tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.general"), generalTab);
         final Spacer spacer1 = new Spacer();
         generalTab.add(spacer1, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         loot = new JPanel();
@@ -497,7 +558,7 @@ public class TabDelayView extends JDialog {
         modeContent.add(cbMode, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addTab = new JPanel();
         addTab.setLayout(new GridLayoutManager(9, 1, new Insets(0, 0, 0, 0), -1, -1));
-        tabPane.addTab("Дополнительно", addTab);
+        tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.add"), addTab);
         final Spacer spacer4 = new Spacer();
         addTab.add(spacer4, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         language = new JPanel();
@@ -511,43 +572,45 @@ public class TabDelayView extends JDialog {
         language.add(localeContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         localeContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbLanguage = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        cbLanguage.setModel(defaultComboBoxModel2);
         localeContent.add(cbLanguage, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         theme = new JPanel();
         theme.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(theme, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label24 = new JLabel();
-        label24.setText("Тема:\n");
+        this.$$$loadLabelText$$$(label24, ResourceBundle.getBundle("locale").getString("preference.label.theme"));
         theme.add(label24, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         themeContent = new JPanel();
         themeContent.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         theme.add(themeContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         themeContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbTheme = new JComboBox();
-        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
-        cbTheme.setModel(defaultComboBoxModel2);
+        final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
+        cbTheme.setModel(defaultComboBoxModel3);
         themeContent.add(cbTheme, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         overflow = new JPanel();
         overflow.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(overflow, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label25 = new JLabel();
-        label25.setText("Переполнение:");
+        this.$$$loadLabelText$$$(label25, ResourceBundle.getBundle("locale").getString("preference.label.overflow"));
         overflow.add(label25, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         overflowContent = new JPanel();
         overflowContent.setLayout(new GridLayoutManager(3, 2, new Insets(5, 5, 5, 5), -1, -1));
         overflow.add(overflowContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         overflowContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label26 = new JLabel();
-        label26.setText("Общее состояние:");
+        this.$$$loadLabelText$$$(label26, ResourceBundle.getBundle("locale").getString("preference.label.state.general"));
         overflowContent.add(label26, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         tfState = new JTextField();
         overflowContent.add(tfState, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label27 = new JLabel();
-        label27.setText("Статус подсечки:");
+        this.$$$loadLabelText$$$(label27, ResourceBundle.getBundle("locale").getString("preference.label.state.status_cut"));
         overflowContent.add(label27, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         tfCutState = new JTextField();
         overflowContent.add(tfCutState, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label28 = new JLabel();
-        label28.setText("Статус капчи:");
+        this.$$$loadLabelText$$$(label28, ResourceBundle.getBundle("locale").getString("preference.label.state.status_captcha"));
         overflowContent.add(label28, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfCapcthaState = new JTextField();
         overflowContent.add(tfCapcthaState, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -555,24 +618,24 @@ public class TabDelayView extends JDialog {
         lootTouch.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(lootTouch, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label29 = new JLabel();
-        label29.setText("Лут:");
+        this.$$$loadLabelText$$$(label29, ResourceBundle.getBundle("locale").getString("preference.label.loot"));
         lootTouch.add(label29, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         lootTouchContent = new JPanel();
         lootTouchContent.setLayout(new GridLayoutManager(3, 5, new Insets(5, 5, 5, 5), -1, -1));
         lootTouch.add(lootTouchContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lootTouchContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label30 = new JLabel();
-        label30.setText("Слот 1:");
+        this.$$$loadLabelText$$$(label30, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot1"));
         lootTouchContent.add(label30, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         tfLootSlotOneY = new JTextField();
         lootTouchContent.add(tfLootSlotOneY, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label31 = new JLabel();
-        label31.setText("Слот 2:");
+        this.$$$loadLabelText$$$(label31, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot2"));
         lootTouchContent.add(label31, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         tfLootSlotTwoY = new JTextField();
         lootTouchContent.add(tfLootSlotTwoY, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label32 = new JLabel();
-        label32.setText("Слот 3:");
+        this.$$$loadLabelText$$$(label32, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot3"));
         lootTouchContent.add(label32, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotThreeY = new JTextField();
         lootTouchContent.add(tfLootSlotThreeY, new GridConstraints(2, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -604,7 +667,7 @@ public class TabDelayView extends JDialog {
         rodTouch.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(rodTouch, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label39 = new JLabel();
-        label39.setText("Удочки");
+        this.$$$loadLabelText$$$(label39, ResourceBundle.getBundle("locale").getString("preference.label.rod"));
         rodTouch.add(label39, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         rodTouchContent = new JPanel();
         rodTouchContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -634,14 +697,14 @@ public class TabDelayView extends JDialog {
         state.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(state, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label44 = new JLabel();
-        label44.setText("Состояния:");
+        this.$$$loadLabelText$$$(label44, ResourceBundle.getBundle("locale").getString("preference.label.states"));
         state.add(label44, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         stateContent = new JPanel();
         stateContent.setLayout(new GridLayoutManager(1, 2, new Insets(5, 5, 5, 5), -1, -1));
         state.add(stateContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         stateContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbSkipCalendar = new JCheckBox();
-        cbSkipCalendar.setText("Скип календаря");
+        this.$$$loadButtonText$$$(cbSkipCalendar, ResourceBundle.getBundle("locale").getString("preference.label.skip_calendar"));
         stateContent.add(cbSkipCalendar, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
         stateContent.add(spacer5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
@@ -649,14 +712,14 @@ public class TabDelayView extends JDialog {
         input.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(input, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label45 = new JLabel();
-        label45.setText("Ввод:");
+        this.$$$loadLabelText$$$(label45, ResourceBundle.getBundle("locale").getString("preference.label.input"));
         input.add(label45, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         inputcontent = new JPanel();
         inputcontent.setLayout(new GridLayoutManager(1, 2, new Insets(5, 5, 5, 5), -1, -1));
         input.add(inputcontent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         inputcontent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label46 = new JLabel();
-        label46.setText("Задержка:");
+        this.$$$loadLabelText$$$(label46, ResourceBundle.getBundle("locale").getString("preference.label.delay"));
         inputcontent.add(label46, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfInputDelay = new JTextField();
         inputcontent.add(tfInputDelay, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -664,25 +727,25 @@ public class TabDelayView extends JDialog {
         parsing.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(parsing, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label47 = new JLabel();
-        label47.setText("Парсинг:");
+        this.$$$loadLabelText$$$(label47, ResourceBundle.getBundle("locale").getString("preference.label.parsing"));
         parsing.add(label47, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         parsingContent = new JPanel();
         parsingContent.setLayout(new GridLayoutManager(2, 2, new Insets(5, 5, 5, 5), -1, -1));
         parsing.add(parsingContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         parsingContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label48 = new JLabel();
-        label48.setText("Коэффициент идентичности:");
+        this.$$$loadLabelText$$$(label48, ResourceBundle.getBundle("locale").getString("preference.label.parse.coef"));
         parsingContent.add(label48, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfParseCoef = new JTextField();
         parsingContent.add(tfParseCoef, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label49 = new JLabel();
-        label49.setText("Очистка от шума:");
+        this.$$$loadLabelText$$$(label49, ResourceBundle.getBundle("locale").getString("preference.label.noise.iteration"));
         parsingContent.add(label49, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfCaptchaNoiseIteration = new JTextField();
         parsingContent.add(tfCaptchaNoiseIteration, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         coordTab = new JPanel();
         coordTab.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        tabPane.addTab("Координаты", coordTab);
+        tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.coord"), coordTab);
         final Spacer spacer6 = new Spacer();
         coordTab.add(spacer6, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
@@ -694,7 +757,7 @@ public class TabDelayView extends JDialog {
         space.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(space, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label50 = new JLabel();
-        label50.setText("Пробел:");
+        this.$$$loadLabelText$$$(label50, ResourceBundle.getBundle("locale").getString("preference.label.space"));
         space.add(label50, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         spaceContent = new JPanel();
         spaceContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -711,12 +774,12 @@ public class TabDelayView extends JDialog {
         tfSpaceY = new JTextField();
         spaceContent.add(tfSpaceY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label53 = new JLabel();
-        label53.setText("Длина");
+        this.$$$loadLabelText$$$(label53, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         spaceContent.add(label53, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSpaceWidth = new JTextField();
         spaceContent.add(tfSpaceWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label54 = new JLabel();
-        label54.setText("Ширина");
+        this.$$$loadLabelText$$$(label54, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         spaceContent.add(label54, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSpaceHeight = new JTextField();
         spaceContent.add(tfSpaceHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -724,7 +787,7 @@ public class TabDelayView extends JDialog {
         line.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(line, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label55 = new JLabel();
-        label55.setText("Линия:");
+        this.$$$loadLabelText$$$(label55, ResourceBundle.getBundle("locale").getString("preference.label.line"));
         line.add(label55, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         lineContent = new JPanel();
         lineContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -741,12 +804,12 @@ public class TabDelayView extends JDialog {
         tfLineY = new JTextField();
         lineContent.add(tfLineY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label58 = new JLabel();
-        label58.setText("Длина");
+        this.$$$loadLabelText$$$(label58, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         lineContent.add(label58, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLineWidth = new JTextField();
         lineContent.add(tfLineWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label59 = new JLabel();
-        label59.setText("Ширина");
+        this.$$$loadLabelText$$$(label59, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         lineContent.add(label59, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLineHeight = new JTextField();
         lineContent.add(tfLineHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -754,7 +817,7 @@ public class TabDelayView extends JDialog {
         subLine.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(subLine, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label60 = new JLabel();
-        label60.setText("Саб-линия:");
+        this.$$$loadLabelText$$$(label60, ResourceBundle.getBundle("locale").getString("preference.label.subline"));
         subLine.add(label60, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         subLineContent = new JPanel();
         subLineContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -771,12 +834,12 @@ public class TabDelayView extends JDialog {
         tfSubLineY = new JTextField();
         subLineContent.add(tfSubLineY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label63 = new JLabel();
-        label63.setText("Длина");
+        this.$$$loadLabelText$$$(label63, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         subLineContent.add(label63, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSubLineWidth = new JTextField();
         subLineContent.add(tfSubLineWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label64 = new JLabel();
-        label64.setText("Ширина");
+        this.$$$loadLabelText$$$(label64, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         subLineContent.add(label64, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSubLineHeight = new JTextField();
         subLineContent.add(tfSubLineHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -784,7 +847,7 @@ public class TabDelayView extends JDialog {
         statusCut.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(statusCut, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label65 = new JLabel();
-        label65.setText("Статус подсечки:");
+        this.$$$loadLabelText$$$(label65, ResourceBundle.getBundle("locale").getString("preference.label.state.status_cut"));
         statusCut.add(label65, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         statusCutContent = new JPanel();
         statusCutContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -801,12 +864,12 @@ public class TabDelayView extends JDialog {
         tfStatusCutY = new JTextField();
         statusCutContent.add(tfStatusCutY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label68 = new JLabel();
-        label68.setText("Длина");
+        this.$$$loadLabelText$$$(label68, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         statusCutContent.add(label68, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfStatusCutWidth = new JTextField();
         statusCutContent.add(tfStatusCutWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label69 = new JLabel();
-        label69.setText("Ширина");
+        this.$$$loadLabelText$$$(label69, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         statusCutContent.add(label69, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfStatusCutHeight = new JTextField();
         statusCutContent.add(tfStatusCutHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -814,7 +877,7 @@ public class TabDelayView extends JDialog {
         captcha.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(captcha, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label70 = new JLabel();
-        label70.setText("Капча:");
+        this.$$$loadLabelText$$$(label70, ResourceBundle.getBundle("locale").getString("preference.label.captcha"));
         captcha.add(label70, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         captchaContent = new JPanel();
         captchaContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -836,7 +899,7 @@ public class TabDelayView extends JDialog {
         tfCaptchaWidth = new JTextField();
         captchaContent.add(tfCaptchaWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label74 = new JLabel();
-        label74.setText("Ширина");
+        this.$$$loadLabelText$$$(label74, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         captchaContent.add(label74, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfCaptchaHeight = new JTextField();
         captchaContent.add(tfCaptchaHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -844,7 +907,7 @@ public class TabDelayView extends JDialog {
         statusCaptcha.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(statusCaptcha, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label75 = new JLabel();
-        label75.setText("Статус капчи:");
+        this.$$$loadLabelText$$$(label75, ResourceBundle.getBundle("locale").getString("preference.label.state.status_captcha"));
         statusCaptcha.add(label75, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         statusCaptchaContent = new JPanel();
         statusCaptchaContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -861,12 +924,12 @@ public class TabDelayView extends JDialog {
         tfStatusCaptchaY = new JTextField();
         statusCaptchaContent.add(tfStatusCaptchaY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label78 = new JLabel();
-        label78.setText("Длина");
+        this.$$$loadLabelText$$$(label78, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         statusCaptchaContent.add(label78, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfStatusCaptchaWidth = new JTextField();
         statusCaptchaContent.add(tfStatusCaptchaWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label79 = new JLabel();
-        label79.setText("Ширина");
+        this.$$$loadLabelText$$$(label79, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         statusCaptchaContent.add(label79, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfStatusCaptchaHeight = new JTextField();
         statusCaptchaContent.add(tfStatusCaptchaHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -874,7 +937,7 @@ public class TabDelayView extends JDialog {
         lootOne.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(lootOne, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label80 = new JLabel();
-        label80.setText("Лут 1:");
+        this.$$$loadLabelText$$$(label80, ResourceBundle.getBundle("locale").getString("preference.label.loot1"));
         lootOne.add(label80, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         lootOneContent = new JPanel();
         lootOneContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -891,12 +954,12 @@ public class TabDelayView extends JDialog {
         tfLooOneY = new JTextField();
         lootOneContent.add(tfLooOneY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label83 = new JLabel();
-        label83.setText("Длина");
+        this.$$$loadLabelText$$$(label83, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         lootOneContent.add(label83, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLooOneWidth = new JTextField();
         lootOneContent.add(tfLooOneWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label84 = new JLabel();
-        label84.setText("Ширина");
+        this.$$$loadLabelText$$$(label84, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         lootOneContent.add(label84, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLooOneHeight = new JTextField();
         lootOneContent.add(tfLooOneHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -904,7 +967,7 @@ public class TabDelayView extends JDialog {
         lootTwo.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(lootTwo, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label85 = new JLabel();
-        label85.setText("Лут 2:");
+        this.$$$loadLabelText$$$(label85, ResourceBundle.getBundle("locale").getString("preference.label.loot2"));
         lootTwo.add(label85, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         lootTwoContent = new JPanel();
         lootTwoContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -921,12 +984,12 @@ public class TabDelayView extends JDialog {
         tfLooTwoY = new JTextField();
         lootTwoContent.add(tfLooTwoY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label88 = new JLabel();
-        label88.setText("Длина");
+        this.$$$loadLabelText$$$(label88, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         lootTwoContent.add(label88, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLooTwoWidth = new JTextField();
         lootTwoContent.add(tfLooTwoWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label89 = new JLabel();
-        label89.setText("Ширина");
+        this.$$$loadLabelText$$$(label89, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         lootTwoContent.add(label89, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLooTwoHeight = new JTextField();
         lootTwoContent.add(tfLooTwoHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -934,7 +997,7 @@ public class TabDelayView extends JDialog {
         lootThree.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(lootThree, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label90 = new JLabel();
-        label90.setText("Лут 3:");
+        this.$$$loadLabelText$$$(label90, ResourceBundle.getBundle("locale").getString("preference.label.loot3"));
         lootThree.add(label90, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         lootThreeContent = new JPanel();
         lootThreeContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -951,12 +1014,12 @@ public class TabDelayView extends JDialog {
         tfLootThreeY = new JTextField();
         lootThreeContent.add(tfLootThreeY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label93 = new JLabel();
-        label93.setText("Длина");
+        this.$$$loadLabelText$$$(label93, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         lootThreeContent.add(label93, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootThreeWidth = new JTextField();
         lootThreeContent.add(tfLootThreeWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label94 = new JLabel();
-        label94.setText("Ширина");
+        this.$$$loadLabelText$$$(label94, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         lootThreeContent.add(label94, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootThreeHeight = new JTextField();
         lootThreeContent.add(tfLootThreeHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -964,7 +1027,7 @@ public class TabDelayView extends JDialog {
         chat.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(chat, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label95 = new JLabel();
-        label95.setText("Чат:");
+        this.$$$loadLabelText$$$(label95, ResourceBundle.getBundle("locale").getString("preference.label.chat"));
         chat.add(label95, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         chatContent = new JPanel();
         chatContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -981,12 +1044,12 @@ public class TabDelayView extends JDialog {
         tfChatY = new JTextField();
         chatContent.add(tfChatY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label98 = new JLabel();
-        label98.setText("Длина");
+        this.$$$loadLabelText$$$(label98, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         chatContent.add(label98, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfChatWidth = new JTextField();
         chatContent.add(tfChatWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label99 = new JLabel();
-        label99.setText("Ширина");
+        this.$$$loadLabelText$$$(label99, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         chatContent.add(label99, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfChatHeight = new JTextField();
         chatContent.add(tfChatHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -994,7 +1057,7 @@ public class TabDelayView extends JDialog {
         fullscreen.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(fullscreen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label100 = new JLabel();
-        label100.setText("Экран:");
+        this.$$$loadLabelText$$$(label100, ResourceBundle.getBundle("locale").getString("preference.label.fullscreen"));
         fullscreen.add(label100, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(125, -1), null, 0, false));
         fullscreenContent = new JPanel();
         fullscreenContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -1011,19 +1074,19 @@ public class TabDelayView extends JDialog {
         tfFullscreenY = new JTextField();
         fullscreenContent.add(tfFullscreenY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label103 = new JLabel();
-        label103.setText("Длина");
+        this.$$$loadLabelText$$$(label103, ResourceBundle.getBundle("locale").getString("preference.label.width"));
         fullscreenContent.add(label103, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfFullscreenWidth = new JTextField();
         tfFullscreenWidth.setText("");
         fullscreenContent.add(tfFullscreenWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label104 = new JLabel();
-        label104.setText("Высота");
+        this.$$$loadLabelText$$$(label104, ResourceBundle.getBundle("locale").getString("preference.label.height"));
         fullscreenContent.add(label104, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfFullscreenHeight = new JTextField();
         fullscreenContent.add(tfFullscreenHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayTab = new JPanel();
         delayTab.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        tabPane.addTab("Задержки", delayTab);
+        tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.delay"), delayTab);
         delay = new JPanel();
         delay.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         delayTab.add(delay, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1032,25 +1095,25 @@ public class TabDelayView extends JDialog {
         delay.add(delayContent, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label105 = new JLabel();
-        label105.setText("Старт:");
+        this.$$$loadLabelText$$$(label105, ResourceBundle.getBundle("locale").getString("preference.label.start"));
         delayContent.add(label105, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JLabel label106 = new JLabel();
-        label106.setText("Ожидание рыбы:");
+        this.$$$loadLabelText$$$(label106, ResourceBundle.getBundle("locale").getString("preference.label.waitfish"));
         delayContent.add(label106, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JLabel label107 = new JLabel();
-        label107.setText("Подсечка:");
+        this.$$$loadLabelText$$$(label107, ResourceBundle.getBundle("locale").getString("preference.label.cut"));
         delayContent.add(label107, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JLabel label108 = new JLabel();
-        label108.setText("Статус подсечки:");
+        this.$$$loadLabelText$$$(label108, ResourceBundle.getBundle("locale").getString("preference.label.state.status_cut"));
         delayContent.add(label108, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JLabel label109 = new JLabel();
-        label109.setText("Капча:");
+        this.$$$loadLabelText$$$(label109, ResourceBundle.getBundle("locale").getString("preference.label.captcha"));
         delayContent.add(label109, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JLabel label110 = new JLabel();
-        label110.setText("Статус капчи:");
+        this.$$$loadLabelText$$$(label110, ResourceBundle.getBundle("locale").getString("preference.label.state.status_captcha"));
         delayContent.add(label110, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JLabel label111 = new JLabel();
-        label111.setText("Лут фильтр:");
+        this.$$$loadLabelText$$$(label111, ResourceBundle.getBundle("locale").getString("preference.label.lootfilter"));
         delayContent.add(label111, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         delayStart = new JPanel();
         delayStart.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
@@ -1062,7 +1125,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField1 = new JTextField();
         delayStart.add(textField1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label113 = new JLabel();
-        label113.setText("После:");
+        this.$$$loadLabelText$$$(label113, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayStart.add(label113, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField2 = new JTextField();
         delayStart.add(textField2, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1076,7 +1139,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField3 = new JTextField();
         delayWaitFish.add(textField3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label115 = new JLabel();
-        label115.setText("После:");
+        this.$$$loadLabelText$$$(label115, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayWaitFish.add(label115, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField4 = new JTextField();
         delayWaitFish.add(textField4, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1090,7 +1153,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField5 = new JTextField();
         delayCut.add(textField5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label117 = new JLabel();
-        label117.setText("После:");
+        this.$$$loadLabelText$$$(label117, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayCut.add(label117, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField6 = new JTextField();
         delayCut.add(textField6, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1104,7 +1167,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField7 = new JTextField();
         delayStatusCut.add(textField7, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label119 = new JLabel();
-        label119.setText("После:");
+        this.$$$loadLabelText$$$(label119, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayStatusCut.add(label119, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField8 = new JTextField();
         delayStatusCut.add(textField8, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1118,7 +1181,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField9 = new JTextField();
         delayCaptcha.add(textField9, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label121 = new JLabel();
-        label121.setText("После:");
+        this.$$$loadLabelText$$$(label121, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayCaptcha.add(label121, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField10 = new JTextField();
         delayCaptcha.add(textField10, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1132,7 +1195,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField11 = new JTextField();
         delayStatusCaptcha.add(textField11, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label123 = new JLabel();
-        label123.setText("После:");
+        this.$$$loadLabelText$$$(label123, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayStatusCaptcha.add(label123, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField12 = new JTextField();
         delayStatusCaptcha.add(textField12, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1146,7 +1209,7 @@ public class TabDelayView extends JDialog {
         final JTextField textField13 = new JTextField();
         delayLooFilter.add(textField13, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label125 = new JLabel();
-        label125.setText("После:");
+        this.$$$loadLabelText$$$(label125, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayLooFilter.add(label125, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JTextField textField14 = new JTextField();
         delayLooFilter.add(textField14, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -1154,7 +1217,7 @@ public class TabDelayView extends JDialog {
         delayTab.add(spacer7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         debugTab = new JPanel();
         debugTab.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        tabPane.addTab("Отладка", debugTab);
+        tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.debug"), debugTab);
         debug = new JPanel();
         debug.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         debugTab.add(debug, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1162,31 +1225,31 @@ public class TabDelayView extends JDialog {
         debugContent.setLayout(new GridLayoutManager(9, 1, new Insets(5, 5, 5, 5), -1, -1));
         debug.add(debugContent, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         cbDebugWaitFish = new JCheckBox();
-        cbDebugWaitFish.setText("Ожидание рыбы");
+        this.$$$loadButtonText$$$(cbDebugWaitFish, ResourceBundle.getBundle("locale").getString("preference.label.debug.waitfish"));
         debugContent.add(cbDebugWaitFish, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugStatusCaptcha = new JCheckBox();
-        cbDebugStatusCaptcha.setText("Статус капчи");
+        this.$$$loadButtonText$$$(cbDebugStatusCaptcha, ResourceBundle.getBundle("locale").getString("preference.label.debug.status_captcha"));
         debugContent.add(cbDebugStatusCaptcha, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugStatusCut = new JCheckBox();
-        cbDebugStatusCut.setText("Статус подсечки");
+        this.$$$loadButtonText$$$(cbDebugStatusCut, ResourceBundle.getBundle("locale").getString("preference.label.debug.status_cut"));
         debugContent.add(cbDebugStatusCut, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugLine = new JCheckBox();
-        cbDebugLine.setText("Линия");
+        this.$$$loadButtonText$$$(cbDebugLine, ResourceBundle.getBundle("locale").getString("preference.label.debug.line"));
         debugContent.add(cbDebugLine, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugCaptcha = new JCheckBox();
-        cbDebugCaptcha.setText("Капча");
+        this.$$$loadButtonText$$$(cbDebugCaptcha, ResourceBundle.getBundle("locale").getString("preference.label.debug.captcha"));
         debugContent.add(cbDebugCaptcha, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebug = new JCheckBox();
-        cbDebug.setText("Фильтр лута");
+        this.$$$loadButtonText$$$(cbDebug, ResourceBundle.getBundle("locale").getString("preference.label.debug.filter"));
         debugContent.add(cbDebug, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugPersonalMessage = new JCheckBox();
-        cbDebugPersonalMessage.setText("Персональное сообщение");
+        this.$$$loadButtonText$$$(cbDebugPersonalMessage, ResourceBundle.getBundle("locale").getString("preference.label.debug.pm"));
         debugContent.add(cbDebugPersonalMessage, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbUnknownLoot = new JCheckBox();
-        cbUnknownLoot.setText("Неопознанный лут");
+        this.$$$loadButtonText$$$(cbUnknownLoot, ResourceBundle.getBundle("locale").getString("preference.label.debug.unknown_loot"));
         debugContent.add(cbUnknownLoot, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbUnsortLoot = new JCheckBox();
-        cbUnsortLoot.setText("Весь лут");
+        this.$$$loadButtonText$$$(cbUnsortLoot, ResourceBundle.getBundle("locale").getString("preference.label.debug.unsort_loot"));
         debugContent.add(cbUnsortLoot, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer8 = new Spacer();
         debugTab.add(spacer8, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -1194,13 +1257,13 @@ public class TabDelayView extends JDialog {
         buttons.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         content.add(buttons, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnCancel = new JButton();
-        btnCancel.setText("Отмена");
+        this.$$$loadButtonText$$$(btnCancel, ResourceBundle.getBundle("locale").getString("preference.button.cancel"));
         buttons.add(btnCancel, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnSave = new JButton();
-        btnSave.setText("Сохранить");
+        this.$$$loadButtonText$$$(btnSave, ResourceBundle.getBundle("locale").getString("preference.button.save"));
         buttons.add(btnSave, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnReset = new JButton();
-        btnReset.setText("Сброс");
+        this.$$$loadButtonText$$$(btnReset, ResourceBundle.getBundle("locale").getString("preference.label.reset"));
         buttons.add(btnReset, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer9 = new Spacer();
         buttons.add(spacer9, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
