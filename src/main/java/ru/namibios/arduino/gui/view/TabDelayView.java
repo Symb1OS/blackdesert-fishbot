@@ -84,9 +84,9 @@ public class TabDelayView extends JDialog {
     private JComboBox cbLanguage;
     private JPanel theme;
     private JPanel themeContent;
-    private JComboBox cbTheme;
+    private JComboBox<String> cbTheme;
     private JTextField tfLootSlotOneX;
-    private JTextField tfLootTwoOneX;
+    private JTextField tfLootSlotTwoX;
     private JTextField tfLootSlotThreeX;
     private JCheckBox cbDebugPersonalMessage;
     private JTextField tfInputDelay;
@@ -234,7 +234,9 @@ public class TabDelayView extends JDialog {
         Image im = new ImageIcon(UI.IMG_SETTINGS).getImage();
         setIconImage(im);
 
-        init();
+        initGeneral();
+        initAdd();
+        initCoord();
 
         this.setResizable(false);
         this.setAlwaysOnTop(true);
@@ -247,9 +249,7 @@ public class TabDelayView extends JDialog {
 
     }
 
-    private void init() {
-        Launcher.LOCALES.keySet().forEach(s -> cbLanguage.addItem(s));
-        cbLanguage.setSelectedItem(Application.getInstance().LANGUAGE());
+    private void initGeneral() {
 
         cbMode.addItem(InputMode.ROBOT);
         cbMode.addItem(InputMode.ARDUINO);
@@ -284,6 +284,227 @@ public class TabDelayView extends JDialog {
         delayVerifier = new CustomVerifier(UIManager.getString("err.format.delay"), REGEX_DELAY);
         rodCountVerifier = new CustomVerifier(UIManager.getString("err.format.rodcount"), REGEX_ROD_COUNT);
 
+        initLootFilter();
+        initTask();
+        initSlots();
+        initRod();
+        initPm();
+        initNotification();
+        initAutoEnd();
+
+    }
+
+    private void initAdd(){
+        Launcher.LOCALES.keySet().forEach(s -> cbLanguage.addItem(s));
+        cbLanguage.setSelectedItem(Application.getInstance().LANGUAGE());
+
+        cbTheme.addItem("DARK");
+        cbTheme.addItem("NIMBUS");
+        cbTheme.setSelectedItem(Application.getInstance().THEME());
+
+        cbSkipCalendar.setSelected(Application.getInstance().SKIP_CALENDAR());
+        tfInputDelay.setText(String.valueOf(Application.getInstance().PRESS_KEY_DELAY()));
+        tfParseCoef.setText(String.valueOf(Application.getInstance().COEF_IDENTITY()));
+        tfCaptchaNoiseIteration.setText(String.valueOf(Application.getInstance().CNT_KAPCHA()));
+
+        tfState.setText(String.valueOf(Application.getInstance().STATE_OVERFLOW()));
+        tfCutState.setText(String.valueOf(Application.getInstance().STATE_CUT_OVERFLOW()));
+        tfCapcthaState.setText(String.valueOf(Application.getInstance().STATE_STATUS_CAPTCHA_OVERFLOW()));
+
+        tfLootSlotOneX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[0].getX()));
+        tfLootSlotOneY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[0].getY()));
+
+        tfLootSlotTwoX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[1].getX()));
+        tfLootSlotTwoY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[1].getY()));
+
+        tfLootSlotThreeX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[2].getX()));
+        tfLootSlotThreeY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[2].getY()));
+
+        tfRodX.setText(String.valueOf(Application.getInstance().ROD_START_X()));
+        tfRodY.setText(String.valueOf(Application.getInstance().ROD_START_Y()));
+        tfRodDX.setText(String.valueOf(Application.getInstance().ROD_DX()));
+        tfRodDY.setText(String.valueOf(Application.getInstance().ROD_DY()));
+
+    }
+
+    private void initCoord(){
+        tfFullscreenX.setText(String.valueOf(Application.getInstance().FULL_SCREEN().x));
+        tfFullscreenY.setText(String.valueOf(Application.getInstance().FULL_SCREEN().y));
+        tfFullscreenWidth.setText(String.valueOf(Application.getInstance().FULL_SCREEN().width));
+        tfFullscreenHeight.setText(String.valueOf(Application.getInstance().FULL_SCREEN().height));
+
+        tfSpaceX.setText(String.valueOf(Application.getInstance().SPACE().x));
+        tfSpaceY.setText(String.valueOf(Application.getInstance().SPACE().y));
+        tfSpaceWidth.setText(String.valueOf(Application.getInstance().SPACE().width));
+        tfSpaceHeight.setText(String.valueOf(Application.getInstance().SPACE().height));
+
+        tfLineX.setText(String.valueOf(Application.getInstance().LINE().x));
+        tfLineY.setText(String.valueOf(Application.getInstance().LINE().y));
+        tfLineWidth.setText(String.valueOf(Application.getInstance().LINE().width));
+        tfLineHeight.setText(String.valueOf(Application.getInstance().LINE().height));
+
+        tfSubLineX.setText(String.valueOf(Application.getInstance().SUB_LINE().x));
+        tfSubLineY.setText(String.valueOf(Application.getInstance().SUB_LINE().y));
+        tfSubLineWidth.setText(String.valueOf(Application.getInstance().SUB_LINE().width));
+        tfSubLineHeight.setText(String.valueOf(Application.getInstance().SUB_LINE().height));
+
+        tfStatusCutX.setText(String.valueOf(Application.getInstance().STATUS_CUT().x));
+        tfStatusCutY.setText(String.valueOf(Application.getInstance().STATUS_CUT().y));
+        tfStatusCutWidth.setText(String.valueOf(Application.getInstance().STATUS_CUT().width));
+        tfStatusCutHeight.setText(String.valueOf(Application.getInstance().STATUS_CUT().height));
+
+        tfStatusCaptchaX.setText("");
+        tfStatusCaptchaY.setText("");
+        tfStatusCaptchaWidth.setText("");
+        tfStatusCaptchaHeight.setText("");
+
+        tfCaptchaX.setText("");
+        tfCaptchaY.setText("");
+        tfCaptchaWidth.setText("");
+        tfCaptchaHeight.setText("");
+
+        tfStatusCaptchaX.setText("");
+        tfStatusCaptchaY.setText("");
+        tfStatusCaptchaWidth.setText("");
+        tfStatusCaptchaHeight.setText("");
+
+        tfLooOneX.setText("");
+        tfLooOneY.setText("");
+        tfLooOneWidth.setText("");
+        tfLooOneHeight.setText("");
+
+        tfLooTwoX.setText("");
+        tfLooTwoY.setText("");
+        tfLooTwoWidth.setText("");
+        tfLooTwoHeight.setText("");
+
+        tfLooThreeX.setText("");
+        tfLootThreeY.setText("");
+        tfLootThreeWidth.setText("");
+        tfLootThreeHeight.setText("");
+
+        tfChatX.setText("");
+        tfChatY.setText("");
+        tfChatWidth.setText("");
+        tfChatHeight.setText("");
+
+    }
+
+    private void initPm() {
+        rbAutoFish.setSelected(Application.getInstance().PM_AUTOFISH());
+        rbExitGame.setSelected(Application.getInstance().PM_EXIT_GAME());
+        rbNothing.setSelected(Application.getInstance().PM_NOTHING());
+
+        ButtonGroup pmGroup = new ButtonGroup();
+        pmGroup.add(rbAutoFish);
+        pmGroup.add(rbExitGame);
+        pmGroup.add(rbNothing);
+    }
+
+    private void initRod() {
+
+        lRod.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
+        lRod.setToolTipText(UIManager.getString("preference.premium.tooltip"));
+
+        tfRodChange.setText(String.valueOf(Application.getInstance().TIME_CHANGE_ROD()));
+        tfRodChange.setInputVerifier(delayVerifier);
+
+        tfRodCount.setText(String.valueOf(Application.getInstance().COUNT_ROD()));
+        tfRodCount.setInputVerifier(rodCountVerifier);
+
+        tfRodChange.setEnabled(Application.getUser().isPremium());
+        tfRodCount.setEnabled(Application.getUser().isPremium());
+
+    }
+
+    private void initNotification() {
+        cbTelegram.setSelected(Application.getInstance().TELEGRAM());
+        tfTelegramKey.setText(Application.getInstance().TELEGRAM_KEY());
+    }
+
+    private void initSlots() {
+
+        lSlots.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
+        lSlots.setToolTipText(UIManager.getString("preference.premium.tooltip"));
+
+        Component[] components = slotContent.getComponents();
+        for (Component component : components) {
+            component.setEnabled(Application.getUser().isPremium());
+        }
+
+        cbFirstSlotActive.setSelected(Application.getInstance().SLOT_ONE().isActive());
+        tfFirstSlotKey.setText(Application.getInstance().SLOT_ONE().getKey());
+        tfFirstSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_ONE().getDelay()));
+        tfFirstSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_ONE().getPeriod()));
+
+        cbSecondSlotActive.setSelected(Application.getInstance().SLOT_TWO().isActive());
+        tfSecondSlotKey.setText(Application.getInstance().SLOT_TWO().getKey());
+        tfSecondSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_TWO().getDelay()));
+        tfSecondSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_TWO().getPeriod()));
+
+        cbThirdSlotActive.setSelected(Application.getInstance().SLOT_THREE().isActive());
+        tfThirdSlotKey.setText(Application.getInstance().SLOT_THREE().getKey());
+        tfThirdSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_THREE().getDelay()));
+        tfThirdSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_THREE().getPeriod()));
+
+        tfFirstSlotKey.setInputVerifier(slotKeyVerifier);
+        tfFirstSlotDelay.setInputVerifier(delayPeriodVerifier);
+        tfFirstSlotPeriod.setInputVerifier(delayPeriodVerifier);
+
+        tfSecondSlotKey.setInputVerifier(slotKeyVerifier);
+        tfSecondSlotDelay.setInputVerifier(delayPeriodVerifier);
+        tfSecondSlotPeriod.setInputVerifier(delayPeriodVerifier);
+
+        tfThirdSlotKey.setInputVerifier(slotKeyVerifier);
+        tfThirdSlotDelay.setInputVerifier(delayPeriodVerifier);
+        tfThirdSlotPeriod.setInputVerifier(delayPeriodVerifier);
+
+    }
+
+    private void initLootFilter() {
+        cbFish.setSelected(Application.getInstance().FISH());
+        cbKey.setSelected(Application.getInstance().KEY());
+        cbEvent.setSelected(Application.getInstance().EVENT());
+        cbConfirm.setSelected(Application.getInstance().CONFIRM());
+        cbRock.setSelected(Application.getInstance().ROCK());
+        cbUnknown.setSelected(Application.getInstance().TAKE_UNKNOWN());
+    }
+
+    private void initTask() {
+
+        cbBeer.setSelected(Application.getInstance().SLOT_BEER().isActive());
+        cbRepeatWork.setSelected(Application.getInstance().BEER_TOUCHS()[2].isActive());
+
+        beerKey.setText(Application.getInstance().SLOT_BEER().getKey());
+        beerKey.setInputVerifier(slotKeyVerifier);
+
+        beerPeriod.setText(String.valueOf(Application.getInstance().SLOT_BEER().getPeriod()));
+        beerPeriod.setInputVerifier(delayPeriodVerifier);
+
+    }
+
+    private void initAutoEnd() {
+
+        cbStopBot.setSelected(Application.getInstance().TASK_STOP().isActive());
+        cbStopBot.addItemListener(e -> {
+            JCheckBox item = (JCheckBox) e.getItem();
+            if (item.isSelected()) {
+                cbExitGame.setSelected(false);
+            }
+        });
+
+        tfStopBot.setText(String.valueOf(Application.getInstance().TASK_STOP().getDelay()));
+        tfStopBot.setInputVerifier(delayPeriodVerifier);
+
+        cbExitGame.setSelected(Application.getInstance().TASK_EXIT_GAME().isActive());
+        cbExitGame.addItemListener(e -> {
+            JCheckBox item = (JCheckBox) e.getItem();
+            if (item.isSelected()) {
+                cbStopBot.setSelected(false);
+            }
+        });
+        tfExitGame.setText(String.valueOf(Application.getInstance().TASK_EXIT_GAME().getDelay()));
+        tfExitGame.setInputVerifier(delayPeriodVerifier);
 
     }
 
@@ -641,8 +862,8 @@ public class TabDelayView extends JDialog {
         lootTouchContent.add(tfLootSlotThreeY, new GridConstraints(2, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfLootSlotOneX = new JTextField();
         lootTouchContent.add(tfLootSlotOneX, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        tfLootTwoOneX = new JTextField();
-        lootTouchContent.add(tfLootTwoOneX, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfLootSlotTwoX = new JTextField();
+        lootTouchContent.add(tfLootSlotTwoX, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfLootSlotThreeX = new JTextField();
         lootTouchContent.add(tfLootSlotThreeX, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label33 = new JLabel();
@@ -673,26 +894,26 @@ public class TabDelayView extends JDialog {
         rodTouchContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
         rodTouch.add(rodTouchContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         rodTouchContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
-        tfRodY = new JTextField();
-        rodTouchContent.add(tfRodY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfRodDY = new JTextField();
         rodTouchContent.add(tfRodDY, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfRodX = new JTextField();
         rodTouchContent.add(tfRodX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        tfRodDX = new JTextField();
-        rodTouchContent.add(tfRodDX, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label40 = new JLabel();
         label40.setText("x:");
         rodTouchContent.add(label40, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label41 = new JLabel();
-        label41.setText("dx:");
-        rodTouchContent.add(label41, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label41.setText("dy:");
+        rodTouchContent.add(label41, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label42 = new JLabel();
-        label42.setText("y:");
+        label42.setText("dx:");
         rodTouchContent.add(label42, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label43 = new JLabel();
-        label43.setText("dy:");
-        rodTouchContent.add(label43, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label43.setText("y:");
+        rodTouchContent.add(label43, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfRodDX = new JTextField();
+        rodTouchContent.add(tfRodDX, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfRodY = new JTextField();
+        rodTouchContent.add(tfRodY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         state = new JPanel();
         state.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         addTab.add(state, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
