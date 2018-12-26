@@ -22,7 +22,7 @@ import java.awt.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
-public class TabDelayView extends JDialog {
+public class TabSettingsView extends JDialog {
     private JPanel content;
     private JTabbedPane tabPane;
     private JPanel generalTab;
@@ -231,14 +231,14 @@ public class TabDelayView extends JDialog {
     private CustomVerifier delayVerifier;
     private CustomVerifier rodCountVerifier;
 
-    private static final Logger LOG = Logger.getLogger(TabDelayView.class);
+    private static final Logger LOG = Logger.getLogger(TabSettingsView.class);
 
     private static final String REGEX_DELAY_OR_PERIOD = "[0-9]+[m|s]{0,1}";
     private static final String REGEX_DELAY = "[0-9]+";
     private static final String REGEX_SLOT = "[a-z0-9-=]{1}";
     private static final String REGEX_ROD_COUNT = "[0-8]{1}";
 
-    public TabDelayView(){
+    public TabSettingsView(){
 
         setContentPane(content);
 
@@ -667,7 +667,7 @@ public class TabDelayView extends JDialog {
 
 //        UIManager.getDefaults().addResourceBundle("locale");
 
-        SwingUtilities.invokeLater(TabDelayView::new);
+        SwingUtilities.invokeLater(TabSettingsView::new);
 
     }
 

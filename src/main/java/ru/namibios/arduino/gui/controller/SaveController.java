@@ -1,7 +1,7 @@
 package ru.namibios.arduino.gui.controller;
 
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.gui.view.TabDelayView;
+import ru.namibios.arduino.gui.view.TabSettingsView;
 import ru.namibios.arduino.model.Touch;
 
 import java.awt.event.ActionEvent;
@@ -17,9 +17,9 @@ public class SaveController implements ActionListener{
 	private static final String FORMAT_SMART_TASK = "%s,%s,%s";
 	private static final String FORMAT_TOUCH = "%s;%s;%s";
 
-	private TabDelayView view;
+	private TabSettingsView view;
 
-	public SaveController(TabDelayView view) {
+	public SaveController(TabSettingsView view) {
 		this.view = view;
 	}
 
