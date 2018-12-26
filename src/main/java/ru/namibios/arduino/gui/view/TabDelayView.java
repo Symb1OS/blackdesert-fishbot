@@ -8,9 +8,13 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.InputMode;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.config.converter.UiThemeConverter;
 import ru.namibios.arduino.gui.CustomVerifier;
 import ru.namibios.arduino.gui.Launcher;
 import ru.namibios.arduino.gui.UI;
+import ru.namibios.arduino.gui.controller.CancelController;
+import ru.namibios.arduino.gui.controller.ResetController;
+import ru.namibios.arduino.gui.controller.SaveController;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import javax.swing.*;
@@ -84,16 +88,14 @@ public class TabDelayView extends JDialog {
     private JComboBox cbLanguage;
     private JPanel theme;
     private JPanel themeContent;
-    private JComboBox<String> cbTheme;
+    private JComboBox cbTheme;
     private JTextField tfLootSlotOneX;
     private JTextField tfLootSlotTwoX;
     private JTextField tfLootSlotThreeX;
     private JCheckBox cbDebugPersonalMessage;
     private JTextField tfInputDelay;
-    private JPanel buttons;
     private JButton btnCancel;
     private JButton btnSave;
-    private JButton btnReset;
     private JCheckBox cbUnknownLoot;
     private JCheckBox cbUnsortLoot;
     private JPanel overflow;
@@ -131,7 +133,7 @@ public class TabDelayView extends JDialog {
     private JCheckBox cbDebugStatusCut;
     private JCheckBox cbDebugLine;
     private JCheckBox cbDebugCaptcha;
-    private JCheckBox cbDebug;
+    private JCheckBox cbDebugLootFilter;
     private JPanel delayStart;
     private JPanel delayWaitFish;
     private JPanel delayCut;
@@ -206,7 +208,24 @@ public class TabDelayView extends JDialog {
     private JTextField tfFullscreenY;
     private JTextField tfFullscreenWidth;
     private JTextField tfFullscreenHeight;
+    private JTextField tfDelayStartBefore;
+    private JTextField tfDelayStartAfter;
+    private JTextField tfDelayWaitfishBefore;
+    private JTextField tfDelayWaitfishAfter;
+    private JTextField tfDelayCutBefore;
+    private JTextField tfDelayCutAfter;
+    private JTextField tfDelayStatusCutBefore;
+    private JTextField tfDelayStatusCutAfter;
+    private JTextField tfDelayCaptchaBefore;
+    private JTextField tfDelayCaptchaAfter;
+    private JTextField tfDelayStatusCaptchaBefore;
+    private JTextField tfDelayStatusCaptchaAfter;
+    private JTextField tfDelayLootFilterBefore;
+    private JTextField tfDelayLootFilterAfter;
+    private JButton btnReset;
+    private JPanel buttons;
 
+    private CustomVerifier numericVerifier;
     private CustomVerifier slotKeyVerifier;
     private CustomVerifier delayPeriodVerifier;
     private CustomVerifier delayVerifier;
@@ -226,10 +245,13 @@ public class TabDelayView extends JDialog {
         getRootPane().setDefaultButton(btnSave);
 
         btnSave.setIcon(new ImageIcon(UI.IMG_SAVE));
-//        btnSave.addActionListener(new SaveController(this));
+        btnSave.addActionListener(new SaveController(this));
 
         btnCancel.setIcon(new ImageIcon(UI.IMG_CLOSE));
-//        btnCancel.addActionListener(new CancelController(this));
+        btnCancel.addActionListener(new CancelController(this));
+
+        btnReset.setIcon(new ImageIcon(UI.IMG_RESET));
+        btnReset.addActionListener(new ResetController());
 
         Image im = new ImageIcon(UI.IMG_SETTINGS).getImage();
         setIconImage(im);
@@ -237,6 +259,8 @@ public class TabDelayView extends JDialog {
         initGeneral();
         initAdd();
         initCoord();
+        initDelay();
+        initDebug();
 
         this.setResizable(false);
         this.setAlwaysOnTop(true);
@@ -246,6 +270,58 @@ public class TabDelayView extends JDialog {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         pack();
+
+    }
+
+    private void initDebug() {
+        cbDebugWaitFish.setSelected(Application.getInstance().DEBUG_WAITFISH());
+        cbDebugStatusCaptcha.setSelected(Application.getInstance().DEBUG_STATUS_CAPTCHA());
+        cbDebugStatusCut.setSelected(Application.getInstance().DEBUG_STATUS_CUT());
+        cbDebugLine.setSelected(Application.getInstance().DEBUG_SUBLINE());
+        cbDebugCaptcha.setSelected(Application.getInstance().DEBUG_CAPTCHA());
+        cbDebugPersonalMessage.setSelected(Application.getInstance().DEBUG_PM_MESSAGE());
+        cbDebugLootFilter.setSelected(Application.getInstance().DEBUG_FILTER_LOOT());
+        cbUnknownLoot.setSelected(Application.getInstance().SAVE_UNKNOWN());
+        cbUnsortLoot.setSelected(Application.getInstance().SAVE_UNSORT());
+    }
+
+    private void initDelay() {
+
+        tfDelayStartBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_START()));
+        tfDelayStartAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_START()));
+
+        tfDelayWaitfishBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_WAIT_FISH()));
+        tfDelayWaitfishAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_WAIT_FISH()));
+
+        tfDelayCutBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_CUT_FISH()));
+        tfDelayCutAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_CUT_FISH()));
+
+        tfDelayStatusCutBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_STATUS_CUT()));
+        tfDelayStatusCutAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_STATUS_CUT()));
+
+        tfDelayCaptchaBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_KAPCHA()));
+        tfDelayCaptchaAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_KAPCHA()));
+
+        tfDelayStatusCaptchaBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA()));
+        tfDelayStatusCaptchaAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_STATUS_KAPCHA()));
+
+        tfDelayLootFilterBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_FILTER_LOOT()));
+        tfDelayLootFilterAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_FILTER_LOOT()));
+
+        tfDelayStartBefore.setInputVerifier(numericVerifier);
+        tfDelayStartAfter.setInputVerifier(numericVerifier);
+        tfDelayWaitfishBefore.setInputVerifier(numericVerifier);
+        tfDelayWaitfishAfter.setInputVerifier(numericVerifier);
+        tfDelayCutBefore.setInputVerifier(numericVerifier);
+        tfDelayCutAfter.setInputVerifier(numericVerifier);
+        tfDelayStatusCutBefore.setInputVerifier(numericVerifier);
+        tfDelayStatusCutAfter.setInputVerifier(numericVerifier);
+        tfDelayCaptchaBefore.setInputVerifier(numericVerifier);
+        tfDelayCaptchaAfter.setInputVerifier(numericVerifier);
+        tfDelayStatusCaptchaBefore.setInputVerifier(numericVerifier);
+        tfDelayStatusCaptchaAfter.setInputVerifier(numericVerifier);
+        tfDelayLootFilterBefore.setInputVerifier(numericVerifier);
+        tfDelayLootFilterAfter.setInputVerifier(numericVerifier);
 
     }
 
@@ -282,6 +358,7 @@ public class TabDelayView extends JDialog {
         slotKeyVerifier = new CustomVerifier(UIManager.getString("err.format.slotkey"), REGEX_SLOT);
         delayPeriodVerifier = new CustomVerifier(UIManager.getString("err.format.slotdelayperiod"), REGEX_DELAY_OR_PERIOD);
         delayVerifier = new CustomVerifier(UIManager.getString("err.format.delay"), REGEX_DELAY);
+        numericVerifier = new CustomVerifier(UIManager.getString("err.format.numeric"), REGEX_DELAY);
         rodCountVerifier = new CustomVerifier(UIManager.getString("err.format.rodcount"), REGEX_ROD_COUNT);
 
         initLootFilter();
@@ -298,9 +375,8 @@ public class TabDelayView extends JDialog {
         Launcher.LOCALES.keySet().forEach(s -> cbLanguage.addItem(s));
         cbLanguage.setSelectedItem(Application.getInstance().LANGUAGE());
 
-        cbTheme.addItem("DARK");
-        cbTheme.addItem("NIMBUS");
-        cbTheme.setSelectedItem(Application.getInstance().THEME());
+        UiThemeConverter.THEMES.keySet().forEach(s -> cbTheme.addItem(s));
+        cbTheme.setSelectedItem(UiThemeConverter.unconvert(Application.getInstance().THEME()));
 
         cbSkipCalendar.setSelected(Application.getInstance().SKIP_CALENDAR());
         tfInputDelay.setText(String.valueOf(Application.getInstance().PRESS_KEY_DELAY()));
@@ -325,68 +401,147 @@ public class TabDelayView extends JDialog {
         tfRodDX.setText(String.valueOf(Application.getInstance().ROD_DX()));
         tfRodDY.setText(String.valueOf(Application.getInstance().ROD_DY()));
 
+        tfInputDelay.setInputVerifier(numericVerifier);
+        tfCaptchaNoiseIteration.setInputVerifier(numericVerifier);
+        tfState.setInputVerifier(numericVerifier);
+        tfCutState.setInputVerifier(numericVerifier);
+        tfCapcthaState.setInputVerifier(numericVerifier);
+
+        tfLootSlotOneX.setInputVerifier(numericVerifier);
+        tfLootSlotOneY.setInputVerifier(numericVerifier);
+        tfLootSlotTwoX.setInputVerifier(numericVerifier);
+        tfLootSlotTwoY.setInputVerifier(numericVerifier);
+        tfLootSlotThreeX.setInputVerifier(numericVerifier);
+        tfLootSlotThreeY.setInputVerifier(numericVerifier);
+
+        tfRodX.setInputVerifier(numericVerifier);
+        tfRodY.setInputVerifier(numericVerifier);
+        tfRodDX.setInputVerifier(numericVerifier);
+        tfRodDY.setInputVerifier(numericVerifier);
+
     }
 
     private void initCoord(){
+
         tfFullscreenX.setText(String.valueOf(Application.getInstance().FULL_SCREEN().x));
         tfFullscreenY.setText(String.valueOf(Application.getInstance().FULL_SCREEN().y));
         tfFullscreenWidth.setText(String.valueOf(Application.getInstance().FULL_SCREEN().width));
         tfFullscreenHeight.setText(String.valueOf(Application.getInstance().FULL_SCREEN().height));
+
+        tfFullscreenX.setInputVerifier(numericVerifier);
+        tfFullscreenY.setInputVerifier(numericVerifier);
+        tfFullscreenWidth.setInputVerifier(numericVerifier);
+        tfFullscreenHeight.setInputVerifier(numericVerifier);
 
         tfSpaceX.setText(String.valueOf(Application.getInstance().SPACE().x));
         tfSpaceY.setText(String.valueOf(Application.getInstance().SPACE().y));
         tfSpaceWidth.setText(String.valueOf(Application.getInstance().SPACE().width));
         tfSpaceHeight.setText(String.valueOf(Application.getInstance().SPACE().height));
 
+        tfSpaceX.setInputVerifier(numericVerifier);
+        tfSpaceY.setInputVerifier(numericVerifier);
+        tfSpaceWidth.setInputVerifier(numericVerifier);
+        tfSpaceHeight.setInputVerifier(numericVerifier);
+
         tfLineX.setText(String.valueOf(Application.getInstance().LINE().x));
         tfLineY.setText(String.valueOf(Application.getInstance().LINE().y));
         tfLineWidth.setText(String.valueOf(Application.getInstance().LINE().width));
         tfLineHeight.setText(String.valueOf(Application.getInstance().LINE().height));
+
+        tfLineX.setInputVerifier(numericVerifier);
+        tfLineY.setInputVerifier(numericVerifier);
+        tfLineWidth.setInputVerifier(numericVerifier);
+        tfLineHeight.setInputVerifier(numericVerifier);
 
         tfSubLineX.setText(String.valueOf(Application.getInstance().SUB_LINE().x));
         tfSubLineY.setText(String.valueOf(Application.getInstance().SUB_LINE().y));
         tfSubLineWidth.setText(String.valueOf(Application.getInstance().SUB_LINE().width));
         tfSubLineHeight.setText(String.valueOf(Application.getInstance().SUB_LINE().height));
 
+        tfSubLineX.setInputVerifier(numericVerifier);
+        tfSubLineY.setInputVerifier(numericVerifier);
+        tfSubLineWidth.setInputVerifier(numericVerifier);
+        tfSubLineHeight.setInputVerifier(numericVerifier);
+
         tfStatusCutX.setText(String.valueOf(Application.getInstance().STATUS_CUT().x));
         tfStatusCutY.setText(String.valueOf(Application.getInstance().STATUS_CUT().y));
         tfStatusCutWidth.setText(String.valueOf(Application.getInstance().STATUS_CUT().width));
         tfStatusCutHeight.setText(String.valueOf(Application.getInstance().STATUS_CUT().height));
 
-        tfStatusCaptchaX.setText("");
-        tfStatusCaptchaY.setText("");
-        tfStatusCaptchaWidth.setText("");
-        tfStatusCaptchaHeight.setText("");
+        tfStatusCutX.setInputVerifier(numericVerifier);
+        tfStatusCutY.setInputVerifier(numericVerifier);
+        tfStatusCutWidth.setInputVerifier(numericVerifier);
+        tfStatusCutHeight.setInputVerifier(numericVerifier);
 
-        tfCaptchaX.setText("");
-        tfCaptchaY.setText("");
-        tfCaptchaWidth.setText("");
-        tfCaptchaHeight.setText("");
+        tfStatusCaptchaX.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().x));
+        tfStatusCaptchaY.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().y));
+        tfStatusCaptchaWidth.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().width));
+        tfStatusCaptchaHeight.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().height));
 
-        tfStatusCaptchaX.setText("");
-        tfStatusCaptchaY.setText("");
-        tfStatusCaptchaWidth.setText("");
-        tfStatusCaptchaHeight.setText("");
+        tfStatusCaptchaX.setInputVerifier(numericVerifier);
+        tfStatusCaptchaY.setInputVerifier(numericVerifier);
+        tfStatusCaptchaWidth.setInputVerifier(numericVerifier);
+        tfStatusCaptchaHeight.setInputVerifier(numericVerifier);
 
-        tfLooOneX.setText("");
-        tfLooOneY.setText("");
-        tfLooOneWidth.setText("");
-        tfLooOneHeight.setText("");
+        tfCaptchaX.setText(String.valueOf(Application.getInstance().CAPTCHA().x));
+        tfCaptchaY.setText(String.valueOf(Application.getInstance().CAPTCHA().y));
+        tfCaptchaWidth.setText(String.valueOf(Application.getInstance().CAPTCHA().height));
+        tfCaptchaHeight.setText(String.valueOf(Application.getInstance().CAPTCHA().width));
 
-        tfLooTwoX.setText("");
-        tfLooTwoY.setText("");
-        tfLooTwoWidth.setText("");
-        tfLooTwoHeight.setText("");
+        tfCaptchaX.setInputVerifier(numericVerifier);
+        tfCaptchaY.setInputVerifier(numericVerifier);
+        tfCaptchaWidth.setInputVerifier(numericVerifier);
+        tfCaptchaHeight.setInputVerifier(numericVerifier);
 
-        tfLooThreeX.setText("");
-        tfLootThreeY.setText("");
-        tfLootThreeWidth.setText("");
-        tfLootThreeHeight.setText("");
+        tfStatusCaptchaX.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().x));
+        tfStatusCaptchaY.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().y));
+        tfStatusCaptchaWidth.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().width));
+        tfStatusCaptchaHeight.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().height));
 
-        tfChatX.setText("");
-        tfChatY.setText("");
-        tfChatWidth.setText("");
-        tfChatHeight.setText("");
+        tfStatusCaptchaX.setInputVerifier(numericVerifier);
+        tfStatusCaptchaY.setInputVerifier(numericVerifier);
+        tfStatusCaptchaWidth.setInputVerifier(numericVerifier);
+        tfStatusCaptchaHeight.setInputVerifier(numericVerifier);
+
+        tfLooOneX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_ONE().x));
+        tfLooOneY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_ONE().y));
+        tfLooOneWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_ONE().width));
+        tfLooOneHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_ONE().height));
+
+        tfLooOneX.setInputVerifier(numericVerifier);
+        tfLooOneY.setInputVerifier(numericVerifier);
+        tfLooOneWidth.setInputVerifier(numericVerifier);
+        tfLooOneHeight.setInputVerifier(numericVerifier);
+
+        tfLooTwoX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_TWO().x));
+        tfLooTwoY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_TWO().y));
+        tfLooTwoWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_TWO().width));
+        tfLooTwoHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_TWO().height));
+
+        tfLooTwoX.setInputVerifier(numericVerifier);
+        tfLooTwoY.setInputVerifier(numericVerifier);
+        tfLooTwoWidth.setInputVerifier(numericVerifier);
+        tfLooTwoHeight.setInputVerifier(numericVerifier);
+
+        tfLooThreeX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_THREE().x));
+        tfLootThreeY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_THREE().y));
+        tfLootThreeWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_THREE().width));
+        tfLootThreeHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_THREE().height));
+
+        tfLooThreeX.setInputVerifier(numericVerifier);
+        tfLootThreeY.setInputVerifier(numericVerifier);
+        tfLootThreeWidth.setInputVerifier(numericVerifier);
+        tfLootThreeHeight.setInputVerifier(numericVerifier);
+
+        tfChatX.setText(String.valueOf(Application.getInstance().CHAT().x));
+        tfChatY.setText(String.valueOf(Application.getInstance().CHAT().y));
+        tfChatWidth.setText(String.valueOf(Application.getInstance().CHAT().width));
+        tfChatHeight.setText(String.valueOf(Application.getInstance().CHAT().height));
+
+        tfChatX.setInputVerifier(numericVerifier);
+        tfChatY.setInputVerifier(numericVerifier);
+        tfChatWidth.setInputVerifier(numericVerifier);
+        tfChatHeight.setInputVerifier(numericVerifier);
 
     }
 
@@ -514,6 +669,822 @@ public class TabDelayView extends JDialog {
 
         SwingUtilities.invokeLater(TabDelayView::new);
 
+    }
+
+    public JPanel getContent() {
+        return content;
+    }
+
+    public JTabbedPane getTabPane() {
+        return tabPane;
+    }
+
+    public JPanel getGeneralTab() {
+        return generalTab;
+    }
+
+    public JPanel getAddTab() {
+        return addTab;
+    }
+
+    public JPanel getCoordTab() {
+        return coordTab;
+    }
+
+    public JPanel getDebugTab() {
+        return debugTab;
+    }
+
+    public JPanel getLoot() {
+        return loot;
+    }
+
+    public JPanel getLootContent() {
+        return lootContent;
+    }
+
+    public JCheckBox getCbFish() {
+        return cbFish;
+    }
+
+    public JCheckBox getCbEvent() {
+        return cbEvent;
+    }
+
+    public JCheckBox getCbRock() {
+        return cbRock;
+    }
+
+    public JCheckBox getCbKey() {
+        return cbKey;
+    }
+
+    public JCheckBox getCbUnknown() {
+        return cbUnknown;
+    }
+
+    public JCheckBox getCbConfirm() {
+        return cbConfirm;
+    }
+
+    public JPanel getPortContent() {
+        return portContent;
+    }
+
+    public JComboBox<String> getCbPort() {
+        return cbPort;
+    }
+
+    public JPanel getTask() {
+        return task;
+    }
+
+    public JPanel getTaskContent() {
+        return taskContent;
+    }
+
+    public JCheckBox getCbBeer() {
+        return cbBeer;
+    }
+
+    public JTextField getBeerKey() {
+        return beerKey;
+    }
+
+    public JTextField getBeerPeriod() {
+        return beerPeriod;
+    }
+
+    public JCheckBox getCbRepeatWork() {
+        return cbRepeatWork;
+    }
+
+    public JPanel getSlots() {
+        return slots;
+    }
+
+    public JLabel getlSlots() {
+        return lSlots;
+    }
+
+    public JPanel getSlotContent() {
+        return slotContent;
+    }
+
+    public JCheckBox getCbFirstSlotActive() {
+        return cbFirstSlotActive;
+    }
+
+    public JTextField getTfFirstSlotKey() {
+        return tfFirstSlotKey;
+    }
+
+    public JTextField getTfFirstSlotDelay() {
+        return tfFirstSlotDelay;
+    }
+
+    public JTextField getTfFirstSlotPeriod() {
+        return tfFirstSlotPeriod;
+    }
+
+    public JCheckBox getCbSecondSlotActive() {
+        return cbSecondSlotActive;
+    }
+
+    public JTextField getTfSecondSlotKey() {
+        return tfSecondSlotKey;
+    }
+
+    public JTextField getTfSecondSlotDelay() {
+        return tfSecondSlotDelay;
+    }
+
+    public JTextField getTfSecondSlotPeriod() {
+        return tfSecondSlotPeriod;
+    }
+
+    public JCheckBox getCbThirdSlotActive() {
+        return cbThirdSlotActive;
+    }
+
+    public JTextField getTfThirdSlotKey() {
+        return tfThirdSlotKey;
+    }
+
+    public JTextField getTfThirdSlotDelay() {
+        return tfThirdSlotDelay;
+    }
+
+    public JTextField getTfThirdSlotPeriod() {
+        return tfThirdSlotPeriod;
+    }
+
+    public JPanel getRod() {
+        return rod;
+    }
+
+    public JLabel getlRod() {
+        return lRod;
+    }
+
+    public JTextField getTfRodCount() {
+        return tfRodCount;
+    }
+
+    public JTextField getTfRodChange() {
+        return tfRodChange;
+    }
+
+    public JPanel getNotification() {
+        return notification;
+    }
+
+    public JPanel getNotificationContent() {
+        return notificationContent;
+    }
+
+    public JCheckBox getCbTelegram() {
+        return cbTelegram;
+    }
+
+    public JTextField getTfTelegramKey() {
+        return tfTelegramKey;
+    }
+
+    public JPanel getPersonalMessage() {
+        return personalMessage;
+    }
+
+    public JPanel getPmContent() {
+        return pmContent;
+    }
+
+    public JRadioButton getRbAutoFish() {
+        return rbAutoFish;
+    }
+
+    public JRadioButton getRbExitGame() {
+        return rbExitGame;
+    }
+
+    public JRadioButton getRbNothing() {
+        return rbNothing;
+    }
+
+    public JCheckBox getCbStopBot() {
+        return cbStopBot;
+    }
+
+    public JTextField getTfStopBot() {
+        return tfStopBot;
+    }
+
+    public JCheckBox getCbExitGame() {
+        return cbExitGame;
+    }
+
+    public JTextField getTfExitGame() {
+        return tfExitGame;
+    }
+
+    public JPanel getTimer() {
+        return timer;
+    }
+
+    public JPanel getTimerContent() {
+        return timerContent;
+    }
+
+    public JPanel getMode() {
+        return mode;
+    }
+
+    public JPanel getModeContent() {
+        return modeContent;
+    }
+
+    public JComboBox getCbMode() {
+        return cbMode;
+    }
+
+    public JPanel getLanguage() {
+        return language;
+    }
+
+    public JPanel getLocaleContent() {
+        return localeContent;
+    }
+
+    public JComboBox getCbLanguage() {
+        return cbLanguage;
+    }
+
+    public JPanel getTheme() {
+        return theme;
+    }
+
+    public JPanel getThemeContent() {
+        return themeContent;
+    }
+
+    public JComboBox getCbTheme() {
+        return cbTheme;
+    }
+
+    public JTextField getTfLootSlotOneX() {
+        return tfLootSlotOneX;
+    }
+
+    public JTextField getTfLootSlotTwoX() {
+        return tfLootSlotTwoX;
+    }
+
+    public JTextField getTfLootSlotThreeX() {
+        return tfLootSlotThreeX;
+    }
+
+    public JCheckBox getCbDebugPersonalMessage() {
+        return cbDebugPersonalMessage;
+    }
+
+    public JTextField getTfInputDelay() {
+        return tfInputDelay;
+    }
+
+    public JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    public JButton getBtnSave() {
+        return btnSave;
+    }
+
+    public JCheckBox getCbUnknownLoot() {
+        return cbUnknownLoot;
+    }
+
+    public JCheckBox getCbUnsortLoot() {
+        return cbUnsortLoot;
+    }
+
+    public JPanel getOverflow() {
+        return overflow;
+    }
+
+    public JPanel getLootTouch() {
+        return lootTouch;
+    }
+
+    public JPanel getRodTouch() {
+        return rodTouch;
+    }
+
+    public JPanel getState() {
+        return state;
+    }
+
+    public JPanel getInput() {
+        return input;
+    }
+
+    public JPanel getParsing() {
+        return parsing;
+    }
+
+    public JPanel getOverflowContent() {
+        return overflowContent;
+    }
+
+    public JTextField getTfState() {
+        return tfState;
+    }
+
+    public JTextField getTfCutState() {
+        return tfCutState;
+    }
+
+    public JTextField getTfCapcthaState() {
+        return tfCapcthaState;
+    }
+
+    public JCheckBox getCbSkipCalendar() {
+        return cbSkipCalendar;
+    }
+
+    public JPanel getStateContent() {
+        return stateContent;
+    }
+
+    public JPanel getInputcontent() {
+        return inputcontent;
+    }
+
+    public JPanel getParsingContent() {
+        return parsingContent;
+    }
+
+    public JTextField getTfParseCoef() {
+        return tfParseCoef;
+    }
+
+    public JTextField getTfCaptchaNoiseIteration() {
+        return tfCaptchaNoiseIteration;
+    }
+
+    public JPanel getLootTouchContent() {
+        return lootTouchContent;
+    }
+
+    public JTextField getTfLootSlotOneY() {
+        return tfLootSlotOneY;
+    }
+
+    public JTextField getTfLootSlotTwoY() {
+        return tfLootSlotTwoY;
+    }
+
+    public JTextField getTfLootSlotThreeY() {
+        return tfLootSlotThreeY;
+    }
+
+    public JPanel getRodTouchContent() {
+        return rodTouchContent;
+    }
+
+    public JTextField getTfRodY() {
+        return tfRodY;
+    }
+
+    public JTextField getTfRodDY() {
+        return tfRodDY;
+    }
+
+    public JTextField getTfRodX() {
+        return tfRodX;
+    }
+
+    public JTextField getTfRodDX() {
+        return tfRodDX;
+    }
+
+    public JPanel getDelayTab() {
+        return delayTab;
+    }
+
+    public JPanel getDelay() {
+        return delay;
+    }
+
+    public JPanel getDelayContent() {
+        return delayContent;
+    }
+
+    public JPanel getDebug() {
+        return debug;
+    }
+
+    public JPanel getDebugContent() {
+        return debugContent;
+    }
+
+    public JCheckBox getCbDebugWaitFish() {
+        return cbDebugWaitFish;
+    }
+
+    public JCheckBox getCbDebugStatusCaptcha() {
+        return cbDebugStatusCaptcha;
+    }
+
+    public JCheckBox getCbDebugStatusCut() {
+        return cbDebugStatusCut;
+    }
+
+    public JCheckBox getCbDebugLine() {
+        return cbDebugLine;
+    }
+
+    public JCheckBox getCbDebugCaptcha() {
+        return cbDebugCaptcha;
+    }
+
+    public JCheckBox getCbDebugLootFilter() {
+        return cbDebugLootFilter;
+    }
+
+    public JPanel getDelayStart() {
+        return delayStart;
+    }
+
+    public JPanel getDelayWaitFish() {
+        return delayWaitFish;
+    }
+
+    public JPanel getDelayCut() {
+        return delayCut;
+    }
+
+    public JPanel getDelayStatusCut() {
+        return delayStatusCut;
+    }
+
+    public JPanel getDelayCaptcha() {
+        return delayCaptcha;
+    }
+
+    public JPanel getDelayStatusCaptcha() {
+        return delayStatusCaptcha;
+    }
+
+    public JPanel getDelayLooFilter() {
+        return delayLooFilter;
+    }
+
+    public JPanel getCoordPane() {
+        return coordPane;
+    }
+
+    public JPanel getSpace() {
+        return space;
+    }
+
+    public JPanel getSpaceContent() {
+        return spaceContent;
+    }
+
+    public JTextField getTfSpaceX() {
+        return tfSpaceX;
+    }
+
+    public JTextField getTfSpaceY() {
+        return tfSpaceY;
+    }
+
+    public JTextField getTfSpaceWidth() {
+        return tfSpaceWidth;
+    }
+
+    public JTextField getTfSpaceHeight() {
+        return tfSpaceHeight;
+    }
+
+    public JPanel getLine() {
+        return line;
+    }
+
+    public JPanel getLineContent() {
+        return lineContent;
+    }
+
+    public JTextField getTfLineX() {
+        return tfLineX;
+    }
+
+    public JTextField getTfLineY() {
+        return tfLineY;
+    }
+
+    public JTextField getTfLineWidth() {
+        return tfLineWidth;
+    }
+
+    public JTextField getTfLineHeight() {
+        return tfLineHeight;
+    }
+
+    public JPanel getSubLine() {
+        return subLine;
+    }
+
+    public JPanel getSubLineContent() {
+        return subLineContent;
+    }
+
+    public JTextField getTfSubLineX() {
+        return tfSubLineX;
+    }
+
+    public JTextField getTfSubLineY() {
+        return tfSubLineY;
+    }
+
+    public JTextField getTfSubLineWidth() {
+        return tfSubLineWidth;
+    }
+
+    public JTextField getTfSubLineHeight() {
+        return tfSubLineHeight;
+    }
+
+    public JPanel getStatusCut() {
+        return statusCut;
+    }
+
+    public JPanel getStatusCutContent() {
+        return statusCutContent;
+    }
+
+    public JTextField getTfStatusCutX() {
+        return tfStatusCutX;
+    }
+
+    public JTextField getTfStatusCutY() {
+        return tfStatusCutY;
+    }
+
+    public JTextField getTfStatusCutWidth() {
+        return tfStatusCutWidth;
+    }
+
+    public JTextField getTfStatusCutHeight() {
+        return tfStatusCutHeight;
+    }
+
+    public JPanel getCaptcha() {
+        return captcha;
+    }
+
+    public JPanel getCaptchaContent() {
+        return captchaContent;
+    }
+
+    public JTextField getTfCaptchaX() {
+        return tfCaptchaX;
+    }
+
+    public JTextField getTfCaptchaY() {
+        return tfCaptchaY;
+    }
+
+    public JTextField getTfCaptchaWidth() {
+        return tfCaptchaWidth;
+    }
+
+    public JTextField getTfCaptchaHeight() {
+        return tfCaptchaHeight;
+    }
+
+    public JPanel getStatusCaptcha() {
+        return statusCaptcha;
+    }
+
+    public JPanel getStatusCaptchaContent() {
+        return statusCaptchaContent;
+    }
+
+    public JTextField getTfStatusCaptchaX() {
+        return tfStatusCaptchaX;
+    }
+
+    public JTextField getTfStatusCaptchaY() {
+        return tfStatusCaptchaY;
+    }
+
+    public JTextField getTfStatusCaptchaWidth() {
+        return tfStatusCaptchaWidth;
+    }
+
+    public JTextField getTfStatusCaptchaHeight() {
+        return tfStatusCaptchaHeight;
+    }
+
+    public JPanel getLootOne() {
+        return lootOne;
+    }
+
+    public JPanel getLootOneContent() {
+        return lootOneContent;
+    }
+
+    public JTextField getTfLooOneX() {
+        return tfLooOneX;
+    }
+
+    public JTextField getTfLooOneY() {
+        return tfLooOneY;
+    }
+
+    public JTextField getTfLooOneWidth() {
+        return tfLooOneWidth;
+    }
+
+    public JTextField getTfLooOneHeight() {
+        return tfLooOneHeight;
+    }
+
+    public JPanel getLootTwo() {
+        return lootTwo;
+    }
+
+    public JPanel getLootTwoContent() {
+        return lootTwoContent;
+    }
+
+    public JTextField getTfLooTwoX() {
+        return tfLooTwoX;
+    }
+
+    public JTextField getTfLooTwoY() {
+        return tfLooTwoY;
+    }
+
+    public JTextField getTfLooTwoWidth() {
+        return tfLooTwoWidth;
+    }
+
+    public JTextField getTfLooTwoHeight() {
+        return tfLooTwoHeight;
+    }
+
+    public JPanel getLootThree() {
+        return lootThree;
+    }
+
+    public JPanel getLootThreeContent() {
+        return lootThreeContent;
+    }
+
+    public JTextField getTfLooThreeX() {
+        return tfLooThreeX;
+    }
+
+    public JTextField getTfLootThreeY() {
+        return tfLootThreeY;
+    }
+
+    public JTextField getTfLootThreeWidth() {
+        return tfLootThreeWidth;
+    }
+
+    public JTextField getTfLootThreeHeight() {
+        return tfLootThreeHeight;
+    }
+
+    public JPanel getChat() {
+        return chat;
+    }
+
+    public JPanel getChatContent() {
+        return chatContent;
+    }
+
+    public JTextField getTfChatX() {
+        return tfChatX;
+    }
+
+    public JTextField getTfChatY() {
+        return tfChatY;
+    }
+
+    public JTextField getTfChatWidth() {
+        return tfChatWidth;
+    }
+
+    public JTextField getTfChatHeight() {
+        return tfChatHeight;
+    }
+
+    public JPanel getFullscreen() {
+        return fullscreen;
+    }
+
+    public JPanel getFullscreenContent() {
+        return fullscreenContent;
+    }
+
+    public JTextField getTfFullscreenX() {
+        return tfFullscreenX;
+    }
+
+    public JTextField getTfFullscreenY() {
+        return tfFullscreenY;
+    }
+
+    public JTextField getTfFullscreenWidth() {
+        return tfFullscreenWidth;
+    }
+
+    public JTextField getTfFullscreenHeight() {
+        return tfFullscreenHeight;
+    }
+
+    public JTextField getTfDelayStartBefore() {
+        return tfDelayStartBefore;
+    }
+
+    public JTextField getTfDelayStartAfter() {
+        return tfDelayStartAfter;
+    }
+
+    public JTextField getTfDelayWaitfishBefore() {
+        return tfDelayWaitfishBefore;
+    }
+
+    public JTextField getTfDelayWaitfishAfter() {
+        return tfDelayWaitfishAfter;
+    }
+
+    public JTextField getTfDelayCutBefore() {
+        return tfDelayCutBefore;
+    }
+
+    public JTextField getTfDelayCutAfter() {
+        return tfDelayCutAfter;
+    }
+
+    public JTextField getTfDelayStatusCutBefore() {
+        return tfDelayStatusCutBefore;
+    }
+
+    public JTextField getTfDelayStatusCutAfter() {
+        return tfDelayStatusCutAfter;
+    }
+
+    public JTextField getTfDelayCaptchaBefore() {
+        return tfDelayCaptchaBefore;
+    }
+
+    public JTextField getTfDelayCaptchaAfter() {
+        return tfDelayCaptchaAfter;
+    }
+
+    public JTextField getTfDelayStatusCaptchaBefore() {
+        return tfDelayStatusCaptchaBefore;
+    }
+
+    public JTextField getTfDelayStatusCaptchaAfter() {
+        return tfDelayStatusCaptchaAfter;
+    }
+
+    public JTextField getTfDelayLootFilterBefore() {
+        return tfDelayLootFilterBefore;
+    }
+
+    public JTextField getTfDelayLootFilterAfter() {
+        return tfDelayLootFilterAfter;
+    }
+
+    public JButton getBtnReset() {
+        return btnReset;
+    }
+
+    public JPanel getButtons() {
+        return buttons;
+    }
+
+    public CustomVerifier getSlotKeyVerifier() {
+        return slotKeyVerifier;
+    }
+
+    public CustomVerifier getDelayPeriodVerifier() {
+        return delayPeriodVerifier;
+    }
+
+    public CustomVerifier getDelayVerifier() {
+        return delayVerifier;
+    }
+
+    public CustomVerifier getRodCountVerifier() {
+        return rodCountVerifier;
     }
 
     {
@@ -990,20 +1961,20 @@ public class TabDelayView extends JDialog {
         tfSpaceX = new JTextField();
         spaceContent.add(tfSpaceX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label52 = new JLabel();
-        label52.setText("y:");
-        spaceContent.add(label52, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfSpaceY = new JTextField();
-        spaceContent.add(tfSpaceY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label53 = new JLabel();
-        this.$$$loadLabelText$$$(label53, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        spaceContent.add(label53, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfSpaceWidth = new JTextField();
-        spaceContent.add(tfSpaceWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label54 = new JLabel();
-        this.$$$loadLabelText$$$(label54, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        spaceContent.add(label54, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label52, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        spaceContent.add(label52, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSpaceHeight = new JTextField();
         spaceContent.add(tfSpaceHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label53 = new JLabel();
+        this.$$$loadLabelText$$$(label53, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        spaceContent.add(label53, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label54 = new JLabel();
+        label54.setText("y:");
+        spaceContent.add(label54, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfSpaceY = new JTextField();
+        spaceContent.add(tfSpaceY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfSpaceWidth = new JTextField();
+        spaceContent.add(tfSpaceWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         line = new JPanel();
         line.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(line, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1020,20 +1991,20 @@ public class TabDelayView extends JDialog {
         tfLineX = new JTextField();
         lineContent.add(tfLineX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label57 = new JLabel();
-        label57.setText("y:");
-        lineContent.add(label57, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLineY = new JTextField();
-        lineContent.add(tfLineY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label58 = new JLabel();
-        this.$$$loadLabelText$$$(label58, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        lineContent.add(label58, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLineWidth = new JTextField();
-        lineContent.add(tfLineWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label59 = new JLabel();
-        this.$$$loadLabelText$$$(label59, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        lineContent.add(label59, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label57, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        lineContent.add(label57, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLineHeight = new JTextField();
         lineContent.add(tfLineHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label58 = new JLabel();
+        this.$$$loadLabelText$$$(label58, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        lineContent.add(label58, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfLineY = new JTextField();
+        lineContent.add(tfLineY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfLineWidth = new JTextField();
+        lineContent.add(tfLineWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label59 = new JLabel();
+        label59.setText("y:");
+        lineContent.add(label59, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         subLine = new JPanel();
         subLine.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(subLine, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1050,20 +2021,20 @@ public class TabDelayView extends JDialog {
         tfSubLineX = new JTextField();
         subLineContent.add(tfSubLineX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label62 = new JLabel();
-        label62.setText("y:");
-        subLineContent.add(label62, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfSubLineY = new JTextField();
-        subLineContent.add(tfSubLineY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label63 = new JLabel();
-        this.$$$loadLabelText$$$(label63, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        subLineContent.add(label63, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfSubLineWidth = new JTextField();
-        subLineContent.add(tfSubLineWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label64 = new JLabel();
-        this.$$$loadLabelText$$$(label64, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        subLineContent.add(label64, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label62, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        subLineContent.add(label62, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSubLineHeight = new JTextField();
         subLineContent.add(tfSubLineHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label63 = new JLabel();
+        this.$$$loadLabelText$$$(label63, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        subLineContent.add(label63, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfSubLineY = new JTextField();
+        subLineContent.add(tfSubLineY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfSubLineWidth = new JTextField();
+        subLineContent.add(tfSubLineWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label64 = new JLabel();
+        label64.setText("y:");
+        subLineContent.add(label64, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         statusCut = new JPanel();
         statusCut.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(statusCut, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1080,20 +2051,20 @@ public class TabDelayView extends JDialog {
         tfStatusCutX = new JTextField();
         statusCutContent.add(tfStatusCutX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label67 = new JLabel();
-        label67.setText("y:");
-        statusCutContent.add(label67, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfStatusCutY = new JTextField();
-        statusCutContent.add(tfStatusCutY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label68 = new JLabel();
-        this.$$$loadLabelText$$$(label68, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        statusCutContent.add(label68, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfStatusCutWidth = new JTextField();
-        statusCutContent.add(tfStatusCutWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label69 = new JLabel();
-        this.$$$loadLabelText$$$(label69, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        statusCutContent.add(label69, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label67, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        statusCutContent.add(label67, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfStatusCutHeight = new JTextField();
         statusCutContent.add(tfStatusCutHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label68 = new JLabel();
+        this.$$$loadLabelText$$$(label68, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        statusCutContent.add(label68, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label69 = new JLabel();
+        label69.setText("y:");
+        statusCutContent.add(label69, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfStatusCutWidth = new JTextField();
+        statusCutContent.add(tfStatusCutWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfStatusCutY = new JTextField();
+        statusCutContent.add(tfStatusCutY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         captcha = new JPanel();
         captcha.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(captcha, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1110,20 +2081,20 @@ public class TabDelayView extends JDialog {
         tfCaptchaX = new JTextField();
         captchaContent.add(tfCaptchaX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label72 = new JLabel();
-        label72.setText("y:");
-        captchaContent.add(label72, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfCaptchaY = new JTextField();
-        captchaContent.add(tfCaptchaY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label73 = new JLabel();
-        label73.setText("Длина");
-        captchaContent.add(label73, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfCaptchaWidth = new JTextField();
-        captchaContent.add(tfCaptchaWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label74 = new JLabel();
-        this.$$$loadLabelText$$$(label74, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        captchaContent.add(label74, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label72, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        captchaContent.add(label72, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfCaptchaHeight = new JTextField();
         captchaContent.add(tfCaptchaHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label73 = new JLabel();
+        label73.setText("Длина");
+        captchaContent.add(label73, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label74 = new JLabel();
+        label74.setText("y:");
+        captchaContent.add(label74, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfCaptchaWidth = new JTextField();
+        captchaContent.add(tfCaptchaWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfCaptchaY = new JTextField();
+        captchaContent.add(tfCaptchaY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         statusCaptcha = new JPanel();
         statusCaptcha.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(statusCaptcha, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1140,20 +2111,20 @@ public class TabDelayView extends JDialog {
         tfStatusCaptchaX = new JTextField();
         statusCaptchaContent.add(tfStatusCaptchaX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label77 = new JLabel();
-        label77.setText("y:");
-        statusCaptchaContent.add(label77, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfStatusCaptchaY = new JTextField();
-        statusCaptchaContent.add(tfStatusCaptchaY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label78 = new JLabel();
-        this.$$$loadLabelText$$$(label78, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        statusCaptchaContent.add(label78, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfStatusCaptchaWidth = new JTextField();
-        statusCaptchaContent.add(tfStatusCaptchaWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label79 = new JLabel();
-        this.$$$loadLabelText$$$(label79, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        statusCaptchaContent.add(label79, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label77, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        statusCaptchaContent.add(label77, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfStatusCaptchaHeight = new JTextField();
         statusCaptchaContent.add(tfStatusCaptchaHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label78 = new JLabel();
+        this.$$$loadLabelText$$$(label78, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        statusCaptchaContent.add(label78, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfStatusCaptchaWidth = new JTextField();
+        statusCaptchaContent.add(tfStatusCaptchaWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfStatusCaptchaY = new JTextField();
+        statusCaptchaContent.add(tfStatusCaptchaY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label79 = new JLabel();
+        label79.setText("y:");
+        statusCaptchaContent.add(label79, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lootOne = new JPanel();
         lootOne.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(lootOne, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1170,20 +2141,20 @@ public class TabDelayView extends JDialog {
         tfLooOneX = new JTextField();
         lootOneContent.add(tfLooOneX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label82 = new JLabel();
-        label82.setText("y:");
-        lootOneContent.add(label82, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLooOneY = new JTextField();
-        lootOneContent.add(tfLooOneY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label83 = new JLabel();
-        this.$$$loadLabelText$$$(label83, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        lootOneContent.add(label83, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLooOneWidth = new JTextField();
-        lootOneContent.add(tfLooOneWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label84 = new JLabel();
-        this.$$$loadLabelText$$$(label84, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        lootOneContent.add(label84, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label82, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        lootOneContent.add(label82, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLooOneHeight = new JTextField();
         lootOneContent.add(tfLooOneHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label83 = new JLabel();
+        this.$$$loadLabelText$$$(label83, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        lootOneContent.add(label83, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label84 = new JLabel();
+        label84.setText("y:");
+        lootOneContent.add(label84, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfLooOneWidth = new JTextField();
+        lootOneContent.add(tfLooOneWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfLooOneY = new JTextField();
+        lootOneContent.add(tfLooOneY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lootTwo = new JPanel();
         lootTwo.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(lootTwo, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1200,20 +2171,20 @@ public class TabDelayView extends JDialog {
         tfLooTwoX = new JTextField();
         lootTwoContent.add(tfLooTwoX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label87 = new JLabel();
-        label87.setText("y:");
-        lootTwoContent.add(label87, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLooTwoY = new JTextField();
-        lootTwoContent.add(tfLooTwoY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label88 = new JLabel();
-        this.$$$loadLabelText$$$(label88, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        lootTwoContent.add(label88, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLooTwoWidth = new JTextField();
-        lootTwoContent.add(tfLooTwoWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label89 = new JLabel();
-        this.$$$loadLabelText$$$(label89, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        lootTwoContent.add(label89, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label87, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        lootTwoContent.add(label87, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLooTwoHeight = new JTextField();
         lootTwoContent.add(tfLooTwoHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label88 = new JLabel();
+        this.$$$loadLabelText$$$(label88, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        lootTwoContent.add(label88, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label89 = new JLabel();
+        label89.setText("y:");
+        lootTwoContent.add(label89, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfLooTwoWidth = new JTextField();
+        lootTwoContent.add(tfLooTwoWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfLooTwoY = new JTextField();
+        lootTwoContent.add(tfLooTwoY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lootThree = new JPanel();
         lootThree.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(lootThree, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1230,20 +2201,20 @@ public class TabDelayView extends JDialog {
         tfLooThreeX = new JTextField();
         lootThreeContent.add(tfLooThreeX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label92 = new JLabel();
-        label92.setText("y:");
-        lootThreeContent.add(label92, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLootThreeY = new JTextField();
-        lootThreeContent.add(tfLootThreeY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label93 = new JLabel();
-        this.$$$loadLabelText$$$(label93, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        lootThreeContent.add(label93, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfLootThreeWidth = new JTextField();
-        lootThreeContent.add(tfLootThreeWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label94 = new JLabel();
-        this.$$$loadLabelText$$$(label94, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        lootThreeContent.add(label94, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label92, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        lootThreeContent.add(label92, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootThreeHeight = new JTextField();
         lootThreeContent.add(tfLootThreeHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label93 = new JLabel();
+        this.$$$loadLabelText$$$(label93, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        lootThreeContent.add(label93, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label94 = new JLabel();
+        label94.setText("y:");
+        lootThreeContent.add(label94, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfLootThreeY = new JTextField();
+        lootThreeContent.add(tfLootThreeY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfLootThreeWidth = new JTextField();
+        lootThreeContent.add(tfLootThreeWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         chat = new JPanel();
         chat.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(chat, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1260,20 +2231,20 @@ public class TabDelayView extends JDialog {
         tfChatX = new JTextField();
         chatContent.add(tfChatX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label97 = new JLabel();
-        label97.setText("y:");
-        chatContent.add(label97, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfChatY = new JTextField();
-        chatContent.add(tfChatY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label98 = new JLabel();
-        this.$$$loadLabelText$$$(label98, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        chatContent.add(label98, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfChatWidth = new JTextField();
-        chatContent.add(tfChatWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label99 = new JLabel();
-        this.$$$loadLabelText$$$(label99, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        chatContent.add(label99, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label97, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        chatContent.add(label97, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfChatHeight = new JTextField();
         chatContent.add(tfChatHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label98 = new JLabel();
+        label98.setText("y:");
+        chatContent.add(label98, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfChatY = new JTextField();
+        chatContent.add(tfChatY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label99 = new JLabel();
+        this.$$$loadLabelText$$$(label99, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        chatContent.add(label99, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfChatWidth = new JTextField();
+        chatContent.add(tfChatWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         fullscreen = new JPanel();
         fullscreen.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
         coordPane.add(fullscreen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -1290,21 +2261,21 @@ public class TabDelayView extends JDialog {
         tfFullscreenX = new JTextField();
         fullscreenContent.add(tfFullscreenX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label102 = new JLabel();
-        label102.setText("y:");
-        fullscreenContent.add(label102, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfFullscreenY = new JTextField();
-        fullscreenContent.add(tfFullscreenY, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label103 = new JLabel();
-        this.$$$loadLabelText$$$(label103, ResourceBundle.getBundle("locale").getString("preference.label.width"));
-        fullscreenContent.add(label103, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfFullscreenWidth = new JTextField();
-        tfFullscreenWidth.setText("");
-        fullscreenContent.add(tfFullscreenWidth, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label104 = new JLabel();
-        this.$$$loadLabelText$$$(label104, ResourceBundle.getBundle("locale").getString("preference.label.height"));
-        fullscreenContent.add(label104, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        this.$$$loadLabelText$$$(label102, ResourceBundle.getBundle("locale").getString("preference.label.height"));
+        fullscreenContent.add(label102, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfFullscreenHeight = new JTextField();
         fullscreenContent.add(tfFullscreenHeight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label103 = new JLabel();
+        this.$$$loadLabelText$$$(label103, ResourceBundle.getBundle("locale").getString("preference.label.width"));
+        fullscreenContent.add(label103, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label104 = new JLabel();
+        label104.setText("y:");
+        fullscreenContent.add(label104, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfFullscreenWidth = new JTextField();
+        tfFullscreenWidth.setText("");
+        fullscreenContent.add(tfFullscreenWidth, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfFullscreenY = new JTextField();
+        fullscreenContent.add(tfFullscreenY, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayTab = new JPanel();
         delayTab.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.delay"), delayTab);
@@ -1341,99 +2312,99 @@ public class TabDelayView extends JDialog {
         delayContent.add(delayStart, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayStart.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label112 = new JLabel();
-        label112.setText("До:");
+        this.$$$loadLabelText$$$(label112, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayStart.add(label112, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField1 = new JTextField();
-        delayStart.add(textField1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayStartBefore = new JTextField();
+        delayStart.add(tfDelayStartBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayStartAfter = new JTextField();
+        delayStart.add(tfDelayStartAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label113 = new JLabel();
         this.$$$loadLabelText$$$(label113, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayStart.add(label113, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField2 = new JTextField();
-        delayStart.add(textField2, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayWaitFish = new JPanel();
         delayWaitFish.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
         delayContent.add(delayWaitFish, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayWaitFish.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label114 = new JLabel();
-        label114.setText("До:");
+        this.$$$loadLabelText$$$(label114, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayWaitFish.add(label114, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField3 = new JTextField();
-        delayWaitFish.add(textField3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayWaitfishBefore = new JTextField();
+        delayWaitFish.add(tfDelayWaitfishBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayWaitfishAfter = new JTextField();
+        delayWaitFish.add(tfDelayWaitfishAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label115 = new JLabel();
         this.$$$loadLabelText$$$(label115, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayWaitFish.add(label115, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField4 = new JTextField();
-        delayWaitFish.add(textField4, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayCut = new JPanel();
         delayCut.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
         delayContent.add(delayCut, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayCut.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label116 = new JLabel();
-        label116.setText("До:");
+        this.$$$loadLabelText$$$(label116, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayCut.add(label116, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField5 = new JTextField();
-        delayCut.add(textField5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayCutBefore = new JTextField();
+        delayCut.add(tfDelayCutBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayCutAfter = new JTextField();
+        delayCut.add(tfDelayCutAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label117 = new JLabel();
         this.$$$loadLabelText$$$(label117, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayCut.add(label117, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField6 = new JTextField();
-        delayCut.add(textField6, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayStatusCut = new JPanel();
         delayStatusCut.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
         delayContent.add(delayStatusCut, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayStatusCut.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        tfDelayStatusCutBefore = new JTextField();
+        delayStatusCut.add(tfDelayStatusCutBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayStatusCutAfter = new JTextField();
+        delayStatusCut.add(tfDelayStatusCutAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label118 = new JLabel();
-        label118.setText("До:");
+        this.$$$loadLabelText$$$(label118, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayStatusCut.add(label118, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField7 = new JTextField();
-        delayStatusCut.add(textField7, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label119 = new JLabel();
         this.$$$loadLabelText$$$(label119, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayStatusCut.add(label119, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField8 = new JTextField();
-        delayStatusCut.add(textField8, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayCaptcha = new JPanel();
         delayCaptcha.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
         delayContent.add(delayCaptcha, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayCaptcha.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        tfDelayCaptchaBefore = new JTextField();
+        delayCaptcha.add(tfDelayCaptchaBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayCaptchaAfter = new JTextField();
+        delayCaptcha.add(tfDelayCaptchaAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label120 = new JLabel();
-        label120.setText("До:");
+        this.$$$loadLabelText$$$(label120, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayCaptcha.add(label120, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField9 = new JTextField();
-        delayCaptcha.add(textField9, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label121 = new JLabel();
         this.$$$loadLabelText$$$(label121, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayCaptcha.add(label121, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField10 = new JTextField();
-        delayCaptcha.add(textField10, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayStatusCaptcha = new JPanel();
         delayStatusCaptcha.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
         delayContent.add(delayStatusCaptcha, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayStatusCaptcha.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        tfDelayStatusCaptchaBefore = new JTextField();
+        delayStatusCaptcha.add(tfDelayStatusCaptchaBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayStatusCaptchaAfter = new JTextField();
+        delayStatusCaptcha.add(tfDelayStatusCaptchaAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label122 = new JLabel();
-        label122.setText("До:");
+        this.$$$loadLabelText$$$(label122, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayStatusCaptcha.add(label122, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField11 = new JTextField();
-        delayStatusCaptcha.add(textField11, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label123 = new JLabel();
         this.$$$loadLabelText$$$(label123, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayStatusCaptcha.add(label123, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField12 = new JTextField();
-        delayStatusCaptcha.add(textField12, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         delayLooFilter = new JPanel();
         delayLooFilter.setLayout(new GridLayoutManager(1, 4, new Insets(5, 5, 5, 5), -1, -1));
         delayContent.add(delayLooFilter, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         delayLooFilter.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        tfDelayLootFilterBefore = new JTextField();
+        delayLooFilter.add(tfDelayLootFilterBefore, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfDelayLootFilterAfter = new JTextField();
+        delayLooFilter.add(tfDelayLootFilterAfter, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label124 = new JLabel();
-        label124.setText("До:");
+        this.$$$loadLabelText$$$(label124, ResourceBundle.getBundle("locale").getString("preference.label.before"));
         delayLooFilter.add(label124, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField13 = new JTextField();
-        delayLooFilter.add(textField13, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label125 = new JLabel();
         this.$$$loadLabelText$$$(label125, ResourceBundle.getBundle("locale").getString("preference.label.after"));
         delayLooFilter.add(label125, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JTextField textField14 = new JTextField();
-        delayLooFilter.add(textField14, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final Spacer spacer7 = new Spacer();
         delayTab.add(spacer7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         debugTab = new JPanel();
@@ -1460,9 +2431,9 @@ public class TabDelayView extends JDialog {
         cbDebugCaptcha = new JCheckBox();
         this.$$$loadButtonText$$$(cbDebugCaptcha, ResourceBundle.getBundle("locale").getString("preference.label.debug.captcha"));
         debugContent.add(cbDebugCaptcha, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cbDebug = new JCheckBox();
-        this.$$$loadButtonText$$$(cbDebug, ResourceBundle.getBundle("locale").getString("preference.label.debug.filter"));
-        debugContent.add(cbDebug, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbDebugLootFilter = new JCheckBox();
+        this.$$$loadButtonText$$$(cbDebugLootFilter, ResourceBundle.getBundle("locale").getString("preference.label.debug.filter"));
+        debugContent.add(cbDebugLootFilter, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugPersonalMessage = new JCheckBox();
         this.$$$loadButtonText$$$(cbDebugPersonalMessage, ResourceBundle.getBundle("locale").getString("preference.label.debug.pm"));
         debugContent.add(cbDebugPersonalMessage, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -1477,15 +2448,15 @@ public class TabDelayView extends JDialog {
         buttons = new JPanel();
         buttons.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         content.add(buttons, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnReset = new JButton();
+        this.$$$loadButtonText$$$(btnReset, ResourceBundle.getBundle("locale").getString("preference.label.reset"));
+        buttons.add(btnReset, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnCancel = new JButton();
         this.$$$loadButtonText$$$(btnCancel, ResourceBundle.getBundle("locale").getString("preference.button.cancel"));
         buttons.add(btnCancel, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnSave = new JButton();
         this.$$$loadButtonText$$$(btnSave, ResourceBundle.getBundle("locale").getString("preference.button.save"));
         buttons.add(btnSave, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnReset = new JButton();
-        this.$$$loadButtonText$$$(btnReset, ResourceBundle.getBundle("locale").getString("preference.label.reset"));
-        buttons.add(btnReset, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer9 = new Spacer();
         buttons.add(spacer9, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
     }

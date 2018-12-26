@@ -2,6 +2,7 @@ package ru.namibios.arduino.config;
 
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.gui.Launcher;
 import ru.namibios.arduino.model.state.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
@@ -60,6 +61,23 @@ public class Application {
 		}catch (Exception e) {
             LOG.error(ExceptionUtils.getString(e));
 		}
+	}
+
+	public static void restart() throws IOException {
+
+		LOG.info("Restart application..");
+
+		Launcher.close();
+
+		StringBuilder cmd = new StringBuilder();
+		String dir = System.getProperty("user.dir");
+		cmd.append(dir);
+		cmd.append(File.separator);
+		cmd.append(Application.getUser().isWin() ? "run.bat" : "run.sh");
+		Runtime.getRuntime().exec(cmd.toString());
+
+		System.exit(0);
+
 	}
 
 }

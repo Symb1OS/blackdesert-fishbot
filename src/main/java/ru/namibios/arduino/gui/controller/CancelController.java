@@ -1,15 +1,15 @@
 package ru.namibios.arduino.gui.controller;
 
+import ru.namibios.arduino.gui.view.TabDelayView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ru.namibios.arduino.gui.view.SettingsView;
-
 public class CancelController implements ActionListener{
 
-	private SettingsView view;
+	private TabDelayView view;
 
-	public CancelController(SettingsView view) {
+	public CancelController(TabDelayView view) {
 		this.view = view;
 	}
 	
