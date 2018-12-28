@@ -669,6 +669,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.autofish"/>
+                          <toolTipText value="Спустя установленное время бот остановит работу. Рыбалка в игре продолжится в афк режиме."/>
                         </properties>
                       </component>
                       <component id="75034" class="javax.swing.JLabel">
@@ -693,6 +694,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.exitgame"/>
+                          <toolTipText value="Спустя установленное время бот выйдет из игры"/>
                         </properties>
                       </component>
                       <component id="464d4" class="javax.swing.JLabel">
@@ -896,6 +898,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.state.status_cut"/>
+                          <toolTipText value="Максимальное количество итераций для определения статуса подсечки."/>
                         </properties>
                       </component>
                       <component id="848c" class="javax.swing.JTextField" binding="tfCutState">
@@ -912,6 +915,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.state.status_captcha"/>
+                          <toolTipText value="Максимальное количество итераций для определения статуска капчи. (выполнение может занимать продолжительное время на слабых ПК)"/>
                         </properties>
                       </component>
                       <component id="af997" class="javax.swing.JTextField" binding="tfCapcthaState">
@@ -960,6 +964,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.loot.slot1"/>
+                          <toolTipText value="Координата 1 ячейки лута."/>
                         </properties>
                       </component>
                       <component id="f17ec" class="javax.swing.JTextField" binding="tfLootSlotOneY">
@@ -978,6 +983,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.loot.slot2"/>
+                          <toolTipText value="Координата 2 ячейки лута."/>
                         </properties>
                       </component>
                       <component id="d148f" class="javax.swing.JTextField" binding="tfLootSlotTwoY">
@@ -994,6 +1000,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.loot.slot3"/>
+                          <toolTipText value="Координата 3 ячейки лута."/>
                         </properties>
                       </component>
                       <component id="1683c" class="javax.swing.JTextField" binding="tfLootSlotThreeY">
@@ -1128,6 +1135,7 @@
                         </constraints>
                         <properties>
                           <text value="x:" noi18n="true"/>
+                          <toolTipText value="Координата верхнего-левого слота инвентаря по осе абсцисс."/>
                         </properties>
                       </component>
                       <component id="4635b" class="javax.swing.JLabel">
@@ -1136,6 +1144,7 @@
                         </constraints>
                         <properties>
                           <text value="dy:" noi18n="true"/>
+                          <toolTipText value="Смещение по y."/>
                         </properties>
                       </component>
                       <component id="b05a9" class="javax.swing.JLabel">
@@ -1144,6 +1153,7 @@
                         </constraints>
                         <properties>
                           <text value="dx:" noi18n="true"/>
+                          <toolTipText value="Смещение по x."/>
                         </properties>
                       </component>
                       <component id="365a8" class="javax.swing.JLabel">
@@ -1152,6 +1162,7 @@
                         </constraints>
                         <properties>
                           <text value="y:" noi18n="true"/>
+                          <toolTipText value="Координата верхнего-левого слота инвентаря по осе ординат."/>
                         </properties>
                       </component>
                       <component id="c7de3" class="javax.swing.JTextField" binding="tfRodDX">
@@ -1249,6 +1260,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.delay"/>
+                          <toolTipText value="Если бот не успевает вводить длинные капчи можно немного уменьшить значение, чтобы ускорить ввод. Желательно не ставить очень низкие(нечеловеческие) значения"/>
                         </properties>
                       </component>
                       <component id="92b64" class="javax.swing.JTextField" binding="tfInputDelay">
@@ -1311,6 +1323,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.noise.iteration"/>
+                          <toolTipText value="&lt;html&gt; Количество итераций для очистки капчи от шума. Чем выше параметр, тем позже бот начнет ввод капчи. &lt;br&gt; Если слабый процессор и бот полностью не успевает вводить капчу можно немного понизить данный параметр. &lt;/html&gt;"/>
                         </properties>
                       </component>
                       <component id="61af9" class="javax.swing.JTextField" binding="tfCaptchaNoiseIteration">
@@ -2503,6 +2516,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед задачей на старт."/>
                             </properties>
                           </component>
                           <component id="5865f" class="javax.swing.JTextField" binding="tfDelayStartBefore">
@@ -2527,6 +2541,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после задачи на старт."/>
                             </properties>
                           </component>
                         </children>
@@ -2545,6 +2560,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед задачей по проверке готовы ли мы подсекать рыбу."/>
                             </properties>
                           </component>
                           <component id="e2300" class="javax.swing.JTextField" binding="tfDelayWaitfishBefore">
@@ -2569,6 +2585,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после задачи по проверке готовы ли мы подсекать рыбу."/>
                             </properties>
                           </component>
                         </children>
@@ -2587,6 +2604,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед подсечкой."/>
                             </properties>
                           </component>
                           <component id="5a0e3" class="javax.swing.JTextField" binding="tfDelayCutBefore">
@@ -2611,6 +2629,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после подсечки."/>
                             </properties>
                           </component>
                         </children>
@@ -2645,6 +2664,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед определением статуса подсечки."/>
                             </properties>
                           </component>
                           <component id="c294b" class="javax.swing.JLabel">
@@ -2653,6 +2673,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после определения статуса подсечки."/>
                             </properties>
                           </component>
                         </children>
@@ -2687,6 +2708,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед парсингом капчи."/>
                             </properties>
                           </component>
                           <component id="12dfd" class="javax.swing.JLabel">
@@ -2695,6 +2717,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после парсинга и ввода капчи."/>
                             </properties>
                           </component>
                         </children>
@@ -2729,6 +2752,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед определением статуса капчи."/>
                             </properties>
                           </component>
                           <component id="c6678" class="javax.swing.JLabel">
@@ -2737,6 +2761,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после определения статуса капчи."/>
                             </properties>
                           </component>
                         </children>
@@ -2771,6 +2796,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.before"/>
+                              <toolTipText value="Задержка перед запуском задачи по фильтрации лута."/>
                             </properties>
                           </component>
                           <component id="aeee8" class="javax.swing.JLabel">
@@ -2779,6 +2805,7 @@
                             </constraints>
                             <properties>
                               <text resource-bundle="locale" key="preference.label.after"/>
+                              <toolTipText value="Задержка после фильтрации лута."/>
                             </properties>
                           </component>
                         </children>
@@ -2880,6 +2907,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.debug.unknown_loot"/>
+                          <toolTipText value="Сохранять ли неопознанный лут в папку loot/unknown"/>
                         </properties>
                       </component>
                       <component id="baa72" class="javax.swing.JCheckBox" binding="cbUnsortLoot">
@@ -2888,6 +2916,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.debug.unsort_loot"/>
+                          <toolTipText value="Сохранять ли весь лут в папку, независимо от того опознан он или нет."/>
                         </properties>
                       </component>
                     </children>
