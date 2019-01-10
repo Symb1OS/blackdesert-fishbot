@@ -10,7 +10,6 @@ import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.ImageUtils;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.Date;
 
 public class Captcha implements Command{
@@ -24,9 +23,15 @@ public class Captcha implements Command{
 	private Screen screen;
 	private String key;
 
-	public Captcha(String filename) throws AWTException  {
-
+	public Captcha(String filename) {
 		this.filename = filename;
+	}
+	
+	public Screen getScreen() {
+		return screen;
+	}
+
+	private void init() throws AWTException {
 
 		String name = String.valueOf(new Date().getTime());
 
@@ -40,21 +45,19 @@ public class Captcha implements Command{
 			screen.saveImage(Path.DEBUG_CAPTCHA);
 		}
 	}
-	
-	public Screen getScreen() {
-		return screen;
-	}
-	
+
 	@Override
 	public String getKey(){
 
-		HttpService http = new HttpService();
-
 		try {
+
+			init();
+
+			HttpService http = new HttpService();
 
 			key = http.parseByteCaptcha(filename, ImageUtils.imageToBytes(screen.getScreenShot()));
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
 		}

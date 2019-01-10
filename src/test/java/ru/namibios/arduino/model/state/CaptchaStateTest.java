@@ -41,7 +41,6 @@ public class CaptchaStateTest {
     @Test
     public void testSendToInput() throws IOException {
 
-
         when(captcha.getKey()).thenReturn("wasd");
         when(inputService.send(any(Captcha.class))).thenReturn(true);
 
@@ -68,7 +67,7 @@ public class CaptchaStateTest {
     }
 
     @Test
-    public void testEndWork() throws IOException {
+    public void testEndWork() {
 
         when(captcha.getKey()).thenReturn("Client need update");
 

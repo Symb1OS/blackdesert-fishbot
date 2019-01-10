@@ -5,10 +5,8 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.command.Captcha;
 import ru.namibios.arduino.model.command.Command;
-import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
-import java.awt.*;
 import java.util.Date;
 
 public class CaptchaState extends State {
@@ -24,19 +22,9 @@ public class CaptchaState extends State {
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_KAPCHA();
 
-        name = String.valueOf(new Date().getTime()) + "_" + Application.getUser().getHash();
+        this.name = String.valueOf(new Date().getTime()) + "_" + Application.getUser().getHash();
+        this.captcha = new Captcha(name);
 
-        try {
-
-            captcha = new Captcha(name);
-
-        } catch (AWTException e) {
-
-            captcha = ShortCommand.IGNORE;
-
-            LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
-            LOG.error(ExceptionUtils.getString(e));
-        }
     }
 
 	@Override
