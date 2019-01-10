@@ -30,6 +30,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("")
 	String COM_PORT();
 
+	@Key("bot.mode")
+	@DefaultValue("FISHING")
+	Mode MODE();
+
 	@Key("bot.input.mode")
 	@DefaultValue("ROBOT")
 	InputMode INPUT_MODE();
@@ -427,4 +431,5 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.debug.pmmessage")
 	@DefaultValue("false")
     boolean DEBUG_PM_MESSAGE();
+
 }

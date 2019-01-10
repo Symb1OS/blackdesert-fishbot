@@ -39,7 +39,7 @@ public class RootView extends JFrame {
 
     public RootView() {
 
-        Transfer transfer = new Transfer((Mode) cbWorkMode.getSelectedItem());
+        Transfer transfer = new Transfer();
 
         setTitle(AppUtils.getVersion());
 
@@ -62,6 +62,7 @@ public class RootView extends JFrame {
 
         cbWorkMode.setEnabled(Application.getUser().isPremium());
         cbWorkMode.setToolTipText(UIManager.getString("rootview.mode.tooltip"));
+        cbWorkMode.addItemListener(e -> Application.getInstance().setProperty("bot.mode", e.getItem().toString()));
 
         Arrays.stream(Mode.values()).forEach(mode -> cbWorkMode.addItem(mode));
 
@@ -135,10 +136,6 @@ public class RootView extends JFrame {
         setVisible(true);
         setResizable(false);
 
-    }
-
-    public JComboBox<Mode> getCbWorkMode() {
-        return cbWorkMode;
     }
 
     {

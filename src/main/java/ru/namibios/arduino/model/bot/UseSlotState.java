@@ -13,7 +13,7 @@ public class UseSlotState extends State {
 
 	private SlotService slotService;
 
-	UseSlotState(FishBot fishBot) {
+	public UseSlotState(FishBot fishBot) {
 		super(fishBot);
 		this.beforeStart = 0;
 		this.afterStart = 1000;
