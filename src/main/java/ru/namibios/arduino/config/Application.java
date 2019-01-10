@@ -3,7 +3,7 @@ package ru.namibios.arduino.config;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.gui.Launcher;
-import ru.namibios.arduino.model.state.service.HttpService;
+import ru.namibios.arduino.model.bot.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.File;

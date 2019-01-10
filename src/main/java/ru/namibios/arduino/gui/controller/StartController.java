@@ -4,8 +4,9 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.Transfer;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.config.Mode;
 import ru.namibios.arduino.gui.view.RootView;
-import ru.namibios.arduino.model.state.FishBot;
+import ru.namibios.arduino.model.bot.FishBot;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -46,7 +47,7 @@ public class StartController implements ActionListener {
             if (fishBot != null) {
 
                if (!fishBot.isRunned()) {
-                   threadTransfer = new Transfer();
+                   threadTransfer = new Transfer((Mode) view.getCbWorkMode().getSelectedItem());
                    threadTransfer.start();
 
                 } else {

@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.model.state.service.HttpService;
+import ru.namibios.arduino.model.bot.service.HttpService;
 
 import java.io.IOException;
 import java.util.UUID;

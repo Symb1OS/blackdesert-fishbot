@@ -5,7 +5,7 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.model.state.service.HttpService;
+import ru.namibios.arduino.model.bot.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.ImageUtils;
 

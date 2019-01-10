@@ -1,7 +1,7 @@
 package ru.namibios.arduino.model.notification;
 
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.state.service.HttpService;
+import ru.namibios.arduino.model.bot.service.HttpService;
 
 public class TelegramNotification extends Notification {
 

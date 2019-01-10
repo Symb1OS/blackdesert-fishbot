@@ -3,7 +3,7 @@ package ru.namibios.arduino.gui;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.gui.view.RootView;
-import ru.namibios.arduino.model.state.service.HttpService;
+import ru.namibios.arduino.model.bot.service.HttpService;
 import ru.namibios.arduino.utils.ExecUtils;
 
 import javax.swing.*;

@@ -2,10 +2,10 @@ package ru.namibios.arduino.gui.controller;
 
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.model.Screen;
-import ru.namibios.arduino.model.state.service.HttpService;
-import ru.namibios.arduino.model.state.service.RodService;
-import ru.namibios.arduino.model.state.service.input.EmulationService;
-import ru.namibios.arduino.model.state.service.input.emulation.AWTRobot;
+import ru.namibios.arduino.model.bot.service.HttpService;
+import ru.namibios.arduino.model.bot.service.RodService;
+import ru.namibios.arduino.model.bot.service.input.EmulationService;
+import ru.namibios.arduino.model.bot.service.input.emulation.AWTRobot;
 import ru.namibios.arduino.utils.DelayUtils;
 
 import java.awt.*;

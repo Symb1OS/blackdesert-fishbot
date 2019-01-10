@@ -3,7 +3,9 @@ package ru.namibios.arduino;
 import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.model.state.FishBot;
+import ru.namibios.arduino.config.Mode;
+import ru.namibios.arduino.model.bot.FishBot;
+import ru.namibios.arduino.model.bot.SlotTaskModeState;
 import ru.namibios.arduino.utils.DelayUtils;
 import ru.namibios.arduino.utils.WinAPI;
 
@@ -11,14 +13,14 @@ public class Transfer extends Thread{
 	
 	private final static Logger LOG = Logger.getLogger(Transfer.class);
 
+	private final Mode mode;
+
 	private FishBot fishBot;
 	
-	public Transfer() {}
-
-	public Transfer(FishBot fishBot) {
-		this.fishBot = fishBot;
+	public Transfer(Mode mode) {
+		this.mode = mode;
 	}
-	
+
 	public FishBot getFishBot() {
 		return fishBot;
 	}
@@ -49,6 +51,18 @@ public class Transfer extends Thread{
 		WinAPI.activateWindow(windowGame);
 
 		DelayUtils.delay(3000);
+
+		switch (mode) {
+			case FISHING:
+				LOG.info("Bot started on FISHING mode..");
+				break;
+			case TASK_SLOT:
+				LOG.info("Bot started on TASK/SLOT mode..");
+				fishBot.setState(new SlotTaskModeState(fishBot));
+				break;
+			default:
+				LOG.info("Undefined mode.. Started FISHING mode by default..");
+		}
 
 		while (fishBot.isRunned()) fishBot.getState().process();
 

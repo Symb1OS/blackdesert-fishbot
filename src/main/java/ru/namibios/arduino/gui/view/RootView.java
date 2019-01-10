@@ -39,7 +39,7 @@ public class RootView extends JFrame {
 
     public RootView() {
 
-        Transfer transfer = new Transfer();
+        Transfer transfer = new Transfer((Mode) cbWorkMode.getSelectedItem());
 
         setTitle(AppUtils.getVersion());
 
@@ -135,6 +135,10 @@ public class RootView extends JFrame {
         setVisible(true);
         setResizable(false);
 
+    }
+
+    public JComboBox<Mode> getCbWorkMode() {
+        return cbWorkMode;
     }
 
     {
