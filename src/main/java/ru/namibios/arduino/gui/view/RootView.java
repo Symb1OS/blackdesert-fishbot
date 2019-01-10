@@ -7,10 +7,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import ru.namibios.arduino.Transfer;
-import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.config.Message;
-import ru.namibios.arduino.config.Path;
-import ru.namibios.arduino.config.TextAreaAppender;
+import ru.namibios.arduino.config.*;
 import ru.namibios.arduino.gui.CheckUpdate;
 import ru.namibios.arduino.gui.DynamicData;
 import ru.namibios.arduino.gui.Info;
@@ -21,6 +18,7 @@ import ru.namibios.arduino.utils.ExecUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class RootView extends JFrame {
@@ -36,12 +34,14 @@ public class RootView extends JFrame {
     private JLabel mouseXY;
     private JButton buttonTest;
     private JLabel premiumLabel;
+    private JComboBox<Mode> cbWorkMode;
+    private JLabel lMode;
 
     public RootView() {
 
         Transfer transfer = new Transfer();
 
-        setTitle("Fish bot_" + AppUtils.getVersion());
+        setTitle(AppUtils.getVersion());
 
         setContentPane(contentPane);
         setAlwaysOnTop(true);
@@ -52,11 +52,18 @@ public class RootView extends JFrame {
         Image im = new ImageIcon(Path.ROOT_ICON).getImage();
         setIconImage(im);
 
-        getRootPane().setDefaultButton(buttonStart);
-
         TextAreaAppender appender = new TextAreaAppender(taLog);
         appender.setLayout(new PatternLayout("[%d{dd.MM.yyyy HH:mm:ss}] - %m%n"));
         LogManager.getRootLogger().addAppender(appender);
+
+        lMode.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
+        lMode.setText(UIManager.getString("rootview.label.mode"));
+        lMode.setToolTipText(UIManager.getString("preference.premium.tooltip"));
+
+        cbWorkMode.setEnabled(Application.getUser().isPremium());
+        cbWorkMode.setToolTipText(UIManager.getString("rootview.mode.tooltip"));
+
+        Arrays.stream(Mode.values()).forEach(mode -> cbWorkMode.addItem(mode));
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -120,6 +127,8 @@ public class RootView extends JFrame {
         buttonTest.addActionListener(new TestController());
         buttonTest.setVisible(false);
 
+        getRootPane().setDefaultButton(buttonStart);
+
         addWindowListener(new CheckUpdate(this));
         addWindowListener(new Info(this));
 
@@ -146,11 +155,11 @@ public class RootView extends JFrame {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 7, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(buttonPanel, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(buttonPanel, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonStart = new JButton();
         this.$$$loadButtonText$$$(buttonStart, ResourceBundle.getBundle("locale").getString("rootview.button.start"));
         buttonPanel.add(buttonStart, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -164,11 +173,16 @@ public class RootView extends JFrame {
         mouseXY.setEnabled(false);
         mouseXY.setText("Point");
         panel1.add(mouseXY, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer1 = new Spacer();
-        panel1.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         premiumLabel = new JLabel();
         premiumLabel.setText("");
         panel1.add(premiumLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbWorkMode = new JComboBox();
+        panel1.add(cbWorkMode, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lMode = new JLabel();
+        lMode.setText("Режим:");
+        panel1.add(lMode, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel1.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
