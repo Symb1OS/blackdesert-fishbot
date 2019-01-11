@@ -18,7 +18,7 @@ public class StartController implements ActionListener {
 	private RootView view;
 
 	private Transfer threadTransfer;
-	
+
 	public StartController(Transfer threadTransfer, RootView view) {
 		this.view = view;
 		this.threadTransfer = threadTransfer;
@@ -57,6 +57,12 @@ public class StartController implements ActionListener {
                 threadTransfer.start();
             }
 
+            inactivePreference();
         }
 	}
+
+    private void inactivePreference() {
+        JMenuItem preference = view.getPreference();
+        preference.setEnabled(false);
+    }
 }

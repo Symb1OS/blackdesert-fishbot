@@ -36,6 +36,7 @@ public class RootView extends JFrame {
     private JLabel premiumLabel;
     private JComboBox<Mode> cbWorkMode;
     private JLabel lMode;
+    private final JMenuItem preference;
 
     public RootView() {
 
@@ -70,9 +71,10 @@ public class RootView extends JFrame {
 
         JMenu file = new JMenu(UIManager.getString("rootview.menu.file"));
 
-        JMenuItem preference = new JMenuItem(UIManager.getString("rootview.menu.file.preference"));
+        preference = new JMenuItem(UIManager.getString("rootview.menu.file.preference"));
         preference.setIcon(new ImageIcon(UI.IMG_SETTINGS));
         preference.addActionListener(new SettingsController());
+
         file.add(preference);
 
         file.addSeparator();
@@ -122,7 +124,7 @@ public class RootView extends JFrame {
         buttonStart.addActionListener(new StartController(transfer, this));
         buttonStart.setIcon(new ImageIcon(UI.IMG_PLAY));
 
-        buttonStop.addActionListener(new StopController(transfer));
+        buttonStop.addActionListener(new StopController(transfer, this));
         buttonStop.setIcon(new ImageIcon(UI.IMG_STOP));
 
         buttonTest.addActionListener(new TestController());
@@ -136,6 +138,10 @@ public class RootView extends JFrame {
         setVisible(true);
         setResizable(false);
 
+    }
+
+    public JMenuItem getPreference() {
+        return preference;
     }
 
     {
