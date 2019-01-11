@@ -45,7 +45,20 @@ public class Slot implements Command{
 		return isActive && timer.hasReady();
 	}
 
-    @Override
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public String info(){
+    	long minute = 1000 * 60;
+		long ready = Math.abs(timer.getReadyTime());
+
+		return ready < minute
+				? String.format("Next %s in %s second", toCommand(), ready / 1000)
+				: String.format("Next %s in %s minute", toCommand(), ready / 1000 / 60);
+	}
+
+	@Override
     public String toString() {
         return "Slot{" +
                 "command='" + command + '\'' +

@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class RootView extends JFrame {
 
@@ -57,7 +58,7 @@ public class RootView extends JFrame {
         setIconImage(im);
 
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(java.util.logging.Level.OFF);
+        logger.setLevel(Level.OFF);
 
         TextAreaAppender appender = new TextAreaAppender(taLog);
         appender.setLayout(new PatternLayout("[%d{dd.MM.yyyy HH:mm:ss}] - %m%n"));

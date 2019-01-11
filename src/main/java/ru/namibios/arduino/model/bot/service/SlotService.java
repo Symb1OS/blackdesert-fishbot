@@ -1,17 +1,35 @@
 package ru.namibios.arduino.model.bot.service;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.model.Slot;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class SlotService {
+
+    private static final Logger LOG = Logger.getLogger(SlotService.class);
 
     private List<Slot> slotList;
 
     public SlotService(List<Slot> slots) {
         this.slotList = new ArrayList<>(slots);
+    }
+
+    public void info(){
+
+        Optional<Slot> optional = slotList.stream()
+                .filter(Slot::isActive)
+                .max(Comparator.comparingLong(Slot::getReadyTime));
+
+        if (optional.isPresent()) {
+            LOG.info(optional.get().info());
+        } else {
+            LOG.info("No active slot/task");
+        }
+
     }
 
     public boolean isReady(){
