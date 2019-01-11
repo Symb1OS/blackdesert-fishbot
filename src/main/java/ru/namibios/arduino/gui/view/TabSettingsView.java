@@ -488,8 +488,8 @@ public class TabSettingsView extends JDialog {
 
         tfCaptchaX.setText(String.valueOf(Application.getInstance().CAPTCHA().x));
         tfCaptchaY.setText(String.valueOf(Application.getInstance().CAPTCHA().y));
-        tfCaptchaWidth.setText(String.valueOf(Application.getInstance().CAPTCHA().height));
-        tfCaptchaHeight.setText(String.valueOf(Application.getInstance().CAPTCHA().width));
+        tfCaptchaWidth.setText(String.valueOf(Application.getInstance().CAPTCHA().width));
+        tfCaptchaHeight.setText(String.valueOf(Application.getInstance().CAPTCHA().height));
 
         tfCaptchaX.setInputVerifier(numericVerifier);
         tfCaptchaY.setInputVerifier(numericVerifier);
