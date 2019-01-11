@@ -62,6 +62,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("false")
 	boolean SKIP_CALENDAR();
 
+	@Key("bot.hotkey.start")
+	@DefaultValue("3657")
+	int HOT_KEY_START();
+
+	@Key("bot.hotkey.stop")
+	@DefaultValue("3665")
+	int HOT_KEY_STOP();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// RODS
