@@ -240,6 +240,8 @@ public class HttpService {
 
 	public void call(String name) throws IOException {
 
+		httpClient = HttpClients.createDefault();
+
 		HttpPost post = Builder.config().setUrl(String.format(CALL_URL, Application.getInstance().URL_CAPTCHA_SERVICE()))
 				.setParameter(new BasicNameValuePair("USER", JSON.getInstance().writeValueAsString(Application.getUser())))
 				.setParameter(new BasicNameValuePair("NAME", name))

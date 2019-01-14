@@ -17,7 +17,9 @@ import ru.namibios.arduino.utils.ExceptionUtils;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class FishBot {
 
@@ -38,6 +40,8 @@ public class FishBot {
 	private InputService inputService;
 
 	private HttpService httpService;
+
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public FishBot(boolean start) {
 
@@ -81,9 +85,9 @@ public class FishBot {
 
 	void call(){
 
-		Executors.newSingleThreadExecutor().submit(() -> {
+    	executorService.submit(() -> {
 
-			try {
+    		try {
 
 				httpService.call(state.getClass().getName());
 
@@ -103,6 +107,23 @@ public class FishBot {
 			telegram.notifyUser();
 		}
 			
+	}
+
+	public void stopExecutors(){
+		try {
+			LOG.debug("attempt to shutdown executor");
+			executorService.shutdown();
+			executorService.awaitTermination(5, TimeUnit.SECONDS);
+		}
+		catch (InterruptedException e) {
+			LOG.error("tasks interrupted");
+		}
+		finally {
+			if (!executorService.isTerminated()) {
+				LOG.debug("cancel non-finished tasks");
+			}
+			LOG.debug("shutdown finished");
+		}
 	}
 
 	public HttpService getHttpService() {

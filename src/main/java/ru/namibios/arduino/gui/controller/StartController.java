@@ -35,14 +35,13 @@ public class StartController implements ActionListener {
 
 	private void start(){
 
-        boolean isInit = transfer != null ;
-
         if (Application.getUser().isBlocked()){
             LOG.info(Message.USER_IS_BLOCKED);
             showMessageDialog(Message.USER_IS_BLOCKED);
             return;
         }
 
+        boolean isInit = transfer != null;
         if (isInit) {
 
             FishBot fishBot = transfer.getFishBot();
@@ -66,8 +65,11 @@ public class StartController implements ActionListener {
 
     private void stop(){
         enablePreference(true);
-        if(transfer != null)
+        if(transfer != null){
             transfer.getFishBot().setRunned(false);
+            transfer.getFishBot().stopExecutors();
+        }
+
     }
 
 	@Override
