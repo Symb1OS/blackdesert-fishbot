@@ -12,10 +12,12 @@ import ru.namibios.arduino.model.bot.service.input.InputService;
 import ru.namibios.arduino.model.bot.service.input.emulation.AWTRobot;
 import ru.namibios.arduino.model.notification.Notification;
 import ru.namibios.arduino.model.notification.TelegramNotification;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class FishBot {
 
@@ -79,13 +81,18 @@ public class FishBot {
 
 	void call(){
 
-    	try {
+		Executors.newSingleThreadExecutor().submit(() -> {
 
-			httpService.call(state.getClass().getName());
+			try {
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+				httpService.call(state.getClass().getName());
+
+			} catch (IOException e) {
+				LOG.error(ExceptionUtils.getString(e));
+			}
+
+		});
+
 	}
 	
 	public void notifyUser(String message){

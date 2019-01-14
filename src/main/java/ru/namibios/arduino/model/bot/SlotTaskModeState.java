@@ -6,8 +6,6 @@ import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.bot.service.SlotService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
-import java.util.concurrent.Executors;
-
 public class SlotTaskModeState extends State {
 
     private static final Logger LOG = Logger.getLogger(UseSlotState.class);
@@ -38,7 +36,7 @@ public class SlotTaskModeState extends State {
             if (slotService.isReady()) {
                 LOG.info("Slot ready.. Use");
 
-                Executors.newSingleThreadExecutor().submit(() -> fishBot.call());
+                fishBot.call();
 
                 String key = slotService.getKey();
                 inputService.send(() -> key);

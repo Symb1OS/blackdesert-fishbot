@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
-import ru.namibios.arduino.Transfer;
 import ru.namibios.arduino.config.*;
 import ru.namibios.arduino.gui.CheckUpdate;
 import ru.namibios.arduino.gui.DynamicData;
@@ -43,8 +42,6 @@ public class RootView extends JFrame {
     private final JMenuItem preference;
 
     public RootView() {
-
-        Transfer transfer = new Transfer();
 
         setTitle(AppUtils.getVersion());
 
@@ -128,10 +125,12 @@ public class RootView extends JFrame {
 
         new DynamicData(mouseXY).start();
 
-        buttonStart.addActionListener(new StartController(transfer, this));
+        StartController startStopController = new StartController(this);
+
+        buttonStart.addActionListener(startStopController);
         buttonStart.setIcon(new ImageIcon(UI.IMG_PLAY));
 
-        buttonStop.addActionListener(new StopController(transfer, this));
+        buttonStop.addActionListener(startStopController);
         buttonStop.setIcon(new ImageIcon(UI.IMG_STOP));
 
         buttonTest.addActionListener(new TestController());

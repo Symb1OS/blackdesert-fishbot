@@ -10,6 +10,8 @@ import ru.namibios.arduino.model.bot.FishBot;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class StartController implements ActionListener {
 
@@ -17,23 +19,25 @@ public class StartController implements ActionListener {
 
 	private RootView view;
 
-	private Transfer threadTransfer;
+    private Executor executor = Executors.newSingleThreadExecutor();
 
-	public StartController(Transfer threadTransfer, RootView view) {
+	private Transfer transfer;
+
+	public StartController(RootView view) {
 		this.view = view;
-		this.threadTransfer = threadTransfer;
+        this.transfer = new Transfer();
+
 	}
-	
+
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(view, message);
 	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		boolean isInit = threadTransfer != null ;
 
-		if (Application.getUser().isBlocked()){
+	private void start(){
+
+        boolean isInit = transfer != null ;
+
+        if (Application.getUser().isBlocked()){
             LOG.info(Message.USER_IS_BLOCKED);
             showMessageDialog(Message.USER_IS_BLOCKED);
             return;
@@ -41,28 +45,46 @@ public class StartController implements ActionListener {
 
         if (isInit) {
 
-            FishBot fishBot = threadTransfer.getFishBot();
+            FishBot fishBot = transfer.getFishBot();
 
             if (fishBot != null) {
-
-               if (!fishBot.isRunned()) {
-                   threadTransfer = new Transfer();
-                   threadTransfer.start();
+                if (!fishBot.isRunned()) {
+                    transfer = new Transfer();
+                    executor.execute(transfer);
 
                 } else {
-                   showMessageDialog(Message.ALREADY_WORK);
+                    showMessageDialog(Message.ALREADY_WORK);
                 }
 
             } else {
-                threadTransfer.start();
+                executor.execute(transfer);
             }
 
-            inactivePreference();
+            enablePreference(false);
         }
+    }
+
+    private void stop(){
+        enablePreference(true);
+        if(transfer != null)
+            transfer.getFishBot().setRunned(false);
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+        if (e.getActionCommand().equals(UIManager.getString("rootview.button.start"))) {
+            start();
+        }
+
+        if (e.getActionCommand().equals(UIManager.getString("rootview.button.stop"))) {
+            stop();
+        }
+
 	}
 
-    private void inactivePreference() {
+    private void enablePreference(boolean state) {
         JMenuItem preference = view.getPreference();
-        preference.setEnabled(false);
+        preference.setEnabled(state);
     }
 }
