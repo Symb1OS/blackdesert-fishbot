@@ -208,6 +208,8 @@ public class HttpService {
 
 		httpResponse = httpClient.execute(post);
 
+		EntityUtils.consume(httpResponse.getEntity());
+
 	}
 
 	public String getInfo() throws IOException {
@@ -248,6 +250,8 @@ public class HttpService {
 				.build();
 
 		httpResponse = httpClient.execute(post);
+
+		EntityUtils.consume(httpResponse.getEntity());
 
 	}
 
