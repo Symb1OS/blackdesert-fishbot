@@ -16,6 +16,12 @@ public class SlotTaskModeState extends State {
         super(fishBot);
 
         slotService = fishBot.getSlotService();
+
+        if (!slotService.isActiveTasks()){
+            LOG.info("No active task.");
+            fishBot.setRunned(false);
+        }
+
     }
 
     @Override

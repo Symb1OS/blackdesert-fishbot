@@ -72,11 +72,13 @@ public class Transfer extends Thread{
 
 	@Override
 	public void run() {
-		
+
 		process();
 
-		LOG.info("End work.");
 		fishBot.notifyUser(Message.END_WORK);
+		fishBot.stopExecutors();
+
+		LOG.info("End work.");
 
 	}
 

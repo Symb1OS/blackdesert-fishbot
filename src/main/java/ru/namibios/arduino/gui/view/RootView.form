@@ -30,6 +30,7 @@
                 </constraints>
                 <properties>
                   <text resource-bundle="locale" key="rootview.button.start"/>
+                  <toolTipText value="Hotkey : &quot;Home&quot;"/>
                 </properties>
               </component>
               <component id="5723f" class="javax.swing.JButton" binding="buttonStop">
@@ -38,6 +39,7 @@
                 </constraints>
                 <properties>
                   <text resource-bundle="locale" key="rootview.button.stop"/>
+                  <toolTipText value="Hotkey : &quot;End&quot;"/>
                 </properties>
               </component>
               <component id="9793a" class="javax.swing.JButton" binding="buttonTest">

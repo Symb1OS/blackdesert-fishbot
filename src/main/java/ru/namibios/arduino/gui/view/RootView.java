@@ -185,9 +185,11 @@ public class RootView extends JFrame {
         panel1.add(buttonPanel, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonStart = new JButton();
         this.$$$loadButtonText$$$(buttonStart, ResourceBundle.getBundle("locale").getString("rootview.button.start"));
+        buttonStart.setToolTipText("Hotkey : \"Home\"");
         buttonPanel.add(buttonStart, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         buttonStop = new JButton();
         this.$$$loadButtonText$$$(buttonStop, ResourceBundle.getBundle("locale").getString("rootview.button.stop"));
+        buttonStop.setToolTipText("Hotkey : \"End\"");
         buttonPanel.add(buttonStop, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         buttonTest = new JButton();
         buttonTest.setText("Тест");

@@ -50,4 +50,7 @@ public class SlotService {
                 .max(Comparator.comparingLong(Slot::getReadyTime)).get();
     }
 
+    public boolean isActiveTasks() {
+        return slotList.stream().anyMatch(Slot::isActive);
+    }
 }
