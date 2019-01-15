@@ -70,10 +70,10 @@ public class Application {
 		Launcher.close();
 
 		StringBuilder cmd = new StringBuilder();
-		String dir = System.getProperty("user.dir");
-		cmd.append(dir);
-		cmd.append(File.separator);
-		cmd.append(Application.getUser().isWin() ? "run.bat" : "run.sh");
+		cmd.append(System.getProperty("user.dir"))
+			.append(File.separator)
+			.append(Application.getUser().isWin() ? "run.bat" : "run.sh");
+
 		Runtime.getRuntime().exec(cmd.toString());
 
 		System.exit(0);

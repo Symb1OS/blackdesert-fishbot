@@ -30,13 +30,13 @@ public class StartController implements ActionListener {
 	}
 
 	private void showMessageDialog(String message) {
+        LOG.info(message);
 		JOptionPane.showMessageDialog(view, message);
 	}
 
 	private void start(){
 
         if (Application.getUser().isBlocked()){
-            LOG.info(Message.USER_IS_BLOCKED);
             showMessageDialog(Message.USER_IS_BLOCKED);
             return;
         }

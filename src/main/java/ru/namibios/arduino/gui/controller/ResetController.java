@@ -3,6 +3,7 @@ package ru.namibios.arduino.gui.controller;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.gui.Launcher;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ public class ResetController implements ActionListener {
             Application.restart();
 
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            LOG.error(ExceptionUtils.getString(ioe));
         }
 
     }
