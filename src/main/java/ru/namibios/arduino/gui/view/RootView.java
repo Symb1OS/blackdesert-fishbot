@@ -136,8 +136,6 @@ public class RootView extends JFrame {
         buttonTest.addActionListener(new TestController());
         buttonTest.setVisible(false);
 
-        getRootPane().setDefaultButton(buttonStart);
-
         addWindowListener(new CheckUpdate(this));
         addWindowListener(new Info(this));
 

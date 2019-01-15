@@ -58,6 +58,7 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.pm.event.autofish", String.valueOf(view.getRbAutoFish().isSelected()));
 		Application.getInstance().setProperty("bot.pm.event.nothing",  String.valueOf(view.getRbNothing().isSelected()));
 
+		Application.getInstance().setProperty("bot.autouse.start", String.format(FORMAT_SMART_TASK, view.getCbDeferredStart().isSelected(), view.getTfDeferredStart().getText() , "Start"));
 		Application.getInstance().setProperty("bot.autouse.stop", String.format(FORMAT_SMART_TASK, view.getCbStopBot().isSelected(), view.getTfStopBot().getText() , "Stop"));
 		Application.getInstance().setProperty("bot.autouse.exit", String.format(FORMAT_SMART_TASK, view.getCbExitGame().isSelected(), view.getTfExitGame().getText(), "Exit"));
 

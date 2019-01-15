@@ -192,6 +192,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(TouchConverter.class)
 	Touch[] BEER_TOUCHS();
 
+	@Key("bot.autouse.start")
+	@DefaultValue("false, 0, Start")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot TASK_START();
+
 	@Key("bot.autouse.stop")
 	@DefaultValue("false, 180m, Stop")
 	@ConverterClass(HotSlotConverter.class)

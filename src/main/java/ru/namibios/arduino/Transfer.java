@@ -4,9 +4,9 @@ import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
+import ru.namibios.arduino.model.bot.DeferredStartState;
 import ru.namibios.arduino.model.bot.FishBot;
 import ru.namibios.arduino.model.bot.SlotTaskModeState;
-import ru.namibios.arduino.model.bot.UseSlotState;
 import ru.namibios.arduino.utils.DelayUtils;
 import ru.namibios.arduino.utils.WinAPI;
 
@@ -39,7 +39,6 @@ public class Transfer extends Thread{
 			LOG.info("The game is not running");
 			System.exit(1);
 		}
-
 		if (fishBot == null) {
 			fishBot = new FishBot(true);
 		}
@@ -52,7 +51,7 @@ public class Transfer extends Thread{
 		switch (Application.getInstance().MODE()) {
 			case FISHING:
 				LOG.info("Bot started on FISHING mode..");
-				fishBot.setState(new UseSlotState(fishBot));
+				fishBot.setState(new DeferredStartState(fishBot));
 				break;
 			case TASK_SLOT:
 				LOG.info("Bot started on TASK/SLOT mode..");
