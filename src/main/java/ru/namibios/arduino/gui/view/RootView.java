@@ -10,8 +10,8 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import ru.namibios.arduino.config.*;
 import ru.namibios.arduino.gui.CheckUpdate;
-import ru.namibios.arduino.gui.DynamicData;
 import ru.namibios.arduino.gui.Info;
+import ru.namibios.arduino.gui.MousePointer;
 import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.*;
 import ru.namibios.arduino.utils.AppUtils;
@@ -123,8 +123,6 @@ public class RootView extends JFrame {
             premiumLabel.setIcon(new ImageIcon(UI.IMG_PREMIUM));
         }
 
-        new DynamicData(mouseXY).start();
-
         StartController startStopController = new StartController(this);
 
         buttonStart.addActionListener(startStopController);
@@ -146,6 +144,7 @@ public class RootView extends JFrame {
 
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(new HotKeyController(buttonStart, buttonStop));
+            GlobalScreen.addNativeMouseMotionListener(new MousePointer(mouseXY));
 
         } catch (NativeHookException e) {
             LOG.error(ExceptionUtils.getString(e));
