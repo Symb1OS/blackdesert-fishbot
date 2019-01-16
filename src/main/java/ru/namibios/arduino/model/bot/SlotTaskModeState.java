@@ -15,13 +15,7 @@ public class SlotTaskModeState extends State {
     public SlotTaskModeState(FishBot fishBot) {
         super(fishBot);
 
-        slotService = fishBot.getSlotService();
-
-        if (!slotService.isActiveTasks()){
-            LOG.info("No active task.");
-            fishBot.setRunned(false);
-        }
-
+        this.slotService = fishBot.getSlotService();
     }
 
     @Override
@@ -38,6 +32,11 @@ public class SlotTaskModeState extends State {
     public void onStep() {
 
         try {
+
+            if (!slotService.isActiveTasks()){
+                LOG.info("No active task.");
+                fishBot.setRunned(false);
+            }
 
             if (slotService.isReady()) {
                 LOG.info("Slot ready.. Use");

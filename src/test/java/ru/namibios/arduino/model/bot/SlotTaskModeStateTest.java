@@ -40,6 +40,7 @@ public class SlotTaskModeStateTest {
     @Test
     public void testSlotReady() throws IOException {
 
+        when(slotService.isActiveTasks()).thenReturn(true);
         when(slotService.isReady()).thenReturn(true);
         when(slotService.getKey()).thenReturn("1");
         when(inputService.send(any(Command.class))).thenReturn(true);
@@ -50,6 +51,17 @@ public class SlotTaskModeStateTest {
         verify(fishBot).call();
         verify(slotService).getKey();
         verify(inputService).send(any(Command.class));
+
+    }
+
+    @Test
+    public void testNoActiveSlot() {
+
+        when(slotService.isActiveTasks()).thenReturn(false);
+
+        slotTaskModeState.onStep();
+
+        verify(fishBot).setRunned(false);
 
     }
 
