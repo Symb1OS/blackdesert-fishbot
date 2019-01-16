@@ -137,9 +137,6 @@ public class RootView extends JFrame {
         addWindowListener(new CheckUpdate(this));
         addWindowListener(new Info(this));
 
-        setVisible(true);
-        setResizable(false);
-
         try {
 
             GlobalScreen.registerNativeHook();
@@ -149,6 +146,9 @@ public class RootView extends JFrame {
         } catch (NativeHookException e) {
             LOG.error(ExceptionUtils.getString(e));
         }
+
+        setVisible(true);
+        setResizable(false);
 
     }
 

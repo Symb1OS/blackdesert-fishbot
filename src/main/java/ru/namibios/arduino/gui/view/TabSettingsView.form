@@ -294,6 +294,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.delay"/>
+                          <toolTipText value="Задержка перед первым вызовом"/>
                         </properties>
                       </component>
                       <component id="c964e" class="javax.swing.JTextField" binding="tfFirstSlotDelay">
@@ -312,6 +313,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.period"/>
+                          <toolTipText value="С какой периодичностью прожимать клавишу"/>
                         </properties>
                       </component>
                       <component id="545fd" class="javax.swing.JTextField" binding="tfFirstSlotPeriod">
@@ -356,6 +358,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.delay"/>
+                          <toolTipText value="Задержка перед первым вызовом"/>
                         </properties>
                       </component>
                       <component id="6aa59" class="javax.swing.JTextField" binding="tfSecondSlotDelay">
@@ -374,6 +377,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.period"/>
+                          <toolTipText value="С какой периодичностью прожимать клавишу"/>
                         </properties>
                       </component>
                       <component id="6bc5e" class="javax.swing.JTextField" binding="tfSecondSlotPeriod">
@@ -418,6 +422,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.delay"/>
+                          <toolTipText value="Задержка перед первым вызовом"/>
                         </properties>
                       </component>
                       <component id="ea977" class="javax.swing.JTextField" binding="tfThirdSlotDelay">
@@ -436,6 +441,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.period"/>
+                          <toolTipText value="С какой периодичностью прожимать клавишу"/>
                         </properties>
                       </component>
                       <component id="b0dae" class="javax.swing.JTextField" binding="tfThirdSlotPeriod">

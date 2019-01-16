@@ -61,11 +61,8 @@ public class HttpService {
 	private static final String CALL_URL = "http://%s/fishingserver/call";
 
 	private HttpClient httpClient;
-	
-	private HttpResponse httpResponse;
 
-	public HttpService() {
-
+    public HttpService() {
         SSLContext tls = getSSLContext();
 
         httpClient = HttpClients.custom().setSSLContext(tls).build();
@@ -94,14 +91,16 @@ public class HttpService {
 				.setParameter(new BasicNameValuePair("message", message))
 				.build();
 
-		httpClient.execute(post);
+        HttpResponse httpResponse = httpClient.execute(post);
+
+        EntityUtils.consume(httpResponse.getEntity());
 	}
 
 	public String getLastReleaseTag() throws IOException{
 
         HttpGet get = new HttpGet(LAST_RELEASE_URL);
 
-        httpResponse = httpClient.execute(get);
+        HttpResponse httpResponse = httpClient.execute(get);
         HttpEntity entity = httpResponse.getEntity();
 
         String response = EntityUtils.toString(entity, "UTF-8");
@@ -129,6 +128,7 @@ public class HttpService {
 		HttpEntity entity = builder.build();
 		post.setEntity(entity);
 
+        HttpResponse httpResponse;
         try {
 
             httpResponse = httpClient.execute(post);
@@ -144,7 +144,6 @@ public class HttpService {
 		entity = httpResponse.getEntity();
 		String response = EntityUtils.toString(entity, "UTF-8").trim();
 		if (statusCode == HttpStatus.SC_OK) {
-
 		    return response;
 		} else {
 
@@ -160,7 +159,7 @@ public class HttpService {
 
         HttpGet get = new HttpGet(String.format(TEST_URL,Application.getInstance().URL_CAPTCHA_SERVICE()) + "?status=bad");
 
-        httpResponse = httpClient.execute(get);
+        HttpResponse httpResponse = httpClient.execute(get);
 
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         System.out.println("statusCode = " + statusCode);
@@ -183,17 +182,6 @@ public class HttpService {
 	}
 
     public static void main(String[] args) throws IOException {
-//		HttpService httpService = new HttpService();
-
-//		httpService.call(ChangeRodState.class.getName());
-
-		HttpService httpService = new HttpService();
-
-		String name = UUID.randomUUID().toString();
-        String s = httpService.parseByteCaptcha(name, new Screen("resources/1.jpg").toByteArray());
-        if (!s.isEmpty()) {
-            httpService.markFail(name);
-        }
 
     }
 
@@ -206,7 +194,7 @@ public class HttpService {
 		postParameters.add(new BasicNameValuePair("NAME", name));
 		post.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
 
-		httpResponse = httpClient.execute(post);
+        HttpResponse httpResponse = httpClient.execute(post);
 
 		EntityUtils.consume(httpResponse.getEntity());
 
@@ -216,7 +204,7 @@ public class HttpService {
 
 		HttpGet get = new HttpGet(String.format(INFO_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
 
-		httpResponse = httpClient.execute(get);
+        HttpResponse httpResponse = httpClient.execute(get);
 		HttpEntity entity = httpResponse.getEntity();
 
 		return EntityUtils.toString(entity, "UTF-8");
@@ -232,7 +220,7 @@ public class HttpService {
 
         get.setURI(uri);
 
-        httpResponse = httpClient.execute(get);
+        HttpResponse httpResponse = httpClient.execute(get);
         HttpEntity entity = httpResponse.getEntity();
         String response = EntityUtils.toString(entity, "UTF-8");
 
@@ -249,7 +237,7 @@ public class HttpService {
 				.setParameter(new BasicNameValuePair("NAME", name))
 				.build();
 
-		httpResponse = httpClient.execute(post);
+        HttpResponse httpResponse = httpClient.execute(post);
 
 		EntityUtils.consume(httpResponse.getEntity());
 
