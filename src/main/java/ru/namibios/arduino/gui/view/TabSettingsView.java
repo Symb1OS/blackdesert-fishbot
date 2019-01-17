@@ -1609,7 +1609,7 @@ public class TabSettingsView extends JDialog {
         taskContent.add(cbBeer, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(25, -1), null, 0, false));
         lBeerKey = new JLabel();
         this.$$$loadLabelText$$$(lBeerKey, ResourceBundle.getBundle("locale").getString("preference.label.digital"));
-        lBeerKey.setToolTipText("Слот в котором располагается пива/еда для рабочих");
+        lBeerKey.setToolTipText("Слот в котором располагается пиво/еда для рабочих");
         taskContent.add(lBeerKey, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         beerKey = new JTextField();
         taskContent.add(beerKey, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
@@ -1993,6 +1993,7 @@ public class TabSettingsView extends JDialog {
         parsingContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label45 = new JLabel();
         this.$$$loadLabelText$$$(label45, ResourceBundle.getBundle("locale").getString("preference.label.parse.coef"));
+        label45.setToolTipText("<html>\nМинимальный коэффициент при котором картинка будет опознана.<br>\nЕсли какой-то лут не распознается, можно немного уменьшить значение, но не стоит уменьшать слишком сильно.\n</html>");
         parsingContent.add(label45, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfParseCoef = new JTextField();
         parsingContent.add(tfParseCoef, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));

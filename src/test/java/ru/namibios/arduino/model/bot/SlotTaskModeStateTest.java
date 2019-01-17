@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.bot.service.SlotService;
 import ru.namibios.arduino.model.bot.service.input.InputService;
 import ru.namibios.arduino.model.command.Command;
@@ -14,8 +15,7 @@ import ru.namibios.arduino.model.command.Command;
 import java.io.IOException;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SlotTaskModeStateTest {
@@ -38,7 +38,28 @@ public class SlotTaskModeStateTest {
     }
 
     @Test
-    public void testSlotReady() throws IOException {
+    public void testSlotReadyWithCalendar() throws IOException {
+
+        Application.getInstance().setProperty("bot.state.skip_calendar", "true");
+
+        when(slotService.isActiveTasks()).thenReturn(true);
+        when(slotService.isReady()).thenReturn(true);
+        when(slotService.getKey()).thenReturn("1");
+        when(inputService.send(any(Command.class))).thenReturn(true);
+
+        slotTaskModeState.onStep();
+
+        verify(slotService).isReady();
+        verify(fishBot).call();
+        verify(slotService).getKey();
+        verify(inputService,times(2)).send(any(Command.class));
+
+    }
+
+    @Test
+    public void testSlotReadyWithoutCalendar() throws IOException {
+
+        Application.getInstance().setProperty("bot.state.skip_calendar", "false");
 
         when(slotService.isActiveTasks()).thenReturn(true);
         when(slotService.isReady()).thenReturn(true);

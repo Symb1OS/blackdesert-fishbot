@@ -193,7 +193,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.digital"/>
-                          <toolTipText value="Слот в котором располагается пива/еда для рабочих"/>
+                          <toolTipText value="Слот в котором располагается пиво/еда для рабочих"/>
                         </properties>
                       </component>
                       <component id="8a40a" class="javax.swing.JTextField" binding="beerKey">
@@ -1331,6 +1331,7 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.parse.coef"/>
+                          <toolTipText value="&lt;html&gt;&#10;Минимальный коэффициент при котором картинка будет опознана.&lt;br&gt;&#10;Если какой-то лут не распознается, можно немного уменьшить значение, но не стоит уменьшать слишком сильно.&#10;&lt;/html&gt;"/>
                         </properties>
                       </component>
                       <component id="e74c7" class="javax.swing.JTextField" binding="tfParseCoef">
