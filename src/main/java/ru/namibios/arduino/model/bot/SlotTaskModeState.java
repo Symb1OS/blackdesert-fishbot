@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.model.bot.service.SlotService;
-import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 public class SlotTaskModeState extends State {
@@ -37,10 +36,6 @@ public class SlotTaskModeState extends State {
             if (!slotService.isActiveTasks()){
                 LOG.info("No active task.");
                 fishBot.setRunned(false);
-            }
-
-            if (Application.getInstance().SKIP_CALENDAR()) {
-                inputService.send(ShortCommand.SKIP_CALENDAR);
             }
 
             if (slotService.isReady()) {
