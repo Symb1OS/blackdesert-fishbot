@@ -32,7 +32,7 @@ public class RodService {
         int x = Application.getInstance().ROD_START_X();
         int y = Application.getInstance().ROD_START_Y();
 
-        for (int i = 0; i < MAX_RODS; i++) {
+        for (int i = 0; i < count; i++) {
             rods.add(new Touch(x, y));
 
             x += Application.getInstance().ROD_DX();
