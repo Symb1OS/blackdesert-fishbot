@@ -8,6 +8,11 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.web.socket.client.WebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 import ru.namibios.arduino.config.*;
 import ru.namibios.arduino.gui.CheckUpdate;
 import ru.namibios.arduino.gui.Info;
@@ -146,6 +151,14 @@ public class RootView extends JFrame {
         } catch (NativeHookException e) {
             LOG.error(ExceptionUtils.getString(e));
         }
+
+        WebSocketClient client = new StandardWebSocketClient();
+        WebSocketStompClient stompClient = new WebSocketStompClient(client);
+
+        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+
+        StompSessionHandler sessionHandler = new TelegramHandler(buttonStart, buttonStop);
+        stompClient.connect(Application.getInstance().URL_WS(), sessionHandler);
 
         setVisible(true);
         setResizable(false);

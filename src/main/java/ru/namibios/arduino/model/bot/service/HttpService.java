@@ -23,6 +23,7 @@ import ru.namibios.arduino.config.User;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.command.ShortCommand;
 import ru.namibios.arduino.utils.ExceptionUtils;
+import ru.namibios.arduino.utils.ImageUtils;
 import ru.namibios.arduino.utils.JSON;
 
 import javax.net.ssl.KeyManager;
@@ -49,6 +50,9 @@ public class HttpService {
 	private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
+
+	private static final String TELEGRAM_MESSAGE_URL = "http://%s/fishingserver/message";
+	private static final String TELEGRAM_PHOTO_URL = "http://%s/fishingserver/photo";
 
     private static final String USER_STATUS_URL = "http://%s/fishingserver/user/status";
 
@@ -84,8 +88,8 @@ public class HttpService {
         return ctx;
     }
 
-	public void sendTelegram(String key, String message) throws IOException{
-		
+	public void sendTelegramAlarmer(String key, String message) throws IOException{
+
 		HttpPost post = Builder.config().setUrl(TELEGRAM_ALARMER_URL)
 				.setParameter(new BasicNameValuePair("key", key))
 				.setParameter(new BasicNameValuePair("message", message))
@@ -95,6 +99,41 @@ public class HttpService {
 
         EntityUtils.consume(httpResponse.getEntity());
 	}
+
+    public void sendTelegramMessage(String key, String message) throws IOException{
+
+        HttpPost post = Builder.config().setUrl(String.format(TELEGRAM_MESSAGE_URL, Application.getInstance().URL_CAPTCHA_SERVICE()))
+                .setParameter(new BasicNameValuePair("key", key))
+                .setParameter(new BasicNameValuePair("message", message))
+                .build();
+
+        HttpResponse httpResponse = httpClient.execute(post);
+
+        EntityUtils.consume(httpResponse.getEntity());
+    }
+
+    public static void main(String[] args) throws IOException {
+        HttpService httpService = new HttpService();
+        httpService.sendTelegramMessage(Application.getInstance().TELEGRAM_KEY(), "Hello");
+        byte[] bytes = ImageUtils.imageToBytes(Screen.getScreen(Application.getInstance().FULL_SCREEN()));
+        httpService.sendTelegramPhoto(Application.getInstance().TELEGRAM_KEY(), bytes);
+    }
+
+    public void sendTelegramPhoto(String key, byte[] photo) throws IOException{
+        HttpPost post = new HttpPost(String.format(TELEGRAM_PHOTO_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+        builder.addTextBody("key", key, ContentType.TEXT_PLAIN);
+        builder.addBinaryBody("photo", photo, ContentType.DEFAULT_BINARY, "file.ext");
+
+        post.setEntity(builder.build());
+
+        HttpResponse httpResponse = httpClient.execute(post);
+        EntityUtils.consume(httpResponse.getEntity());
+
+    }
 
 	public String getLastReleaseTag() throws IOException{
 
@@ -180,10 +219,6 @@ public class HttpService {
         }
 
 	}
-
-    public static void main(String[] args) throws IOException {
-
-    }
 
 	public void markFail(String name) throws IOException{
 

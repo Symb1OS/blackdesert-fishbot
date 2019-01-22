@@ -61,6 +61,22 @@ public class Screen {
 		return screenShot.getSubimage(zone.x, zone.y, zone.width, zone.height);
 	}
 
+	public static BufferedImage getScreen(Rectangle zone){
+
+		try {
+
+			Robot robot = new Robot();
+			BufferedImage screenCapture = robot.createScreenCapture(zone);
+
+			return screenCapture;
+
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	public void clearNoise(int iteration) throws AWTException {
 		logger.info("Cleaning captcha...");
 		int cnt = 0;

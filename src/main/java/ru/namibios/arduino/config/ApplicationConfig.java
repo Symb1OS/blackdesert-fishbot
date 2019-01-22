@@ -22,6 +22,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("23.95.61.97:9999")
 	String URL_CAPTCHA_SERVICE();
 
+	@Key("bot.ws")
+	@DefaultValue("ws://${bot.http}/fishingserver/tg_bot")
+	String URL_WS();
+
     @Key("bot.local.port")
     @DefaultValue("9999")
     int LOCAL_PORT();
