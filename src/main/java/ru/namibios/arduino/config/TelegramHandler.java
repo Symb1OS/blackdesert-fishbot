@@ -39,7 +39,7 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
         session.subscribe("/hash/topic/reg", this);
         session.subscribe("/hash/topic/commands", this);
 
-        Message msg = new Message();
+        RemoteMessage msg = new RemoteMessage();
         msg.setHash(Application.getUser().getHash());
         msg.setKey(Application.getInstance().TELEGRAM_KEY());
 
@@ -53,13 +53,13 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
 
     @Override
     public Type getPayloadType(StompHeaders headers) {
-        return Message.class;
+        return RemoteMessage.class;
     }
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
 
-        Message msg = (Message) payload;
+        RemoteMessage msg = (RemoteMessage) payload;
 
         LOG.debug("Received:" + msg);
 
@@ -115,66 +115,64 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
 
     }
 
-    class Message {
-
-        private String hash;
-        private String key;
-        private String remoteCommand;
-        private String time;
-        private String text;
-
-        public String getHash() {
-            return hash;
-        }
-
-        public void setHash(String hash) {
-            this.hash = hash;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public String getRemoteCommand() {
-            return remoteCommand;
-        }
-
-        public void setRemoteCommand(String remoteCommand) {
-            this.remoteCommand = remoteCommand;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return "RemoteMessage{" +
-                    "hash='" + hash + '\'' +
-                    ", key='" + key + '\'' +
-                    ", remoteCommand='" + remoteCommand + '\'' +
-                    ", time='" + time + '\'' +
-                    ", text='" + text + '\'' +
-                    '}';
-        }
-    }
-
-
 }
 
+class RemoteMessage {
+
+    private String hash;
+    private String key;
+    private String remoteCommand;
+    private String time;
+    private String text;
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getRemoteCommand() {
+        return remoteCommand;
+    }
+
+    public void setRemoteCommand(String remoteCommand) {
+        this.remoteCommand = remoteCommand;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "RemoteMessage{" +
+                "hash='" + hash + '\'' +
+                ", key='" + key + '\'' +
+                ", remoteCommand='" + remoteCommand + '\'' +
+                ", time='" + time + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
+}
