@@ -63,6 +63,16 @@ public class Application {
 		}
 	}
 
+	public static void closeBot(int status){
+
+		LOG.info("Close bot..");
+
+		Launcher.close();
+
+		System.exit(status);
+
+	}
+
 	public static void restart() throws IOException {
 
 		LOG.info("Restart application..");
@@ -76,8 +86,25 @@ public class Application {
 
 		Runtime.getRuntime().exec(cmd.toString());
 
-		System.exit(0);
+		closeBot(0);
 
 	}
 
+	public static void shutdownPc() {
+
+		LOG.info("Shutdown PC..");
+
+		Launcher.close();
+
+		try {
+
+			Runtime.getRuntime().exec("shutdown /s");
+
+		} catch (IOException e) {
+			LOG.error(ExceptionUtils.getString(e));
+		}
+
+		closeBot(0);
+
+	}
 }

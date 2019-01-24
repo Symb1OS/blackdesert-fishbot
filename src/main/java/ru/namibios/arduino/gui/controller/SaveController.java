@@ -62,6 +62,10 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.autouse.stop", String.format(FORMAT_SMART_TASK, view.getCbStopBot().isSelected(), view.getTfStopBot().getText() , "Stop"));
 		Application.getInstance().setProperty("bot.autouse.exit", String.format(FORMAT_SMART_TASK, view.getCbExitGame().isSelected(), view.getTfExitGame().getText(), "Exit"));
 
+		Application.getInstance().setProperty("bot.crash_client.stop_bot", String.valueOf(view.getRbCrashStopBot().isSelected()));
+		Application.getInstance().setProperty("bot.crash_client.exit_bot", String.valueOf(view.getRbCrashExitBot().isSelected()));
+		Application.getInstance().setProperty("bot.crash_client.shutdown_pc", String.valueOf(view.getRbCrashShutdownPc().isSelected()));
+
 	}
 
 	private void saveAdd(){

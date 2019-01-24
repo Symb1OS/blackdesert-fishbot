@@ -24,5 +24,8 @@ public class Message {
 	public static final String URI_REPORT_PROBLEM = "https://github.com/Symb1OS/blackdesert-fishbot/issues";
 	public static final String URI_WIKI = "https://github.com/Symb1OS/blackdesert-fishbot/wiki";
 
+	public static final String GAME_CLIENT_CRASH_STOP_BOT = "Game client crash. Stop bot.";
+	public static final String GAME_CLIENT_CRASH_SHUTDOWN_PC = "Game client crash. Shutdown PC..";
+	public static final String GAME_CLIENT_CRASH_CLOSE_BOT = "Game client crash. Close bot.";
 }
 

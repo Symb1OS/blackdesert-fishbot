@@ -25,8 +25,10 @@ public class Transfer extends Thread{
 	private void restart(){
 		LOG.info("Need Restart. Restarted after 10 second...");
 		DelayUtils.delay(10000);
+
 		fishBot.setRunned(true);
 		fishBot.setRestart(false);
+
 		process();
 	}
 
@@ -42,9 +44,6 @@ public class Transfer extends Thread{
 		if (fishBot == null) {
 			fishBot = new FishBot(true);
 		}
-
-		DelayUtils.delay(1000);
-		WinAPI.activateWindow(windowGame);
 
 		DelayUtils.delay(3000);
 

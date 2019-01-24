@@ -1,6 +1,7 @@
 package ru.namibios.arduino.model.bot;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,6 +39,7 @@ public class SlotTaskModeStateTest {
     }
 
     @Test
+    @Ignore
     public void testSlotReadyWithCalendar() throws IOException {
 
         Application.getInstance().setProperty("bot.state.skip_calendar", "true");
