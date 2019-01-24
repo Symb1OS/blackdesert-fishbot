@@ -152,13 +152,15 @@ public class RootView extends JFrame {
             LOG.error(ExceptionUtils.getString(e));
         }
 
-        WebSocketClient client = new StandardWebSocketClient();
-        WebSocketStompClient stompClient = new WebSocketStompClient(client);
+        if (Application.getInstance().TELEGRAM()) {
+            WebSocketClient client = new StandardWebSocketClient();
+            WebSocketStompClient stompClient = new WebSocketStompClient(client);
 
-        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+            stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
-        StompSessionHandler sessionHandler = new TelegramHandler(buttonStart, buttonStop);
-        stompClient.connect(Application.getInstance().URL_WS(), sessionHandler);
+            StompSessionHandler sessionHandler = new TelegramHandler(buttonStart, buttonStop);
+            stompClient.connect(Application.getInstance().URL_WS(), sessionHandler);
+        }
 
         setVisible(true);
         setResizable(false);

@@ -63,6 +63,10 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
 
         LOG.debug("Received:" + msg);
 
+        if (msg.getText() != null) {
+            LOG.info(msg.getText());
+        }
+
         if (msg.getRemoteCommand() != null) {
             switch (msg.getRemoteCommand()) {
                 case "SCREEN":
