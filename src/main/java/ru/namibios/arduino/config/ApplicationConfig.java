@@ -416,6 +416,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CHAT();
 
+	@Key("bot.screen.inventory")
+	@DefaultValue("960, 0, 960, 1080")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle INVENTORY();
+
 
     ///////////////////////////////////////////////////////////////////////////
     // EMULATION

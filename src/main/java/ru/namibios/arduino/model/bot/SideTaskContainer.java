@@ -1,0 +1,24 @@
+package ru.namibios.arduino.model.bot;
+
+
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+public class SideTaskContainer {
+
+    public enum Task {
+        INVENTORY, SKIP_CALENDAR
+    }
+
+    private static Queue<Task> tasks = new ArrayDeque<>();
+
+    public static Queue<Task> getInstance(){
+
+            if (tasks == null) {
+                tasks = new ArrayDeque<>();
+            }
+
+            return tasks;
+    }
+
+}

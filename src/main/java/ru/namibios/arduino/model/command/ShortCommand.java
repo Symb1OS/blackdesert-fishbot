@@ -16,4 +16,6 @@ public class ShortCommand {
     public static final Command STOP = () -> "Stop";
     public static final Command EXIT = () -> "Exit";
 
+    public static final Command INVENTORY =  () -> "Inventory";
+
 }

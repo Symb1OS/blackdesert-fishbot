@@ -6,6 +6,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import ru.namibios.arduino.model.Screen;
+import ru.namibios.arduino.model.bot.SideTaskContainer;
 import ru.namibios.arduino.model.bot.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.ImageUtils;
@@ -111,6 +112,20 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
                         LOG.error(ExceptionUtils.getString(e));
                     }
 
+
+                    break;
+
+                case "INVENTORY":
+                    LOG.info("Get screen inventory");
+
+                    SideTaskContainer.getInstance().add(SideTaskContainer.Task.INVENTORY);
+
+                    break;
+
+                case "SKIP_CALENDAR":
+                    LOG.info("Skip calendar");
+
+                    SideTaskContainer.getInstance().add(SideTaskContainer.Task.SKIP_CALENDAR);
 
                     break;
             }

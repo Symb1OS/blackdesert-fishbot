@@ -164,6 +164,11 @@ public class EmulationService implements InputService{
 
     }
 
+    private void inventory(){
+        LOG.info("Open/close inventory");
+        emulationInput.sendInput(KeyEvent.VK_I);
+    }
+
     @Override
     public boolean send(Command command) throws IOException {
 
@@ -190,6 +195,8 @@ public class EmulationService implements InputService{
             takeAll();
         } else if (key.startsWith(ShortCommand.SKIP_CALENDAR.getKey())) {
             skipCalendar();
+        } else if (key.startsWith(ShortCommand.INVENTORY.getKey())) {
+            inventory();
         } else if (key.startsWith(ShortCommand.EXIT.getKey())) {
             exit();
         } else {
