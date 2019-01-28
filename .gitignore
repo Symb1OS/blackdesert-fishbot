@@ -2,9 +2,12 @@
 /resources/debug
 /resources/changes
 /resources/loot/unknow/*
+/resources/model
 /work.log
 /error.log
 /debug.log
 /lib
 /app
 /debug/
+.idea
+/logs

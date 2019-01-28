@@ -125,6 +125,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -157,6 +163,9 @@
             </resource>
             <resource>
                 <directory>script</directory>
+                <excludes>
+                    <exclude>install.bat</exclude>
+                </excludes>
                 <targetPath>../${project.artifactId}_${project.version}</targetPath>
             </resource>
         </resources>
@@ -228,24 +237,22 @@
             </plugin>
 
             <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <version>1.4.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
-
                     <execution>
-                        <id>install-arduino</id>
-                        <phase>prepare-package</phase>
+                        <phase>package</phase>
                         <goals>
-                            <goal>wget</goal>
+                            <goal>single</goal>
                         </goals>
                         <configuration>
-                            <url>https://www.arduino.cc/download.php?f=/arduino-1.8.5-windows.exe</url>
-                            <outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/soft
-                            </outputDirectory>
+                            <finalName>${project.artifactId}_${project.version}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>src/main/assembly/zip.xml</descriptor>
+                            </descriptors>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
 
