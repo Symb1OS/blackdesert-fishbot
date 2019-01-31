@@ -124,7 +124,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.kapcha.noise.iteration")
 	int CNT_KAPCHA();
 	
-	@DefaultValue("0.88")
+	@DefaultValue("0.85")
 	@Key("bot.parsing.coefidentity")
 	double COEF_IDENTITY();
 	
