@@ -15,6 +15,8 @@
             <excludes>
                 <exclude>resources/model/**</exclude>
                 <exclude>resources/application.properties</exclude>
+                <exclude>resources/loot/unknown/*</exclude>
+                <exclude>resources/loot/unsort/*</exclude>
             </excludes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
