@@ -248,7 +248,7 @@ public class TabSettingsView extends JDialog {
     private static final String REGEX_DELAY_OR_PERIOD = "[0-9]+[m|s]{0,1}";
     private static final String REGEX_DELAY = "[0-9]+";
     private static final String REGEX_SLOT = "[a-z0-9-=]{1}";
-    private static final String REGEX_ROD_COUNT = "[0-8]{1}";
+    private static final String REGEX_ROD_COUNT = "[0-9]|[1][0-6]";
 
     public TabSettingsView(){
 
