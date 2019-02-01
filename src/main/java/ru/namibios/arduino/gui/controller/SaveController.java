@@ -15,6 +15,7 @@ public class SaveController implements ActionListener{
 	private static final String FORMAT_SLOT_TASK = "%s,%s,%s,%s, %s";
 	private static final String FORMAT_BEER_TOUCHS = "%s;%s;%s";
 	private static final String FORMAT_SMART_TASK = "%s,%s,%s";
+	private static final String FORMAT_SMART_TASK_WITH_RANDOM = "%s,%s,%s,%s,%s,%s,%s,%s";
 	private static final String FORMAT_TOUCH = "%s;%s;%s";
 
 	private TabSettingsView view;
@@ -58,6 +59,7 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.pm.event.autofish", String.valueOf(view.getRbAutoFish().isSelected()));
 		Application.getInstance().setProperty("bot.pm.event.nothing",  String.valueOf(view.getRbNothing().isSelected()));
 
+		Application.getInstance().setProperty("bot.autouse.pause", String.format(FORMAT_SMART_TASK_WITH_RANDOM, view.getCbPause().isSelected(), view.getTfPauseDelayFrom().getText(), view.getTfPauseDelayTo().getText(), view.getTfPauseDelayFrom().getText(), view.getTfPauseDelayTo().getText(), view.getTfPauseDowntimeFrom().getText(), view.getTfPauseDowntimeTo().getText(), "Pause"));
 		Application.getInstance().setProperty("bot.autouse.start", String.format(FORMAT_SMART_TASK, view.getCbDeferredStart().isSelected(), view.getTfDeferredStart().getText() , "Start"));
 		Application.getInstance().setProperty("bot.autouse.stop", String.format(FORMAT_SMART_TASK, view.getCbStopBot().isSelected(), view.getTfStopBot().getText() , "Stop"));
 		Application.getInstance().setProperty("bot.autouse.exit", String.format(FORMAT_SMART_TASK, view.getCbExitGame().isSelected(), view.getTfExitGame().getText(), "Exit"));

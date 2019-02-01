@@ -3,6 +3,7 @@ package ru.namibios.arduino.model;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HotSlotTest {
 
@@ -16,6 +17,22 @@ public class HotSlotTest {
 
         assertEquals(1000 * 60 * 2, hotSlot.getPeriod() );
         assertEquals(100 * 1000, hotSlot.getDelay());
+
+    }
+
+    @Test
+    public void testConverterWithRandom() {
+
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setDelay("2m");
+        hotSlot.setRandomDelay("1m");
+
+        hotSlot.setPeriod("3m");
+        hotSlot.setRandomDelay("2m");
+
+        assertEquals(1000 * 60 * 2, hotSlot.getDelay());
+        assertEquals(1000 * 60 * 3, hotSlot.getPeriod());
 
     }
 
@@ -39,5 +56,39 @@ public class HotSlotTest {
 
         assertEquals(0, hotSlot.getDelay());
         assertEquals(5, hotSlot.getPeriod());
+    }
+
+    @Test
+    public void testRandomDelay() {
+
+        int a = 100;
+        int b = 200;
+
+        HotSlot hotSlot = new HotSlot();
+        hotSlot.setDelay(a);
+        hotSlot.setRandomDelay(b);
+
+        for (int i = 0; i < 1000; i++) {
+            assertTrue(hotSlot.getDelay() >= a);
+            assertTrue(hotSlot.getDelay() < b);
+        }
+
+    }
+
+    @Test
+    public void testRandomPeriod() {
+
+        int min = 500;
+        int max = 600;
+
+        HotSlot hotSlot = new HotSlot();
+        hotSlot.setPeriod(min);
+        hotSlot.setRandomPeriod(max);
+
+        for (int i = 0; i < 1000; i++) {
+            assertTrue(hotSlot.getPeriod() >= min);
+            assertTrue(hotSlot.getPeriod() < max);
+        }
+
     }
 }

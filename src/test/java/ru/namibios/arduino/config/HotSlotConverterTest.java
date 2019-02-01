@@ -4,8 +4,7 @@ import org.junit.Test;
 import ru.namibios.arduino.config.converter.HotSlotConverter;
 import ru.namibios.arduino.model.HotSlot;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class HotSlotConverterTest {
 
@@ -68,4 +67,45 @@ public class HotSlotConverterTest {
 
         assertNull(hotSlot);
     }
+
+    @Test
+    public void testSmartTaskWithRandom() {
+
+        HotSlotConverter hotSlotConverter = new HotSlotConverter();
+        HotSlot hotSlot = hotSlotConverter.convert(null, "true, 10s, 20s, 30s, 40s, Pause");
+
+        assertTrue(hotSlot.isActive());
+        assertNull(hotSlot.getKey());
+        assertEquals("Pause", hotSlot.getCommand());
+
+        for (int i = 0; i < 1000; i++) {
+            assertTrue(hotSlot.getDelayWithRandom() >= 10000);
+            assertTrue(hotSlot.getDelayWithRandom() < 20000);
+            assertTrue(hotSlot.getPeriodWithRandom() >= 30000);
+            assertTrue(hotSlot.getPeriodWithRandom() < 40000);
+        }
+
+    }
+
+    @Test
+    public void testSmartTaskWithRandomPause() {
+
+        HotSlotConverter hotSlotConverter = new HotSlotConverter();
+        HotSlot hotSlot = hotSlotConverter.convert(null, "true, 10s, 20s, 30s, 40s, 50s, 60s, Pause");
+
+        assertTrue(hotSlot.isActive());
+        assertNull(hotSlot.getKey());
+        assertEquals("Pause", hotSlot.getCommand());
+
+        for (int i = 0; i < 1000; i++) {
+            assertTrue(hotSlot.getDelayWithRandom() >= 10000);
+            assertTrue(hotSlot.getDelayWithRandom() < 20000);
+            assertTrue(hotSlot.getPeriodWithRandom() >= 30000);
+            assertTrue(hotSlot.getPeriodWithRandom() < 40000);
+            assertTrue(hotSlot.getPause() >= 50000);
+            assertTrue(hotSlot.getPause() < 60000);
+        }
+
+    }
+
 }

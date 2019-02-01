@@ -16,7 +16,7 @@ public class Slot implements Command{
         this.isActive = hotSlot.isActive();
         this.hotKey = hotSlot.getKey();
 
-        this.timer = new Timer(hotSlot.getDelay(), hotSlot.getPeriod());
+        this.timer = new Timer(hotSlot.getDelayWithRandom(), hotSlot.getPeriodWithRandom());
     }
 
 	public Slot(String command, boolean isActive, String hotKey, long delay, long period) {

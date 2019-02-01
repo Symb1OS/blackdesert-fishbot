@@ -47,16 +47,45 @@ public class HotSlotConverter implements Converter<HotSlot> {
         return hotSlot;
     }
 
+    private HotSlot getSmartTaskWithRandom(String [] params){
+
+        HotSlot hotSlot = new HotSlot();
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setDelay(params[1]);
+        hotSlot.setRandomDelay(params[2]);
+        hotSlot.setPeriod(params[3]);
+        hotSlot.setRandomPeriod(params[4]);
+        hotSlot.setCommand(params[5]);
+
+        return hotSlot;
+    }
+
+    private HotSlot getSmartTaskWithRandomPause(String [] params){
+
+        HotSlot hotSlot = new HotSlot();
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setDelay(params[1]);
+        hotSlot.setRandomDelay(params[2]);
+        hotSlot.setPeriod(params[3]);
+        hotSlot.setRandomPeriod(params[4]);
+        hotSlot.setPauseFrom(params[5]);
+        hotSlot.setPauseTo(params[6]);
+        hotSlot.setCommand(params[7]);
+
+        return hotSlot;
+    }
     @Override
     public HotSlot convert(Method method, String input) {
 
-        HotSlot hotSlot = new HotSlot();
+        HotSlot hotSlot;
 
         String[] split = input.replaceAll("\\s", "").split(",");
         switch (split.length) {
             case 3: hotSlot = getSmartTask(split); break;
             case 4: hotSlot = getSlot(split); break;
             case 5: hotSlot = getSlotTask(split); break;
+            case 6: hotSlot = getSmartTaskWithRandom(split); break;
+            case 8: hotSlot = getSmartTaskWithRandomPause(split); break;
 
             default: {
                 LOG.error("Unknown constructor. Check: " + input);

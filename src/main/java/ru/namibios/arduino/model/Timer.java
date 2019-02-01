@@ -16,7 +16,7 @@ public class Timer {
         this.initTime = System.currentTimeMillis();
     }
 
-    Timer(long delay, long period) {
+    public Timer(long delay, long period) {
         this.initTime = System.currentTimeMillis();
         this.timeLastRun = NEVER_RUN;
         this.readyTime = NEVER_RUN;
@@ -33,7 +33,7 @@ public class Timer {
         return timeLastRun == NEVER_RUN;
     }
 
-    boolean hasReady(){
+    public boolean hasReady(){
 
         readyTime = isNeverRunned()
                         ? getWorkTime(initTime) - delay
@@ -46,7 +46,7 @@ public class Timer {
         return readyTime;
     }
 
-    void resetTimeLastRun(){
+    public void resetTimeLastRun(){
         timeLastRun = System.currentTimeMillis();
     }
 
@@ -55,6 +55,11 @@ public class Timer {
         long workTime = current - initTime;
 
         return workTime >= period;
+    }
+
+    public long getUptime(){
+        long current = System.currentTimeMillis();
+        return current - initTime;
     }
 
     @Override

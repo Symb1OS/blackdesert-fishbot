@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="content" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="1077" height="1175"/>
+      <xy x="20" y="20" width="1092" height="1175"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -636,7 +636,7 @@
                   </grid>
                 </children>
               </grid>
-              <grid id="84a3d" binding="timer" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="84a3d" binding="timer" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="5" bottom="0" right="0"/>
                 <constraints>
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -646,7 +646,7 @@
                 <children>
                   <component id="b3be2" class="javax.swing.JLabel" binding="lTimer">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="110" height="-1"/>
                       </grid>
                     </constraints>
@@ -657,7 +657,7 @@
                   <grid id="b58e" binding="timerContent" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="bevel-lowered"/>
@@ -736,6 +736,91 @@
                           </grid>
                         </constraints>
                         <properties/>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="4e52f" binding="pauseContent" layout-manager="GridLayoutManager" row-count="1" column-count="9" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="5" left="5" bottom="5" right="5"/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="bevel-lowered"/>
+                    <children>
+                      <component id="e45f4" class="javax.swing.JCheckBox" binding="cbPause">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Пауза"/>
+                          <toolTipText value="&lt;html&gt;&#10;Спустя установленное время бот будет останавливаться, ждать определённый промежуток времени, после чего продолжать работу.&#10;&lt;br&gt;&#10;&lt;table border=&quot;1&quot;&gt;&#10;   &lt;tr&gt;&#10;    &lt;th&gt;Наименование&lt;/th&gt; &lt;th&gt;Значение&lt;/th&gt; &lt;th&gt;Описание&lt;/th&gt;&#10;   &lt;/tr&gt;&#10;   &lt;tr&gt;&lt;td&gt;Задержка&lt;/td&gt;&lt;td&gt;20m-40m&lt;/td&gt;&lt;td&gt;Спустя 20-40 минут бот встанет на паузу.&lt;/td&gt;&lt;/tr&gt;&#10;   &lt;tr&gt;&lt;td&gt;Период&lt;/td&gt;&lt;td&gt;10m-15m&lt;/td&gt;&lt;td&gt;Бот простоит на паузе 10-15 минут, после чего продолжит работу.&lt;/td&gt;&lt;/tr&gt;&#10;&lt;/html&gt;"/>
+                        </properties>
+                      </component>
+                      <component id="83d16" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Задержка"/>
+                          <toolTipText value=""/>
+                        </properties>
+                      </component>
+                      <component id="9a569" class="javax.swing.JTextField" binding="tfPauseDelayTo">
+                        <constraints>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="80" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                      <component id="eca01" class="javax.swing.JTextField" binding="tfPauseDelayFrom">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="80" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                      <component id="904a6" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="-"/>
+                        </properties>
+                      </component>
+                      <component id="c5251" class="javax.swing.JTextField" binding="tfPauseDowntimeFrom">
+                        <constraints>
+                          <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="80" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                      <component id="4dc1c" class="javax.swing.JTextField" binding="tfPauseDowntimeTo">
+                        <constraints>
+                          <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="80" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                      <component id="25e9c" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Период"/>
+                          <toolTipText value=""/>
+                        </properties>
+                      </component>
+                      <component id="4b392" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="-"/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
