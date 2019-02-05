@@ -416,6 +416,20 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_SLOT_THREE();
 
+	@Key("bot.screen.loot_slot_list")
+	@Separator(";")
+	@DefaultValue("1539, 597, 43, 43;"
+				+ "1586, 597, 43, 43;"
+				+ "1633, 597, 43, 43;"
+				+ "1539, 644, 43, 43;"
+				+ "1586, 644, 43, 43;"
+				+ "1633, 644, 43, 43;"
+				+ "1539, 691, 43, 43;"
+				+ "1586, 691, 43, 43;"
+				+ "1633, 691, 43, 43")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] LOOT_SLOT_LIST();
+
 	@Key("bot.screen.chat")
 	@DefaultValue("5, 1000, 355, 40")
 	@ConverterClass(RectangleConverter.class)

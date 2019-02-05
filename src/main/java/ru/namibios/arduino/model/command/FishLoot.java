@@ -5,11 +5,14 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.model.*;
 import ru.namibios.arduino.model.template.Loot;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FishLoot implements Command{
 
@@ -46,19 +49,32 @@ public class FishLoot implements Command{
 
 	public FishLoot() throws AWTException {
 		LOG.info("Init filter");
-		this.screens = new ArrayList<>();
-		
-		this.one = new Screen(Application.getInstance().LOOT_SLOT_ONE());
-		this.two = new Screen(Application.getInstance().LOOT_SLOT_TWO());
-		this.three = new Screen(Application.getInstance().LOOT_SLOT_THREE());
 
-		this.screens.add(one);
-		this.screens.add(two);
-		this.screens.add(three);
+        Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
+
+        List<Screen> collect = Arrays.stream(rectangles)
+                .peek(rectangle -> System.out.println(rectangle))
+                .map(FishLoot::toScreen)
+                .collect(Collectors.toList());
+
+        this.screens = new ArrayList<>(collect);
 
 	}
 
-	private String[] getLootIndices() {
+    private static Screen toScreen(Rectangle rectangle) {
+
+	    try {
+
+            return new Screen(rectangle);
+
+        } catch (AWTException e) {
+            LOG.error(ExceptionUtils.getString(e));
+        }
+
+        return null;
+    }
+
+    private String[] getLootIndices() {
 		String loots = "";
 		for (Screen screen : screens) {
 			imageParser = new ImageParser(screen, Loot.values());
