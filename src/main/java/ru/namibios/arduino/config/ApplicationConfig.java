@@ -135,7 +135,9 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	
 	@Key("bot.loot.touch")
 	@Separator(";")
-	@DefaultValue("{1561,616};{1608,616};{1655,616}")
+	@DefaultValue("{1561,616};{1608,616};{1655,616};" +
+                    "{1560,665};{1607,665};{1654,665};" +
+                    "{1560,712};{1607,712};{1654,712}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] LOOT_TOUCH();
 
@@ -400,21 +402,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("760, 485, 390, 105")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_CAPTCHA();
-
-	@Key("bot.screen.lootslotone")
-	@DefaultValue("1539, 597, 43, 43")
-	@ConverterClass(RectangleConverter.class)
-	Rectangle LOOT_SLOT_ONE();
-
-	@Key("bot.screen.lootslottwo")
-	@DefaultValue("1586, 597, 43, 43")
-	@ConverterClass(RectangleConverter.class)
-	Rectangle LOOT_SLOT_TWO();
-
-	@Key("bot.screen.lootslotthree")
-	@DefaultValue("1633, 597, 43, 43")
-	@ConverterClass(RectangleConverter.class)
-	Rectangle LOOT_SLOT_THREE();
 
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")

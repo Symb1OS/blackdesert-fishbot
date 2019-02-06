@@ -39,21 +39,12 @@ public class FishLoot implements Command{
 		this.screens.add(new Screen(fileLootThree));
 	}
 
-	public FishLoot(String file) throws IOException {
-		this.screens = new ArrayList<>();
-
-		this.screens.add(new Screen(file, Application.getInstance().LOOT_SLOT_ONE()));
-		this.screens.add(new Screen(file, Application.getInstance().LOOT_SLOT_TWO()));
-		this.screens.add(new Screen(file, Application.getInstance().LOOT_SLOT_THREE()));
-	}
-
 	public FishLoot() throws AWTException {
 		LOG.info("Init filter");
 
         Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
         List<Screen> collect = Arrays.stream(rectangles)
-                .peek(rectangle -> System.out.println(rectangle))
                 .map(FishLoot::toScreen)
                 .collect(Collectors.toList());
 
