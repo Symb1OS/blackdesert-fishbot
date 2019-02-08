@@ -21,38 +21,33 @@ public class FishLoot implements Command{
 	private static final String UNKNOWN_INDEX = "-1";
 
 	private List<Screen> screens;
-	private Screen one;
-	private Screen two;
-	private Screen three;
 
-	private ImageParser imageParser;
-	
-	public FishLoot(String fileLootOne, String fileLootTwo) throws IOException {
+	public FishLoot(String... loot) throws IOException {
+		if (loot.length <= 0 || loot.length > 8) {
+			throw new IllegalArgumentException("Expected 1-8 files.. Actual " + loot.length);
+		}
+
 		this.screens = new ArrayList<>();
-		this.screens.add(new Screen(fileLootOne));
-		this.screens.add(new Screen(fileLootTwo));
-		
+		for (String filename : loot) {
+			this.screens.add(new Screen(filename));
+		}
+
 	}
 
-	public FishLoot(String fileLootOne, String fileLootTwo, String fileLootThree) throws IOException {
-        this(fileLootOne, fileLootTwo);
-		this.screens.add(new Screen(fileLootThree));
-	}
-
-	public FishLoot() throws AWTException {
+	public FishLoot() {
 		LOG.info("Init filter");
 
         Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
         List<Screen> collect = Arrays.stream(rectangles)
-                .map(FishLoot::toScreen)
+                .map(this::toScreen)
                 .collect(Collectors.toList());
 
         this.screens = new ArrayList<>(collect);
 
 	}
 
-    private static Screen toScreen(Rectangle rectangle) {
+    private Screen toScreen(Rectangle rectangle) {
 
 	    try {
 
@@ -68,7 +63,7 @@ public class FishLoot implements Command{
     private String[] getLootIndices() {
 		String loots = "";
 		for (Screen screen : screens) {
-			imageParser = new ImageParser(screen, Loot.values());
+			ImageParser imageParser = new ImageParser(screen, Loot.values());
 			imageParser.parse(Screen.GRAY);
 
 			String key = imageParser.getKey();
