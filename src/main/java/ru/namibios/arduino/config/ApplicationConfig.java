@@ -19,7 +19,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String THEME();
 
 	@Key("bot.http")
-	@DefaultValue("23.95.61.97:9090")
+	@DefaultValue("23.95.61.97:9999")
 	String URL_CAPTCHA_SERVICE();
 
 	@Key("bot.ws")
@@ -132,12 +132,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("${bot.key}")
 	@ConverterClass(SerialPortConverter.class)
 	SerialPort physicalPort();
-	
+
 	@Key("bot.loot.touch")
 	@Separator(";")
-	@DefaultValue("{1561,616};{1608,616};{1655,616};" +
-                    "{1560,665};{1607,665};{1654,665};" +
-                    "{1560,712};{1607,712};{1654,712}")
+	@DefaultValue("{1560,618};{1607,618};{1654,618};{1701,618};" +
+				  "{1560,665};{1607,665};{1654,665};{1701,665}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] LOOT_TOUCH();
 
@@ -405,15 +404,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")
-	@DefaultValue("1539, 597, 43, 43;"
-				+ "1586, 597, 43, 43;"
-				+ "1633, 597, 43, 43;"
-				+ "1539, 644, 43, 43;"
-				+ "1586, 644, 43, 43;"
-				+ "1633, 644, 43, 43;"
-				+ "1539, 691, 43, 43;"
-				+ "1586, 691, 43, 43;"
-				+ "1633, 691, 43, 43")
+    @DefaultValue("1539, 597, 43, 43;"
+                + "1586, 597, 43, 43;"
+                + "1633, 597, 43, 43;"
+                + "1680, 597, 43, 43;"
+                + "1539, 644, 43, 43;"
+                + "1586, 644, 43, 43;"
+                + "1633, 644, 43, 43;"
+                + "1680, 644, 43, 43")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] LOOT_SLOT_LIST();
 

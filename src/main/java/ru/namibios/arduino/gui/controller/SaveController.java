@@ -16,9 +16,8 @@ public class SaveController implements ActionListener{
 	private static final String FORMAT_BEER_TOUCHS = "%s;%s;%s";
 	private static final String FORMAT_SMART_TASK = "%s,%s,%s";
 	private static final String FORMAT_SMART_TASK_WITH_RANDOM = "%s,%s,%s,%s,%s,%s,%s,%s";
-	private static final String FORMAT_TOUCH = "%s;%s;%s;%s;%s;%s;%s;%s;%s";
+	private static final String FORMAT_TOUCH = "%s;%s;%s;%s;%s;%s;%s;%s";
 	private static final String FORMAT_SCREEN_LOOT_LIST = "%s,%s,%s,%s;" +
-														" %s,%s,%s,%s;" +
 														" %s,%s,%s,%s;" +
 														" %s,%s,%s,%s;" +
 														" %s,%s,%s,%s;" +
@@ -100,8 +99,7 @@ public class SaveController implements ActionListener{
 				new Touch(Integer.valueOf(view.getTfLootSlotFiveX().getText()), Integer.valueOf(view.getTfLootSlotFiveY().getText())).toSettingTouch(),
 				new Touch(Integer.valueOf(view.getTfLootSlotSixX().getText()), Integer.valueOf(view.getTfLootSlotSixY().getText())).toSettingTouch(),
 				new Touch(Integer.valueOf(view.getTfLootSlotSevenX().getText()), Integer.valueOf(view.getTfLootSlotSevenY().getText())).toSettingTouch(),
-				new Touch(Integer.valueOf(view.getTfLootSlotEightX().getText()), Integer.valueOf(view.getTfLootSlotEightY().getText())).toSettingTouch(),
-				new Touch(Integer.valueOf(view.getTfLootSlotNineX().getText()), Integer.valueOf(view.getTfLootSlotNineY().getText())).toSettingTouch()));
+				new Touch(Integer.valueOf(view.getTfLootSlotEightX().getText()), Integer.valueOf(view.getTfLootSlotEightY().getText())).toSettingTouch()));
 
 		Application.getInstance().setProperty("bot.rod.x", view.getTfRodX().getText());
 		Application.getInstance().setProperty("bot.rod.y", view.getTfRodY().getText());
@@ -127,8 +125,7 @@ public class SaveController implements ActionListener{
 				view.getTfLootFiveX().getText(), view.getTfLootFiveY().getText(), view.getTfLootFiveWidth().getText(), view.getTfLootFiveHeight().getText(),
 				view.getTfLootSixX().getText(), view.getTfLootSixY().getText(), view.getTfLootSixWidth().getText(), view.getTfLootSixHeight().getText(),
 				view.getTfLootSevenX().getText(), view.getTfLootSevenY().getText(), view.getTfLootSevenWidth().getText(), view.getTfLootSevenHeight().getText(),
-				view.getTfLootEightX().getText(), view.getTfLootEightY().getText(), view.getTfLootEightWidth().getText(), view.getTfLootEightHeight().getText(),
-				view.getTfLootNineX().getText(), view.getTfLootNineY().getText(), view.getTfLootNineWidth().getText(), view.getTfLootNineHeight().getText()
+				view.getTfLootEightX().getText(), view.getTfLootEightY().getText(), view.getTfLootEightWidth().getText(), view.getTfLootEightHeight().getText()
 				));
 
 		Application.getInstance().setProperty("bot.screen.chat", String.format(FORMAT_SCREEN, view.getTfChatX().getText(), view.getTfChatY().getText(), view.getTfChatWidth().getText(), view.getTfChatHeight().getText()));
