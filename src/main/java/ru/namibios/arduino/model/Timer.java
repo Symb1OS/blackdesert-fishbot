@@ -50,6 +50,11 @@ public class Timer {
         timeLastRun = System.currentTimeMillis();
     }
 
+    public void reset(){
+        this.initTime = System.currentTimeMillis();
+        timeLastRun = NEVER_RUN;
+    }
+
     public boolean isOver(long period){
         long current = System.currentTimeMillis();
         long workTime = current - initTime;
@@ -58,8 +63,7 @@ public class Timer {
     }
 
     public long getUptime(){
-        long current = System.currentTimeMillis();
-        return current - initTime;
+        return System.currentTimeMillis() - initTime;
     }
 
     @Override
@@ -70,4 +74,5 @@ public class Timer {
                 ", readyTime=" + readyTime +
                 '}';
     }
+
 }

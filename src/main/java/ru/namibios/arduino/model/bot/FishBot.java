@@ -1,11 +1,12 @@
 package ru.namibios.arduino.model.bot;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.model.HotSlot;
 import ru.namibios.arduino.model.Slot;
 import ru.namibios.arduino.model.Timer;
 import ru.namibios.arduino.model.bot.service.HttpService;
+import ru.namibios.arduino.model.bot.service.PauseService;
 import ru.namibios.arduino.model.bot.service.RodService;
 import ru.namibios.arduino.model.bot.service.SlotService;
 import ru.namibios.arduino.model.bot.service.input.ArduinoService;
@@ -14,7 +15,6 @@ import ru.namibios.arduino.model.bot.service.input.InputService;
 import ru.namibios.arduino.model.bot.service.input.emulation.AWTRobot;
 import ru.namibios.arduino.model.notification.Notification;
 import ru.namibios.arduino.model.notification.TelegramNotification;
-import ru.namibios.arduino.utils.DelayUtils;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.IOException;
@@ -46,7 +46,9 @@ public class FishBot {
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-	private final Timer pauseTimer;
+	private PauseService pauseService;
+
+	private Timer timer;
 
     public FishBot(boolean start) {
 
@@ -82,26 +84,11 @@ public class FishBot {
 
 		this.state = new UseSlotState(this);
 
-		this.pauseTimer = new Timer(Application.getInstance().TASK_PAUSE().getDelay(), Application.getInstance().TASK_PAUSE().getPeriod());
+		this.timer = new Timer();
+		this.pauseService = new PauseService(Application.getInstance().TASK_PAUSE());
+
 	}
 
-	boolean isPause(){
-
-		HotSlot hotSlot = Application.getInstance().TASK_PAUSE();
-		if (hotSlot.isActive()) {
-			if (pauseTimer.hasReady()) {
-				long pause = hotSlot.getPause();
-				LOG.info("Task pause: " + pause);
-				DelayUtils.delay(pause);
-				pauseTimer.resetTimeLastRun();
-			}
-
-
-		}
-
-		return false;
-	}
-	
 	void restart(){
 		setRestart(true);
 		setRunned(false);
@@ -122,7 +109,16 @@ public class FishBot {
 		});
 
 	}
-	
+
+	public long getUptime(){
+		return timer.getUptime();
+	}
+
+	public String getFormatUptime(String format){
+		long uptime = timer.getUptime();
+		return DurationFormatUtils.formatDuration(uptime, format);
+	}
+
 	public void notifyUser(String message){
 			
 		if(Application.getInstance().TELEGRAM()) {
@@ -148,6 +144,10 @@ public class FishBot {
 			}
 			LOG.debug("shutdown finished");
 		}
+	}
+
+	public PauseService getPauseService() {
+		return pauseService;
 	}
 
 	public HttpService getHttpService() {
