@@ -43,6 +43,10 @@ public class WaitFishState extends State {
 
 				switch (task) {
 
+					case UPTIME:
+						httpService.sendTelegramMessage(Application.getInstance().TELEGRAM_KEY(), fishBot.getFormatUptime("HH:mm:ss"));
+						break;
+
 					case SKIP_CALENDAR:
 						inputService.send(ShortCommand.SKIP_CALENDAR);
 						break;

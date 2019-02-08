@@ -7,7 +7,7 @@ import java.util.Queue;
 public class SideTaskContainer {
 
     public enum Task {
-        INVENTORY, SKIP_CALENDAR
+        INVENTORY, SKIP_CALENDAR, UPTIME
     }
 
     private static Queue<Task> tasks = new ArrayDeque<>();

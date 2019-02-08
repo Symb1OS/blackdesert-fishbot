@@ -128,6 +128,13 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
                     SideTaskContainer.getInstance().add(SideTaskContainer.Task.SKIP_CALENDAR);
 
                     break;
+
+                case "UPTIME":
+                    LOG.info("Get uptime");
+
+                    SideTaskContainer.getInstance().add(SideTaskContainer.Task.UPTIME);
+
+                    break;
             }
 
         }
