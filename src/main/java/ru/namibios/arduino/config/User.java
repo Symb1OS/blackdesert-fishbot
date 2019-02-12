@@ -30,6 +30,9 @@ public class User {
     private String country;
     private String version;
 
+    private String message;
+    private Integer code;
+
     public void setVersion(String version) {
         this.version = version;
     }
@@ -169,6 +172,14 @@ public class User {
         return version;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -185,6 +196,8 @@ public class User {
                 ", osVersion='" + osVersion + '\'' +
                 ", country='" + country + '\'' +
                 ", version='" + version + '\'' +
+                ", message='" + message + '\'' +
+                ", code=" + code +
                 '}';
     }
 }

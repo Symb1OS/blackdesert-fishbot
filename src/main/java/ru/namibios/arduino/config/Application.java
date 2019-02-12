@@ -46,6 +46,9 @@ public class Application {
 			try {
 
 				user = httpService.getUserStatus(user);
+				if (user.getCode() != 0) {
+					LOG.info(user.getMessage());
+				}
 
 			} catch (IOException | URISyntaxException e) {
 				LOG.error(ExceptionUtils.getString(e));
