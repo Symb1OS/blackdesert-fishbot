@@ -654,7 +654,7 @@
                       <text resource-bundle="locale" key="preference.label.timer"/>
                     </properties>
                   </component>
-                  <grid id="b58e" binding="timerContent" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="b58e" binding="timerContent" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -668,7 +668,6 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.autofish"/>
-                          <toolTipText value="Спустя установленное время бот остановит работу. Рыбалка в игре продолжится в афк режиме."/>
                         </properties>
                       </component>
                       <component id="75034" class="javax.swing.JLabel">
@@ -693,7 +692,6 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.exitgame"/>
-                          <toolTipText value="Спустя установленное время бот выйдет из игры"/>
                         </properties>
                       </component>
                       <component id="464d4" class="javax.swing.JLabel">
@@ -718,7 +716,6 @@
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.auto_start"/>
-                          <toolTipText resource-bundle="locale" key="prefernce.label.auto_start.tooltip"/>
                         </properties>
                       </component>
                       <component id="7d989" class="javax.swing.JLabel">
@@ -737,9 +734,36 @@
                         </constraints>
                         <properties/>
                       </component>
+                      <component id="cf523" class="javax.swing.JLabel" binding="lIdeaDeferredStart">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value=""/>
+                          <toolTipText resource-bundle="locale" key="prefernce.label.auto_start.tooltip"/>
+                        </properties>
+                      </component>
+                      <component id="bb92f" class="javax.swing.JLabel" binding="lIdeaStopBot">
+                        <constraints>
+                          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value=""/>
+                          <toolTipText value="Спустя установленное время бот остановит работу. Рыбалка в игре продолжится в афк режиме."/>
+                        </properties>
+                      </component>
+                      <component id="ecd92" class="javax.swing.JLabel" binding="lIdeaExitGame">
+                        <constraints>
+                          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value=""/>
+                          <toolTipText value="Спустя установленное время бот выйдет из игры"/>
+                        </properties>
+                      </component>
                     </children>
                   </grid>
-                  <grid id="4e52f" binding="pauseContent" layout-manager="GridLayoutManager" row-count="1" column-count="9" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="4e52f" binding="pauseContent" layout-manager="GridLayoutManager" row-count="1" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -753,7 +777,6 @@
                         </constraints>
                         <properties>
                           <text value="Пауза"/>
-                          <toolTipText value="&lt;html&gt;&#10;Спустя установленное время бот будет останавливаться, ждать определённый промежуток времени, после чего продолжать работу.&#10;&lt;br&gt;&#10;&lt;table border=&quot;1&quot;&gt;&#10;   &lt;tr&gt;&#10;    &lt;th&gt;Наименование&lt;/th&gt; &lt;th&gt;Значение&lt;/th&gt; &lt;th&gt;Описание&lt;/th&gt;&#10;   &lt;/tr&gt;&#10;   &lt;tr&gt;&lt;td&gt;Задержка&lt;/td&gt;&lt;td&gt;20m-40m&lt;/td&gt;&lt;td&gt;Спустя 20-40 минут бот встанет на паузу.&lt;/td&gt;&lt;/tr&gt;&#10;   &lt;tr&gt;&lt;td&gt;Период&lt;/td&gt;&lt;td&gt;10m-15m&lt;/td&gt;&lt;td&gt;Бот простоит на паузе 10-15 минут, после чего продолжит работу.&lt;/td&gt;&lt;/tr&gt;&#10;&lt;/html&gt;"/>
                         </properties>
                       </component>
                       <component id="83d16" class="javax.swing.JLabel">
@@ -762,7 +785,6 @@
                         </constraints>
                         <properties>
                           <text value="Задержка"/>
-                          <toolTipText value=""/>
                         </properties>
                       </component>
                       <component id="9a569" class="javax.swing.JTextField" binding="tfPauseDelayTo">
@@ -811,7 +833,6 @@
                         </constraints>
                         <properties>
                           <text value="Период"/>
-                          <toolTipText value=""/>
                         </properties>
                       </component>
                       <component id="4b392" class="javax.swing.JLabel">
@@ -820,6 +841,15 @@
                         </constraints>
                         <properties>
                           <text value="-"/>
+                        </properties>
+                      </component>
+                      <component id="35fac" class="javax.swing.JLabel" binding="lIdeaPause">
+                        <constraints>
+                          <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value=""/>
+                          <toolTipText value="&lt;html&gt; Спустя установленное время бот будет останавливаться, ждать определённый промежуток времени, после чего продолжать работу. &lt;br&gt; &lt;table border=&quot;1&quot;&gt;    &lt;tr&gt;     &lt;th&gt;Наименование&lt;/th&gt; &lt;th&gt;Значение&lt;/th&gt; &lt;th&gt;Описание&lt;/th&gt;    &lt;/tr&gt;    &lt;tr&gt;&lt;td&gt;Задержка&lt;/td&gt;&lt;td&gt;20m-40m&lt;/td&gt;&lt;td&gt;Спустя 20-40 минут бот встанет на паузу.&lt;/td&gt;&lt;/tr&gt;    &lt;tr&gt;&lt;td&gt;Период&lt;/td&gt;&lt;td&gt;10m-15m&lt;/td&gt;&lt;td&gt;Бот простоит на паузе 10-15 минут, после чего продолжит работу.&lt;/td&gt;&lt;/tr&gt; &lt;/html&gt;"/>
                         </properties>
                       </component>
                     </children>
@@ -1040,7 +1070,7 @@
                               <text resource-bundle="locale" key="preference.label.overflow"/>
                             </properties>
                           </component>
-                          <grid id="808b2" binding="overflowContent" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="808b2" binding="overflowContent" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="5" left="5" bottom="5" right="5"/>
                             <constraints>
                               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -1066,7 +1096,7 @@
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="fea05" class="javax.swing.JLabel">
+                              <component id="fea05" class="javax.swing.JLabel" binding="lStatusCut">
                                 <constraints>
                                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                                     <preferred-size width="100" height="-1"/>
@@ -1074,7 +1104,6 @@
                                 </constraints>
                                 <properties>
                                   <text resource-bundle="locale" key="preference.label.state.status_cut"/>
-                                  <toolTipText value="Максимальное количество итераций для определения статуса подсечки."/>
                                 </properties>
                               </component>
                               <component id="848c" class="javax.swing.JTextField" binding="tfCutState">
@@ -1085,13 +1114,13 @@
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="76b31" class="javax.swing.JLabel">
+                              <component id="76b31" class="javax.swing.JLabel" binding="lStatusCaptcha">
                                 <constraints>
                                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <text resource-bundle="locale" key="preference.label.state.status_captcha"/>
-                                  <toolTipText value="Максимальное количество итераций для определения статуска капчи. (выполнение может занимать продолжительное время на слабых ПК)"/>
+                                  <toolTipText value=""/>
                                 </properties>
                               </component>
                               <component id="af997" class="javax.swing.JTextField" binding="tfCapcthaState">
@@ -1101,6 +1130,24 @@
                                   </grid>
                                 </constraints>
                                 <properties/>
+                              </component>
+                              <component id="b756d" class="javax.swing.JLabel" binding="lIdeaStatusCaptcha">
+                                <constraints>
+                                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value=""/>
+                                  <toolTipText value="Максимальное количество итераций для определения статуска капчи. (выполнение может занимать продолжительное время на слабых ПК)"/>
+                                </properties>
+                              </component>
+                              <component id="adfad" class="javax.swing.JLabel" binding="lIdeaStatusCut">
+                                <constraints>
+                                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value=""/>
+                                  <toolTipText value="Максимальное количество итераций для определения статуса подсечки."/>
+                                </properties>
                               </component>
                             </children>
                           </grid>
@@ -1510,7 +1557,7 @@
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="f88" class="javax.swing.JLabel">
+                              <component id="f88" class="javax.swing.JLabel" binding="lRodX">
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -1519,7 +1566,7 @@
                                   <toolTipText value="Координата верхнего-левого слота инвентаря по осе абсцисс."/>
                                 </properties>
                               </component>
-                              <component id="4635b" class="javax.swing.JLabel">
+                              <component id="4635b" class="javax.swing.JLabel" binding="lRodDy">
                                 <constraints>
                                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -1528,7 +1575,7 @@
                                   <toolTipText value="Смещение по y."/>
                                 </properties>
                               </component>
-                              <component id="b05a9" class="javax.swing.JLabel">
+                              <component id="b05a9" class="javax.swing.JLabel" binding="lRodDx">
                                 <constraints>
                                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -1537,7 +1584,7 @@
                                   <toolTipText value="Смещение по x."/>
                                 </properties>
                               </component>
-                              <component id="365a8" class="javax.swing.JLabel">
+                              <component id="365a8" class="javax.swing.JLabel" binding="lRodY">
                                 <constraints>
                                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -1632,7 +1679,7 @@
                               <text resource-bundle="locale" key="preference.label.input"/>
                             </properties>
                           </component>
-                          <grid id="607c1" binding="inputcontent" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="607c1" binding="inputcontent" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="5" left="5" bottom="5" right="5"/>
                             <constraints>
                               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -1640,13 +1687,12 @@
                             <properties/>
                             <border type="bevel-lowered"/>
                             <children>
-                              <component id="9a9e" class="javax.swing.JLabel">
+                              <component id="9a9e" class="javax.swing.JLabel" binding="lInputDeay">
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <text resource-bundle="locale" key="preference.label.delay"/>
-                                  <toolTipText value="Если бот не успевает вводить длинные капчи можно немного уменьшить значение, чтобы ускорить ввод. Желательно не ставить очень низкие(нечеловеческие) значения"/>
                                 </properties>
                               </component>
                               <component id="1e63c" class="javax.swing.JTextField" binding="tfInputDelay">
@@ -1656,6 +1702,15 @@
                                   </grid>
                                 </constraints>
                                 <properties/>
+                              </component>
+                              <component id="77f1b" class="javax.swing.JLabel" binding="lIdeaInputDelay">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value=""/>
+                                  <toolTipText value="Если бот не успевает вводить длинные капчи можно немного уменьшить значение, чтобы ускорить ввод. Желательно не ставить очень низкие(нечеловеческие) значения"/>
+                                </properties>
                               </component>
                             </children>
                           </grid>
@@ -1679,7 +1734,7 @@
                               <text resource-bundle="locale" key="preference.label.parsing"/>
                             </properties>
                           </component>
-                          <grid id="4ac1e" binding="parsingContent" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="4ac1e" binding="parsingContent" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="5" left="5" bottom="5" right="5"/>
                             <constraints>
                               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -1687,13 +1742,12 @@
                             <properties/>
                             <border type="bevel-lowered"/>
                             <children>
-                              <component id="4f823" class="javax.swing.JLabel">
+                              <component id="4f823" class="javax.swing.JLabel" binding="lParsingIdentity">
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <text resource-bundle="locale" key="preference.label.parse.coef"/>
-                                  <toolTipText value="&lt;html&gt;&#10;Минимальный коэффициент при котором картинка будет опознана.&lt;br&gt;&#10;Если какой-то лут не распознается, можно немного уменьшить значение, но не стоит уменьшать слишком сильно.&#10;&lt;/html&gt;"/>
                                 </properties>
                               </component>
                               <component id="24425" class="javax.swing.JTextField" binding="tfParseCoef">
@@ -1704,13 +1758,12 @@
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="20be6" class="javax.swing.JLabel">
+                              <component id="20be6" class="javax.swing.JLabel" binding="lCleanNoise">
                                 <constraints>
                                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <text resource-bundle="locale" key="preference.label.noise.iteration"/>
-                                  <toolTipText value="&lt;html&gt; Количество итераций для очистки капчи от шума. Чем выше параметр, тем позже бот начнет ввод капчи. &lt;br&gt; Если слабый процессор и бот полностью не успевает вводить капчу можно немного понизить данный параметр. &lt;/html&gt;"/>
                                 </properties>
                               </component>
                               <component id="d4927" class="javax.swing.JTextField" binding="tfCaptchaNoiseIteration">
@@ -1720,6 +1773,24 @@
                                   </grid>
                                 </constraints>
                                 <properties/>
+                              </component>
+                              <component id="71e78" class="javax.swing.JLabel" binding="lIdeaCleanNoise">
+                                <constraints>
+                                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value=""/>
+                                  <toolTipText value="&lt;html&gt; Количество итераций для очистки капчи от шума. Чем выше параметр, тем позже бот начнет ввод капчи. &lt;br&gt; Если слабый процессор и бот полностью не успевает вводить капчу можно немного понизить данный параметр. &lt;/html&gt;"/>
+                                </properties>
+                              </component>
+                              <component id="d4acf" class="javax.swing.JLabel" binding="lIdeaParseIdentity">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value=""/>
+                                  <toolTipText value="&lt;html&gt; Минимальный коэффициент при котором картинка будет опознана.&lt;br&gt; Если какой-то лут не распознается, можно немного уменьшить значение, но не стоит уменьшать слишком сильно. &lt;/html&gt;"/>
+                                </properties>
                               </component>
                             </children>
                           </grid>

@@ -162,6 +162,9 @@ public class RootView extends JFrame {
             stompClient.connect(Application.getInstance().URL_WS(), sessionHandler);
         }
 
+        ToolTipManager.sharedInstance().setDismissDelay(1000 * 100);
+        ToolTipManager.sharedInstance().setInitialDelay(100);
+
         setVisible(true);
         setResizable(false);
 
