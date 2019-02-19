@@ -11,7 +11,7 @@ public class StartFishState extends State{
 
 	private static final Logger LOG = Logger.getLogger(StartFishState.class);
 
-	private final PauseService pauseService;
+	private PauseService pauseService;
 
 	StartFishState(FishBot fishBot) {
 		super(fishBot);

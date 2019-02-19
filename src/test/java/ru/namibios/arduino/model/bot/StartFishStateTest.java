@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.arduino.config.Application;
+import ru.namibios.arduino.model.bot.service.PauseService;
 import ru.namibios.arduino.model.bot.service.input.InputService;
 import ru.namibios.arduino.model.command.Command;
 
@@ -26,6 +27,9 @@ public class StartFishStateTest {
     @Mock
     private InputService inputService;
 
+    @Mock
+    private PauseService pauseService;
+
     @InjectMocks
     private StartFishState startFishState;
 
@@ -33,6 +37,23 @@ public class StartFishStateTest {
     public void setUp() {
 
         MockitoAnnotations.initMocks(this);
+
+    }
+
+    @Test
+    public void testPause() throws IOException {
+
+        Application.getInstance().setProperty("bot.state.skip_calendar", "false");
+
+        Mockito.when(pauseService.isReady()).thenReturn(true);
+        Mockito.when(inputService.send(any(Command.class))).thenReturn(true);
+
+        startFishState.onStep();
+
+        Mockito.verify(inputService).send(any(Command.class));
+        Mockito.verify(fishBot).setState(isA(PersonalMessageState.class));
+        Mockito.verify(pauseService).isReady();
+        Mockito.verify(pauseService).rest();
 
     }
 
