@@ -19,7 +19,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String THEME();
 
 	@Key("bot.http")
-	@DefaultValue("23.95.61.97:9999")
+	@DefaultValue("23.95.61.97:9090")
 	String URL_CAPTCHA_SERVICE();
 
 	@Key("bot.ws")
