@@ -2262,12 +2262,13 @@ public class TabSettingsView extends JDialog {
         overflowContent.add(tfCutState, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lStatusCaptcha = new JLabel();
         this.$$$loadLabelText$$$(lStatusCaptcha, ResourceBundle.getBundle("locale").getString("preference.label.state.status_captcha"));
-        lStatusCaptcha.setToolTipText("Максимальное количество итераций для определения статуска капчи. (выполнение может занимать продолжительное время на слабых ПК)");
+        lStatusCaptcha.setToolTipText("");
         overflowContent.add(lStatusCaptcha, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfCapcthaState = new JTextField();
         overflowContent.add(tfCapcthaState, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lIdeaStatusCaptcha = new JLabel();
         lIdeaStatusCaptcha.setText("");
+        lIdeaStatusCaptcha.setToolTipText("Максимальное количество итераций для определения статуска капчи. (выполнение может занимать продолжительное время на слабых ПК)");
         overflowContent.add(lIdeaStatusCaptcha, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaStatusCut = new JLabel();
         lIdeaStatusCut.setText("");

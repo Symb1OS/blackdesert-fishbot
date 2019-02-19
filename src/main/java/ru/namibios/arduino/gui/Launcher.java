@@ -9,9 +9,7 @@ import ru.namibios.arduino.utils.ExceptionUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.net.BindException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
+import java.net.*;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -28,6 +26,22 @@ public class Launcher {
 	static {
 		LOCALES.put("English", new Locale("en", "US"));
 		LOCALES.put("Русский", new Locale("ru", "RU"));
+	}
+
+	private static boolean hostAvailabilityCheck() {
+
+		try(Socket s = new Socket()) {
+
+			String url = Application.getInstance().URL_CAPTCHA_SERVICE();
+			String ip = url.substring(0, url.indexOf(":"));
+			String port = url.substring(url.indexOf(":") + 1 );
+
+			s.connect(new InetSocketAddress(ip, Integer.valueOf(port)), 5000);
+			return true;
+		} catch (IOException e) {
+			LOG.error(ExceptionUtils.getString(e));
+		}
+		return false;
 	}
 
 	private static void checkIfRunning() {
@@ -77,6 +91,12 @@ public class Launcher {
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+
+		boolean isAvailable = hostAvailabilityCheck();
+		if (!isAvailable) {
+			LOG.error(Message.SERVER_NOT_AVAILABLE_EN);
+			JOptionPane.showMessageDialog(null, Message.SERVER_NOT_AVAILABLE_EN, "Warning", JOptionPane.ERROR_MESSAGE);
+		}
 
 		checkIfRunning();
 		checkResolution();
