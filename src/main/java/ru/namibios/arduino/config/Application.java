@@ -6,6 +6,7 @@ import ru.namibios.arduino.gui.Launcher;
 import ru.namibios.arduino.model.bot.service.HttpService;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,6 +47,11 @@ public class Application {
 			try {
 
 				user = httpService.getUserStatus(user);
+				if (user.isBlocked()) {
+					LOG.info(Message.USER_IS_BLOCKED);
+					JOptionPane.showMessageDialog(null, Message.USER_IS_BLOCKED, "Warning", JOptionPane.ERROR_MESSAGE);
+					Application.closeBot(1);
+				}
 				if (user.getCode() != 0) {
 					LOG.info(user.getMessage());
 				}

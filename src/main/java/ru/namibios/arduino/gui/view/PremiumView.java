@@ -42,9 +42,13 @@ public class PremiumView extends JFrame {
     }
 
     private void init() {
-        tfStatus.setText(Application.getUser().isPremium()
-                ? UIManager.getString("premium.status.active")
-                : UIManager.getString("premium.status.inactive"));
+        if (Application.getUser().isBlocked()) {
+            tfStatus.setText(UIManager.getString("premium.status.blocked"));
+        } else {
+            tfStatus.setText(Application.getUser().isPremium()
+                    ? UIManager.getString("premium.status.active")
+                    : UIManager.getString("premium.status.inactive"));
+        }
 
         tfHash.setText(Application.getUser().getHash());
 
