@@ -60,6 +60,16 @@ public class HotSlotConverter implements Converter<HotSlot> {
         return hotSlot;
     }
 
+    private HotSlot getSlotActiveKey(String [] params){
+
+        HotSlot hotSlot = new HotSlot();
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setKey(params[1]);
+        hotSlot.setCommand("Slot");
+
+        return hotSlot;
+    }
+
     private HotSlot getSmartTaskWithRandomPause(String [] params){
 
         HotSlot hotSlot = new HotSlot();
@@ -81,6 +91,7 @@ public class HotSlotConverter implements Converter<HotSlot> {
 
         String[] split = input.replaceAll("\\s", "").split(",");
         switch (split.length) {
+            case 2: hotSlot = getSlotActiveKey(split); break;
             case 3: hotSlot = getSmartTask(split); break;
             case 4: hotSlot = getSlot(split); break;
             case 5: hotSlot = getSlotTask(split); break;

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class SaveController implements ActionListener{
 
+	private static final String FORMAT_SLOT_ACTIVE_KEY = "%s,%s";
 	private static final String FORMAT_SLOT = "%s,%s,%s,%s";
 	private static final String FORMAT_SCREEN = "%s,%s,%s,%s";
 	private static final String FORMAT_SLOT_TASK = "%s,%s,%s,%s, %s";
@@ -56,6 +57,9 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.slot.one", String.format(FORMAT_SLOT, view.getCbFirstSlotActive().isSelected(), view.getTfFirstSlotKey().getText(), view.getTfFirstSlotDelay().getText(), view.getTfFirstSlotPeriod().getText()));
 		Application.getInstance().setProperty("bot.slot.two", String.format(FORMAT_SLOT, view.getCbSecondSlotActive().isSelected(),view.getTfSecondSlotKey().getText(), view.getTfSecondSlotDelay().getText(), view.getTfSecondSlotPeriod().getText()));
 		Application.getInstance().setProperty("bot.slot.three", String.format(FORMAT_SLOT, view.getCbThirdSlotActive().isSelected(),view.getTfThirdSlotKey().getText(), view.getTfThirdSlotDelay().getText(), view.getTfThirdSlotPeriod().getText()));
+
+		Application.getInstance().setProperty("bot.slot.debuf.day", String.format(FORMAT_SLOT_ACTIVE_KEY, view.getCbDebufDay().isSelected(), view.getTfDebufDayKey().getText()));
+		Application.getInstance().setProperty("bot.slot.debuf.night", String.format(FORMAT_SLOT_ACTIVE_KEY, view.getCbDebufNight().isSelected(), view.getTfDebufNightKey().getText()));
 
 		Application.getInstance().setProperty("bot.rod.count", String.valueOf(view.getTfRodCount().getText()));
 		Application.getInstance().setProperty("bot.rod.changetime", String.valueOf(view.getTfRodChange().getText()));
@@ -158,6 +162,7 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.screen.debug.captcha", String.valueOf(view.getCbDebugCaptcha().isSelected()));
 		Application.getInstance().setProperty("bot.screen.debug.filterloot", String.valueOf(view.getCbDebugLootFilter().isSelected()));
 		Application.getInstance().setProperty("bot.screen.debug.pmmessage", String.valueOf(view.getCbDebugPersonalMessage().isSelected()));
+		Application.getInstance().setProperty("bot.screen.debug.debuf", String.valueOf(view.getCbDebugDebuf().isSelected()));
 		Application.getInstance().setProperty("bot.loot.save_unsort", String.valueOf(view.getCbUnsortLoot().isSelected()));
 		Application.getInstance().setProperty("bot.loot.save_unknown", String.valueOf(view.getCbUnknownLoot().isSelected()));
 

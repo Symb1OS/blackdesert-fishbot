@@ -19,7 +19,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String THEME();
 
 	@Key("bot.http")
-	@DefaultValue("23.95.61.97:9090")
+	@DefaultValue("23.95.61.97:9999")
 	String URL_CAPTCHA_SERVICE();
 
 	@Key("bot.ws")
@@ -316,6 +316,16 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_THREE();
 
+	@Key("bot.slot.debuf.day")
+	@DefaultValue("false, 0")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot SLOT_DEBUF_DESERT_DAY();
+
+	@Key("bot.slot.debuf.night")
+	@DefaultValue("false, 0")
+	@ConverterClass(HotSlotConverter.class)
+	HotSlot SLOT_DEBUF_DESERT_NIGHT();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// NOTIFICATION
@@ -425,6 +435,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle INVENTORY();
 
+    @Key("bot.screen.debuff_desert")
+    @DefaultValue("676, 868, 28, 28")
+    @ConverterClass(RectangleConverter.class)
+	Rectangle DEBUFF_DESERT();
+
 
     ///////////////////////////////////////////////////////////////////////////
     // EMULATION
@@ -475,4 +490,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("false")
     boolean DEBUG_PM_MESSAGE();
 
+	@Key("bot.screen.debug.debuf")
+	@DefaultValue("false")
+	boolean DEBUG_DEBUF();
 }

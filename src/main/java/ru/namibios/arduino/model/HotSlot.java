@@ -135,26 +135,6 @@ public class HotSlot {
         this.period = converterMills(s);
     }
 
-    public static void main(String[] args) {
-
-        HotSlot hotSlot= new HotSlot();
-        hotSlot.setActive(true);
-        hotSlot.setCommand("2");
-
-        hotSlot.setPeriod("20s");
-        hotSlot.setRandomPeriod("30s");
-
-        hotSlot.setDelay(10000);
-        hotSlot.setRandomDelay(20000);
-
-        hotSlot.setPauseFrom(1000);
-        hotSlot.setPauseTo(2000);
-
-        long pause = hotSlot.getPause();
-        System.out.println("pause = " + pause);
-
-    }
-
     private long converterMills(String value) {
         long ms = -1;
 

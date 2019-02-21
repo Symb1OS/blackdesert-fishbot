@@ -52,5 +52,9 @@ public class SlotTaskModeState extends State {
             LOG.error(ExceptionUtils.getString(e));
         }
 
+        if (Application.getInstance().SLOT_DEBUF_DESERT_DAY().isActive() || Application.getInstance().SLOT_DEBUF_DESERT_NIGHT().isActive()) {
+            fishBot.setState(new DebufState(fishBot));
+        }
+
     }
 }
