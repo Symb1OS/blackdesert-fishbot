@@ -33,7 +33,9 @@ public class SlotTaskModeState extends State {
 
         try {
 
-            if (!slotService.isActiveTasks()){
+            if (!slotService.isActiveTasks()
+                    && !Application.getInstance().SLOT_DEBUF_DESERT_DAY().isActive()
+                    && !Application.getInstance().SLOT_DEBUF_DESERT_NIGHT().isActive()){
                 LOG.info("No active task.");
                 fishBot.setRunned(false);
             }
