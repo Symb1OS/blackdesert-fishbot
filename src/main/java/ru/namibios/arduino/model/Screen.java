@@ -29,10 +29,26 @@ public class Screen {
 		makeGray();
 	}
 
+	public Screen(String filename, boolean isGray) throws IOException{
+		this.screenShot = ImageIO.read(new File(filename));
+		if (isGray) {
+			makeGray();
+		}
+	}
+
 	public Screen(String filename, Rectangle zone) throws IOException{
 		this.screenShot = ImageIO.read(new File(filename));
 		this.screenShot = getScreenZone(zone);
 		makeGray();
+	}
+
+	public Screen(String filename, Rectangle zone, boolean isGray) throws IOException{
+		this.screenShot = ImageIO.read(new File(filename));
+		this.screenShot = getScreenZone(zone);
+		if (isGray) {
+			makeGray();
+		}
+
 	}
 
 	public Screen(Rectangle zone, boolean gray) throws AWTException {

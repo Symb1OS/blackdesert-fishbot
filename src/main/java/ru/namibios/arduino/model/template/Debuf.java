@@ -1,7 +1,7 @@
 package ru.namibios.arduino.model.template;
 
-import ru.namibios.arduino.model.ImageParser;
-import ru.namibios.arduino.model.Screen;
+import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.model.PaletteParser;
 import ru.namibios.arduino.utils.ImageUtils;
 
 import java.awt.image.BufferedImage;
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 
 public enum Debuf implements MatrixTemplate{
 
-    DAY("resources/templates/debuff/day.jpg"),
+    DAY("day.jpg"),
 
-    NIGHT("resources/templates/debuff/night.jpg");
+    NIGHT("night.jpg");
 
     private final List<int[][]> templates;
 
@@ -29,10 +29,10 @@ public enum Debuf implements MatrixTemplate{
 
         ArrayList<int[][]> collect = Arrays.stream(filenames)
                 .map(s -> {
-                    BufferedImage image = ImageUtils.read(new File(s));
-                    ImageParser parser = new ImageParser(image);
-                    parser.parse(Screen.GRAY);
-                    return parser.getImageMatrix();
+                    BufferedImage image = ImageUtils.read(new File(Path.DEBUF + s));
+                    PaletteParser parser = new PaletteParser(image);
+                    parser.parse();
+                    return  parser.getImageMatrix();
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
 

@@ -58,7 +58,9 @@ public class FishBot {
                 new Slot(Application.getInstance().SLOT_THREE()),
                 new Slot(Application.getInstance().SLOT_BEER()),
 				new Slot(Application.getInstance().TASK_STOP()),
-				new Slot(Application.getInstance().TASK_EXIT_GAME())
+				new Slot(Application.getInstance().TASK_EXIT_GAME()),
+				new Slot(Application.getInstance().SLOT_DEBUF_DESERT_DAY()),
+				new Slot(Application.getInstance().SLOT_DEBUF_DESERT_NIGHT())
         );
 
 		this.httpService = new HttpService();

@@ -11,6 +11,18 @@ public final class MatrixUtils {
 
 	private MatrixUtils() {}
 
+	public static void printSrcMatrix(int[][] tmp){
+		int row = tmp.length;
+		int column = tmp[0].length;
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				System.out.print(tmp[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
 	public static void printMatrix(int[][] tmp){
 		int row = tmp.length;
 		int column = tmp[0].length;
