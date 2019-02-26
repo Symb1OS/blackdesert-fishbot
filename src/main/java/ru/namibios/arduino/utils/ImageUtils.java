@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public final class ImageUtils {
 	
@@ -37,5 +39,19 @@ public final class ImageUtils {
 		}
 		return bytes;
 		
+	}
+
+	public static URL toUrl(String filename) {
+
+		try {
+
+			return new File(filename).toURI().toURL();
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
 	}
 }

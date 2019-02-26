@@ -16,6 +16,7 @@ import ru.namibios.arduino.gui.controller.CancelController;
 import ru.namibios.arduino.gui.controller.ResetController;
 import ru.namibios.arduino.gui.controller.SaveController;
 import ru.namibios.arduino.utils.ExceptionUtils;
+import ru.namibios.arduino.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -307,6 +308,8 @@ public class TabSettingsView extends JDialog {
     private JCheckBox cbDebufNight;
     private JLabel lDebuf;
     private JCheckBox cbDebugDebuf;
+    private JLabel lIdeaDebufDay;
+    private JLabel lIdeaDebufNight;
     private JLabel lIdeaUnknownLoot;
 
     private CustomVerifier numericVerifier;
@@ -479,7 +482,7 @@ public class TabSettingsView extends JDialog {
         pmGroup.add(rbCrashShutdownPc);
     }
 
-    private void initAdd(){
+    private void initAdd() {
         Launcher.LOCALES.keySet().forEach(s -> cbLanguage.addItem(s));
         cbLanguage.setSelectedItem(Application.getInstance().LANGUAGE());
 
@@ -491,6 +494,11 @@ public class TabSettingsView extends JDialog {
         lIdeaCleanNoise.setIcon(new ImageIcon(UI.IMG_IDEA));
         lIdeaStatusCut.setIcon(new ImageIcon(UI.IMG_IDEA));
         lIdeaStatusCaptcha.setIcon(new ImageIcon(UI.IMG_IDEA));
+        lIdeaDebufDay.setIcon(new ImageIcon(UI.IMG_IDEA));
+        lIdeaDebufNight.setIcon(new ImageIcon(UI.IMG_IDEA));
+
+        lIdeaDebufDay.setToolTipText(String.format(UIManager.getString("preference.label.debuf.day.tooltip"), ImageUtils.toUrl(UI.IMG_DEBUF_DAY)));
+        lIdeaDebufNight.setToolTipText(String.format(UIManager.getString("preference.label.debuf.night.tooltip"), ImageUtils.toUrl(UI.IMG_DEBUF_NIGHT)));
 
         cbSkipCalendar.setSelected(Application.getInstance().SKIP_CALENDAR());
         tfInputDelay.setText(String.valueOf(Application.getInstance().PRESS_KEY_DELAY()));
@@ -2167,7 +2175,7 @@ public class TabSettingsView extends JDialog {
         timerContent.add(lIdeaDeferredStart, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaStopBot = new JLabel();
         lIdeaStopBot.setText("");
-        lIdeaStopBot.setToolTipText("Спустя установленное время бот остановит работу. Рыбалка в игре продолжится в афк режиме.");
+        lIdeaStopBot.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.stop_bot.tooltip"));
         timerContent.add(lIdeaStopBot, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaExitGame = new JLabel();
         lIdeaExitGame.setText("");
@@ -2178,10 +2186,10 @@ public class TabSettingsView extends JDialog {
         timer.add(pauseContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         pauseContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbPause = new JCheckBox();
-        cbPause.setText("Пауза");
+        this.$$$loadButtonText$$$(cbPause, ResourceBundle.getBundle("locale").getString("preference.label.pause"));
         pauseContent.add(cbPause, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label19 = new JLabel();
-        label19.setText("Задержка");
+        this.$$$loadLabelText$$$(label19, ResourceBundle.getBundle("locale").getString("preference.label.delay"));
         pauseContent.add(label19, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfPauseDelayTo = new JTextField();
         pauseContent.add(tfPauseDelayTo, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
@@ -2202,7 +2210,7 @@ public class TabSettingsView extends JDialog {
         pauseContent.add(label22, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaPause = new JLabel();
         lIdeaPause.setText("");
-        lIdeaPause.setToolTipText("<html> Спустя установленное время бот будет останавливаться, ждать определённый промежуток времени, после чего продолжать работу. <br> <table border=\"1\">    <tr>     <th>Наименование</th> <th>Значение</th> <th>Описание</th>    </tr>    <tr><td>Задержка</td><td>20m-40m</td><td>Спустя 20-40 минут бот встанет на паузу.</td></tr>    <tr><td>Период</td><td>10m-15m</td><td>Бот простоит на паузе 10-15 минут, после чего продолжит работу.</td></tr> </html>");
+        lIdeaPause.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.pause.tooltip"));
         pauseContent.add(lIdeaPause, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         mode = new JPanel();
         mode.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
@@ -2246,7 +2254,7 @@ public class TabSettingsView extends JDialog {
         this.$$$loadLabelText$$$(lDebuf, ResourceBundle.getBundle("locale").getString("preference.label.debuf"));
         panel2.add(lDebuf, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(2, 3, new Insets(5, 5, 5, 5), -1, -1));
+        panel3.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
         panel2.add(panel3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel3.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbDebufDay = new JCheckBox();
@@ -2265,6 +2273,14 @@ public class TabSettingsView extends JDialog {
         panel3.add(label26, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(50, -1), null, 0, false));
         tfDebufNightKey = new JTextField();
         panel3.add(tfDebufNightKey, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
+        lIdeaDebufDay = new JLabel();
+        lIdeaDebufDay.setText("");
+        lIdeaDebufDay.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.debuf.tooltip"));
+        panel3.add(lIdeaDebufDay, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lIdeaDebufNight = new JLabel();
+        lIdeaDebufNight.setText("");
+        lIdeaDebufNight.setToolTipText("");
+        panel3.add(lIdeaDebufNight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addTab = new JPanel();
         addTab.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.add"), addTab);
@@ -2329,11 +2345,11 @@ public class TabSettingsView extends JDialog {
         overflowContent.add(tfCapcthaState, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lIdeaStatusCaptcha = new JLabel();
         lIdeaStatusCaptcha.setText("");
-        lIdeaStatusCaptcha.setToolTipText("Максимальное количество итераций для определения статуска капчи. (выполнение может занимать продолжительное время на слабых ПК)");
+        lIdeaStatusCaptcha.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.state.status_captcha.tooltip"));
         overflowContent.add(lIdeaStatusCaptcha, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaStatusCut = new JLabel();
         lIdeaStatusCut.setText("");
-        lIdeaStatusCut.setToolTipText("Максимальное количество итераций для определения статуса подсечки.");
+        lIdeaStatusCut.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.state.status_cut.tooltip"));
         overflowContent.add(lIdeaStatusCut, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lootTouch = new JPanel();
         lootTouch.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
@@ -2347,19 +2363,19 @@ public class TabSettingsView extends JDialog {
         lootTouchContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         final JLabel label32 = new JLabel();
         this.$$$loadLabelText$$$(label32, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot1"));
-        label32.setToolTipText("Координата 1 ячейки лута.");
+        label32.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot1.tooltip"));
         lootTouchContent.add(label32, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         tfLootSlotOneY = new JTextField();
         lootTouchContent.add(tfLootSlotOneY, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label33 = new JLabel();
         this.$$$loadLabelText$$$(label33, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot2"));
-        label33.setToolTipText("Координата 2 ячейки лута.");
+        label33.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot2.tooltip"));
         lootTouchContent.add(label33, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         tfLootSlotTwoY = new JTextField();
         lootTouchContent.add(tfLootSlotTwoY, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label34 = new JLabel();
         this.$$$loadLabelText$$$(label34, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot3"));
-        label34.setToolTipText("Координата 3 ячейки лута.");
+        label34.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot3.tooltip"));
         lootTouchContent.add(label34, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotThreeY = new JTextField();
         lootTouchContent.add(tfLootSlotThreeY, new GridConstraints(2, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2389,7 +2405,7 @@ public class TabSettingsView extends JDialog {
         lootTouchContent.add(label40, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label41 = new JLabel();
         this.$$$loadLabelText$$$(label41, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot4"));
-        label41.setToolTipText("Координата 3 ячейки лута.");
+        label41.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot4.tooltip"));
         lootTouchContent.add(label41, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotFourY = new JTextField();
         lootTouchContent.add(tfLootSlotFourY, new GridConstraints(3, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2403,7 +2419,7 @@ public class TabSettingsView extends JDialog {
         lootTouchContent.add(label43, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label44 = new JLabel();
         this.$$$loadLabelText$$$(label44, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot5"));
-        label44.setToolTipText("Координата 3 ячейки лута.");
+        label44.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot5.tooltip"));
         lootTouchContent.add(label44, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotFiveY = new JTextField();
         lootTouchContent.add(tfLootSlotFiveY, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2417,7 +2433,7 @@ public class TabSettingsView extends JDialog {
         lootTouchContent.add(label46, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label47 = new JLabel();
         this.$$$loadLabelText$$$(label47, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot6"));
-        label47.setToolTipText("Координата 3 ячейки лута.");
+        label47.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot6.tooltip"));
         lootTouchContent.add(label47, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotSixY = new JTextField();
         lootTouchContent.add(tfLootSlotSixY, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2431,7 +2447,7 @@ public class TabSettingsView extends JDialog {
         lootTouchContent.add(label49, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label50 = new JLabel();
         this.$$$loadLabelText$$$(label50, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot7"));
-        label50.setToolTipText("Координата 3 ячейки лута.");
+        label50.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot7.tooltip"));
         lootTouchContent.add(label50, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotSevenY = new JTextField();
         lootTouchContent.add(tfLootSlotSevenY, new GridConstraints(6, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2445,7 +2461,7 @@ public class TabSettingsView extends JDialog {
         lootTouchContent.add(label52, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label53 = new JLabel();
         this.$$$loadLabelText$$$(label53, ResourceBundle.getBundle("locale").getString("preference.label.loot.slot8"));
-        label53.setToolTipText("Координата 3 ячейки лута.");
+        label53.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.loot8.tooltip"));
         lootTouchContent.add(label53, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfLootSlotEightY = new JTextField();
         lootTouchContent.add(tfLootSlotEightY, new GridConstraints(7, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2473,19 +2489,19 @@ public class TabSettingsView extends JDialog {
         rodTouchContent.add(tfRodX, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lRodX = new JLabel();
         lRodX.setText("x:");
-        lRodX.setToolTipText("Координата верхнего-левого слота инвентаря по осе абсцисс.");
+        lRodX.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.rod.x.tooltip"));
         rodTouchContent.add(lRodX, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lRodDy = new JLabel();
         lRodDy.setText("dy:");
-        lRodDy.setToolTipText("Смещение по y.");
+        lRodDy.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.rod.dy.tooltip"));
         rodTouchContent.add(lRodDy, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lRodDx = new JLabel();
         lRodDx.setText("dx:");
-        lRodDx.setToolTipText("Смещение по x.");
+        lRodDx.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.rod.dx.tooltip"));
         rodTouchContent.add(lRodDx, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lRodY = new JLabel();
         lRodY.setText("y:");
-        lRodY.setToolTipText("Координата верхнего-левого слота инвентаря по осе ординат.");
+        lRodY.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.rod.y.tooltip"));
         rodTouchContent.add(lRodY, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfRodDX = new JTextField();
         rodTouchContent.add(tfRodDX, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -2525,7 +2541,7 @@ public class TabSettingsView extends JDialog {
         inputcontent.add(tfInputDelay, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lIdeaInputDelay = new JLabel();
         lIdeaInputDelay.setText("");
-        lIdeaInputDelay.setToolTipText("Если бот не успевает вводить длинные капчи можно немного уменьшить значение, чтобы ускорить ввод. Желательно не ставить очень низкие(нечеловеческие) значения");
+        lIdeaInputDelay.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.input.tooltip"));
         inputcontent.add(lIdeaInputDelay, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         parsing = new JPanel();
         parsing.setLayout(new GridLayoutManager(1, 2, new Insets(0, 5, 0, 0), -1, -1));
@@ -2549,11 +2565,11 @@ public class TabSettingsView extends JDialog {
         parsingContent.add(tfCaptchaNoiseIteration, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         lIdeaCleanNoise = new JLabel();
         lIdeaCleanNoise.setText("");
-        lIdeaCleanNoise.setToolTipText("<html> Количество итераций для очистки капчи от шума. Чем выше параметр, тем позже бот начнет ввод капчи. <br> Если слабый процессор и бот полностью не успевает вводить капчу можно немного понизить данный параметр. </html>");
+        lIdeaCleanNoise.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.noise.iteration.tooltip"));
         parsingContent.add(lIdeaCleanNoise, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaParseIdentity = new JLabel();
         lIdeaParseIdentity.setText("");
-        lIdeaParseIdentity.setToolTipText("<html> Минимальный коэффициент при котором картинка будет опознана.<br> Если какой-то лут не распознается, можно немного уменьшить значение, но не стоит уменьшать слишком сильно. </html>");
+        lIdeaParseIdentity.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.parse.coef.tooltip"));
         parsingContent.add(lIdeaParseIdentity, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         coordTab = new JPanel();
         coordTab.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -3221,11 +3237,11 @@ public class TabSettingsView extends JDialog {
         debugContent.add(cbDebugPersonalMessage, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbUnknownLoot = new JCheckBox();
         this.$$$loadButtonText$$$(cbUnknownLoot, ResourceBundle.getBundle("locale").getString("preference.label.debug.unknown_loot"));
-        cbUnknownLoot.setToolTipText("Сохранять ли неопознанный лут в папку loot/unknown");
+        cbUnknownLoot.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.debug.unknown_loot.tooltip"));
         debugContent.add(cbUnknownLoot, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbUnsortLoot = new JCheckBox();
         this.$$$loadButtonText$$$(cbUnsortLoot, ResourceBundle.getBundle("locale").getString("preference.label.debug.unsort_loot"));
-        cbUnsortLoot.setToolTipText("Сохранять ли весь лут в папку, независимо от того опознан он или нет.");
+        cbUnsortLoot.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.debug.unsort_loot.tooltip"));
         debugContent.add(cbUnsortLoot, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbDebugDebuf = new JCheckBox();
         this.$$$loadButtonText$$$(cbDebugDebuf, ResourceBundle.getBundle("locale").getString("preference.label.debug.debuf"));

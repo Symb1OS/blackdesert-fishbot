@@ -31,12 +31,6 @@ public class Application {
 		return config;
 	}
 
-	public static void main(String[] args) {
-
-		User user = Application.getUser();
-		System.out.println(user);
-	}
-
 	public static User getUser(){
 		if (user == null) {
 			LOG.debug("User initialization..");

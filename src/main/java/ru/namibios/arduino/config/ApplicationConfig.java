@@ -128,7 +128,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.parsing.coefidentity")
 	double COEF_IDENTITY();
 
-	@DefaultValue("0.80")
+	@DefaultValue("0.70")
 	@Key("bot.parsing.palette_coefidentity")
 	double PALETTE_COEF_IDENTITY();
 	
