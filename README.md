@@ -3,12 +3,20 @@
  Bot working on EU and RU servers.
  
  Features:
- 
+
+- several modes (auto-fishing, task-slot-debuffs);
 - auto fishing;
 - changing fishing rods;
 - using hot keys;
+- using beer;
+- check debuffs;
 - loot filtering;
-- telegram notifications.
+- PM notification;
+- timer (random pauses on work, deferred start, stop bot, exit game);
+- crash client (shutdown pc, close bot, stop bot);
+- telegram: notifications and remote commands.
+
+More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 
 
 ### Navigation
