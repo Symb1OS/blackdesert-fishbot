@@ -2179,7 +2179,7 @@ public class TabSettingsView extends JDialog {
         timerContent.add(lIdeaStopBot, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaExitGame = new JLabel();
         lIdeaExitGame.setText("");
-        lIdeaExitGame.setToolTipText("Спустя установленное время бот выйдет из игры");
+        lIdeaExitGame.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.exitgame.tooltip"));
         timerContent.add(lIdeaExitGame, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pauseContent = new JPanel();
         pauseContent.setLayout(new GridLayoutManager(1, 10, new Insets(5, 5, 5, 5), -1, -1));
