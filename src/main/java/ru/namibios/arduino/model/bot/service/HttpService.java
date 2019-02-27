@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model.bot.service;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
@@ -22,8 +24,8 @@ import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.User;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.model.command.ShortCommand;
+import ru.namibios.arduino.utils.AppUtils;
 import ru.namibios.arduino.utils.ExceptionUtils;
-import ru.namibios.arduino.utils.ImageUtils;
 import ru.namibios.arduino.utils.JSON;
 
 import javax.net.ssl.KeyManager;
@@ -40,6 +42,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -69,7 +72,11 @@ public class HttpService {
     public HttpService() {
         SSLContext tls = getSSLContext();
 
-        httpClient = HttpClients.custom().setSSLContext(tls).build();
+        Header header = new BasicHeader("x-forwarded-for", AppUtils.getForwaded());
+        httpClient = HttpClients.custom()
+                .setDefaultHeaders(Collections.singletonList(header))
+                .setSSLContext(tls)
+                .build();
     }
 
     private SSLContext getSSLContext() {
@@ -110,13 +117,6 @@ public class HttpService {
         HttpResponse httpResponse = httpClient.execute(post);
 
         EntityUtils.consume(httpResponse.getEntity());
-    }
-
-    public static void main(String[] args) throws IOException {
-        HttpService httpService = new HttpService();
-        httpService.sendTelegramMessage(Application.getInstance().TELEGRAM_KEY(), "Hello");
-        byte[] bytes = ImageUtils.imageToBytes(Screen.getScreen(Application.getInstance().FULL_SCREEN()));
-        httpService.sendTelegramPhoto(Application.getInstance().TELEGRAM_KEY(), bytes);
     }
 
     public void sendTelegramPhoto(String key, byte[] photo) throws IOException{
