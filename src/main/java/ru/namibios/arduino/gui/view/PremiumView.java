@@ -9,6 +9,8 @@ import ru.namibios.arduino.utils.DateUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.ResourceBundle;
 
 public class PremiumView extends JFrame {
@@ -22,6 +24,7 @@ public class PremiumView extends JFrame {
     private JTextField tfPremiumTo;
     private JPanel hashPane;
     private JTextField tfStatus;
+    private JButton btnCopyKey;
 
     public PremiumView() {
 
@@ -34,6 +37,12 @@ public class PremiumView extends JFrame {
         setSize(new Dimension(500, 200));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        btnCopyKey.addActionListener(e -> {
+            StringSelection stringSelection = new StringSelection(tfHash.getText());
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stringSelection, null);
+        });
+
         init();
 
         setVisible(true);
@@ -42,6 +51,7 @@ public class PremiumView extends JFrame {
     }
 
     private void init() {
+
         if (Application.getUser().isBlocked()) {
             tfStatus.setText(UIManager.getString("premium.status.blocked"));
         } else {
@@ -80,12 +90,15 @@ public class PremiumView extends JFrame {
         this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("locale").getString("premium.label.hash"));
         hashPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
         hashPane = new JPanel();
-        hashPane.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        hashPane.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         hashPanel.add(hashPane, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         hashPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         tfHash = new JTextField();
         tfHash.setEditable(false);
         hashPane.add(tfHash, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        btnCopyKey = new JButton();
+        this.$$$loadButtonText$$$(btnCopyKey, ResourceBundle.getBundle("locale").getString("premium.button.copy"));
+        hashPane.add(btnCopyKey, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         contentPane.add(spacer1, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         premiumDate = new JPanel();
@@ -148,6 +161,33 @@ public class PremiumView extends JFrame {
         component.setText(result.toString());
         if (haveMnemonic) {
             component.setDisplayedMnemonic(mnemonic);
+            component.setDisplayedMnemonicIndex(mnemonicIndex);
+        }
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private void $$$loadButtonText$$$(AbstractButton component, String text) {
+        StringBuffer result = new StringBuffer();
+        boolean haveMnemonic = false;
+        char mnemonic = '\0';
+        int mnemonicIndex = -1;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '&') {
+                i++;
+                if (i == text.length()) break;
+                if (!haveMnemonic && text.charAt(i) != '&') {
+                    haveMnemonic = true;
+                    mnemonic = text.charAt(i);
+                    mnemonicIndex = result.length();
+                }
+            }
+            result.append(text.charAt(i));
+        }
+        component.setText(result.toString());
+        if (haveMnemonic) {
+            component.setMnemonic(mnemonic);
             component.setDisplayedMnemonicIndex(mnemonicIndex);
         }
     }
