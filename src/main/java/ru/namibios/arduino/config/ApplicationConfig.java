@@ -128,7 +128,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.parsing.coefidentity")
 	double COEF_IDENTITY();
 
-	@DefaultValue("0.70")
+	@DefaultValue("0.77")
 	@Key("bot.parsing.palette_coefidentity")
 	double PALETTE_COEF_IDENTITY();
 	
@@ -191,7 +191,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.autouse.beer")
-	@DefaultValue("false, 7, 0m, 120m, Beer")
+	@DefaultValue("false, 7, 0, 0, 0, 0, Beer")
 	@ConverterClass(HotSlotConverter.class)
 	HotSlot SLOT_BEER();
 

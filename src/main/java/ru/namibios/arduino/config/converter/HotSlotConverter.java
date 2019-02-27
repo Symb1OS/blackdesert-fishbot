@@ -36,6 +36,21 @@ public class HotSlotConverter implements Converter<HotSlot> {
         return hotSlot;
     }
 
+    private HotSlot getSlotTaskWithRandom(String[] params) {
+
+        HotSlot hotSlot = new HotSlot();
+
+        hotSlot.setActive(Boolean.valueOf(params[0]));
+        hotSlot.setKey(params[1]);
+        hotSlot.setDelay(params[2]);
+        hotSlot.setRandomDelay(params[3]);
+        hotSlot.setPeriod(params[4]);
+        hotSlot.setRandomPeriod(params[5]);
+        hotSlot.setCommand(params[6]);
+
+        return hotSlot;
+    }
+
     private HotSlot getSmartTask(String [] params){
 
         HotSlot hotSlot = new HotSlot();
@@ -96,6 +111,7 @@ public class HotSlotConverter implements Converter<HotSlot> {
             case 4: hotSlot = getSlot(split); break;
             case 5: hotSlot = getSlotTask(split); break;
             case 6: hotSlot = getSmartTaskWithRandom(split); break;
+            case 7: hotSlot = getSlotTaskWithRandom(split); break;
             case 8: hotSlot = getSmartTaskWithRandomPause(split); break;
 
             default: {

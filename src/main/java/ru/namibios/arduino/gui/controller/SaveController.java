@@ -14,6 +14,7 @@ public class SaveController implements ActionListener{
 	private static final String FORMAT_SLOT = "%s,%s,%s,%s";
 	private static final String FORMAT_SCREEN = "%s,%s,%s,%s";
 	private static final String FORMAT_SLOT_TASK = "%s,%s,%s,%s, %s";
+	private static final String FORMAT_SLOT_TASK_WITH_RANDOM = "%s,%s,%s,%s,%s,%s, %s";
 	private static final String FORMAT_BEER_TOUCHS = "%s;%s;%s";
 	private static final String FORMAT_SMART_TASK = "%s,%s,%s";
 	private static final String FORMAT_SMART_TASK_WITH_RANDOM = "%s,%s,%s,%s,%s,%s,%s,%s";
@@ -45,7 +46,7 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.loot.confirm", String.valueOf(view.getCbConfirm().isSelected()));
 		Application.getInstance().setProperty("bot.loot.unknown", String.valueOf(view.getCbUnknown().isSelected()));
 
-		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT_TASK, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, view.getBeerPeriod().getText(), "Beer"));
+		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT_TASK_WITH_RANDOM, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, 0, view.getBeerPeriodFrom().getText(), view.getBeerPeriodTo().getText(), "Beer"));
 
 		Touch[] touches = Application.getInstance().BEER_TOUCHS();
 		touches[2].setActive(view.getCbRepeatWork().isSelected());
