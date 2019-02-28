@@ -43,7 +43,7 @@ public class Application {
 				user = httpService.getUserStatus(user);
 				if (user.isBlocked()) {
 					LOG.info(Message.USER_IS_BLOCKED);
-					JOptionPane.showMessageDialog(null, Message.USER_IS_BLOCKED, "Warning", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, Message.USER_IS_BLOCKED + "\nReason: " + user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
 					Application.closeBot(1);
 				}
 				if (user.getCode() != 0) {
