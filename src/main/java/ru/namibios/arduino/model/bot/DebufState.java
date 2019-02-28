@@ -55,9 +55,7 @@ public class DebufState extends State {
             if (!key.isEmpty()) {
 
                 Debuf debuf = Debuf.valueOf(key);
-                if (Application.getInstance().DEBUG_DEBUF()) {
-                    LOG.debug("Detected debuff " + debuf);
-                }
+                LOG.debug("Detected debuff " + debuf);
 
                 Slot slot;
                 switch (debuf) {

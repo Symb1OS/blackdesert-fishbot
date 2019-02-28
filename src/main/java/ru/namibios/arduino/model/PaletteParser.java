@@ -123,7 +123,6 @@ public class PaletteParser {
         }
 
         double coef = (compare / all);
-        LOG.debug("coef = " + coef);
 
         return coef;
     }
