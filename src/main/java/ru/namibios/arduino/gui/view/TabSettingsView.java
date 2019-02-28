@@ -311,6 +311,7 @@ public class TabSettingsView extends JDialog {
     private JLabel lIdeaDebufDay;
     private JLabel lIdeaDebufNight;
     private JTextField beerPeriodTo;
+    private JPanel debufContent;
     private JLabel lIdeaUnknownLoot;
 
     private CustomVerifier numericVerifier;
@@ -450,6 +451,11 @@ public class TabSettingsView extends JDialog {
         delayVerifier = new CustomVerifier(UIManager.getString("err.format.delay"), REGEX_DELAY);
         numericVerifier = new CustomVerifier(UIManager.getString("err.format.numeric"), REGEX_DELAY);
         rodCountVerifier = new CustomVerifier(UIManager.getString("err.format.rodcount"), REGEX_ROD_COUNT);
+
+        Component[] components = debufContent.getComponents();
+        for (Component component : components) {
+            component.setEnabled(Application.getUser().isPremium());
+        }
 
         lDebuf.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
         lDebuf.setToolTipText(UIManager.getString("preference.premium.tooltip"));
@@ -2266,34 +2272,34 @@ public class TabSettingsView extends JDialog {
         lDebuf = new JLabel();
         this.$$$loadLabelText$$$(lDebuf, ResourceBundle.getBundle("locale").getString("preference.label.debuf"));
         panel2.add(lDebuf, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(110, -1), null, 0, false));
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
-        panel2.add(panel3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        panel3.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        debufContent = new JPanel();
+        debufContent.setLayout(new GridLayoutManager(2, 4, new Insets(5, 5, 5, 5), -1, -1));
+        panel2.add(debufContent, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        debufContent.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         cbDebufDay = new JCheckBox();
         this.$$$loadButtonText$$$(cbDebufDay, ResourceBundle.getBundle("locale").getString("preference.label.debuf.day"));
-        panel3.add(cbDebufDay, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        debufContent.add(cbDebufDay, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label26 = new JLabel();
         this.$$$loadLabelText$$$(label26, ResourceBundle.getBundle("locale").getString("preference.label.digital"));
-        panel3.add(label26, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(50, -1), null, 0, false));
+        debufContent.add(label26, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(50, -1), null, 0, false));
         tfDebufDayKey = new JTextField();
-        panel3.add(tfDebufDayKey, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
+        debufContent.add(tfDebufDayKey, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
         cbDebufNight = new JCheckBox();
         this.$$$loadButtonText$$$(cbDebufNight, ResourceBundle.getBundle("locale").getString("preference.label.debuf.night"));
-        panel3.add(cbDebufNight, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        debufContent.add(cbDebufNight, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label27 = new JLabel();
         this.$$$loadLabelText$$$(label27, ResourceBundle.getBundle("locale").getString("preference.label.digital"));
-        panel3.add(label27, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(50, -1), null, 0, false));
+        debufContent.add(label27, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(50, -1), null, 0, false));
         tfDebufNightKey = new JTextField();
-        panel3.add(tfDebufNightKey, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
+        debufContent.add(tfDebufNightKey, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(80, -1), null, 0, false));
         lIdeaDebufDay = new JLabel();
         lIdeaDebufDay.setText("");
         lIdeaDebufDay.setToolTipText(ResourceBundle.getBundle("locale").getString("preference.label.debuf.tooltip"));
-        panel3.add(lIdeaDebufDay, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        debufContent.add(lIdeaDebufDay, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lIdeaDebufNight = new JLabel();
         lIdeaDebufNight.setText("");
         lIdeaDebufNight.setToolTipText("");
-        panel3.add(lIdeaDebufNight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        debufContent.add(lIdeaDebufNight, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addTab = new JPanel();
         addTab.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabPane.addTab(ResourceBundle.getBundle("locale").getString("preference.label.tab.add"), addTab);

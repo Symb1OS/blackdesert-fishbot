@@ -987,7 +987,7 @@
                       <text resource-bundle="locale" key="preference.label.debuf"/>
                     </properties>
                   </component>
-                  <grid id="b6a9e" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="b6a9e" binding="debufContent" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
