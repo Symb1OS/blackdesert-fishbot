@@ -117,7 +117,7 @@ public class HotSlot {
     }
 
     public long getPeriodWithRandom() {
-        if (randomDelay > 0 && randomDelay > delay) {
+        if (randomPeriod > 0 && randomPeriod > period) {
             return ThreadLocalRandom.current().nextLong(period, randomPeriod);
         }
         return period;

@@ -50,6 +50,11 @@ public class Timer {
         timeLastRun = System.currentTimeMillis();
     }
 
+    public void resetTimeLastRunWithUpdate(long period){
+        this.period = period;
+        timeLastRun = System.currentTimeMillis();
+    }
+
     public void reset(){
         this.initTime = System.currentTimeMillis();
         timeLastRun = NEVER_RUN;
@@ -64,6 +69,10 @@ public class Timer {
 
     public long getUptime(){
         return System.currentTimeMillis() - initTime;
+    }
+
+    public void setPeriod(long period) {
+        this.period = period;
     }
 
     @Override

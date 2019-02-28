@@ -11,13 +11,18 @@ public class Slot implements Command{
 
 	private Timer timer;
 
-    public Slot(HotSlot hotSlot) {
+	private HotSlot hotSlot;
+
+	public Slot(HotSlot hotSlot) {
+		this.hotSlot = hotSlot;
+
         this.command = hotSlot.getCommand();
         this.isActive = hotSlot.isActive();
         this.hotKey = hotSlot.getKey();
 
         this.timer = new Timer(hotSlot.getDelayWithRandom(), hotSlot.getPeriodWithRandom());
-    }
+
+	}
 
 	public Slot(String command, boolean isActive, String hotKey, long delay, long period) {
         this.command = command;
@@ -29,7 +34,7 @@ public class Slot implements Command{
 
 	@Override
 	public String getKey() {
-		timer.resetTimeLastRun();
+		timer.resetTimeLastRunWithUpdate(hotSlot.getPeriodWithRandom());
 		return toCommand();
 	}
 
