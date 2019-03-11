@@ -14,6 +14,10 @@ import java.net.URISyntaxException;
 
 public class Application {
 
+	public static final int CODE_OK = 0;
+	public static final int CODE_INVALID_KEY = 1;
+	public static final int CODE_USER_BLOCKED = 2;
+
 	private static final Logger LOG = Logger.getLogger(Application.class);
 
 	private static final String PROPERTY_FILE_NAME = "resources/application.properties";
@@ -41,13 +45,19 @@ public class Application {
 			try {
 
 				user = httpService.getUserStatus(user);
-				if (user.isBlocked()) {
-					LOG.info(Message.USER_IS_BLOCKED);
-					JOptionPane.showMessageDialog(null, Message.USER_IS_BLOCKED + "\nReason: " + user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
-					Application.closeBot(1);
-				}
-				if (user.getCode() != 0) {
-					LOG.info(user.getMessage());
+				user.saveHash();
+
+				switch (user.getCode()) {
+					case CODE_INVALID_KEY:
+						LOG.error(Message.INVALID_KEY);
+						JOptionPane.showMessageDialog(null,  user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
+						Application.closeBot(CODE_INVALID_KEY);
+						break;
+					case CODE_USER_BLOCKED:
+						LOG.error(Message.USER_IS_BLOCKED);
+						JOptionPane.showMessageDialog(null, Message.USER_IS_BLOCKED + "\nReason: " + user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
+						Application.closeBot(CODE_USER_BLOCKED);
+						break;
 				}
 
 			} catch (IOException | URISyntaxException e) {

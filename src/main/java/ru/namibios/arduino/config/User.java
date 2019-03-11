@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
-import java.util.UUID;
 
 public class User {
 
@@ -70,6 +69,23 @@ public class User {
         return null;
     }
 
+    public void saveHash() {
+
+        String home = System.getProperty("user.home") + "/fishbotkey";
+
+        try {
+
+            if (!Files.exists(Paths.get(home))) {
+                LOG.debug("hash saved..");
+                Files.write(Paths.get(home), hash.getBytes());
+            }
+
+        } catch (IOException e) {
+            LOG.error(ExceptionUtils.getString(e));
+        }
+
+    }
+
     private String initHash() {
 
         if (hash != null) {
@@ -77,29 +93,9 @@ public class User {
 
         } else {
             String home = System.getProperty("user.home") + "/fishbotkey";
-
-            if (!Files.exists(Paths.get(home))) {
-                LOG.debug("File does not exist");
-
-                hash = UUID.randomUUID().toString();
-                LOG.debug("New key: " + hash);
-
+            if (Files.exists(Paths.get(home))) {
                 try {
-
-                    LOG.debug("Load hash " + home);
-                    Files.write(Paths.get(home), hash.getBytes());
-
-                } catch (IOException e) {
-                    LOG.error(ExceptionUtils.getString(e));
-                }
-
-                return hash;
-
-            } else {
-
-                LOG.debug("Load hash");
-                try {
-
+                    LOG.debug("Load hash");
                     hash = Files.readAllLines(Paths.get(home)).get(0);
                     return hash;
 
@@ -108,8 +104,6 @@ public class User {
                 }
             }
 
-            LOG.error("hash not loaded!");
-            System.exit(1);
         }
 
         return hash;
