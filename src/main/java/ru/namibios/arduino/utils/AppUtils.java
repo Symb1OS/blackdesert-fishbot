@@ -24,15 +24,22 @@ public final class AppUtils {
         return version;
     }
 
+    private static final String CHECKS[] = {"http://checkip.amazonaws.com","http://icanhazip.com","http://ipecho.net/plain", "http://ident.me", "http://bot.whatismyipaddress.com"};
+
     public static String getForwaded() {
 
         String forwarded = "";
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(new URL("http://checkip.amazonaws.com").openStream()))) {
 
-            forwarded = in.readLine();
+        for (String check : CHECKS) {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(new URL(check).openStream()))) {
+                forwarded = in.readLine();
+                if (!forwarded.isEmpty()) {
+                    return forwarded;
+                }
 
-        } catch (Exception ignore) {
+            } catch (Exception ignore) {
 
+            }
         }
 
         return forwarded;
