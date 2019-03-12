@@ -5,6 +5,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -20,6 +22,7 @@ public class User {
     private boolean blocked;
 
     private String hash;
+    private String compName;
     private String name;
     private String home;
     private String encoding;
@@ -40,6 +43,7 @@ public class User {
 
         this.hash = initHash();
         this.version = initVersion();
+        this.compName = initCompName();
         this.name = System.getProperty("user.name");
         this.home = System.getProperty("user.home");
         this.encoding = System.getProperty("file.encoding");
@@ -47,7 +51,17 @@ public class User {
         this.osArch = System.getProperty("os.arch");
         this.osVersion = System.getProperty("os.version");
         this.country = System.getProperty("user.country");
+    }
 
+    private String initCompName() {
+
+        try {
+
+            return InetAddress.getLocalHost().getHostName();
+
+        } catch (UnknownHostException ignored) {}
+
+        return "UNKNOWN";
     }
 
     private String initVersion(){
@@ -112,6 +126,10 @@ public class User {
     @JsonIgnore
     public boolean isWin(){
         return os.startsWith("Win");
+    }
+
+    public String getCompName() {
+        return compName;
     }
 
     public boolean isBlocked() {
@@ -182,6 +200,7 @@ public class User {
                 ", premiumEnd=" + premiumEnd +
                 ", blocked=" + blocked +
                 ", hash='" + hash + '\'' +
+                ", compName='" + compName + '\'' +
                 ", name='" + name + '\'' +
                 ", home='" + home + '\'' +
                 ", encoding='" + encoding + '\'' +
