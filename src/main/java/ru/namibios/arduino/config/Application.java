@@ -17,6 +17,18 @@ public class Application {
 	public static final int CODE_OK = 0;
 	public static final int CODE_INVALID_KEY = 1;
 	public static final int CODE_USER_BLOCKED = 2;
+    public static final int CODE_GAME_NOT_RUNNING = 3;
+	public static final int CODE_CLOSE_COM_PORT = 4;
+	public static final int CODE_RESTART_APPLICATION = 5;
+	public static final int CODE_SHUTDOWN_PC = 6;
+	public static final int CODE_GAME_CLIENT_CRASH = 7;
+    public static final int CODE_UNSUPPORTED_RESOLUTION = 8;
+	public static final int CODE_ALREADY_RUNNING = 9;
+	public static final int CODE_EMPTY_STATUS_CUT = 10;
+	public static final int CODE_EMPTY_STATUS_CAPTCHA = 11;
+	public static final int CODE_EMPTY_LOOT = 12;
+	public static final int CODE_EMPTY_CHARS = 13;
+	public static final int CODE_EMPTY_TEMPLATE = 14;
 
 	private static final Logger LOG = Logger.getLogger(Application.class);
 
@@ -78,7 +90,7 @@ public class Application {
 
 	public static void closeBot(int status){
 
-		LOG.info("Close bot..");
+		LOG.info("Close bot with status - " + status);
 
 		Launcher.close();
 
@@ -99,7 +111,7 @@ public class Application {
 
 		Runtime.getRuntime().exec(cmd.toString());
 
-		closeBot(0);
+		closeBot(Application.CODE_RESTART_APPLICATION);
 
 	}
 
@@ -117,7 +129,7 @@ public class Application {
 			LOG.error(ExceptionUtils.getString(e));
 		}
 
-		closeBot(0);
+		closeBot(CODE_SHUTDOWN_PC);
 
 	}
 }

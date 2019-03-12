@@ -90,7 +90,7 @@ public class RootView extends JFrame {
 
         JMenuItem exit = new JMenuItem(UIManager.getString("rootview.menu.file.close"));
         exit.setIcon(new ImageIcon(UI.IMG_CLOSE));
-        exit.addActionListener((e) -> System.exit(1));
+        exit.addActionListener((e) -> Application.closeBot(Application.CODE_OK));
         file.add(exit);
 
         JMenu premium = new JMenu(UIManager.getString("rootview.menu.premium"));

@@ -1,6 +1,7 @@
 package ru.namibios.arduino.model.template;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.utils.MatrixUtils;
 
@@ -38,7 +39,7 @@ public enum StatusCaptchaTemplate implements MatrixTemplate{
 
 				if(list.isEmpty()){
 					LOG.error("Empty template, please check " + filename);
-					System.exit(1);
+					Application.closeBot(Application.CODE_EMPTY_STATUS_CAPTCHA);
 				}
 
 				templates.add(MatrixUtils.importTemplate(list));

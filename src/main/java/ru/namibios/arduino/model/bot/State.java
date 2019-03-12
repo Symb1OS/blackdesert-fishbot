@@ -54,7 +54,7 @@ public abstract class State {
 			if (Application.getInstance().CRASH_EXIT_BOT()) {
 
 				fishBot.notifyUser(Message.GAME_CLIENT_CRASH_CLOSE_BOT);
-				Application.closeBot(0);
+				Application.closeBot(Application.CODE_GAME_CLIENT_CRASH);
 			}
 
 			if (Application.getInstance().CRASH_STOP_BOT()) {

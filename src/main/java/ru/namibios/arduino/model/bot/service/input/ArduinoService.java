@@ -22,13 +22,12 @@ public class ArduinoService implements InputService{
         serialPort = SerialPort.getCommPort(Application.getInstance().COM_PORT());
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
-        if (serialPort.openPort()) {
-            LOG.info("Port is open..");
-        } else {
+        if (!serialPort.openPort()) {
             LOG.info("Port is closed. Check your port in settings or change the mode work");
-            System.exit(-1);
+            Application.closeBot(Application.CODE_CLOSE_COM_PORT);
         }
 
+        LOG.info("Port is open..");
     }
 
     private boolean isComplete() throws IOException {

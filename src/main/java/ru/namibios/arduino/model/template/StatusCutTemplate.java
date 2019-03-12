@@ -1,6 +1,7 @@
 package ru.namibios.arduino.model.template;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
 import ru.namibios.arduino.utils.MatrixUtils;
 
@@ -40,7 +41,7 @@ public enum StatusCutTemplate implements MatrixTemplate{
 
 				if(list.isEmpty()){
 					LOG.error("Empty template, please check " + filename);
-					System.exit(1);
+					Application.closeBot(Application.CODE_EMPTY_STATUS_CUT);
 				}
 
                 templates.add(MatrixUtils.importTemplate(list));

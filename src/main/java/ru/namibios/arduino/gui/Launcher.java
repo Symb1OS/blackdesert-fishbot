@@ -55,12 +55,12 @@ public class Launcher {
             JOptionPane.showMessageDialog(null, "Program already running on port: " + Application.getInstance().LOCAL_PORT(), "Warning", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Program already running on port: " + Application.getInstance().LOCAL_PORT());
 			LOG.error(ExceptionUtils.getString(e));
-			System.exit(1);
+			Application.closeBot(Application.CODE_ALREADY_RUNNING);
 		}
 		catch (IOException e) {
 			LOG.error("Unexpected error.");
 			LOG.error(ExceptionUtils.getString(e));
-			System.exit(2);
+			Application.closeBot(Application.CODE_ALREADY_RUNNING);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class Launcher {
 		if (width != 1920 || height != 1080) {
 			LOG.error("Unsupported resolution: " + width + "x" + height);
 			JOptionPane.showMessageDialog(null, "Supporting only 1920x1080", "Unsupported resolution", JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
+			Application.closeBot(Application.CODE_UNSUPPORTED_RESOLUTION);
 		}
 	}
 

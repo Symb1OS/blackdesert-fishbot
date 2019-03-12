@@ -1,6 +1,7 @@
 package ru.namibios.arduino.model.template;
 
 import org.apache.log4j.Logger;
+import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.model.Screen;
 import ru.namibios.arduino.utils.ImageUtils;
@@ -40,7 +41,7 @@ public enum Loot implements MatrixTemplate {
 		File[] files = new File(fileFolderName).listFiles();
 		if (files != null && files.length == 0) {
 			LOG.error("Folder is empty: " + fileFolderName);
-			System.exit(1);
+			Application.closeBot(Application.CODE_EMPTY_LOOT);
 		}
 
 		for (File file : files) {
