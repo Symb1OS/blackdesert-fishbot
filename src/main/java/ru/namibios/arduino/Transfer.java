@@ -36,7 +36,7 @@ public class Transfer extends Thread{
 
 		LOG.info("Start...");
 
-		WinDef.HWND windowGame = WinAPI.findWindow("BLACK DESERT");
+		WinDef.HWND windowGame = WinAPI.findWindow(Application.getInstance().GAME_TITLE());
 		if (windowGame == null) {
 			LOG.info("The game is not running");
 			Application.closeBot(Application.CODE_GAME_NOT_RUNNING);

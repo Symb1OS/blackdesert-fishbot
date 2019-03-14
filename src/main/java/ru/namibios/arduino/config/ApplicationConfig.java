@@ -22,6 +22,22 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("23.95.61.97:9090")
 	String URL_CAPTCHA_SERVICE();
 
+	@Key("bot.http.connect_timeout")
+	@DefaultValue("15000")
+	int HTTP_DEFAULT_CONNECT_TIMEOUT();
+
+	@Key("bot.http.socket_timeout")
+	@DefaultValue("15000")
+	int HTTP_DEFAULT_SOCKET_TIMEOUT();
+
+	@Key("bot.http.socket_timeout.captcha")
+	@DefaultValue("6000")
+	int HTTP_CAPTCHA_SOCKET_TIMEOUT();
+
+	@Key("bot.game_title")
+	@DefaultValue("BLACK DESERT")
+	String GAME_TITLE();
+
 	@Key("bot.ws")
 	@DefaultValue("ws://${bot.http}/fishingserver/tg_bot")
 	String URL_WS();
@@ -497,4 +513,5 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.debug.debuf")
 	@DefaultValue("false")
 	boolean DEBUG_DEBUF();
+
 }

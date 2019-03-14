@@ -5,9 +5,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
@@ -70,10 +72,18 @@ public class HttpService {
 	private HttpClient httpClient;
 
     public HttpService() {
+
         SSLContext tls = getSSLContext();
 
         Header header = new BasicHeader("x-forwarded-for", AppUtils.getForwaded());
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(Application.getInstance().HTTP_DEFAULT_CONNECT_TIMEOUT())
+                .setSocketTimeout(Application.getInstance().HTTP_DEFAULT_SOCKET_TIMEOUT())
+                .build();
+
         httpClient = HttpClients.custom()
+                .setDefaultRequestConfig(requestConfig)
                 .setDefaultHeaders(Collections.singletonList(header))
                 .setSSLContext(tls)
                 .build();
@@ -168,9 +178,16 @@ public class HttpService {
 		post.setEntity(entity);
 
         HttpResponse httpResponse;
+
         try {
 
-            httpResponse = httpClient.execute(post);
+            HttpClientContext context = new HttpClientContext();
+
+            context.setRequestConfig(RequestConfig.custom()
+                    .setSocketTimeout(Application.getInstance().HTTP_CAPTCHA_SOCKET_TIMEOUT())
+                    .build());
+
+            httpResponse = httpClient.execute(post, context);
 
         } catch (HttpHostConnectException e) {
 
