@@ -42,6 +42,8 @@ public class CaptchaState extends State {
                 return;
             }
 
+			fishBot.call();
+
             if (inputService.send(() -> key)){
 				LOG.info("Captcha send to input. Go to check status...");
 				fishBot.setState(new StatusCaptchaState(fishBot, name));
@@ -50,7 +52,7 @@ public class CaptchaState extends State {
 				LOG.info("Captcha is not recognized. Return to start...");
 				fishBot.setState(new StartFishState(fishBot));
 			}
-			
+
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
