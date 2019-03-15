@@ -44,7 +44,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,7 +52,7 @@ import static ru.namibios.arduino.config.Message.SERVER_NOT_AVAILABLE;
 
 public class HttpService {
 
-	private static final Logger LOG = Logger.getLogger(HttpService.class);
+    private static final Logger LOG = Logger.getLogger(HttpService.class);
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
 
@@ -60,6 +60,7 @@ public class HttpService {
 	private static final String TELEGRAM_PHOTO_URL = "http://%s/fishingserver/photo";
 
     private static final String USER_STATUS_URL = "http://%s/fishingserver/user/status";
+    private static final String CLOSE_BOT = "http://%s/fishingserver/user/close";
 
 	private static final String INFO_URL = "http://%s/fishingserver/info";
 	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
@@ -69,13 +70,14 @@ public class HttpService {
     private static final String TEST_URL = "http://%s/fishingserver/captcha/test";
 	private static final String CALL_URL = "http://%s/fishingserver/call";
 
-	private HttpClient httpClient;
+    private HttpClient httpClient;
 
     public HttpService() {
 
         SSLContext tls = getSSLContext();
 
-        Header header = new BasicHeader("x-forwarded-for", AppUtils.getForwaded());
+        Header forwarded = new BasicHeader("X-FORWARDED-FOR", AppUtils.getForwaded());
+        Header session = new BasicHeader("USER_SESSION", Application.SESSION);
 
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(Application.getInstance().HTTP_DEFAULT_CONNECT_TIMEOUT())
@@ -84,7 +86,7 @@ public class HttpService {
 
         httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(requestConfig)
-                .setDefaultHeaders(Collections.singletonList(header))
+                .setDefaultHeaders(Arrays.asList(forwarded, session))
                 .setSSLContext(tls)
                 .build();
     }
@@ -280,6 +282,22 @@ public class HttpService {
 
     }
 
+    public void close(int status) throws IOException {
+
+        HttpPost post = new HttpPost(String.format(CLOSE_BOT, Application.getInstance().URL_CAPTCHA_SERVICE()));
+
+        ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
+        postParameters.add(new BasicNameValuePair("USER", JSON.getInstance().writeValueAsString(Application.getUser())));
+        postParameters.add(new BasicNameValuePair("STATUS", String.valueOf(status)));
+
+        post.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
+
+        HttpResponse httpResponse = httpClient.execute(post);
+
+        EntityUtils.consume(httpResponse.getEntity());
+
+    }
+
 	public void call(String name) throws IOException {
 
 		httpClient = HttpClients.createDefault();
@@ -295,7 +313,7 @@ public class HttpService {
 
 	}
 
-	private static class DefaultTrustManager implements X509TrustManager {
+    private static class DefaultTrustManager implements X509TrustManager {
 
         @Override
         public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}

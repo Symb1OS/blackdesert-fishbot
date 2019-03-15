@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 public class Application {
 
@@ -29,10 +30,14 @@ public class Application {
 	public static final int CODE_EMPTY_LOOT = 12;
 	public static final int CODE_EMPTY_CHARS = 13;
 	public static final int CODE_EMPTY_TEMPLATE = 14;
+	public static final int CODE_CLOSE_GUI = 15;
+	public static final int CODE_USER_ALREADY_LOGGED = 16;
 
 	private static final Logger LOG = Logger.getLogger(Application.class);
 
 	private static final String PROPERTY_FILE_NAME = "resources/application.properties";
+
+	public static final String SESSION = UUID.randomUUID().toString();
 
 	private static User user;
 
@@ -59,17 +64,10 @@ public class Application {
 				user = httpService.getUserStatus(user);
 				user.saveHash();
 
-				switch (user.getCode()) {
-					case CODE_INVALID_KEY:
-						LOG.error(Message.INVALID_KEY);
-						JOptionPane.showMessageDialog(null,  user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
-						Application.closeBot(CODE_INVALID_KEY);
-						break;
-					case CODE_USER_BLOCKED:
-						LOG.error(Message.USER_IS_BLOCKED);
-						JOptionPane.showMessageDialog(null, Message.USER_IS_BLOCKED + "\nReason: " + user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
-						Application.closeBot(CODE_USER_BLOCKED);
-						break;
+				if (user.getCode() != Application.CODE_OK) {
+					LOG.error("Code " + user.getCode() + ". Description: " + user.getMessage());
+					JOptionPane.showMessageDialog(null, "Description: " + user.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
+					Application.closeBot(user.getCode());
 				}
 
 			} catch (IOException | URISyntaxException e) {
@@ -93,6 +91,16 @@ public class Application {
 		LOG.info("Close bot with status - " + status);
 
 		Launcher.close();
+
+		HttpService httpService = new HttpService();
+
+		try {
+
+			httpService.close(status);
+
+		} catch (IOException e) {
+			LOG.error(ExceptionUtils.getString(e));
+		}
 
 		System.exit(status);
 

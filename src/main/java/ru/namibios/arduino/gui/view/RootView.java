@@ -25,6 +25,8 @@ import ru.namibios.arduino.utils.ExecUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -164,6 +166,15 @@ public class RootView extends JFrame {
 
         ToolTipManager.sharedInstance().setDismissDelay(1000 * 100);
         ToolTipManager.sharedInstance().setInitialDelay(100);
+
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                Application.closeBot(Application.CODE_CLOSE_GUI);
+            }
+        });
 
         setVisible(true);
         setResizable(false);
