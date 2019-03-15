@@ -46,7 +46,7 @@ public abstract class State {
 
 	private boolean isActiveClient(){
 
-		WinDef.HWND windowGame = WinAPI.findWindow("BLACK DESERT");
+		WinDef.HWND windowGame = WinAPI.findWindow(Application.getInstance().GAME_TITLE());
 		if (windowGame == null) {
 
 			LOG.info("Game client crash");
