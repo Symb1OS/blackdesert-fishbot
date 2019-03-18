@@ -34,6 +34,8 @@ public class CaptchaState extends State {
 		
 		try {
 
+			fishBot.call();
+
             String key = captcha.getKey();
 
             if (!key.matches(Captcha.REGEX)) {
@@ -41,8 +43,6 @@ public class CaptchaState extends State {
                 fishBot.setRunned(false);
                 return;
             }
-
-			fishBot.call();
 
             if (inputService.send(() -> key)){
 				LOG.info("Captcha send to input. Go to check status...");

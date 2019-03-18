@@ -4,6 +4,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -300,18 +301,28 @@ public class HttpService {
 
 	public void call(String name) throws IOException {
 
-		httpClient = HttpClients.createDefault();
-
 		HttpPost post = Builder.config().setUrl(String.format(CALL_URL, Application.getInstance().URL_CAPTCHA_SERVICE()))
 				.setParameter(new BasicNameValuePair("USER", JSON.getInstance().writeValueAsString(Application.getUser())))
 				.setParameter(new BasicNameValuePair("NAME", name))
 				.build();
 
-        HttpResponse httpResponse = httpClient.execute(post);
-
-		EntityUtils.consume(httpResponse.getEntity());
+        httpClient.execute(post, this::defaultHandleResponse);
 
 	}
+
+    private Boolean defaultHandleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != HttpStatus.SC_OK) {
+
+            String message = EntityUtils.toString(response.getEntity());
+            LOG.error(message);
+
+            return false;
+
+        }
+
+        return true;
+    }
 
     private static class DefaultTrustManager implements X509TrustManager {
 
