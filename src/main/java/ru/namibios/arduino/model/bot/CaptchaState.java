@@ -34,8 +34,6 @@ public class CaptchaState extends State {
 		
 		try {
 
-			fishBot.call();
-
             String key = captcha.getKey();
 
             if (!key.matches(Captcha.REGEX)) {
