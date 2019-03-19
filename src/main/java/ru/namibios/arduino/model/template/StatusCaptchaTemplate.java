@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
 import ru.namibios.arduino.utils.ExceptionUtils;
-import ru.namibios.arduino.utils.MatrixUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public enum StatusCaptchaTemplate implements MatrixTemplate{
         File[] filenames = new File(fileFolderName).listFiles();
         if (filenames != null && filenames.length == 0) {
             LOG.error("Folder is empty: " + fileFolderName);
-            Application.closeBot(Application.CODE_EMPTY_STATUS_CAPTCHA);
+            Application.closeBot(Application.CODE_INIT_STATUS_CAPTCHA);
         }
 
 		try {
@@ -43,16 +42,8 @@ public enum StatusCaptchaTemplate implements MatrixTemplate{
 
 		} catch (Exception e) {
 			LOG.error(ExceptionUtils.getString(e));
-			Application.closeBot(Application.CODE_EMPTY_STATUS_CAPTCHA);
+			Application.closeBot(Application.CODE_INIT_STATUS_CAPTCHA);
 		}
 
 	}
-
-    public static void main(String[] args) {
-        StatusCaptchaTemplate a = SUCCESS;
-        List<int[][]> templates = a.getTemplates();
-        for (int[][] template : templates) {
-            MatrixUtils.printMatrix(template, "0");
-        }
-    }
 }

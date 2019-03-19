@@ -3,6 +3,7 @@ package ru.namibios.arduino.model.template;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.ImageParser;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,12 +29,20 @@ public enum Chars implements MatrixTemplate{
 		File[] filenames = new File(fileFolderName).listFiles();
 		if (filenames != null && filenames.length == 0) {
 			LOG.error("Folder is empty: " + fileFolderName);
-			Application.closeBot(Application.CODE_EMPTY_CHARS);
+			Application.closeBot(Application.CODE_INIT_CHARS);
 		}
 
-		Arrays.stream(filenames)
-				.map(ImageParser::mapImageMatrix)
-				.forEach(templates::add);
+		try {
+
+            Arrays.stream(filenames)
+                    .map(ImageParser::mapImageMatrix)
+                    .forEach(templates::add);
+
+        } catch (Exception e) {
+            LOG.error(ExceptionUtils.getString(e));
+            Application.closeBot(Application.CODE_INIT_CHARS);
+        }
+
 	}
 
 }

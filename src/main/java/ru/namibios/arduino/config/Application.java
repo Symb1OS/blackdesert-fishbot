@@ -25,11 +25,10 @@ public class Application {
 	public static final int CODE_GAME_CLIENT_CRASH = 7;
     public static final int CODE_UNSUPPORTED_RESOLUTION = 8;
 	public static final int CODE_ALREADY_RUNNING = 9;
-	public static final int CODE_EMPTY_STATUS_CUT = 10;
-	public static final int CODE_EMPTY_STATUS_CAPTCHA = 11;
-	public static final int CODE_EMPTY_LOOT = 12;
-	public static final int CODE_EMPTY_CHARS = 13;
-	public static final int CODE_EMPTY_TEMPLATE = 14;
+	public static final int CODE_INIT_STATUS_CUT = 10;
+	public static final int CODE_INIT_STATUS_CAPTCHA = 11;
+	public static final int CODE_INIT_LOOT = 12;
+	public static final int CODE_INIT_CHARS = 13;
 	public static final int CODE_CLOSE_GUI = 15;
 	public static final int CODE_USER_ALREADY_LOGGED = 16;
 
