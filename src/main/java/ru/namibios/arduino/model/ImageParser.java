@@ -5,8 +5,11 @@ import ru.namibios.arduino.model.template.Loot;
 import ru.namibios.arduino.model.template.MatrixTemplate;
 import ru.namibios.arduino.utils.Matrix;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,6 +179,22 @@ public class ImageParser {
 			}
 		}
 		return null;
+	}
+
+	public static int[][] mapImageMatrix(File file){
+
+		try {
+
+			BufferedImage image = ImageIO.read(file);
+			ImageParser parser = new ImageParser(image);
+			parser.parse(Screen.WHITE);
+			return parser.getImageMatrix();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null ;
 	}
 
 	public MatrixTemplate getNameTemplateBySubImage() {

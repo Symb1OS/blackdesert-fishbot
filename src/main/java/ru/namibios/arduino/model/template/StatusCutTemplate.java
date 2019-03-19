@@ -2,54 +2,60 @@ package ru.namibios.arduino.model.template;
 
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.config.Path;
+import ru.namibios.arduino.model.ImageParser;
+import ru.namibios.arduino.utils.ExceptionUtils;
 import ru.namibios.arduino.utils.MatrixUtils;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum StatusCutTemplate implements MatrixTemplate{
-	
-	PERFECT("PERFECT_RU","PERFECT_EN"),
-	
-	GOOD("GOOD_RU", "GOOD_EN"),
-	
-	BAD("BAD_RU", "BAD_EN");
+
+	PERFECT("resources/templates/statuscut/perfect"),
+
+	GOOD("resources/templates/statuscut/good"),
+
+	BAD("resources/templates/statuscut/bad");
 
 	private final List<int[][]> templates;
 
 	private final Logger LOG = Logger.getLogger(StatusCutTemplate.class);
-	
+
 	@Override
 	public List<int[][]> getTemplates() {
 		return templates;
 	}
-	
-	StatusCutTemplate(String... filenames) {
+
+	StatusCutTemplate(String fileFolderName) {
 		this.templates = new ArrayList<>();
 
-		try {
+        File[] filenames = new File(fileFolderName).listFiles();
+        if (filenames != null && filenames.length == 0) {
+            LOG.error("Folder is empty: " + fileFolderName);
+            Application.closeBot(Application.CODE_EMPTY_STATUS_CUT);
+        }
 
-            for (String filename : filenames) {
-                List<String> list = Files.lines(Paths.get(Path.STATUS_CUT, filename), StandardCharsets.UTF_8)
-                        .collect(Collectors.toCollection(ArrayList::new));
+        try {
 
-				if(list.isEmpty()){
-					LOG.error("Empty template, please check " + filename);
-					Application.closeBot(Application.CODE_EMPTY_STATUS_CUT);
-				}
+            Arrays.stream(filenames)
+                    .map(ImageParser::mapImageMatrix)
+                    .forEach(templates::add);
 
-                templates.add(MatrixUtils.importTemplate(list));
-            }
+        } catch (Exception e) {
+            LOG.error(ExceptionUtils.getString(e));
+            Application.closeBot(Application.CODE_EMPTY_STATUS_CUT);
+        }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
+
+    public static void main(String[] args) {
+        StatusCutTemplate a = BAD;
+        List<int[][]> templates = a.getTemplates();
+        for (int[][] template : templates) {
+            MatrixUtils.printMatrix(template, "0");
+        }
+    }
 
 }
