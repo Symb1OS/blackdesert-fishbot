@@ -11,6 +11,7 @@ import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.config.converter.UiThemeConverter;
 import ru.namibios.arduino.gui.CustomVerifier;
 import ru.namibios.arduino.gui.Launcher;
+import ru.namibios.arduino.gui.TimeMouseConverter;
 import ru.namibios.arduino.gui.UI;
 import ru.namibios.arduino.gui.controller.CancelController;
 import ru.namibios.arduino.gui.controller.ResetController;
@@ -778,6 +779,7 @@ public class TabSettingsView extends JDialog {
 
         tfRodChange.setText(String.valueOf(Application.getInstance().TIME_CHANGE_ROD()));
         tfRodChange.setInputVerifier(delayVerifier);
+        tfRodChange.addMouseListener(new TimeMouseConverter(tfRodChange));
 
         tfRodCount.setText(String.valueOf(Application.getInstance().COUNT_ROD()));
         tfRodCount.setInputVerifier(rodCountVerifier);
@@ -802,17 +804,23 @@ public class TabSettingsView extends JDialog {
         cbFirstSlotActive.setSelected(Application.getInstance().SLOT_ONE().isActive());
         tfFirstSlotKey.setText(Application.getInstance().SLOT_ONE().getKey());
         tfFirstSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_ONE().getDelay()));
+        tfFirstSlotDelay.addMouseListener(new TimeMouseConverter(tfFirstSlotDelay));
         tfFirstSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_ONE().getPeriod()));
+        tfFirstSlotPeriod.addMouseListener(new TimeMouseConverter(tfFirstSlotPeriod));
 
         cbSecondSlotActive.setSelected(Application.getInstance().SLOT_TWO().isActive());
         tfSecondSlotKey.setText(Application.getInstance().SLOT_TWO().getKey());
         tfSecondSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_TWO().getDelay()));
+        tfSecondSlotDelay.addMouseListener(new TimeMouseConverter(tfSecondSlotDelay));
         tfSecondSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_TWO().getPeriod()));
+        tfSecondSlotPeriod.addMouseListener(new TimeMouseConverter(tfSecondSlotPeriod));
 
         cbThirdSlotActive.setSelected(Application.getInstance().SLOT_THREE().isActive());
         tfThirdSlotKey.setText(Application.getInstance().SLOT_THREE().getKey());
         tfThirdSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_THREE().getDelay()));
+        tfThirdSlotDelay.addMouseListener(new TimeMouseConverter(tfThirdSlotDelay));
         tfThirdSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_THREE().getPeriod()));
+        tfThirdSlotPeriod.addMouseListener(new TimeMouseConverter(tfThirdSlotPeriod));
 
         tfFirstSlotKey.setInputVerifier(slotKeyVerifier);
         tfFirstSlotDelay.setInputVerifier(delayPeriodVerifier);
@@ -859,8 +867,11 @@ public class TabSettingsView extends JDialog {
 
         beerPeriodFrom.setText(String.valueOf(Application.getInstance().SLOT_BEER().getPeriod()));
         beerPeriodFrom.setInputVerifier(delayPeriodVerifier);
+        beerPeriodFrom.addMouseListener(new TimeMouseConverter(beerPeriodFrom));
+
         beerPeriodTo.setText(String.valueOf(Application.getInstance().SLOT_BEER().getRandomPeriod()));
         beerPeriodTo.setInputVerifier(delayPeriodVerifier);
+        beerPeriodTo.addMouseListener(new TimeMouseConverter(beerPeriodTo));
     }
 
     private void initAutoEnd() {
@@ -868,10 +879,14 @@ public class TabSettingsView extends JDialog {
         lIdeaPause.setIcon(new ImageIcon(UI.IMG_IDEA));
         cbPause.setSelected(Application.getInstance().TASK_PAUSE().isActive());
         tfPauseDelayFrom.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getDelay()));
+        tfPauseDelayFrom.addMouseListener(new TimeMouseConverter(tfPauseDelayFrom));
         tfPauseDelayTo.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getRandomDelay()));
+        tfPauseDelayTo.addMouseListener(new TimeMouseConverter(tfPauseDelayTo));
 
         tfPauseDowntimeFrom.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getPauseFrom()));
+        tfPauseDowntimeFrom.addMouseListener(new TimeMouseConverter(tfPauseDowntimeFrom));
         tfPauseDowntimeTo.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getPauseTo()));
+        tfPauseDowntimeTo.addMouseListener(new TimeMouseConverter(tfPauseDowntimeTo));
 
         lTimer.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
         lTimer.setToolTipText(UIManager.getString("preference.premium.tooltip"));
@@ -883,6 +898,7 @@ public class TabSettingsView extends JDialog {
         lIdeaDeferredStart.setIcon(new ImageIcon(UI.IMG_IDEA));
         cbDeferredStart.setSelected(Application.getInstance().TASK_START().isActive());
         tfDeferredStart.setText(String.valueOf(Application.getInstance().TASK_START().getDelay()));
+        tfDeferredStart.addMouseListener(new TimeMouseConverter(tfDeferredStart));
         tfDeferredStart.setInputVerifier(delayPeriodVerifier);
 
         lIdeaStopBot.setIcon(new ImageIcon(UI.IMG_IDEA));
@@ -895,6 +911,7 @@ public class TabSettingsView extends JDialog {
         });
 
         tfStopBot.setText(String.valueOf(Application.getInstance().TASK_STOP().getDelay()));
+        tfStopBot.addMouseListener(new TimeMouseConverter(tfStopBot));
         tfStopBot.setInputVerifier(delayPeriodVerifier);
 
         lIdeaExitGame.setIcon(new ImageIcon(UI.IMG_IDEA));
@@ -906,6 +923,7 @@ public class TabSettingsView extends JDialog {
             }
         });
         tfExitGame.setText(String.valueOf(Application.getInstance().TASK_EXIT_GAME().getDelay()));
+        tfExitGame.addMouseListener(new TimeMouseConverter(tfExitGame));
         tfExitGame.setInputVerifier(delayPeriodVerifier);
 
     }
