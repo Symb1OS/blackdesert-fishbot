@@ -138,8 +138,8 @@ public class HotSlot {
     private long converterMills(String value) {
         long ms = -1;
 
-        // К примеру если указано просто 0
-        if (value.length() == 1) {
+        // если 0 или просто число
+        if (value.length() == 1 || value.matches("[\\d]+")) {
             return Long.parseLong(value);
         }
 
@@ -149,7 +149,7 @@ public class HotSlot {
         switch (format) {
             case 's' : ms = unformat * 1000;      break;
             case 'm' : ms = unformat * 1000 * 60; break;
-            default  : ms = Long.parseLong(value);
+            default  : throw new IllegalArgumentException(String.valueOf(format));
         }
 
         return ms;

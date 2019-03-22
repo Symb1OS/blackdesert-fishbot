@@ -18,8 +18,15 @@ public class TimeMouseConverter extends MouseAdapter {
     public void mouseEntered(MouseEvent e) {
         if (field != null) {
             String text = field.getText();
-            TimeConverter converter = new TimeConverter(text);
-            field.setToolTipText(converter.getValue());
+            try {
+
+                TimeConverter converter = new TimeConverter(text);
+                field.setToolTipText(converter.getValue());
+
+            } catch (NumberFormatException ignore) {
+                
+            }
         }
     }
+
 }
