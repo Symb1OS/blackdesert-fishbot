@@ -37,7 +37,7 @@ public abstract class State {
 	int overflow = Application.getInstance().STATE_OVERFLOW();
 	private int step = 0;
 
-	void ifBreak() {
+	void overflow() {
 		step++;
 		if(step >= overflow){
 			onOverflow();
