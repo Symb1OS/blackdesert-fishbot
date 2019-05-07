@@ -82,4 +82,5 @@ Right click at `run.bat` and *Run as administrator*(`!!IMPORTANT!!`)
 
 
 ### Donation
-[Donation](https://money.yandex.ru/to/410014569437812)
+- [PayPal](https://www.paypal.me/Symb1OS)
+- [Yandex Money](https://money.yandex.ru/to/410014569437812)
