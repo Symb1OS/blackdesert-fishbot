@@ -395,7 +395,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle FULL_SCREEN();
 
 	@Key("bot.screen.space")
-	@DefaultValue("928, 190, 63, 25")
+	@DefaultValue("928, 230, 63, 25")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle SPACE();
 
@@ -404,7 +404,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int SPACE_OFFSET_X();
 
 	@Key("bot.screen.space.offset.y")
-	@DefaultValue("40")
+	@DefaultValue("60")
 	int SPACE_OFFSET_Y();
 
 	@Key("bot.screen.line")
@@ -483,7 +483,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     boolean DEBUG_SCREEN();
 
     @Key("bot.screen.debug.waitfish")
-    @DefaultValue("false")
+    @DefaultValue("true")
     boolean DEBUG_WAITFISH();
 
     @Key("bot.screen.debug.statuscaptcha")

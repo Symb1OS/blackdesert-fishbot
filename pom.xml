@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.namibios.arduino</groupId>
     <artifactId>blackdesert-fishbot</artifactId>
-    <version>1.8.6</version>
+    <version>1.8.7</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -130,7 +130,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.0</version>
         </dependency>
-
 
     </dependencies>
 
