@@ -57,19 +57,18 @@ public class HttpService {
 	
 	private static final String TELEGRAM_ALARMER_URL = "https://alarmerbot.ru";
 
-	private static final String TELEGRAM_MESSAGE_URL = "http://%s/fishingserver/message";
-	private static final String TELEGRAM_PHOTO_URL = "http://%s/fishingserver/photo";
+	private static final String TELEGRAM_MESSAGE_URL = "https://%s/fishingserver/message";
+	private static final String TELEGRAM_PHOTO_URL = "https://%s/fishingserver/photo";
 
-    private static final String USER_STATUS_URL = "http://%s/fishingserver/user/status";
-    private static final String CLOSE_BOT = "http://%s/fishingserver/user/close";
+    private static final String USER_STATUS_URL = "https://%s/fishingserver/user/status";
+    private static final String CLOSE_BOT = "https://%s/fishingserver/user/close";
 
-	private static final String INFO_URL = "http://%s/fishingserver/info";
-	private static final String BYTE_CAPTCHA_URL = "http://%s/fishingserver/captcha/decode";
-    private static final String MARK_FAILURE_STATUS_URL = "http://%s/fishingserver/captcha/status";
+	private static final String INFO_URL = "https://%s/fishingserver/info";
+	private static final String BYTE_CAPTCHA_URL = "https://%s/fishingserver/captcha/decode";
+    private static final String MARK_FAILURE_STATUS_URL = "https://%s/fishingserver/captcha/status";
     private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
 
-    private static final String TEST_URL = "http://%s/fishingserver/captcha/test";
-	private static final String CALL_URL = "http://%s/fishingserver/call";
+	private static final String CALL_URL = "https://%s/fishingserver/call";
 
     private HttpClient httpClient;
 
@@ -147,6 +146,13 @@ public class HttpService {
         EntityUtils.consume(httpResponse.getEntity());
 
     }
+    public static void main(String[] args) throws IOException {
+
+        HttpService httpService = new HttpService();
+
+        String greeting = httpService.greeting();
+        System.out.println("greeting = " + greeting);
+    }
 
 	public String getLastReleaseTag() throws IOException{
 
@@ -214,21 +220,6 @@ public class HttpService {
 
 	}
 
-	public void test() throws IOException {
-
-        HttpGet get = new HttpGet(String.format(TEST_URL,Application.getInstance().URL_CAPTCHA_SERVICE()) + "?status=bad");
-
-        HttpResponse httpResponse = httpClient.execute(get);
-
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
-        System.out.println("statusCode = " + statusCode);
-
-        HttpEntity entity = httpResponse.getEntity();
-        String response = EntityUtils.toString(entity, "UTF-8");
-        System.out.println("response = " + response);
-
-    }
-
     private void testCaptcha() throws IOException {
 		HttpService httpService = new HttpService();
 
@@ -254,6 +245,16 @@ public class HttpService {
 		EntityUtils.consume(httpResponse.getEntity());
 
 	}
+
+    public String greeting() throws IOException {
+
+        HttpGet get = new HttpGet(String.format("https://%s/fishingserver/info/greeting", Application.getInstance().URL_CAPTCHA_SERVICE()));
+
+        HttpResponse httpResponse = httpClient.execute(get);
+        HttpEntity entity = httpResponse.getEntity();
+
+        return EntityUtils.toString(entity, "UTF-8");
+    }
 
 	public String getInfo() throws IOException {
 

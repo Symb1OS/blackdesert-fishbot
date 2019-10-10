@@ -19,7 +19,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String THEME();
 
 	@Key("bot.http")
-	@DefaultValue("23.95.61.97:9090")
+	@DefaultValue("namibios.ru:443")
 	String URL_CAPTCHA_SERVICE();
 
 	@Key("bot.http.connect_timeout")
@@ -39,7 +39,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String GAME_TITLE();
 
 	@Key("bot.ws")
-	@DefaultValue("ws://${bot.http}/fishingserver/tg_bot")
+	@DefaultValue("wss://${bot.http}/fishingserver/tg_bot")
 	String URL_WS();
 
     @Key("bot.local.port")
