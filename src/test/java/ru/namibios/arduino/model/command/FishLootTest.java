@@ -2,6 +2,7 @@ package ru.namibios.arduino.model.command;
 
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.config.Path;
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class FishLootTest {
 	
 	@Before

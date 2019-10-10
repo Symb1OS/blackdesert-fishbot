@@ -155,8 +155,8 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.loot.touch")
 	@Separator(";")
-	@DefaultValue("{1560,618};{1607,618};{1654,618};{1701,618};" +
-				  "{1560,665};{1607,665};{1654,665};{1701,665}")
+	@DefaultValue("{1440,640};{1494,640};{1654,640};{1701,640};{1560,640};{1607,640};" +
+				  "{1440,694};{1494,694}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] LOOT_TOUCH();
 
@@ -434,14 +434,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")
-    @DefaultValue("1539, 597, 43, 43;"
-                + "1586, 597, 43, 43;"
-                + "1633, 597, 43, 43;"
-                + "1680, 597, 43, 43;"
-                + "1539, 644, 43, 43;"
-                + "1586, 644, 43, 43;"
-                + "1633, 644, 43, 43;"
-                + "1680, 644, 43, 43")
+    @DefaultValue("1419, 619, 42, 42;"
+                + "1473, 619, 42, 42;"
+                + "1527, 619, 42, 42;"
+                + "1581, 619, 42, 42;"
+                + "1635, 619, 42, 42;"
+                + "1689, 619, 42, 42;"
+                + "1419, 673, 42, 42;"
+                + "1473, 673, 42, 42")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] LOOT_SLOT_LIST();
 
