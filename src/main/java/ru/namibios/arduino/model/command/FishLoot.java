@@ -37,7 +37,7 @@ public class FishLoot implements Command{
 	public FishLoot() {
 		LOG.info("Init filter");
 
-        Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
+		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
         List<Screen> collect = Arrays.stream(rectangles)
                 .map(this::toScreen)
@@ -85,6 +85,15 @@ public class FishLoot implements Command{
 	}
 
 	private void saveLoot(String[] arrayLoots){
+
+		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
+			try {
+				Screen screen = new Screen(Application.getInstance().FULL_SCREEN(), false);
+				screen.saveImage(Path.DEBUG_FILTERLOOT);
+			} catch (AWTException e) {
+				LOG.error(ExceptionUtils.getString(e));
+			}
+		}
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
 			screens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));

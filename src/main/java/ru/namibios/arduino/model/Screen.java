@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +124,13 @@ public class Screen {
 
 	public void saveDebugImage(){
 		try {
+
+			if (!Files.exists(Paths.get(Path.DEBUG))) {
+				Files.createDirectory(Paths.get(Path.DEBUG));
+			}
+
 			ImageIO.write(screenShot, "jpg", new File(Path.DEBUG + DateUtils.getYYYY_MM_DD_HH_MM_SS_S() + ".jpg"));
+
 		} catch (IOException e) {
 			logger.error("Exception " + e);
 		}

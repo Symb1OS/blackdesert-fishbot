@@ -34,7 +34,7 @@ More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 ### Requirements
 
 - Screen resolution 1920x1080 (full screen or in window without frame)
-- [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [JDK 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
 
 - [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) `(Optional)`
 - [Arduino IDE](https://www.arduino.cc/en/main/software) `(Optional)`

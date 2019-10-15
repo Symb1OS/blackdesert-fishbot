@@ -22,7 +22,7 @@ public class CaptchaState extends State {
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_KAPCHA();
 
-        this.name = String.valueOf(new Date().getTime()) + "_" + Application.getUser().getHash();
+        this.name = new Date().getTime() + "_" + Application.getUser().getHash();
         this.captcha = new Captcha(name);
 
     }

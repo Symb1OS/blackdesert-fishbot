@@ -1,5 +1,6 @@
 package ru.namibios.arduino.model;
 
+import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
 import ru.namibios.arduino.model.template.Loot;
 import ru.namibios.arduino.model.template.MatrixTemplate;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageParser {
+
+	private final Logger LOG = Logger.getLogger(ImageParser.class);
 	
 	private int[][] screenMatrix;
 	private ArrayList<int[][]> keyList;
@@ -118,10 +121,16 @@ public class ImageParser {
 		int index = 0;
 		while(index < collectionTemplate.length){
 			List<int[][]> templateNumber = collectionTemplate[index].getTemplates();
+			if (Application.getInstance().DEBUG_IMAGE_PARSER()) {
+				LOG.debug("Category: " + Loot.values()[index].name() + "(" + index + ")");
+			}
 			for (int[][] template : templateNumber) {
 				if(!isCorrectrDimension(numberMatrix, template)) continue;
 				coef.init(numberMatrix, template);
 				coef.calculate(index);
+				if (Application.getInstance().DEBUG_IMAGE_PARSER()) {
+					LOG.debug(coef);
+				}
 				if (coef.isFullMatch()) {
 					return coef.getRezultIndex();
 				}

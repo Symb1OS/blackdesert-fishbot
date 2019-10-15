@@ -482,6 +482,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("false")
     boolean DEBUG_SCREEN();
 
+	@Key("bot.screen.debug.image_parser")
+	@DefaultValue("false")
+	boolean DEBUG_IMAGE_PARSER();
+
     @Key("bot.screen.debug.waitfish")
     @DefaultValue("false")
     boolean DEBUG_WAITFISH();
