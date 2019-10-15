@@ -1,5 +1,8 @@
 package ru.namibios.arduino.config;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.gui.Launcher;
@@ -85,6 +88,37 @@ public class Application {
             LOG.error(ExceptionUtils.getString(e));
 		}
 	}
+
+	public static void sync(){
+
+		LOG.info("Start sync..");
+
+		try {
+
+			LOG.info("Create archive..");
+
+			String lootFolder = Path.RESOURCES + "loot";
+			String archive = lootFolder + ".zip";
+
+			ZipFile zipFile = new ZipFile(archive);
+			zipFile.addFolder(lootFolder, new ZipParameters());
+
+			LOG.info("Archive " + archive + " created..");
+
+			LOG.info("Start sync with server..");
+
+			HttpService httpService = new HttpService();
+			httpService.sync(new File(archive));
+
+		} catch (ZipException | IOException e) {
+            LOG.error(ExceptionUtils.getString(e));
+		}
+
+    }
+
+    public static void main(String[] args) {
+        sync();
+    }
 
 	public static void closeBot(int status){
 

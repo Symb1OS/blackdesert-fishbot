@@ -201,6 +201,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	boolean SAVE_UNKNOWN();
 
+    @Key("bot.loot.sync")
+    @DefaultValue("true")
+	boolean LOOT_SYNC();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// TASKS

@@ -35,6 +35,7 @@ import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -69,6 +70,7 @@ public class HttpService {
     private static final String LAST_RELEASE_URL = "https://api.github.com/repos/Symb1OS/blackdesert-fishbot/releases/latest";
 
 	private static final String CALL_URL = "https://%s/fishingserver/call";
+    private static final String SYNC_URL = "https://%s/fishingserver/sync";
 
     private HttpClient httpClient;
 
@@ -145,13 +147,6 @@ public class HttpService {
         HttpResponse httpResponse = httpClient.execute(post);
         EntityUtils.consume(httpResponse.getEntity());
 
-    }
-    public static void main(String[] args) throws IOException {
-
-        HttpService httpService = new HttpService();
-
-        String greeting = httpService.greeting();
-        System.out.println("greeting = " + greeting);
     }
 
 	public String getLastReleaseTag() throws IOException{
@@ -246,16 +241,6 @@ public class HttpService {
 
 	}
 
-    public String greeting() throws IOException {
-
-        HttpGet get = new HttpGet(String.format("https://%s/fishingserver/info/greeting", Application.getInstance().URL_CAPTCHA_SERVICE()));
-
-        HttpResponse httpResponse = httpClient.execute(get);
-        HttpEntity entity = httpResponse.getEntity();
-
-        return EntityUtils.toString(entity, "UTF-8");
-    }
-
 	public String getInfo() throws IOException {
 
 		HttpGet get = new HttpGet(String.format(INFO_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
@@ -310,6 +295,28 @@ public class HttpService {
         httpClient.execute(post, this::defaultHandleResponse);
 
 	}
+
+    public void sync(File file) throws IOException {
+
+        HttpPost post = new HttpPost(String.format(SYNC_URL, Application.getInstance().URL_CAPTCHA_SERVICE()));
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+        User user = Application.getUser();
+
+        builder.addTextBody("USER", JSON.getInstance().writeValueAsString(user));
+        builder.addBinaryBody("LOOT", file, ContentType.DEFAULT_BINARY, file.getName());
+
+        HttpEntity reqEntity = builder.build();
+        post.setEntity(reqEntity);
+
+        HttpResponse httpResponse = httpClient.execute(post);
+
+        HttpEntity entity = httpResponse.getEntity();
+        LOG.info(EntityUtils.toString(entity));
+
+    }
 
     private Boolean defaultHandleResponse(HttpResponse response) throws ClientProtocolException, IOException {
         int statusCode = response.getStatusLine().getStatusCode();
