@@ -116,13 +116,13 @@ public class Application {
 
     }
 
-    public static void main(String[] args) {
-        sync();
-    }
-
 	public static void closeBot(int status){
 
 		LOG.info("Close bot with status - " + status);
+
+		if (Application.getInstance().LOOT_SYNC()) {
+			sync();
+		}
 
 		Launcher.close();
 
