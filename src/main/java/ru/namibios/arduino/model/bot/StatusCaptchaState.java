@@ -50,7 +50,7 @@ public class StatusCaptchaState extends State{
 			StatusCaptchaTemplate status = statusService.getTemplate(new StatusCaptcha());
 			
 			if(status == null) {
-				ifBreak();
+				overflow();
 
 			}else{
 

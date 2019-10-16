@@ -41,7 +41,7 @@ public enum Loot implements MatrixTemplate {
 		File[] files = new File(fileFolderName).listFiles();
 		if (files != null && files.length == 0) {
 			LOG.error("Folder is empty: " + fileFolderName);
-			Application.closeBot(Application.CODE_EMPTY_LOOT);
+			Application.closeBot(Application.CODE_INIT_LOOT);
 		}
 
 		for (File file : files) {

@@ -39,7 +39,7 @@ public class StatusCutState extends State{
 
 			StatusCutTemplate status = statusService.getTemplate(new StatusCut());
 			if (status == null) {
-				ifBreak();
+				overflow();
 
 			} else {
 

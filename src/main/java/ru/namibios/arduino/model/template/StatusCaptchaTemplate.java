@@ -2,52 +2,48 @@ package ru.namibios.arduino.model.template;
 
 import org.apache.log4j.Logger;
 import ru.namibios.arduino.config.Application;
-import ru.namibios.arduino.config.Path;
-import ru.namibios.arduino.utils.MatrixUtils;
+import ru.namibios.arduino.model.ImageParser;
+import ru.namibios.arduino.utils.ExceptionUtils;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum StatusCaptchaTemplate implements MatrixTemplate{
 
-	SUCCESS("SUCCESS_EU", "SUCCESS_RU"),
+    SUCCESS("resources/templates/statuskapcha/success"),
 
-	FAILED("FAILED_EU", "FAILED_RU");
+    FAILED("resources/templates/statuskapcha/failed");
 	
 	private final List<int[][]> templates;
 
 	private final Logger LOG = Logger.getLogger(StatusCaptchaTemplate.class);
-	
+
 	@Override
 	public List<int[][]> getTemplates() {
 		return templates;
 	}
 
-	StatusCaptchaTemplate(String... filenames) {
+	StatusCaptchaTemplate(String fileFolderName) {
 		this.templates = new ArrayList<>();
+
+        File[] filenames = new File(fileFolderName).listFiles();
+        if (filenames != null && filenames.length == 0) {
+            LOG.error("Folder is empty: " + fileFolderName);
+            Application.closeBot(Application.CODE_INIT_STATUS_CAPTCHA);
+        }
 
 		try {
 
-			for (String filename : filenames) {
-				List<String> list = Files.lines(Paths.get(Path.STATUS_KAPCHA, filename), StandardCharsets.UTF_8)
-						.collect(Collectors.toCollection(ArrayList::new));
+            Arrays.stream(filenames)
+                    .map(ImageParser::mapImageMatrix)
+                    .forEach(templates::add);
 
-				if(list.isEmpty()){
-					LOG.error("Empty template, please check " + filename);
-					Application.closeBot(Application.CODE_EMPTY_STATUS_CAPTCHA);
-				}
-
-				templates.add(MatrixUtils.importTemplate(list));
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			LOG.error(ExceptionUtils.getString(e));
+			Application.closeBot(Application.CODE_INIT_STATUS_CAPTCHA);
 		}
-	}
 
+	}
 }

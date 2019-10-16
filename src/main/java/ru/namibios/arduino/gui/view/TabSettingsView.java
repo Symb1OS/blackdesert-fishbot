@@ -11,7 +11,12 @@ import ru.namibios.arduino.config.Message;
 import ru.namibios.arduino.config.converter.UiThemeConverter;
 import ru.namibios.arduino.gui.CustomVerifier;
 import ru.namibios.arduino.gui.Launcher;
+import ru.namibios.arduino.gui.TimeMouseConverter;
 import ru.namibios.arduino.gui.UI;
+import ru.namibios.arduino.gui.components.CoordComponent;
+import ru.namibios.arduino.gui.components.DelayComponent;
+import ru.namibios.arduino.gui.components.SlotComponent;
+import ru.namibios.arduino.gui.components.TouchComponent;
 import ru.namibios.arduino.gui.controller.CancelController;
 import ru.namibios.arduino.gui.controller.ResetController;
 import ru.namibios.arduino.gui.controller.SaveController;
@@ -378,41 +383,26 @@ public class TabSettingsView extends JDialog {
 
     private void initDelay() {
 
-        tfDelayStartBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_START()));
-        tfDelayStartAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_START()));
+        DelayComponent start = new DelayComponent(tfDelayStartBefore, tfDelayStartAfter, numericVerifier);
+        start.init(Application.getInstance().DELAY_BEFORE_START(), Application.getInstance().DELAY_AFTER_START());
 
-        tfDelayWaitfishBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_WAIT_FISH()));
-        tfDelayWaitfishAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_WAIT_FISH()));
+        DelayComponent waitfish = new DelayComponent(tfDelayWaitfishBefore, tfDelayWaitfishAfter, numericVerifier);
+        waitfish.init(Application.getInstance().DELAY_BEFORE_WAIT_FISH(), Application.getInstance().DELAY_AFTER_WAIT_FISH());
 
-        tfDelayCutBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_CUT_FISH()));
-        tfDelayCutAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_CUT_FISH()));
+        DelayComponent cut = new DelayComponent(tfDelayCutBefore, tfDelayCutAfter, numericVerifier);
+        cut.init(Application.getInstance().DELAY_BEFORE_CUT_FISH(), Application.getInstance().DELAY_AFTER_CUT_FISH());
 
-        tfDelayStatusCutBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_STATUS_CUT()));
-        tfDelayStatusCutAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_STATUS_CUT()));
+        DelayComponent statusCut = new DelayComponent(tfDelayStatusCutBefore, tfDelayStatusCutAfter, numericVerifier);
+        statusCut.init(Application.getInstance().DELAY_BEFORE_STATUS_CUT(), Application.getInstance().DELAY_AFTER_STATUS_CUT());
 
-        tfDelayCaptchaBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_KAPCHA()));
-        tfDelayCaptchaAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_KAPCHA()));
+        DelayComponent captcha = new DelayComponent(tfDelayCaptchaBefore, tfDelayCaptchaAfter, numericVerifier);
+        captcha.init(Application.getInstance().DELAY_BEFORE_KAPCHA(), Application.getInstance().DELAY_AFTER_KAPCHA());
 
-        tfDelayStatusCaptchaBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA()));
-        tfDelayStatusCaptchaAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_STATUS_KAPCHA()));
+        DelayComponent statusCaptcha = new DelayComponent(tfDelayStatusCaptchaBefore, tfDelayStatusCaptchaAfter, numericVerifier);
+        statusCaptcha.init(Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA(), Application.getInstance().DELAY_AFTER_STATUS_KAPCHA());
 
-        tfDelayLootFilterBefore.setText(String.valueOf(Application.getInstance().DELAY_BEFORE_FILTER_LOOT()));
-        tfDelayLootFilterAfter.setText(String.valueOf(Application.getInstance().DELAY_AFTER_FILTER_LOOT()));
-
-        tfDelayStartBefore.setInputVerifier(numericVerifier);
-        tfDelayStartAfter.setInputVerifier(numericVerifier);
-        tfDelayWaitfishBefore.setInputVerifier(numericVerifier);
-        tfDelayWaitfishAfter.setInputVerifier(numericVerifier);
-        tfDelayCutBefore.setInputVerifier(numericVerifier);
-        tfDelayCutAfter.setInputVerifier(numericVerifier);
-        tfDelayStatusCutBefore.setInputVerifier(numericVerifier);
-        tfDelayStatusCutAfter.setInputVerifier(numericVerifier);
-        tfDelayCaptchaBefore.setInputVerifier(numericVerifier);
-        tfDelayCaptchaAfter.setInputVerifier(numericVerifier);
-        tfDelayStatusCaptchaBefore.setInputVerifier(numericVerifier);
-        tfDelayStatusCaptchaAfter.setInputVerifier(numericVerifier);
-        tfDelayLootFilterBefore.setInputVerifier(numericVerifier);
-        tfDelayLootFilterAfter.setInputVerifier(numericVerifier);
+        DelayComponent lootFilter = new DelayComponent(tfDelayLootFilterBefore, tfDelayLootFilterAfter, numericVerifier);
+        lootFilter.init(Application.getInstance().DELAY_BEFORE_FILTER_LOOT(), Application.getInstance().DELAY_AFTER_FILTER_LOOT());
 
     }
 
@@ -517,29 +507,29 @@ public class TabSettingsView extends JDialog {
         tfCutState.setText(String.valueOf(Application.getInstance().STATE_CUT_OVERFLOW()));
         tfCapcthaState.setText(String.valueOf(Application.getInstance().STATE_STATUS_CAPTCHA_OVERFLOW()));
 
-        tfLootSlotOneX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[0].getX()));
-        tfLootSlotOneY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[0].getY()));
+        TouchComponent lootSlotOne = new TouchComponent(tfLootSlotOneX, tfLootSlotOneY, numericVerifier);
+        lootSlotOne.init(Application.getInstance().LOOT_TOUCH()[0]);
 
-        tfLootSlotTwoX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[1].getX()));
-        tfLootSlotTwoY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[1].getY()));
+        TouchComponent lootSlotTwo = new TouchComponent(tfLootSlotTwoX, tfLootSlotTwoY, numericVerifier);
+        lootSlotTwo.init(Application.getInstance().LOOT_TOUCH()[1]);
 
-        tfLootSlotThreeX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[2].getX()));
-        tfLootSlotThreeY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[2].getY()));
+        TouchComponent lootSlotThree = new TouchComponent(tfLootSlotThreeX, tfLootSlotThreeY, numericVerifier);
+        lootSlotThree.init(Application.getInstance().LOOT_TOUCH()[2]);
 
-        tfLootSlotFourX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[3].getX()));
-        tfLootSlotFourY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[3].getY()));
+        TouchComponent lootSlotFour = new TouchComponent(tfLootSlotFourX, tfLootSlotFourY, numericVerifier);
+        lootSlotFour.init(Application.getInstance().LOOT_TOUCH()[3]);
 
-        tfLootSlotFiveX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[4].getX()));
-        tfLootSlotFiveY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[4].getY()));
+        TouchComponent lootSlotFive = new TouchComponent(tfLootSlotFiveX, tfLootSlotFiveY, numericVerifier);
+        lootSlotFive.init(Application.getInstance().LOOT_TOUCH()[4]);
 
-        tfLootSlotSixX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[5].getX()));
-        tfLootSlotSixY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[5].getY()));
+        TouchComponent lootSlotSix = new TouchComponent(tfLootSlotSixX, tfLootSlotSixY, numericVerifier);
+        lootSlotSix.init(Application.getInstance().LOOT_TOUCH()[5]);
 
-        tfLootSlotSevenX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[6].getX()));
-        tfLootSlotSevenY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[6].getY()));
+        TouchComponent lootSlotSeven = new TouchComponent(tfLootSlotSevenX, tfLootSlotSevenY, numericVerifier);
+        lootSlotSeven.init(Application.getInstance().LOOT_TOUCH()[6]);
 
-        tfLootSlotEightX.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[7].getX()));
-        tfLootSlotEightY.setText(String.valueOf(Application.getInstance().LOOT_TOUCH()[7].getY()));
+        TouchComponent lootSlotEight = new TouchComponent(tfLootSlotEightX, tfLootSlotEightY, numericVerifier);
+        lootSlotEight.init(Application.getInstance().LOOT_TOUCH()[7]);
 
         lRodX.setIcon(new ImageIcon(UI.IMG_IDEA));
         lRodY.setIcon(new ImageIcon(UI.IMG_IDEA));
@@ -557,23 +547,6 @@ public class TabSettingsView extends JDialog {
         tfCutState.setInputVerifier(numericVerifier);
         tfCapcthaState.setInputVerifier(numericVerifier);
 
-        tfLootSlotOneX.setInputVerifier(numericVerifier);
-        tfLootSlotOneY.setInputVerifier(numericVerifier);
-        tfLootSlotTwoX.setInputVerifier(numericVerifier);
-        tfLootSlotTwoY.setInputVerifier(numericVerifier);
-        tfLootSlotThreeX.setInputVerifier(numericVerifier);
-        tfLootSlotThreeY.setInputVerifier(numericVerifier);
-        tfLootSlotFourX.setInputVerifier(numericVerifier);
-        tfLootSlotFourY.setInputVerifier(numericVerifier);
-        tfLootSlotFiveX.setInputVerifier(numericVerifier);
-        tfLootSlotFiveY.setInputVerifier(numericVerifier);
-        tfLootSlotSixX.setInputVerifier(numericVerifier);
-        tfLootSlotSixY.setInputVerifier(numericVerifier);
-        tfLootSlotSevenX.setInputVerifier(numericVerifier);
-        tfLootSlotSevenY.setInputVerifier(numericVerifier);
-        tfLootSlotEightX.setInputVerifier(numericVerifier);
-        tfLootSlotEightY.setInputVerifier(numericVerifier);
-
         tfRodX.setInputVerifier(numericVerifier);
         tfRodY.setInputVerifier(numericVerifier);
         tfRodDX.setInputVerifier(numericVerifier);
@@ -583,176 +556,149 @@ public class TabSettingsView extends JDialog {
 
     private void initCoord(){
 
-        tfFullscreenX.setText(String.valueOf(Application.getInstance().FULL_SCREEN().x));
-        tfFullscreenY.setText(String.valueOf(Application.getInstance().FULL_SCREEN().y));
-        tfFullscreenWidth.setText(String.valueOf(Application.getInstance().FULL_SCREEN().width));
-        tfFullscreenHeight.setText(String.valueOf(Application.getInstance().FULL_SCREEN().height));
+        CoordComponent fullscreen = CoordComponent.Builder.config()
+                .setComponentX(tfFullscreenX)
+                .setComponentY(tfFullscreenY)
+                .setComponentWidth(tfFullscreenWidth)
+                .setComponentHeight(tfFullscreenHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().FULL_SCREEN())
+                .build();
 
-        tfFullscreenX.setInputVerifier(numericVerifier);
-        tfFullscreenY.setInputVerifier(numericVerifier);
-        tfFullscreenWidth.setInputVerifier(numericVerifier);
-        tfFullscreenHeight.setInputVerifier(numericVerifier);
+        CoordComponent space = CoordComponent.Builder.config()
+                .setComponentX(tfSpaceX)
+                .setComponentY(tfSpaceY)
+                .setComponentWidth(tfSpaceWidth)
+                .setComponentHeight(tfSpaceHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().SPACE())
+                .build();
 
-        tfSpaceX.setText(String.valueOf(Application.getInstance().SPACE().x));
-        tfSpaceY.setText(String.valueOf(Application.getInstance().SPACE().y));
-        tfSpaceWidth.setText(String.valueOf(Application.getInstance().SPACE().width));
-        tfSpaceHeight.setText(String.valueOf(Application.getInstance().SPACE().height));
+        CoordComponent line = CoordComponent.Builder.config()
+                .setComponentX(tfLineX)
+                .setComponentY(tfLineY)
+                .setComponentWidth(tfLineWidth)
+                .setComponentHeight(tfLineHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LINE())
+                .build();
 
-        tfSpaceX.setInputVerifier(numericVerifier);
-        tfSpaceY.setInputVerifier(numericVerifier);
-        tfSpaceWidth.setInputVerifier(numericVerifier);
-        tfSpaceHeight.setInputVerifier(numericVerifier);
+        CoordComponent subline = CoordComponent.Builder.config()
+                .setComponentX(tfSubLineX)
+                .setComponentY(tfSubLineY)
+                .setComponentWidth(tfSubLineWidth)
+                .setComponentHeight(tfSubLineHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().SUB_LINE())
+                .build();
 
-        tfLineX.setText(String.valueOf(Application.getInstance().LINE().x));
-        tfLineY.setText(String.valueOf(Application.getInstance().LINE().y));
-        tfLineWidth.setText(String.valueOf(Application.getInstance().LINE().width));
-        tfLineHeight.setText(String.valueOf(Application.getInstance().LINE().height));
+        CoordComponent statusCut = CoordComponent.Builder.config()
+                .setComponentX(tfStatusCutX)
+                .setComponentY(tfStatusCutY)
+                .setComponentWidth(tfStatusCutWidth)
+                .setComponentHeight(tfStatusCutHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().STATUS_CUT())
+                .build();
 
-        tfLineX.setInputVerifier(numericVerifier);
-        tfLineY.setInputVerifier(numericVerifier);
-        tfLineWidth.setInputVerifier(numericVerifier);
-        tfLineHeight.setInputVerifier(numericVerifier);
+        CoordComponent statusCaptcha = CoordComponent.Builder.config()
+                .setComponentX(tfStatusCaptchaX)
+                .setComponentY(tfStatusCaptchaY)
+                .setComponentWidth(tfStatusCaptchaWidth)
+                .setComponentHeight(tfStatusCaptchaHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().STATUS_CAPTCHA())
+                .build();
 
-        tfSubLineX.setText(String.valueOf(Application.getInstance().SUB_LINE().x));
-        tfSubLineY.setText(String.valueOf(Application.getInstance().SUB_LINE().y));
-        tfSubLineWidth.setText(String.valueOf(Application.getInstance().SUB_LINE().width));
-        tfSubLineHeight.setText(String.valueOf(Application.getInstance().SUB_LINE().height));
+        CoordComponent captcha = CoordComponent.Builder.config()
+                .setComponentX(tfCaptchaX)
+                .setComponentY(tfCaptchaY)
+                .setComponentWidth(tfCaptchaWidth)
+                .setComponentHeight(tfCaptchaHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().CAPTCHA())
+                .build();
 
-        tfSubLineX.setInputVerifier(numericVerifier);
-        tfSubLineY.setInputVerifier(numericVerifier);
-        tfSubLineWidth.setInputVerifier(numericVerifier);
-        tfSubLineHeight.setInputVerifier(numericVerifier);
+        CoordComponent lootOne = CoordComponent.Builder.config()
+                .setComponentX(tfLootOneX)
+                .setComponentY(tfLootOneY)
+                .setComponentWidth(tfLootOneWidth)
+                .setComponentHeight(tfLootOneHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[0])
+                .build();
 
-        tfStatusCutX.setText(String.valueOf(Application.getInstance().STATUS_CUT().x));
-        tfStatusCutY.setText(String.valueOf(Application.getInstance().STATUS_CUT().y));
-        tfStatusCutWidth.setText(String.valueOf(Application.getInstance().STATUS_CUT().width));
-        tfStatusCutHeight.setText(String.valueOf(Application.getInstance().STATUS_CUT().height));
+        CoordComponent lootTwo = CoordComponent.Builder.config()
+                .setComponentX(tfLootTwoX)
+                .setComponentY(tfLootTwoY)
+                .setComponentWidth(tfLootTwoWidth)
+                .setComponentHeight(tfLootTwoHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[1])
+                .build();
 
-        tfStatusCutX.setInputVerifier(numericVerifier);
-        tfStatusCutY.setInputVerifier(numericVerifier);
-        tfStatusCutWidth.setInputVerifier(numericVerifier);
-        tfStatusCutHeight.setInputVerifier(numericVerifier);
+        CoordComponent lootThree= CoordComponent.Builder.config()
+                .setComponentX(tfLootThreeX)
+                .setComponentY(tfLootThreeY)
+                .setComponentWidth(tfLootThreeWidth)
+                .setComponentHeight(tfLootThreeHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[2])
+                .build();
 
-        tfStatusCaptchaX.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().x));
-        tfStatusCaptchaY.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().y));
-        tfStatusCaptchaWidth.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().width));
-        tfStatusCaptchaHeight.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().height));
+        CoordComponent lootFour= CoordComponent.Builder.config()
+                .setComponentX(tfLootFourX)
+                .setComponentY(tfLootFourY)
+                .setComponentWidth(tfLootFourWidth)
+                .setComponentHeight(tfLootFourHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[3])
+                .build();
 
-        tfStatusCaptchaX.setInputVerifier(numericVerifier);
-        tfStatusCaptchaY.setInputVerifier(numericVerifier);
-        tfStatusCaptchaWidth.setInputVerifier(numericVerifier);
-        tfStatusCaptchaHeight.setInputVerifier(numericVerifier);
+        CoordComponent lootFive= CoordComponent.Builder.config()
+                .setComponentX(tfLootFiveX)
+                .setComponentY(tfLootFiveY)
+                .setComponentWidth(tfLootFiveWidth)
+                .setComponentHeight(tfLootFiveHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[4])
+                .build();
 
-        tfCaptchaX.setText(String.valueOf(Application.getInstance().CAPTCHA().x));
-        tfCaptchaY.setText(String.valueOf(Application.getInstance().CAPTCHA().y));
-        tfCaptchaWidth.setText(String.valueOf(Application.getInstance().CAPTCHA().width));
-        tfCaptchaHeight.setText(String.valueOf(Application.getInstance().CAPTCHA().height));
+        CoordComponent lootSix= CoordComponent.Builder.config()
+                .setComponentX(tfLootSixX)
+                .setComponentY(tfLootSixY)
+                .setComponentWidth(tfLootSixWidth)
+                .setComponentHeight(tfLootSixHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[5])
+                .build();
 
-        tfCaptchaX.setInputVerifier(numericVerifier);
-        tfCaptchaY.setInputVerifier(numericVerifier);
-        tfCaptchaWidth.setInputVerifier(numericVerifier);
-        tfCaptchaHeight.setInputVerifier(numericVerifier);
+        CoordComponent lootSeven= CoordComponent.Builder.config()
+                .setComponentX(tfLootSevenX)
+                .setComponentY(tfLootSevenY)
+                .setComponentWidth(tfLootSevenWidth)
+                .setComponentHeight(tfLootSevenHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[6])
+                .build();
 
-        tfStatusCaptchaX.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().x));
-        tfStatusCaptchaY.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().y));
-        tfStatusCaptchaWidth.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().width));
-        tfStatusCaptchaHeight.setText(String.valueOf(Application.getInstance().STATUS_CAPTCHA().height));
+        CoordComponent lootEight= CoordComponent.Builder.config()
+                .setComponentX(tfLootEightX)
+                .setComponentY(tfLootEightY)
+                .setComponentWidth(tfLootEightWidth)
+                .setComponentHeight(tfLootEightHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().LOOT_SLOT_LIST()[7])
+                .build();
 
-        tfStatusCaptchaX.setInputVerifier(numericVerifier);
-        tfStatusCaptchaY.setInputVerifier(numericVerifier);
-        tfStatusCaptchaWidth.setInputVerifier(numericVerifier);
-        tfStatusCaptchaHeight.setInputVerifier(numericVerifier);
-
-        tfLootOneX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[0].x));
-        tfLootOneY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[0].y));
-        tfLootOneWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[0].width));
-        tfLootOneHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[0].height));
-
-        tfLootOneX.setInputVerifier(numericVerifier);
-        tfLootOneY.setInputVerifier(numericVerifier);
-        tfLootOneWidth.setInputVerifier(numericVerifier);
-        tfLootOneHeight.setInputVerifier(numericVerifier);
-
-        tfLootTwoX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[1].x));
-        tfLootTwoY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[1].y));
-        tfLootTwoWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[1].width));
-        tfLootTwoHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[1].height));
-
-        tfLootTwoX.setInputVerifier(numericVerifier);
-        tfLootTwoY.setInputVerifier(numericVerifier);
-        tfLootTwoWidth.setInputVerifier(numericVerifier);
-        tfLootTwoHeight.setInputVerifier(numericVerifier);
-
-        tfLootThreeX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[2].x));
-        tfLootThreeY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[2].y));
-        tfLootThreeWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[2].width));
-        tfLootThreeHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[2].height));
-
-        tfLootThreeX.setInputVerifier(numericVerifier);
-        tfLootThreeY.setInputVerifier(numericVerifier);
-        tfLootThreeWidth.setInputVerifier(numericVerifier);
-        tfLootThreeHeight.setInputVerifier(numericVerifier);
-
-        tfLootFourX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[3].x));
-        tfLootFourY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[3].y));
-        tfLootFourWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[3].width));
-        tfLootFourHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[3].height));
-
-        tfLootFourX.setInputVerifier(numericVerifier);
-        tfLootFourY.setInputVerifier(numericVerifier);
-        tfLootFourWidth.setInputVerifier(numericVerifier);
-        tfLootFourHeight.setInputVerifier(numericVerifier);
-
-        tfLootFiveX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[4].x));
-        tfLootFiveY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[4].y));
-        tfLootFiveWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[4].width));
-        tfLootFiveHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[4].height));
-
-        tfLootFiveX.setInputVerifier(numericVerifier);
-        tfLootFiveY.setInputVerifier(numericVerifier);
-        tfLootFiveWidth.setInputVerifier(numericVerifier);
-        tfLootFiveHeight.setInputVerifier(numericVerifier);
-
-        tfLootSixX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[5].x));
-        tfLootSixY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[5].y));
-        tfLootSixWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[5].width));
-        tfLootSixHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[5].height));
-
-        tfLootSixX.setInputVerifier(numericVerifier);
-        tfLootSixY.setInputVerifier(numericVerifier);
-        tfLootSixWidth.setInputVerifier(numericVerifier);
-        tfLootSixHeight.setInputVerifier(numericVerifier);
-
-        tfLootSevenX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[6].x));
-        tfLootSevenY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[6].y));
-        tfLootSevenWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[6].width));
-        tfLootSevenHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[6].height));
-
-        tfLootSevenX.setInputVerifier(numericVerifier);
-        tfLootSevenY.setInputVerifier(numericVerifier);
-        tfLootSevenWidth.setInputVerifier(numericVerifier);
-        tfLootSevenHeight.setInputVerifier(numericVerifier);
-
-        tfLootEightX.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[7].x));
-        tfLootEightY.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[7].y));
-        tfLootEightWidth.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[7].width));
-        tfLootEightHeight.setText(String.valueOf(Application.getInstance().LOOT_SLOT_LIST()[7].height));
-
-        tfLootEightX.setInputVerifier(numericVerifier);
-        tfLootEightY.setInputVerifier(numericVerifier);
-        tfLootEightWidth.setInputVerifier(numericVerifier);
-        tfLootEightHeight.setInputVerifier(numericVerifier);
-
-        tfChatX.setText(String.valueOf(Application.getInstance().CHAT().x));
-        tfChatY.setText(String.valueOf(Application.getInstance().CHAT().y));
-        tfChatWidth.setText(String.valueOf(Application.getInstance().CHAT().width));
-        tfChatHeight.setText(String.valueOf(Application.getInstance().CHAT().height));
-
-        tfChatX.setInputVerifier(numericVerifier);
-        tfChatY.setInputVerifier(numericVerifier);
-        tfChatWidth.setInputVerifier(numericVerifier);
-        tfChatHeight.setInputVerifier(numericVerifier);
-
+        CoordComponent chat = CoordComponent.Builder.config()
+                .setComponentX(tfChatX)
+                .setComponentY(tfChatY)
+                .setComponentWidth(tfChatWidth)
+                .setComponentHeight(tfChatHeight)
+                .setVerifier(numericVerifier)
+                .setRectangle(Application.getInstance().CHAT())
+                .build();
     }
 
     private void initPm() {
@@ -778,6 +724,7 @@ public class TabSettingsView extends JDialog {
 
         tfRodChange.setText(String.valueOf(Application.getInstance().TIME_CHANGE_ROD()));
         tfRodChange.setInputVerifier(delayVerifier);
+        tfRodChange.addMouseListener(new TimeMouseConverter(tfRodChange));
 
         tfRodCount.setText(String.valueOf(Application.getInstance().COUNT_ROD()));
         tfRodCount.setInputVerifier(rodCountVerifier);
@@ -799,33 +746,29 @@ public class TabSettingsView extends JDialog {
             component.setEnabled(Application.getUser().isPremium());
         }
 
-        cbFirstSlotActive.setSelected(Application.getInstance().SLOT_ONE().isActive());
-        tfFirstSlotKey.setText(Application.getInstance().SLOT_ONE().getKey());
-        tfFirstSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_ONE().getDelay()));
-        tfFirstSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_ONE().getPeriod()));
+        SlotComponent.Builder.config()
+                .setActiveComponent(cbFirstSlotActive)
+                .setKeyComponent(tfFirstSlotKey, slotKeyVerifier)
+                .setDelayComponent(tfFirstSlotDelay, delayPeriodVerifier)
+                .setPeriodComponent(tfFirstSlotPeriod, delayPeriodVerifier)
+                .setHotSlot(Application.getInstance().SLOT_ONE())
+                .build();
 
-        cbSecondSlotActive.setSelected(Application.getInstance().SLOT_TWO().isActive());
-        tfSecondSlotKey.setText(Application.getInstance().SLOT_TWO().getKey());
-        tfSecondSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_TWO().getDelay()));
-        tfSecondSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_TWO().getPeriod()));
+        SlotComponent.Builder.config()
+                .setActiveComponent(cbSecondSlotActive)
+                .setKeyComponent(tfSecondSlotKey, slotKeyVerifier)
+                .setDelayComponent(tfSecondSlotDelay, delayPeriodVerifier)
+                .setPeriodComponent(tfSecondSlotPeriod, delayPeriodVerifier)
+                .setHotSlot(Application.getInstance().SLOT_TWO())
+                .build();
 
-        cbThirdSlotActive.setSelected(Application.getInstance().SLOT_THREE().isActive());
-        tfThirdSlotKey.setText(Application.getInstance().SLOT_THREE().getKey());
-        tfThirdSlotDelay.setText(String.valueOf(Application.getInstance().SLOT_THREE().getDelay()));
-        tfThirdSlotPeriod.setText(String.valueOf(Application.getInstance().SLOT_THREE().getPeriod()));
-
-        tfFirstSlotKey.setInputVerifier(slotKeyVerifier);
-        tfFirstSlotDelay.setInputVerifier(delayPeriodVerifier);
-        tfFirstSlotPeriod.setInputVerifier(delayPeriodVerifier);
-
-        tfSecondSlotKey.setInputVerifier(slotKeyVerifier);
-        tfSecondSlotDelay.setInputVerifier(delayPeriodVerifier);
-        tfSecondSlotPeriod.setInputVerifier(delayPeriodVerifier);
-
-        tfThirdSlotKey.setInputVerifier(slotKeyVerifier);
-        tfThirdSlotDelay.setInputVerifier(delayPeriodVerifier);
-        tfThirdSlotPeriod.setInputVerifier(delayPeriodVerifier);
-
+        SlotComponent.Builder.config()
+                .setActiveComponent(cbThirdSlotActive)
+                .setKeyComponent(tfThirdSlotKey, slotKeyVerifier)
+                .setDelayComponent(tfThirdSlotDelay, delayPeriodVerifier)
+                .setPeriodComponent(tfThirdSlotPeriod, delayPeriodVerifier)
+                .setHotSlot(Application.getInstance().SLOT_THREE())
+                .build();
     }
 
     private void initLootFilter() {
@@ -859,8 +802,11 @@ public class TabSettingsView extends JDialog {
 
         beerPeriodFrom.setText(String.valueOf(Application.getInstance().SLOT_BEER().getPeriod()));
         beerPeriodFrom.setInputVerifier(delayPeriodVerifier);
+        beerPeriodFrom.addMouseListener(new TimeMouseConverter(beerPeriodFrom));
+
         beerPeriodTo.setText(String.valueOf(Application.getInstance().SLOT_BEER().getRandomPeriod()));
         beerPeriodTo.setInputVerifier(delayPeriodVerifier);
+        beerPeriodTo.addMouseListener(new TimeMouseConverter(beerPeriodTo));
     }
 
     private void initAutoEnd() {
@@ -868,10 +814,14 @@ public class TabSettingsView extends JDialog {
         lIdeaPause.setIcon(new ImageIcon(UI.IMG_IDEA));
         cbPause.setSelected(Application.getInstance().TASK_PAUSE().isActive());
         tfPauseDelayFrom.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getDelay()));
+        tfPauseDelayFrom.addMouseListener(new TimeMouseConverter(tfPauseDelayFrom));
         tfPauseDelayTo.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getRandomDelay()));
+        tfPauseDelayTo.addMouseListener(new TimeMouseConverter(tfPauseDelayTo));
 
         tfPauseDowntimeFrom.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getPauseFrom()));
+        tfPauseDowntimeFrom.addMouseListener(new TimeMouseConverter(tfPauseDowntimeFrom));
         tfPauseDowntimeTo.setText(String.valueOf(Application.getInstance().TASK_PAUSE().getPauseTo()));
+        tfPauseDowntimeTo.addMouseListener(new TimeMouseConverter(tfPauseDowntimeTo));
 
         lTimer.setIcon(new ImageIcon(UI.SMALL_PREMIUM));
         lTimer.setToolTipText(UIManager.getString("preference.premium.tooltip"));
@@ -883,6 +833,7 @@ public class TabSettingsView extends JDialog {
         lIdeaDeferredStart.setIcon(new ImageIcon(UI.IMG_IDEA));
         cbDeferredStart.setSelected(Application.getInstance().TASK_START().isActive());
         tfDeferredStart.setText(String.valueOf(Application.getInstance().TASK_START().getDelay()));
+        tfDeferredStart.addMouseListener(new TimeMouseConverter(tfDeferredStart));
         tfDeferredStart.setInputVerifier(delayPeriodVerifier);
 
         lIdeaStopBot.setIcon(new ImageIcon(UI.IMG_IDEA));
@@ -895,6 +846,7 @@ public class TabSettingsView extends JDialog {
         });
 
         tfStopBot.setText(String.valueOf(Application.getInstance().TASK_STOP().getDelay()));
+        tfStopBot.addMouseListener(new TimeMouseConverter(tfStopBot));
         tfStopBot.setInputVerifier(delayPeriodVerifier);
 
         lIdeaExitGame.setIcon(new ImageIcon(UI.IMG_IDEA));
@@ -906,14 +858,12 @@ public class TabSettingsView extends JDialog {
             }
         });
         tfExitGame.setText(String.valueOf(Application.getInstance().TASK_EXIT_GAME().getDelay()));
+        tfExitGame.addMouseListener(new TimeMouseConverter(tfExitGame));
         tfExitGame.setInputVerifier(delayPeriodVerifier);
 
     }
 
     public static void main(String[] args) {
-
-//        UIManager.getDefaults().addResourceBundle("locale");
-
         SwingUtilities.invokeLater(TabSettingsView::new);
 
     }
