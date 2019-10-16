@@ -19,7 +19,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String THEME();
 
 	@Key("bot.http")
-	@DefaultValue("namibios.ru:443")
+	@DefaultValue("namibios.ru:9443")
 	String URL_CAPTCHA_SERVICE();
 
 	@Key("bot.http.connect_timeout")
