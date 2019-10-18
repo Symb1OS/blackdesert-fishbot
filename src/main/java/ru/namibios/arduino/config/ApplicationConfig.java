@@ -19,8 +19,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String THEME();
 
 	@Key("bot.http")
+	@DefaultValue("namibios.ru:9090")
+	String URL_SERVER_HTTP();
+
+	@Key("bot.https")
 	@DefaultValue("namibios.ru:9443")
-	String URL_CAPTCHA_SERVICE();
+	String URL_SERVER_HTTPS();
 
 	@Key("bot.http.connect_timeout")
 	@DefaultValue("15000")
@@ -39,7 +43,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	String GAME_TITLE();
 
 	@Key("bot.ws")
-	@DefaultValue("wss://${bot.http}/fishingserver/tg_bot")
+	@DefaultValue("wss://${bot.https}/fishingserver/tg_bot")
 	String URL_WS();
 
     @Key("bot.local.port")
@@ -408,7 +412,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int SPACE_OFFSET_X();
 
 	@Key("bot.screen.space.offset.y")
-	@DefaultValue("80")
+	@DefaultValue("120")
 	int SPACE_OFFSET_Y();
 
 	@Key("bot.screen.line")

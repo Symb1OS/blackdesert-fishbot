@@ -99,7 +99,7 @@ public class Launcher {
 
 			try (Socket s = new Socket()) {
 
-				String url = Application.getInstance().URL_CAPTCHA_SERVICE();
+				String url = Application.getInstance().URL_SERVER_HTTPS();
 				String ip = url.substring(0, url.indexOf(":"));
 				String port = url.substring(url.indexOf(":") + 1 );
 
