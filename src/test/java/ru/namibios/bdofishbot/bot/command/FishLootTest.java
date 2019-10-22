@@ -4,8 +4,8 @@ package ru.namibios.bdofishbot.bot.command;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Path;
 
 import java.io.IOException;
 

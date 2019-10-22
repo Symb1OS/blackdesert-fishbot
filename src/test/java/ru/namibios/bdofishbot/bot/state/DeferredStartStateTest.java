@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.bdofishbot.bot.Timer;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.isA;

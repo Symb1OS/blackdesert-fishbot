@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.namibios.bdofishbot.bot.Screen;
-import ru.namibios.bdofishbot.bot.state.service.HttpService;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.cli.config.Path;
 
 import java.io.IOException;
 import java.util.UUID;

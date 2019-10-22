@@ -3,8 +3,8 @@ package ru.namibios.bdofishbot.bot.command;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.*;
 import ru.namibios.bdofishbot.bot.template.Loot;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import java.awt.*;

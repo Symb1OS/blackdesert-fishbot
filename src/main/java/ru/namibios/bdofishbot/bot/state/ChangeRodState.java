@@ -1,9 +1,9 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.state.service.RodService;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Message;
+import ru.namibios.bdofishbot.bot.service.RodService;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 public class ChangeRodState extends State{

@@ -218,7 +218,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ru.namibios.bdofishbot.Launcher</mainClass>
+                            <mainClass>ru.namibios.bdofishbot.cli.Launcher</mainClass>
                             <classpathPrefix>libs/</classpathPrefix>
                         </manifest>
                     </archive>

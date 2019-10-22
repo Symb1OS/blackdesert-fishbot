@@ -1,8 +1,8 @@
 package ru.namibios.bdofishbot.bot;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.DateUtils;
 
 import javax.imageio.ImageIO;

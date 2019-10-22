@@ -7,7 +7,7 @@ import org.junit.Test;
 import ru.namibios.bdofishbot.bot.ImageParser;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.template.Loot;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 
 import java.io.File;
 import java.io.IOException;

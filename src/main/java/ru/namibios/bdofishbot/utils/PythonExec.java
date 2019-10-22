@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.utils;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.config.Path;
 
 import java.io.BufferedReader;
 import java.io.File;

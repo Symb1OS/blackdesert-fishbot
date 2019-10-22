@@ -3,7 +3,7 @@ package ru.namibios.bdofishbot.gui.view;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.gui.UI;
 import ru.namibios.bdofishbot.utils.DateUtils;
 

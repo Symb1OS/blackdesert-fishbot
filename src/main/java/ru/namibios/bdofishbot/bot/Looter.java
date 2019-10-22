@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.bot;
 
 import ru.namibios.bdofishbot.bot.template.Loot;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 
 import java.util.ArrayList;
 import java.util.List;

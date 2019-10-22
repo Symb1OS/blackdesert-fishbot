@@ -4,8 +4,8 @@ import ru.namibios.bdofishbot.bot.PaletteParser;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.template.Debuf;
 import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Path;
 
 import java.awt.*;
 

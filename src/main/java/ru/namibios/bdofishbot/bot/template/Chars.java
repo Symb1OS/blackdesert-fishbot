@@ -2,7 +2,7 @@ package ru.namibios.bdofishbot.bot.template;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.ImageParser;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import java.io.File;

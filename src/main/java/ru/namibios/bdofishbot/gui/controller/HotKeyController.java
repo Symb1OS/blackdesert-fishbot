@@ -3,7 +3,7 @@ package ru.namibios.bdofishbot.gui.controller;
 import org.apache.log4j.Logger;
 import org.jnativehook.keyboard.NativeKeyAdapter;
 import org.jnativehook.keyboard.NativeKeyEvent;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 
 import javax.swing.*;
 

@@ -10,8 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.bdofishbot.bot.Timer;
 import ru.namibios.bdofishbot.bot.command.Line;
-import ru.namibios.bdofishbot.bot.state.service.input.InputService;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.bot.service.input.InputService;
+import ru.namibios.bdofishbot.cli.Application;
 
 import java.io.IOException;
 

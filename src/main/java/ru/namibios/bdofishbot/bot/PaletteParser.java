@@ -2,7 +2,7 @@ package ru.namibios.bdofishbot.bot;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

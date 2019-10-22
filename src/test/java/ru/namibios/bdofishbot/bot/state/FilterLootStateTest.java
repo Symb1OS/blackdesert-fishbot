@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.namibios.bdofishbot.bot.command.FishLoot;
-import ru.namibios.bdofishbot.bot.state.service.input.InputService;
+import ru.namibios.bdofishbot.bot.service.input.InputService;
 
 import java.io.IOException;
 

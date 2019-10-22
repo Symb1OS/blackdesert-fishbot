@@ -1,6 +1,6 @@
 package ru.namibios.bdofishbot.gui;
 
-import ru.namibios.bdofishbot.config.converter.TimeConverter;
+import ru.namibios.bdofishbot.cli.config.converter.TimeConverter;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;

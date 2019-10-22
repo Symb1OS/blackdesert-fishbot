@@ -3,8 +3,8 @@ package ru.namibios.bdofishbot.bot.status;
 import ru.namibios.bdofishbot.bot.ImageParser;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.template.StatusCutTemplate;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Path;
 
 import java.awt.*;
 import java.io.IOException;

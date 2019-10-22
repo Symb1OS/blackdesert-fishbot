@@ -1,12 +1,12 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.state.service.HttpService;
-import ru.namibios.bdofishbot.bot.state.service.StatusService;
+import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.bot.service.StatusService;
 import ru.namibios.bdofishbot.bot.status.StatusCaptcha;
 import ru.namibios.bdofishbot.bot.template.StatusCaptchaTemplate;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Message;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 public class StatusCaptchaState extends State{

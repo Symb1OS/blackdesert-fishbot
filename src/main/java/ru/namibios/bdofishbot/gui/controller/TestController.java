@@ -2,10 +2,10 @@ package ru.namibios.bdofishbot.gui.controller;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Screen;
-import ru.namibios.bdofishbot.bot.state.service.HttpService;
-import ru.namibios.bdofishbot.bot.state.service.RodService;
-import ru.namibios.bdofishbot.bot.state.service.input.EmulationService;
-import ru.namibios.bdofishbot.bot.state.service.input.emulation.AWTRobot;
+import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.bot.service.RodService;
+import ru.namibios.bdofishbot.bot.service.input.EmulationService;
+import ru.namibios.bdofishbot.bot.service.input.emulation.AWTRobot;
 import ru.namibios.bdofishbot.utils.DelayUtils;
 
 import java.awt.*;

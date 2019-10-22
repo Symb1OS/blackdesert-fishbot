@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.bot.command.WaitFish;
-import ru.namibios.bdofishbot.bot.state.service.HttpService;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Message;
+import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 import ru.namibios.bdofishbot.utils.ImageUtils;
 

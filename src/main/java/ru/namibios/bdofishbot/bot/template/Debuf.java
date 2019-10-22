@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.bot.template;
 
 import ru.namibios.bdofishbot.bot.PaletteParser;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ImageUtils;
 
 import java.awt.image.BufferedImage;

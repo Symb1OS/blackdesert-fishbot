@@ -1,10 +1,10 @@
 package ru.namibios.bdofishbot.gui.controller;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.Transfer;
 import ru.namibios.bdofishbot.bot.state.FishBot;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Message;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.Bot;
+import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.gui.view.RootView;
 
 import javax.swing.*;
@@ -21,11 +21,11 @@ public class StartController implements ActionListener {
 
     private Executor executor = Executors.newSingleThreadExecutor();
 
-	private Transfer transfer;
+	private Bot bot;
 
 	public StartController(RootView view) {
 		this.view = view;
-        this.transfer = new Transfer();
+        this.bot = new Bot();
 
 	}
 
@@ -41,22 +41,22 @@ public class StartController implements ActionListener {
             return;
         }
 
-        boolean isInit = transfer != null;
+        boolean isInit = bot != null;
         if (isInit) {
 
-            FishBot fishBot = transfer.getFishBot();
+            FishBot fishBot = bot.getFishBot();
 
             if (fishBot != null) {
                 if (!fishBot.isRunned()) {
-                    transfer = new Transfer();
-                    executor.execute(transfer);
+                    bot = new Bot();
+                    executor.execute(bot);
 
                 } else {
                     showMessageDialog(Message.ALREADY_WORK);
                 }
 
             } else {
-                executor.execute(transfer);
+                executor.execute(bot);
             }
 
             enablePreference(false);
@@ -65,9 +65,9 @@ public class StartController implements ActionListener {
 
     private void stop(){
         enablePreference(true);
-        if(transfer != null){
-            transfer.getFishBot().setRunned(false);
-            transfer.getFishBot().stopExecutors();
+        if(bot != null){
+            bot.getFishBot().setRunned(false);
+            bot.getFishBot().stopExecutors();
         }
 
     }

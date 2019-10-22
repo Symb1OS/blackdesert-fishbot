@@ -1,8 +1,8 @@
 package ru.namibios.bdofishbot.gui.controller;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.Launcher;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.Launcher;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import java.awt.event.ActionEvent;

@@ -3,9 +3,9 @@ package ru.namibios.bdofishbot.bot.state;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Slot;
 import ru.namibios.bdofishbot.bot.command.DebufStatus;
-import ru.namibios.bdofishbot.bot.state.service.input.InputService;
+import ru.namibios.bdofishbot.bot.service.input.InputService;
 import ru.namibios.bdofishbot.bot.template.Debuf;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import java.awt.*;

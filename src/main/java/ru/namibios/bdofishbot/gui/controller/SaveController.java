@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.gui.controller;
 
 import ru.namibios.bdofishbot.bot.Touch;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.gui.view.TabSettingsView;
 
 import java.awt.event.ActionEvent;

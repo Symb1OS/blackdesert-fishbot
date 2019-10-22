@@ -3,9 +3,9 @@ package ru.namibios.bdofishbot.bot.state;
 import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Timer;
-import ru.namibios.bdofishbot.bot.state.service.input.InputService;
-import ru.namibios.bdofishbot.config.Application;
-import ru.namibios.bdofishbot.config.Message;
+import ru.namibios.bdofishbot.bot.service.input.InputService;
+import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.DelayUtils;
 import ru.namibios.bdofishbot.utils.WinAPI;
 

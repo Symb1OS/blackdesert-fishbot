@@ -7,11 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.namibios.bdofishbot.bot.state.service.StatusService;
+import ru.namibios.bdofishbot.bot.service.StatusService;
 import ru.namibios.bdofishbot.bot.status.Status;
 import ru.namibios.bdofishbot.bot.status.StatusCut;
 import ru.namibios.bdofishbot.bot.template.StatusCutTemplate;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 
 import static org.mockito.Mockito.*;
 

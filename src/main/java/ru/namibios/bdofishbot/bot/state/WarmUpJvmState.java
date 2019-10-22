@@ -1,8 +1,8 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.config.Message;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.config.Message;
+import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 import ru.namibios.bdofishbot.utils.PythonExec;
 

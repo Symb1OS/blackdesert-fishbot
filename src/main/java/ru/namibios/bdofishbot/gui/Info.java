@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.gui;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.state.service.HttpService;
+import ru.namibios.bdofishbot.bot.service.HttpService;
 import ru.namibios.bdofishbot.gui.view.RootView;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 

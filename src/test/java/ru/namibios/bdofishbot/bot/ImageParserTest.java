@@ -5,7 +5,7 @@ import org.junit.Test;
 import ru.namibios.bdofishbot.bot.template.Loot;
 import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.bot.template.StatusCaptchaTemplate;
-import ru.namibios.bdofishbot.config.Path;
+import ru.namibios.bdofishbot.cli.config.Path;
 
 import java.io.File;
 import java.io.IOException;

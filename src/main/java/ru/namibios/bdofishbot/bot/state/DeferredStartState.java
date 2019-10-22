@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.config.Application;
+import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.utils.DelayUtils;
 import ru.namibios.bdofishbot.utils.TimeUtils;
 
