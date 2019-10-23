@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-#java -jar blackdesert-fishbot.jar
-java -cp libs/*:modules/* ru.namibios.bdofishbot.gui.Launcher
+java -cp "libs/*" ru.namibios.bdofishbot.gui.Launcher

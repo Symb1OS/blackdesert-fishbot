@@ -7,9 +7,9 @@
     <version>1.9.0</version>
 
     <modules>
+        <module>bdofishbot-utils</module>
         <module>bdofishbot-bot</module>
         <module>bdofishbot-gui</module>
-        <module>bdofishbot-utils</module>
     </modules>
 
     <properties>
@@ -69,43 +69,6 @@
 
     <build>
 
-        <!--<resources>
-            <resource>
-                <directory>./</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>version</include>
-                </includes>
-                <targetPath>../${project.artifactId}_${project.version}</targetPath>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>arduino/emulation</directory>
-                <targetPath>../${project.artifactId}_${project.version}/emulation</targetPath>
-            </resource>
-            <resource>
-                <directory>resources</directory>
-                <targetPath>../${project.artifactId}_${project.version}/resources</targetPath>
-            </resource>
-            <resource>
-                <directory>soft</directory>
-                <targetPath>../${project.artifactId}_${project.version}/soft</targetPath>
-            </resource>
-            <resource>
-                <directory>libs</directory>
-                <targetPath>../${project.artifactId}_${project.version}/libs</targetPath>
-            </resource>
-            <resource>
-                <directory>script</directory>
-                <excludes>
-                    <exclude>install.bat</exclude>
-                </excludes>
-                <targetPath>../${project.artifactId}_${project.version}</targetPath>
-            </resource>
-        </resources>-->
-
         <pluginManagement/>
         <plugins>
 
@@ -144,45 +107,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <!--
-                        <plugin>
-                            <artifactId>maven-dependency-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>copy-dependencies</goal>
-                                    </goals>
-                                    <configuration>
-                                        <outputDirectory>${project.build.directory}/${project.artifactId}_${project.version}/libs
-                                        </outputDirectory>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-
-
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-assembly-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>single</goal>
-                                    </goals>
-                                    <configuration>
-                                        <finalName>${project.artifactId}_${project.version}</finalName>
-                                        <appendAssemblyId>false</appendAssemblyId>
-                                        <descriptors>
-                                            <descriptor>src/main/assembly/zip.xml</descriptor>
-                                        </descriptors>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-            -->
 
         </plugins>
     </build>

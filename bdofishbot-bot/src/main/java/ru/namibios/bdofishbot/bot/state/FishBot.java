@@ -89,12 +89,12 @@ public class FishBot {
 
 	}
 
-	void restart(){
+	public void restart(){
 		setRestart(true);
 		setRunned(false);
 	}
 
-	void call(){
+	public void call(){
 
     	executorService.submit(() -> {
 

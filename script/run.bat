@@ -1,4 +1,4 @@
 @echo off
 
 cd /d %~dp0
-java -jar "blackdesert-fishbot.jar"
+java -cp "libs/*" ru.namibios.bdofishbot.gui.Launcher
