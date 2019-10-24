@@ -11,6 +11,14 @@
 
     <artifactId>bdofishbot-gui</artifactId>
 
+    <repositories>
+        <repository>
+            <id>JetBrains</id>
+            <name>JetBrains 3rdParty</name>
+            <url>https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
 
         <dependency>
@@ -20,9 +28,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.intellij</groupId>
-            <artifactId>forms_rt</artifactId>
-            <version>7.0.3</version>
+            <groupId>com.jetbrains.intellij.java</groupId>
+            <artifactId>java-gui-forms-rt</artifactId>
+            <version>193.4744</version>
         </dependency>
 
     </dependencies>

@@ -1,0 +1,25 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+    <id>zip</id>
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <fileSets>
+
+        <fileSet>
+            <directory>../target/${project.parent.artifactId}_${project.parent.version}</directory>
+            <excludes>
+                <exclude>resources/application.properties</exclude>
+                <exclude>resources/loot/unknown/*</exclude>
+                <exclude>resources/loot/unsort/*</exclude>
+            </excludes>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+
+    </fileSets>
+
+</assembly>
