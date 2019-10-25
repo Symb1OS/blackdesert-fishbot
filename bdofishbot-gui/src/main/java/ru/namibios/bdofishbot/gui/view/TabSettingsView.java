@@ -3293,4 +3293,5 @@ public class TabSettingsView extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return content;
     }
+
 }

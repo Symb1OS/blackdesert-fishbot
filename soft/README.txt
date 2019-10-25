@@ -7,5 +7,8 @@ Arduino IDE необходима только в том случае, если �
 
 # English
 
+Arduino IDE is only necessary if you intend to use the board to emulate a keyboard / mouse.
+Otherwise, you do not need to install it.
+
 For download Arduino IDE follow link - https://www.arduino.cc/download.php?f=/arduino-1.8.5-windows.exe
 

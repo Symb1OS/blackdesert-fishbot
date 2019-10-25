@@ -15,6 +15,12 @@
 
         <dependency>
             <groupId>ru.namibios.bdofishbot</groupId>
+            <artifactId>bdofishbot-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.namibios.bdofishbot</groupId>
             <artifactId>bdofishbot-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -52,19 +58,19 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.0</version>
+            <version>3.9</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
+            <version>4.5.10</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>4.3.1</version>
+            <version>4.5.10</version>
         </dependency>
 
         <dependency>

@@ -1,6 +1,6 @@
 package ru.namibios.bdofishbot.utils;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class JSON {
 

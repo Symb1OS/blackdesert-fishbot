@@ -23,7 +23,19 @@
 
         <dependency>
             <groupId>ru.namibios.bdofishbot</groupId>
+            <artifactId>bdofishbot-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.namibios.bdofishbot</groupId>
             <artifactId>bdofishbot-bot</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.namibios.bdofishbot</groupId>
+            <artifactId>bdofishbot-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -49,26 +61,12 @@
             </resource>
 
             <resource>
-                <directory>../</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>version</include>
-                </includes>
-                <targetPath>${project.basedir}/../target/${project.parent.artifactId}_${project.parent.version}</targetPath>
-            </resource>
-
-            <resource>
-                <directory>../arduino/emulation</directory>
-                <targetPath>${project.basedir}/../target/${project.parent.artifactId}_${project.parent.version}/emulation</targetPath>
-            </resource>
-
-            <resource>
                 <directory>../soft</directory>
                 <targetPath>${project.basedir}/../target/${project.parent.artifactId}_${project.parent.version}/soft</targetPath>
             </resource>
 
             <resource>
-                <directory>../script</directory>
+                <directory>../bin</directory>
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>install.bat</exclude>

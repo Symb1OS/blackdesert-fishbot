@@ -1,24 +1,30 @@
 package ru.namibios.bdofishbot.utils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 public final class AppUtils {
 
     public static String getVersion() {
 
-        String version = "";
+        String version = null;
 
         try {
 
-            version = Files.lines(Paths.get("version")).findFirst().get();
+            InputStream inputStream =  ClassLoader.getSystemClassLoader().getResourceAsStream("version");
 
-        } catch (IOException ignore) {
-            ignore.printStackTrace();
+            if (inputStream != null) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                    version =  br.lines().collect(Collectors.joining(System.lineSeparator()));
+                }
+            }
+
+        } catch (Exception ignore) {
+
         }
 
         return version;

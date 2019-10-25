@@ -1,7 +1,8 @@
 package ru.namibios.bdofishbot.cli.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import ru.namibios.bdofishbot.utils.AppUtils;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import java.io.IOException;
@@ -66,21 +67,14 @@ public class User {
 
     private String initVersion(){
 
-        try {
+        if (version != null) {
+            return version;
 
-            if (version != null) {
-                return version;
-
-            } else {
-                version = Files.readAllLines(Paths.get("version")).get(0);
-                return version;
-            }
-
-        } catch (IOException e) {
-            LOG.error(ExceptionUtils.getString(e));
+        } else {
+            version = AppUtils.getVersion();
+            return version;
         }
 
-        return null;
     }
 
     public void saveHash() {

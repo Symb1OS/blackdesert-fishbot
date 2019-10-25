@@ -3,12 +3,11 @@ module bdofishbot.bot {
     requires java.desktop;
     requires log4j;
     requires jSerialComm;
-    requires httpclient;
-    requires httpcore;
-    requires httpmime;
-    requires jackson.mapper.asl;
-    requires jackson.core.asl;
-    requires commons.lang3;
+    requires org.apache.httpcomponents.httpcore;
+    requires org.apache.httpcomponents.httpclient;
+    requires org.apache.httpcomponents.httpmime;
+    requires org.apache.commons.lang3;
+    requires com.fasterxml.jackson.databind;
     requires jna.platform;
     requires owner;
     requires JTattoo;
@@ -23,6 +22,6 @@ module bdofishbot.bot {
     exports ru.namibios.bdofishbot.cli.config;
     exports ru.namibios.bdofishbot.cli.config.converter;
 
-    opens ru.namibios.bdofishbot.cli.config to jackson.mapper.asl;
+    opens ru.namibios.bdofishbot.cli.config to com.fasterxml.jackson.databind;
 
 }
