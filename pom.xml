@@ -4,7 +4,7 @@
     <groupId>ru.namibios.bdofishbot</groupId>
     <artifactId>blackdesert-fishbot</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.0</version>
+    <version>${revision}</version>
 
     <modules>
         <module>bdofishbot-base</module>
@@ -16,6 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <revision>2.0.0</revision>
     </properties>
 
     <dependencies>
