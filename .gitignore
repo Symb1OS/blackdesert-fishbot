@@ -1,4 +1,9 @@
-/target/
+.idea
+*.iml
+target
+logs
+application.properties
+loot.zip
 /resources/debug
 /resources/changes
 /resources/loot/unknow/*
@@ -6,13 +11,3 @@
 /lib
 /app
 /debug/
-.idea
-/logs
-/bdofishbot-bot/logs/
-/bdofishbot-gui/logs/
-/bdofishbot-utils/logs/
-/bdofishbot-gui/target/
-/bdofishbot-bot/target/
-/bdofishbot-utils/target/
-*.iml
-/bdofishbot/target/
