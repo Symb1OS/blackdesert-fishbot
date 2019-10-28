@@ -42,7 +42,7 @@ More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 
 ### Presets
 
-- Download and install [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+- Download and install [Java](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html).
 
 - Download last version [bot](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
