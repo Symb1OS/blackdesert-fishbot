@@ -17,7 +17,7 @@
                 <exclude>resources/loot/unknown/*</exclude>
                 <exclude>resources/loot/unsort/*</exclude>
             </excludes>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory>\</outputDirectory>
         </fileSet>
 
     </fileSets>
