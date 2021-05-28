@@ -28,6 +28,7 @@ public class Path {
 
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String DEBUF = TEMPLATES + "debuff/";
+	public static final String SPACE = TEMPLATES + "space/";
 	public static final String STATUS_CUT = TEMPLATES + "statuscut/";
 	public static final String STATUS_KAPCHA = TEMPLATES + "statuskapcha/";
 

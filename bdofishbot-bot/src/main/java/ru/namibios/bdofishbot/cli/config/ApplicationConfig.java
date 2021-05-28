@@ -403,7 +403,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle FULL_SCREEN();
 
 	@Key("bot.screen.space")
-	@DefaultValue("928, 190, 63, 25")
+	@DefaultValue("900, 333, 120, 30")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle SPACE();
 
@@ -412,7 +412,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int SPACE_OFFSET_X();
 
 	@Key("bot.screen.space.offset.y")
-	@DefaultValue("120")
+	@DefaultValue("0")
 	int SPACE_OFFSET_Y();
 
 	@Key("bot.screen.line")
@@ -421,7 +421,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle LINE();
 
 	@Key("bot.screen.subline")
-	@DefaultValue("997, 402, 10, 25")
+	@DefaultValue("1011, 373, 10, 25")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle SUB_LINE();
 
