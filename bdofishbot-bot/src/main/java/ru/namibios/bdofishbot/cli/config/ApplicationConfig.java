@@ -281,7 +281,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_AFTER_CUT_FISH();
 	
 	@Key("bot.delay.statuscut.before")
-	@DefaultValue("0")
+	@DefaultValue("500")
 	int DELAY_BEFORE_STATUS_CUT();
 	
 	@Key("bot.delay.statuscut.after")
@@ -426,12 +426,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle SUB_LINE();
 
 	@Key("bot.screen.statuscut")
-	@DefaultValue("874, 480, 171, 33")
+	@DefaultValue("837,448,234,42")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_CUT();
 
 	@Key("bot.screen.captcha")
-	@DefaultValue("780, 350, 372, 58")
+	@DefaultValue("759,335,400,90")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CAPTCHA();
 
