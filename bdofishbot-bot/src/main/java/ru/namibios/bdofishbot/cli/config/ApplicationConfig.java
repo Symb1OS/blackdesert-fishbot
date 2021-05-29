@@ -285,7 +285,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_STATUS_CUT();
 	
 	@Key("bot.delay.statuscut.after")
-	@DefaultValue("1000")
+	@DefaultValue("2000")
 	int DELAY_AFTER_STATUS_CUT();
 
 	@Key("bot.delay.kapcha.before")
@@ -293,7 +293,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_KAPCHA();
 	
 	@Key("bot.delay.kapcha.after")
-	@DefaultValue("0")
+	@DefaultValue("5000")
 	int DELAY_AFTER_KAPCHA();
 	
 	@Key("bot.delay.statuskapcha.before")
@@ -511,7 +511,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     boolean DEBUG_SUBLINE();
 
     @Key("bot.screen.debug.captcha")
-    @DefaultValue("false")
+    @DefaultValue("true")
     boolean DEBUG_CAPTCHA();
 
     @Key("bot.screen.debug.filterloot")

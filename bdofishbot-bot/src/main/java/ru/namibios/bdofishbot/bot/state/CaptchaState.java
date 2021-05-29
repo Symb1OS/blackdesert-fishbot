@@ -36,7 +36,11 @@ public class CaptchaState extends State {
 
             String key = captcha.getKey();
 
-            if (!key.matches(Captcha.REGEX)) {
+			inputService.send(() -> "wwww");
+
+			fishBot.setState(new StartFishState(fishBot));
+
+            /*if (!key.matches(Captcha.REGEX)) {
                 LOG.error(key);
                 fishBot.setRunned(false);
                 return;
@@ -49,7 +53,7 @@ public class CaptchaState extends State {
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");
 				fishBot.setState(new StartFishState(fishBot));
-			}
+			}*/
 
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
