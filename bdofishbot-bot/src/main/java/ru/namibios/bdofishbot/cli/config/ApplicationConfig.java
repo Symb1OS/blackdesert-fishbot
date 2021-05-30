@@ -221,7 +221,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.autouse.beer.touchs")
 	@Separator(";")
-	@DefaultValue("{1507,847};{1192,494};!{1646,844}")
+	@DefaultValue("{1500,854};{1090,440};!{1760,850}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] BEER_TOUCHS();
 

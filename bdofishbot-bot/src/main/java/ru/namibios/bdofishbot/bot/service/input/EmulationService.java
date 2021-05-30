@@ -90,7 +90,8 @@ public class EmulationService implements InputService{
 
         clickSequence(Application.getInstance().BEER_TOUCHS());
 
-        emulationInput.sendInput(KeyEvent.VK_ESCAPE);
+        useSlot(command);
+
     }
 
     public static void main(String[] args) throws IOException {
