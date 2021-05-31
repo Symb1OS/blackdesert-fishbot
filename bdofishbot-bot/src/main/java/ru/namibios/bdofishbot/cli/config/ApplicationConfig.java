@@ -431,7 +431,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle STATUS_CUT();
 
 	@Key("bot.screen.captcha")
-	@DefaultValue("759,335,400,90")
+	@DefaultValue("769,345,380,60")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CAPTCHA();
 
