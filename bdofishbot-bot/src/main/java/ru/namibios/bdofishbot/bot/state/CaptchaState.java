@@ -34,26 +34,32 @@ public class CaptchaState extends State {
 		
 		try {
 
-            String key = captcha.getKey();
+			if (Application.getInstance().DEBUG_STORED_CAPTCHA()) {
 
-			inputService.send(() -> "wwww");
+				inputService.send(() -> "wwww");
 
-			fishBot.setState(new StartFishState(fishBot));
-
-            /*if (!key.matches(Captcha.REGEX)) {
-                LOG.error(key);
-                fishBot.setRunned(false);
-                return;
-            }
-
-            if (inputService.send(() -> key)){
-				LOG.info("Captcha send to input. Go to check status...");
-				fishBot.setState(new StatusCaptchaState(fishBot, name));
-			}
-			else {
-				LOG.info("Captcha is not recognized. Return to start...");
 				fishBot.setState(new StartFishState(fishBot));
-			}*/
+
+			} else {
+
+				String key = captcha.getKey();
+
+				if (!key.matches(Captcha.REGEX)) {
+					LOG.error(key);
+					fishBot.setRunned(false);
+					return;
+            	}
+
+				if (inputService.send(() -> key)){
+					LOG.info("Captcha send to input. Go to check status...");
+					fishBot.setState(new StatusCaptchaState(fishBot, name));
+				}
+				else {
+					LOG.info("Captcha is not recognized. Return to start...");
+					fishBot.setState(new StartFishState(fishBot));
+				}
+
+			}
 
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

@@ -159,8 +159,8 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.loot.touch")
 	@Separator(";")
-	@DefaultValue("{1435,640};{1489,640};{1649,640};{1696,640};{1555,640};{1602,640};" +
-				  "{1435,694};{1489,694}")
+	@DefaultValue("{1412,512};{1466,512};{1520,512};{1574,512};{1628,512};{1682,512};" +
+				  "{1412,566};{1466,566}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] LOOT_TOUCH();
 
@@ -442,14 +442,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")
-    @DefaultValue("1414, 619, 42, 42;"
-                + "1468, 619, 42, 42;"
-                + "1522, 619, 42, 42;"
-                + "1576, 619, 42, 42;"
-                + "1630, 619, 42, 42;"
-                + "1684, 619, 42, 42;"
-                + "1414, 673, 42, 42;"
-                + "1468, 673, 42, 42")
+    @DefaultValue("1412, 512, 42, 42;"
+                + "1466, 512, 42, 42;"
+                + "1520, 512, 42, 42;"
+                + "1574, 512, 42, 42;"
+                + "1628, 512, 42, 42;"
+                + "1682, 512, 42, 42;"
+                + "1412, 566, 42, 42;"
+                + "1466, 566, 42, 42")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] LOOT_SLOT_LIST();
 
@@ -485,6 +485,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
     ///////////////////////////////////////////////////////////////////////////
     // DEBUG
     ///////////////////////////////////////////////////////////////////////////
+
+	@Key("bot.screen.debug.stored.captcha")
+	@DefaultValue("true")
+	boolean DEBUG_STORED_CAPTCHA();
 
     @Key("bot.screen.debug")
     @DefaultValue("false")
