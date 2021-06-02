@@ -80,8 +80,19 @@ public class FishLoot implements Command{
 
 		}
 
-		LOG.debug("Loot indexes: " + loots);
+		LOG.info("Loot indexes: " + nameFromId(loots));
 		return loots.split(",");
+	}
+
+	private String nameFromId(String id) {
+		return id.replaceAll("-1", "UNKNOWN")
+				.replaceAll("0", "SCALA")
+				.replaceAll("1", "KEY")
+				.replaceAll("2", "FISH")
+				.replaceAll("3", "TRASH")
+				.replaceAll("4", "EVENT")
+				.replaceAll("5", "CONFIRM")
+				.replaceAll("6", "EMPTY");
 	}
 
 	private void saveLoot(String[] arrayLoots){
