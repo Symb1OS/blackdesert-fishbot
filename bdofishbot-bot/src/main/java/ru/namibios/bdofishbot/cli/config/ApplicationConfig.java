@@ -108,11 +108,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int TIME_CHANGE_ROD();
 
 	@Key("bot.rod.x")
-	@DefaultValue("1484")
+	@DefaultValue("1488")
 	int ROD_START_X();
 	
 	@Key("bot.rod.y")
-	@DefaultValue("360")
+	@DefaultValue("342")
 	int ROD_START_Y();
 	
 	@Key("bot.rod.dx")
@@ -159,8 +159,8 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.loot.touch")
 	@Separator(";")
-	@DefaultValue("{1412,512};{1466,512};{1520,512};{1574,512};{1628,512};{1682,512};" +
-				  "{1412,566};{1466,566}")
+	@DefaultValue("{1434,534};{1488,534};{1542,534};{1596,534};{1650,534};{1704,534};" +
+				  "{1434,588};{1488,588}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] LOOT_TOUCH();
 
