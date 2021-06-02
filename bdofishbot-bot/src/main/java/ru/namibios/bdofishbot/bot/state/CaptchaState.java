@@ -43,8 +43,8 @@ public class CaptchaState extends State {
 			}
 
 			if (inputService.send(() -> key)){
-				LOG.info("Go filter loot...");
-				fishBot.setState(new FilterLootState(fishBot));
+				LOG.info("Go check status parsing captcha...");
+				fishBot.setState(new StatusCaptchaState(fishBot, name));
 			}
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");

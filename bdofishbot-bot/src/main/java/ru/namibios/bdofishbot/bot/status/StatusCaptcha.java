@@ -17,6 +17,7 @@ public class StatusCaptcha implements Status<StatusCaptchaTemplate>{
 		this.screen = new Screen(Application.getInstance().STATUS_CAPTCHA());
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_STATUS_CAPTCHA()) {
+			new Screen(Application.getInstance().FULL_SCREEN()).saveImage(Path.DEBUG_STATUSCAPTCHA);
 			screen.saveImage(Path.DEBUG_STATUSCAPTCHA);
 		}
 

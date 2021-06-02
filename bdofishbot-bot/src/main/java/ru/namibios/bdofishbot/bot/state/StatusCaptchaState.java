@@ -38,7 +38,7 @@ public class StatusCaptchaState extends State{
 
     @Override
 	public void onOverflow() {
-		LOG.info("Status not identified. Go filter loot...");
+		LOG.info("Captcha parsed success. Go filter loot...");
 		fishBot.setState(new FilterLootState(fishBot));
 	}
 
@@ -49,26 +49,13 @@ public class StatusCaptchaState extends State{
 
 			StatusCaptchaTemplate status = statusService.getTemplate(new StatusCaptcha());
 			
-			if(status == null) {
+			if (status == null) {
 				overflow();
 
-			}else{
-
-				switch (status) {
-					case SUCCESS: {
-						LOG.info("Captcha parsed success. Go filter loot...");
-						fishBot.setState(new FilterLootState(fishBot));
-						break;
-					}
-
-					case FAILED: {
-						LOG.info("Captcha parsed failure. Back to start...");
-						fishBot.setState(new StartFishState(fishBot));
-						httpService.markFail(filename);
-						break;
-					}
-				}
-
+			} else if (status == StatusCaptchaTemplate.FAILED){
+				LOG.info("Captcha parsed failure. Back to start...");
+				fishBot.setState(new StartFishState(fishBot));
+				httpService.markFail(filename);
 			}
 
 		}catch (Exception e) {

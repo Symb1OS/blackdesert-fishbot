@@ -37,8 +37,6 @@ public class Captcha implements Command{
 
 		this.screen = new Screen(Application.getInstance().CAPTCHA());
 		this.screen.saveDirty(name);
-		this.screen.clearNoise(Application.getInstance().CNT_KAPCHA());
-		this.screen.saveClean(name);
 		this.key = "";
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_CAPTCHA()) {

@@ -38,7 +38,7 @@ public class StatusCaptchaStateTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+/*    @Test
     public void testSuccess() {
 
         when(statusService.getTemplate(any(Status.class))).thenReturn(StatusCaptchaTemplate.SUCCESS);
@@ -48,7 +48,7 @@ public class StatusCaptchaStateTest {
         verify(statusService).getTemplate(isA(Status.class));
         verify(fishBot).setState(isA(FilterLootState.class));
 
-    }
+    }*/
 
     @Test
     public void testFailure() throws IOException {

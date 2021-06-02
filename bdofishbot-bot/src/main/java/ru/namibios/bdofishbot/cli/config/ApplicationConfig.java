@@ -293,7 +293,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_KAPCHA();
 	
 	@Key("bot.delay.kapcha.after")
-	@DefaultValue("5000")
+	@DefaultValue("0")
 	int DELAY_AFTER_KAPCHA();
 	
 	@Key("bot.delay.statuskapcha.before")
@@ -436,7 +436,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle CAPTCHA();
 
 	@Key("bot.screen.statuscaptcha")
-	@DefaultValue("837,490,234,42")
+	@DefaultValue("865,490,195,72")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_CAPTCHA();
 

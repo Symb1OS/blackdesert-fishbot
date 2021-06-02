@@ -12,8 +12,6 @@ import java.util.List;
 
 public enum StatusCaptchaTemplate implements MatrixTemplate{
 
-    SUCCESS("resources/templates/statuskapcha/success"),
-
     FAILED("resources/templates/statuskapcha/failed");
 	
 	private final List<int[][]> templates;

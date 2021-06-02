@@ -35,7 +35,7 @@ public class ImageParserTest {
 		Assert.assertEquals("1,", key);
 	}
 
-	@Test
+/*	@Test
 	public void testSubImageSuccess() throws IOException {
 
 		File[] files = new File(Path.TEST_RESOURCES + "parsing/statuscaptcha/success").listFiles();
@@ -50,7 +50,7 @@ public class ImageParserTest {
 			Assert.assertEquals(StatusCaptchaTemplate.SUCCESS, nameTemplateBySubImage);
 		}
 
-	}
+	}*/
 
 	@Test
 	public void testSubImageFailed() throws IOException {

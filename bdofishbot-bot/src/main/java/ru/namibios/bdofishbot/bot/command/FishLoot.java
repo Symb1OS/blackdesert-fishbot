@@ -70,7 +70,7 @@ public class FishLoot implements Command{
 			if (key.equals("-1,")) {
 				double coefWhite = imageParser.getCoefWhite();
 				LOG.debug("Loot cell is not defined");
-				if (coefWhite == 0) {
+				if (coefWhite < 0.05) {
 					LOG.debug("CoefWhite = " + coefWhite + ". Replaced on empty cell");
 					key = Loot.EMPTY.ordinal() + ",";
 				}
