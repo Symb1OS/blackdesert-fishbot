@@ -20,6 +20,7 @@ public class EmulationService implements InputService{
     private static final String TOUCH_MATCHER = "\\[{1}[0-9]{1,}[,]{1}[0-9]{1,}\\]{1}";
     private static final String SLOT_MATCHER = "[a-zA-Z]{4}\\[{1}[0-9]{1}\\]{1}";
 
+    private static final int ONE_SECONDS = 1000;
     private static final int TWO_SECONDS = 2000;
     private static final String CONFIRM_FLAG = "!";
 
@@ -67,7 +68,7 @@ public class EmulationService implements InputService{
             if (touch.isActive()) {
                 LOG.debug(touch);
                 emulationInput.clickLeft(touch.getX(),touch.getY());
-                DelayUtils.delay(TWO_SECONDS);
+                DelayUtils.delay(Application.getInstance().MOUSE_CLICK_SEQUENCE_DELAY());
             }
         }
     }
@@ -86,7 +87,7 @@ public class EmulationService implements InputService{
     private void beer(String command){
 
         useSlot(command);
-        DelayUtils.delay(TWO_SECONDS);
+        DelayUtils.delay(ONE_SECONDS);
 
         clickSequence(Application.getInstance().BEER_TOUCHS());
 

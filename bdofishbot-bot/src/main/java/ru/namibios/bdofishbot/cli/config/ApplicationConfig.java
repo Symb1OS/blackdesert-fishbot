@@ -431,7 +431,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle STATUS_CUT();
 
 	@Key("bot.screen.captcha")
-	@DefaultValue("769,347,380,60")
+	@DefaultValue("770,348,380,60")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CAPTCHA();
 
@@ -476,6 +476,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @Key("bot.keyboard.input.delay")
     @DefaultValue("150")
     int PRESS_KEY_DELAY();
+
+	@Key("bot.mouse.click_sequence.delay")
+	@DefaultValue("2000")
+	long MOUSE_CLICK_SEQUENCE_DELAY();
 
 	@Key("bot.mouse.correction_factor")
 	@DefaultValue("1")
