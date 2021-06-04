@@ -431,7 +431,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	Rectangle STATUS_CUT();
 
 	@Key("bot.screen.captcha")
-	@DefaultValue("769,345,380,60")
+	@DefaultValue("769,347,380,60")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle CAPTCHA();
 
@@ -486,12 +486,8 @@ public interface ApplicationConfig extends Accessible, Mutable{
     // DEBUG
     ///////////////////////////////////////////////////////////////////////////
 
-	@Key("bot.screen.debug.stored.captcha")
-	@DefaultValue("true")
-	boolean DEBUG_STORED_CAPTCHA();
-
     @Key("bot.screen.debug")
-    @DefaultValue("true")
+    @DefaultValue("false")
     boolean DEBUG_SCREEN();
 
 	@Key("bot.screen.debug.image_parser")
