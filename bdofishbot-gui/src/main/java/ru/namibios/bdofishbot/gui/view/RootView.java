@@ -56,7 +56,7 @@ public class RootView extends JFrame {
 
         setContentPane(contentPane);
         setAlwaysOnTop(true);
-        setLocation(0, 400);
+        setLocation(Application.getInstance().UI_WINDOW_ROOT_X(), Application.getInstance().UI_WINDOW_ROOT_Y());
         setSize(new Dimension(520, 300));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -94,6 +94,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("3663")
 	int HOT_KEY_STOP();
 
+	@Key("bot.ui.window.root.x")
+	@DefaultValue("0")
+	int UI_WINDOW_ROOT_X();
+
+	@Key("bot.ui.window.root.y")
+	@DefaultValue("400")
+	int UI_WINDOW_ROOT_Y();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// RODS
