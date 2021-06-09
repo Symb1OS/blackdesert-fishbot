@@ -38,14 +38,25 @@ public class PaletteParser {
         this.screenMatrix = new int[row][column];
     }
 
+    private Color[] palette;
+
     private static final Color CUSTOM_GRAY = new Color(180,180, 180);
 
-    private static Color[] PALETTE = {
+    public static Color[] DEFAULT_PALETTE = {
             Color.WHITE,
             CUSTOM_GRAY,
             Color.RED,
             Color.GREEN,
             Color.BLUE,
+    };
+
+    public static Color[] LOOT_FRAME_PALETTE = {
+            new Color(24, 24, 26),
+            new Color(112, 128, 151),
+            new Color(141, 146, 123),
+            new Color(203, 192, 138),
+            new Color(121,98,104),
+
     };
 
     private int getIndexPallete(Color color){
@@ -56,8 +67,8 @@ public class PaletteParser {
 
         int minValue = Integer.MAX_VALUE;
         int minIndex = Integer.MAX_VALUE;
-        for (int i = 0; i < PALETTE.length; i++) {
-            Color pal = PALETTE[i];
+        for (int i = 0; i < palette.length; i++) {
+            Color pal = palette[i];
             int rez = (int)
                     (Math.pow(red - pal.getRed(), 2) +
                             Math.pow(green - pal.getGreen(), 2) +
@@ -76,7 +87,9 @@ public class PaletteParser {
         return screenMatrix;
     }
 
-    public void parse(){
+    public void parse(Color[] palette){
+
+        this.palette = palette;
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {

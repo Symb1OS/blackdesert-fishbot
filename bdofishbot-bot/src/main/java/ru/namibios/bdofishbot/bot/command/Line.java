@@ -32,7 +32,7 @@ public class Line implements Command {
 		}
 
 		paletteParser = new PaletteParser(screen, ColorChars.values());
-		paletteParser.parse();
+		paletteParser.parse(PaletteParser.DEFAULT_PALETTE);
 
 		MatrixTemplate value = paletteParser.getValue();
 		return value != null ? value.toString() : "";

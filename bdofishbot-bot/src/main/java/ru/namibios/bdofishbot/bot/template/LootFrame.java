@@ -11,28 +11,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum Debuf implements MatrixTemplate{
+public enum LootFrame implements MatrixTemplate{
 
-    DAY("day.jpg"),
+    black("black.jpg"),
 
-    NIGHT("night.jpg");
+    green("green.jpg"),
+
+    blue("blue.jpg"),
+
+    gold("gold.jpg"),
+
+    red("red.jpg"),;
 
     private final List<int[][]> templates;
 
-    @Override
     public List<int[][]> getTemplates() {
         return templates;
     }
 
-    Debuf(String... filenames) {
+    LootFrame(String... filenames) {
         this.templates = new ArrayList<>();
 
         ArrayList<int[][]> collect = Arrays.stream(filenames)
                 .map(s -> {
-                    BufferedImage image = ImageUtils.read(new File(Path.DEBUF + s));
+                    BufferedImage image = ImageUtils.read(new File(Path.LOOT_FRAMES + s));
                     PaletteParser parser = new PaletteParser(image);
-                    parser.parse(PaletteParser.DEFAULT_PALETTE);
-                    return  parser.getImageMatrix();
+                    parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
+                    return parser.getImageMatrix();
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
 

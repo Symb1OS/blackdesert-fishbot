@@ -14,7 +14,7 @@ public class PaletteParserTest {
 
         Screen screen = new Screen("resources/templates/debuff/day.jpg", false);
         PaletteParser paletteParser = new PaletteParser(screen, Debuf.values());
-        paletteParser.parse();
+        paletteParser.parse(PaletteParser.DEFAULT_PALETTE);
 
         MatrixTemplate value = paletteParser.getValue();
         Assert.assertEquals(Debuf.DAY, value);
@@ -26,7 +26,7 @@ public class PaletteParserTest {
 
         Screen screen = new Screen("resources/templates/debuff/night.jpg", false);
         PaletteParser paletteParser = new PaletteParser(screen, Debuf.values());
-        paletteParser.parse();
+        paletteParser.parse(PaletteParser.DEFAULT_PALETTE);
 
         MatrixTemplate value = paletteParser.getValue();
         Assert.assertEquals(Debuf.NIGHT, value);

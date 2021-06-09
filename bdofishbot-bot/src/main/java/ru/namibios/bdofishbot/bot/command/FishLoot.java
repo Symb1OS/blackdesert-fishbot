@@ -3,6 +3,8 @@ package ru.namibios.bdofishbot.bot.command;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.*;
 import ru.namibios.bdofishbot.bot.template.Loot;
+import ru.namibios.bdofishbot.bot.template.LootFrame;
+import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -22,6 +24,8 @@ public class FishLoot implements Command{
 
 	private List<Screen> screens;
 
+	private List<Screen> colorScreens;
+
 	public FishLoot(String... loot) throws IOException {
 		if (loot.length <= 0 || loot.length > 8) {
 			throw new IllegalArgumentException("Expected 1-8 files.. Actual " + loot.length);
@@ -34,24 +38,61 @@ public class FishLoot implements Command{
 
 	}
 
+	private FishLoot(final String fullscreen) {
+
+		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
+
+		this.screens = Arrays.stream(rectangles)
+				.map(rectangle -> toScreen(fullscreen, rectangle, true))
+				.collect(Collectors.toList());
+
+		rectangles = Application.getInstance().LOOT_SLOT_LIST_COLOR();
+
+		this.colorScreens = Arrays.stream(rectangles)
+				.map(rectangle -> toScreen(fullscreen, rectangle, false))
+				.collect(Collectors.toList());
+
+	}
+
 	public FishLoot() {
 		LOG.info("Init filter");
 
 		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
-        List<Screen> collect = Arrays.stream(rectangles)
-                .map(this::toScreen)
-                .collect(Collectors.toList());
+		this.screens = Arrays.stream(rectangles)
+				.map(rectangle -> toScreen(rectangle, true))
+				.collect(Collectors.toList());
 
-        this.screens = new ArrayList<>(collect);
+		rectangles = Application.getInstance().LOOT_SLOT_LIST_COLOR();
+
+		this.colorScreens = Arrays.stream(rectangles)
+				.map(rectangle -> toScreen(rectangle, false))
+				.collect(Collectors.toList());
 
 	}
 
-    private Screen toScreen(Rectangle rectangle) {
+	private Screen toScreen(String fullscreen, Rectangle rectangle, boolean isGray) {
+
+		if (fullscreen != null) {
+
+			try {
+
+				return new Screen(fullscreen, rectangle, isGray);
+
+			} catch (IOException e) {
+				LOG.error(ExceptionUtils.getString(e));
+			}
+
+		}
+
+		return null;
+	}
+
+    private Screen toScreen(Rectangle rectangle, boolean gray) {
 
 	    try {
 
-            return new Screen(rectangle);
+            return new Screen(rectangle, gray);
 
         } catch (AWTException e) {
             LOG.error(ExceptionUtils.getString(e));
@@ -61,7 +102,17 @@ public class FishLoot implements Command{
     }
 
     private String[] getLootIndices() {
+
 		String loots = "";
+		String colorLoots = "";
+
+		for (Screen colorScreen : colorScreens) {
+			PaletteParser parser = new PaletteParser(colorScreen, LootFrame.values());
+			parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
+			MatrixTemplate value = parser.getValue();
+			colorLoots += value.toString() + ",";
+		}
+
 		for (Screen screen : screens) {
 			ImageParser imageParser = new ImageParser(screen, Loot.values());
 			imageParser.parse(Screen.GRAY);
@@ -80,7 +131,9 @@ public class FishLoot implements Command{
 
 		}
 
+		LOG.info("Loot frames: " + colorLoots);
 		LOG.info("Loot indexes: " + nameFromId(loots));
+
 		return loots.split(",");
 	}
 
@@ -107,7 +160,7 @@ public class FishLoot implements Command{
 		}
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
-			screens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));
+			colorScreens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));
 		}
 
 		if(Application.getInstance().SAVE_UNSORT()) {

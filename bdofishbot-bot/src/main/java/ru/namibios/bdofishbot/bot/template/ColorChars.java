@@ -28,7 +28,7 @@ public enum ColorChars implements MatrixTemplate{
                 .map(s -> {
                     BufferedImage image = ImageUtils.read(new File(Path.SPACE + s));
                     PaletteParser parser = new PaletteParser(image);
-                    parser.parse();
+                    parser.parse(PaletteParser.DEFAULT_PALETTE);
                     return parser.getImageMatrix();
                 })
                 .collect(Collectors.toCollection(ArrayList::new));

@@ -461,6 +461,19 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] LOOT_SLOT_LIST();
 
+	@Key("bot.screen.loot_slot_list.color")
+	@Separator(";")
+	@DefaultValue("1411, 511, 45, 1;"
+				+ "1465, 511, 45, 1;"
+				+ "1519, 511, 45, 1;"
+				+ "1573, 511, 45, 1;"
+				+ "1627, 511, 45, 1;"
+				+ "1681, 511, 45, 1;"
+				+ "1411, 565, 45, 1;"
+				+ "1465, 565, 45, 1")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] LOOT_SLOT_LIST_COLOR();
+
 	@Key("bot.screen.chat")
 	@DefaultValue("5, 1000, 355, 40")
 	@ConverterClass(RectangleConverter.class)
@@ -523,11 +536,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
     boolean DEBUG_SUBLINE();
 
     @Key("bot.screen.debug.captcha")
-    @DefaultValue("true")
+    @DefaultValue("false")
     boolean DEBUG_CAPTCHA();
 
     @Key("bot.screen.debug.filterloot")
-    @DefaultValue("false")
+    @DefaultValue("true")
     boolean DEBUG_FILTER_LOOT();
 
 	@Key("bot.screen.debug.pmmessage")

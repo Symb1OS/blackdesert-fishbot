@@ -25,6 +25,7 @@ public class Path {
 
     public static final String LOOT_UNSORT = "loot/unsort";
     public static final String LOOT_UNKNOWN = "loot/unknown";
+    public static final String LOOT_FRAMES = Path.RESOURCES + "loot/frame/";
 
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String DEBUF = TEMPLATES + "debuff/";

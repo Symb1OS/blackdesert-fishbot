@@ -24,7 +24,7 @@ public class DebufStatus implements Command {
     public String getKey() {
 
         PaletteParser parser = new PaletteParser(screen, Debuf.values());
-        parser.parse();
+        parser.parse(PaletteParser.DEFAULT_PALETTE);
 
         MatrixTemplate value = parser.getValue();
         return value != null ? value.toString() : "";
