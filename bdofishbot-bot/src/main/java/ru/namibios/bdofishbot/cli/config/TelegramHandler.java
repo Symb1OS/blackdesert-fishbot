@@ -113,7 +113,10 @@ public class TelegramHandler extends StompSessionHandlerAdapter {
                         LOG.error(ExceptionUtils.getString(e));
                     }
 
+                    break;
 
+                case "SHUTDOWN":
+                    Application.shutdownPc();
                     break;
 
                 case "INVENTORY":
