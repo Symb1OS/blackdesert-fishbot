@@ -205,26 +205,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	boolean CONFIRM();
 
-	@Key("bot.loot.fish")
-	@DefaultValue("true")
-	boolean FISH();
-	
-	@Key("bot.loot.key")
-	@DefaultValue("true")
-	boolean KEY();
-	
-	@Key("bot.loot.rock")
-	@DefaultValue("true")
-	boolean ROCK();
-	
-	@Key("bot.loot.event")
-	@DefaultValue("true")
-	boolean EVENT();
-
-	@Key("bot.loot.trash")
-	@DefaultValue("false")
-	boolean TRASH();
-	
 	@Key("bot.loot.unknown")
 	@DefaultValue("false")
 	boolean TAKE_UNKNOWN();

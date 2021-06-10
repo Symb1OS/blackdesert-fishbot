@@ -39,12 +39,14 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.comport", getPortName(String.valueOf(view.getCbPort().getSelectedItem())));
 		Application.getInstance().setProperty("bot.input.mode", String.valueOf(view.getCbMode().getSelectedItem()));
 
-		Application.getInstance().setProperty("bot.loot.key",   String.valueOf(view.getCbKey().isSelected()));
-		Application.getInstance().setProperty("bot.loot.rock",  String.valueOf(view.getCbRock().isSelected()));
-		Application.getInstance().setProperty("bot.loot.fish",  String.valueOf(view.getCbFish().isSelected()));
-		Application.getInstance().setProperty("bot.loot.event", String.valueOf(view.getCbEvent().isSelected()));
+		Application.getInstance().setProperty("bot.loot.frame.red",   String.valueOf(view.getCbRed().isSelected()));
+		Application.getInstance().setProperty("bot.loot.frame.gold",   String.valueOf(view.getCbGold().isSelected()));
+		Application.getInstance().setProperty("bot.loot.frame.blue",   String.valueOf(view.getCbBlue().isSelected()));
+		Application.getInstance().setProperty("bot.loot.frame.green",   String.valueOf(view.getCbGreen().isSelected()));
+		Application.getInstance().setProperty("bot.loot.frame.gray",   String.valueOf(view.getCbGray().isSelected()));
+
+		Application.getInstance().setProperty("bot.loot.usefull",   String.valueOf(view.getCbUsefull().isSelected()));
 		Application.getInstance().setProperty("bot.loot.confirm", String.valueOf(view.getCbConfirm().isSelected()));
-		Application.getInstance().setProperty("bot.loot.unknown", String.valueOf(view.getCbUnknown().isSelected()));
 
 		Application.getInstance().setProperty("bot.autouse.beer", String.format(FORMAT_SLOT_TASK_WITH_RANDOM, view.getCbBeer().isSelected(), view.getBeerKey().getText(), 0, 0, view.getBeerPeriodFrom().getText(), view.getBeerPeriodTo().getText(), "Beer"));
 

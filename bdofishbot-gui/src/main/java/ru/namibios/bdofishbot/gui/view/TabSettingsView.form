@@ -48,7 +48,7 @@
                       <text resource-bundle="locale" key="preference.label.loot"/>
                     </properties>
                   </component>
-                  <grid id="6747" binding="lootContent" layout-manager="GridLayoutManager" row-count="1" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="6747" binding="lootContent" layout-manager="GridLayoutManager" row-count="1" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -56,57 +56,65 @@
                     <properties/>
                     <border type="bevel-lowered"/>
                     <children>
-                      <component id="714a5" class="javax.swing.JCheckBox" binding="cbFish">
+                      <component id="ab2ee" class="javax.swing.JCheckBox" binding="cbRed">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <text resource-bundle="locale" key="preference.label.fish"/>
-                        </properties>
-                      </component>
-                      <component id="ab2ee" class="javax.swing.JCheckBox" binding="cbEvent">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text resource-bundle="locale" key="preference.label.event"/>
-                        </properties>
-                      </component>
-                      <component id="d8962" class="javax.swing.JCheckBox" binding="cbRock">
-                        <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text resource-bundle="locale" key="preference.label.rock"/>
-                        </properties>
-                      </component>
-                      <component id="47ad2" class="javax.swing.JCheckBox" binding="cbKey">
-                        <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text resource-bundle="locale" key="preference.label.keys"/>
-                        </properties>
-                      </component>
-                      <component id="486e9" class="javax.swing.JCheckBox" binding="cbUnknown">
-                        <constraints>
-                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text resource-bundle="locale" key="preference.label.unknow"/>
+                          <text resource-bundle="locale" key="preference.label.red"/>
                         </properties>
                       </component>
                       <hspacer id="749f6">
                         <constraints>
-                          <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                       </hspacer>
                       <component id="d61f5" class="javax.swing.JCheckBox" binding="cbConfirm">
                         <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text resource-bundle="locale" key="preference.label.stack"/>
+                        </properties>
+                      </component>
+                      <component id="714a5" class="javax.swing.JCheckBox" binding="cbUsefull">
+                        <constraints>
+                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.usefull"/>
+                        </properties>
+                      </component>
+                      <component id="5b2c1" class="javax.swing.JCheckBox" binding="cbBlue">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.blue"/>
+                        </properties>
+                      </component>
+                      <component id="b425" class="javax.swing.JCheckBox" binding="cbGold">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.gold"/>
+                        </properties>
+                      </component>
+                      <component id="e617e" class="javax.swing.JCheckBox" binding="cbGreen">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.green"/>
+                        </properties>
+                      </component>
+                      <component id="142ba" class="javax.swing.JCheckBox" binding="cbGray">
+                        <constraints>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="locale" key="preference.label.gray"/>
                         </properties>
                       </component>
                     </children>
