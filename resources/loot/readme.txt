@@ -12,6 +12,10 @@ unknown - Сюда попадает лут, который не опознан �
 
 usefull - Добавляем сюда лут, который хотим подбирать без учета рамки. Например осколки реликвий имеют зеленую рамку, но мы хотим чтобы бот их поднимал при отключенном фильтре.
 
+Алгоритм определения лута следующий:
+Первым делом лут сопоставляется с тем, что лежит в папках (usefull, confirm, exception).
+В случае если иконка определяется как UNKNOWN, к ней применяется фильтр по цвету рамки.
+
 ============================================ E N G ============================================
 
 confirm - we collect items that stack, in order to take them, you need to confirm the number, so a separate algorithm is needed to raise the loot.
@@ -25,3 +29,7 @@ frame - Do not add anything here, it is needed to define the frame color.
 unknown - This contains loot that is not recognized for any of the categories (usefull, confirm, exception). Border color is not taken into account.
 
 usefull - Add here the loot that we want to pick up without taking into account the frame. For example, fragments of relics have a green border, but we want the bot to pick them up with the filter turned off.
+
+The algorithm for determining the loot is as follows:
+First of all, the loot is compared with what is in the folders (usefull, confirm, exception).
+If an icon is defined as UNKNOWN, a filter by frame color is applied to it.
