@@ -158,10 +158,6 @@ public class FishLoot implements Command{
 			colorScreens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));
 		}
 
-		if(Application.getInstance().SAVE_UNSORT()) {
-			screens.forEach(screen -> screen.saveImage(Path.LOOT_UNSORT));
-		}
-
 		if (Application.getInstance().SAVE_UNKNOWN()) {
 			for (int i = 0; i < arrayLoots.length; i++) {
 				if (arrayLoots[i].equals(UNKNOWN_INDEX)) {
