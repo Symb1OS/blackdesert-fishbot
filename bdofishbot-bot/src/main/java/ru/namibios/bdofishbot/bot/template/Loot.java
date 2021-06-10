@@ -38,11 +38,14 @@ public enum Loot implements MatrixTemplate {
 		}
 
 		for (File file : files) {
-			BufferedImage image = ImageUtils.read(file);
-			ImageParser parser = new ImageParser(image);
-			parser.parse(Screen.GRAY);
+			if (file.getName().endsWith(".jpg")) {
+				BufferedImage image = ImageUtils.read(file);
+				ImageParser parser = new ImageParser(image);
+				parser.parse(Screen.GRAY);
 
-			templates.add(parser.getImageMatrix());
+				templates.add(parser.getImageMatrix());
+			}
+
 		}
 	}
 
@@ -60,6 +63,15 @@ public enum Loot implements MatrixTemplate {
 			sb.append(value.toString()).append(",");
 		}
 		return sb.toString();
+	}
+
+	public static void main(String[] args) {
+		Loot[] values = Loot.values();
+		for (Loot value : values) {
+			int size = value.getTemplates().size();
+			System.out.println(size);
+			System.out.println(value);
+		}
 	}
 
 }
