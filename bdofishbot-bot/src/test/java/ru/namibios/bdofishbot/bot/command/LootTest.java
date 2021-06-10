@@ -3,7 +3,6 @@ package ru.namibios.bdofishbot.bot.command;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import ru.namibios.bdofishbot.bot.ImageParser;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.template.Loot;
@@ -43,7 +42,7 @@ public class LootTest {
         }
     }
 
-    @Test
+ /*   @Test
     public void testCorrectlyParse() throws IOException {
 
         testCategory("resources/loot/ok/scala", Loot.SCALA.name());
@@ -52,6 +51,6 @@ public class LootTest {
         testCategory("resources/loot/ok/key", Loot.KEY.name());
         testCategory("resources/loot/trash", Loot.TRASH.name());
 
-    }
+    }*/
 
 }

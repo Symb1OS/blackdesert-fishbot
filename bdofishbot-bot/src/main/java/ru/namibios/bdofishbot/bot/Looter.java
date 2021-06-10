@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot;
 
 import ru.namibios.bdofishbot.bot.template.Loot;
+import ru.namibios.bdofishbot.bot.template.LootFrame;
 import ru.namibios.bdofishbot.cli.Application;
 
 import java.util.ArrayList;
@@ -14,47 +15,60 @@ public class Looter {
 
     private LootCount count;
 	
-	public Looter(String[] slots, boolean isTakeUnknown) {
+	public Looter(String[] slots, String[] frames, boolean isTakeUnknown) {
+
+		List<Integer> lootFrameOk = new ArrayList<>();
+		List<Integer> lootFrameTrash = new ArrayList<>();
 
         List<Integer> lootOk = new ArrayList<>();
         List<Integer> lootConfirm = new ArrayList<>();
         List<Integer> lootTrash = new ArrayList<>();
 		this.lootTypeList = new ArrayList<>();
-		
-		if(Application.getInstance().ROCK())  lootOk.add(Loot.SCALA.ordinal()); else lootTrash.add(Loot.SCALA.ordinal());
-		if(Application.getInstance().KEY())   lootOk.add(Loot.KEY.ordinal());   else lootTrash.add(Loot.KEY.ordinal());
-		if(Application.getInstance().FISH())  lootOk.add(Loot.FISH.ordinal());  else lootTrash.add(Loot.FISH.ordinal());
-		if(Application.getInstance().EVENT()) lootOk.add(Loot.EVENT.ordinal()); else lootTrash.add(Loot.EVENT.ordinal());
-		if(Application.getInstance().CONFIRM()) lootConfirm.add(Loot.CONFIRM.ordinal()); else lootTrash.add(Loot.CONFIRM.ordinal());
 
-		lootTrash.add(Loot.TRASH.ordinal());
+		if (Application.getInstance().RED_FRAME()) lootFrameOk.add(LootFrame.RED.ordinal()); else lootFrameTrash.add(LootFrame.RED.ordinal());
+		if (Application.getInstance().GOLD_FRAME()) lootFrameOk.add(LootFrame.GOLD.ordinal()); else lootFrameTrash.add(LootFrame.GOLD.ordinal());
+		if (Application.getInstance().BLUE_FRAME()) lootFrameOk.add(LootFrame.BLUE.ordinal()); else lootFrameTrash.add(LootFrame.BLUE.ordinal());
+		if (Application.getInstance().GREEN_FRAME()) lootFrameOk.add(LootFrame.GREEN.ordinal()); else lootFrameTrash.add(LootFrame.GREEN.ordinal());
+		if (Application.getInstance().GRAY_FRAME()) lootFrameOk.add(LootFrame.GRAY.ordinal()); else lootFrameTrash.add(LootFrame.GRAY.ordinal());
+
+		if (Application.getInstance().USEFULL()) lootOk.add(Loot.USEFULL.ordinal()); else lootTrash.add(Loot.USEFULL.ordinal());
+		if (Application.getInstance().CONFIRM()) lootConfirm.add(Loot.CONFIRM.ordinal()); else lootTrash.add(Loot.CONFIRM.ordinal());
+
+		lootTrash.add(Loot.EXCEPTION.ordinal());
 
 		for (int index = 0; index < slots.length; index++) {
 
 			int slot = Integer.parseInt(slots[index]);
+			int frame = Integer.parseInt(frames[index]);
 
 			LootType lootType = new LootType(index);
+
+			for (Integer trashIndex : lootTrash) {
+				if (slot == trashIndex) lootType.setTrash(true);
+			}
+
 			for (Integer okIndex : lootOk) {
-				if(slot == okIndex) lootType.setOk(true);
+				if (slot == okIndex) lootType.setOk(true);
 			}
 
 			for (Integer confirmIndex : lootConfirm) {
 				if (slot == confirmIndex) lootType.setConfirm(true);
 			}
 
-			for (Integer trashIndex : lootTrash) {
-				if(slot == trashIndex) lootType.setTrash(true);
-			}
+			if(slot == Loot.EMPTY.ordinal()) lootType.setEmpty(true);
 
 			if (slot  == UNKNOWN) {
-				if(isTakeUnknown) {
-					lootType.setOk(true);
-				}else {
-					lootType.setTrash(true);
+
+				for (Integer okIndex : lootFrameOk) {
+					if (frame == okIndex) lootType.setOk(true);
 				}
+
+				for (Integer trashIndex : lootFrameTrash) {
+					if (frame == trashIndex) lootType.setTrash(true);
+				}
+
 			}
 
-			if(slot == Loot.EMPTY.ordinal()) lootType.setEmpty(true);
 			lootTypeList.add(lootType);
 		}
 		
@@ -73,7 +87,15 @@ public class Looter {
 	public List<LootType> getLootTypeList() {
 		return lootTypeList;
 	}
-	
+
+	public void info() {
+		System.out.println("getOk = " + count.getOk());
+		System.out.println("getTrash = " + count.getTrash());
+		System.out.println("getUnknow = " + count.getUnknow());
+		System.out.println("getEmpty = " + count.getEmpty());
+
+	}
+
 	public boolean isTakeAll() {
 		return (count.getOk() + count.getEmpty() == count.getLength());
 	}
@@ -85,4 +107,5 @@ public class Looter {
 	public boolean isTakeByIndex() {
 		return (count.getOk() > 0 && count.getOk() < count.getLength());
 	}
+
 }

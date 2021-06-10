@@ -3,7 +3,6 @@ package ru.namibios.bdofishbot.bot.template;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.ImageParser;
 import ru.namibios.bdofishbot.bot.Screen;
-import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.utils.ImageUtils;
 
 import java.awt.image.BufferedImage;
@@ -13,20 +12,14 @@ import java.util.List;
 
 public enum Loot implements MatrixTemplate {
 	
-	SCALA("resources/loot/ok/scala"),
-	
-	KEY("resources/loot/ok/key"),
-	
-	FISH("resources/loot/ok/fish"),
-	
-	TRASH("resources/loot/trash"),
-	
-	EVENT("resources/loot/ok/event"),
+	USEFULL("resources/loot/usefull"),
 
-	CONFIRM("resources/loot/ok/confirm"),
+	CONFIRM("resources/loot/confirm"),
 
-	EMPTY("resources/loot/ok/empty");
-	
+	EXCEPTION("resources/loot/exception"),
+
+	EMPTY("resources/loot/empty");
+
 	private final List<int[][]> templates;
 
 	private final Logger LOG = Logger.getLogger(Loot.class);
@@ -41,7 +34,7 @@ public enum Loot implements MatrixTemplate {
 		File[] files = new File(fileFolderName).listFiles();
 		if (files != null && files.length == 0) {
 			LOG.error("Folder is empty: " + fileFolderName);
-			Application.closeBot(Application.CODE_INIT_LOOT);
+			return;
 		}
 
 		for (File file : files) {
@@ -51,6 +44,22 @@ public enum Loot implements MatrixTemplate {
 
 			templates.add(parser.getImageMatrix());
 		}
+	}
+
+	public static String toString(String[] array) {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String s : array) {
+			if (s.equals("-1")){
+				sb.append("UNKNOWN,");
+				continue;
+			}
+
+			Loot value = values()[Integer.parseInt(s)];
+			sb.append(value.toString()).append(",");
+		}
+		return sb.toString();
 	}
 
 }

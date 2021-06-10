@@ -177,6 +177,34 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	// LOOT FILTER
 	///////////////////////////////////////////////////////////////////////////
 
+	@Key("bot.loot.frame.red")
+	@DefaultValue("true")
+	boolean RED_FRAME();
+
+	@Key("bot.loot.frame.gold")
+	@DefaultValue("true")
+	boolean GOLD_FRAME();
+
+	@Key("bot.loot.frame.blue")
+	@DefaultValue("false")
+	boolean BLUE_FRAME();
+
+	@Key("bot.loot.frame.green")
+	@DefaultValue("false")
+	boolean GREEN_FRAME();
+
+	@Key("bot.loot.frame.gray")
+	@DefaultValue("false")
+	boolean GRAY_FRAME();
+
+	@Key("bot.loot.usefull")
+	@DefaultValue("true")
+	boolean USEFULL();
+
+	@Key("bot.loot.confirm")
+	@DefaultValue("true")
+	boolean CONFIRM();
+
 	@Key("bot.loot.fish")
 	@DefaultValue("true")
 	boolean FISH();
@@ -193,10 +221,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	boolean EVENT();
 
-	@Key("bot.loot.confirm")
-	@DefaultValue("true")
-	boolean CONFIRM();
-	
 	@Key("bot.loot.trash")
 	@DefaultValue("false")
 	boolean TRASH();

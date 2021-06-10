@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 
 public enum LootFrame implements MatrixTemplate{
 
-    black("black.jpg"),
+    GRAY("gray.jpg"),
 
-    green("green.jpg"),
+    GREEN("green.jpg"),
 
-    blue("blue.jpg"),
+    BLUE("blue.jpg"),
 
-    gold("gold.jpg"),
+    GOLD("gold.jpg"),
 
-    red("red.jpg"),;
+    RED("red.jpg"),;
 
     private final List<int[][]> templates;
 
@@ -43,6 +43,15 @@ public enum LootFrame implements MatrixTemplate{
 
         templates.addAll(collect);
 
+    }
+
+    public static String toString(String[] lootFrames) {
+        StringBuilder sb = new StringBuilder();
+        for (String frame : lootFrames) {
+            LootFrame value = values()[Integer.parseInt(frame)];
+            sb.append(value).append(",");
+        }
+        return sb.toString();
     }
 
 }

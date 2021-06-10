@@ -101,17 +101,26 @@ public class FishLoot implements Command{
         return null;
     }
 
+    private String[] getLootFrames(){
+
+		StringBuilder colorLoots = new StringBuilder();
+
+		for (Screen colorScreen : colorScreens) {
+
+			PaletteParser parser = new PaletteParser(colorScreen, LootFrame.values());
+			parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
+
+			MatrixTemplate value = parser.getValue();
+			LootFrame lootFrame = LootFrame.valueOf(value.toString());
+			colorLoots.append(lootFrame.ordinal()).append(",");
+		}
+
+		return colorLoots.toString().split(",");
+	}
+
     private String[] getLootIndices() {
 
 		String loots = "";
-		String colorLoots = "";
-
-		for (Screen colorScreen : colorScreens) {
-			PaletteParser parser = new PaletteParser(colorScreen, LootFrame.values());
-			parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
-			MatrixTemplate value = parser.getValue();
-			colorLoots += value.toString() + ",";
-		}
 
 		for (Screen screen : screens) {
 			ImageParser imageParser = new ImageParser(screen, Loot.values());
@@ -131,21 +140,7 @@ public class FishLoot implements Command{
 
 		}
 
-		LOG.info("Loot frames: " + colorLoots);
-		LOG.info("Loot indexes: " + nameFromId(loots));
-
 		return loots.split(",");
-	}
-
-	private String nameFromId(String id) {
-		return id.replaceAll("-1", "UNKNOWN")
-				.replaceAll("0", "SCALA")
-				.replaceAll("1", "KEY")
-				.replaceAll("2", "FISH")
-				.replaceAll("3", "TRASH")
-				.replaceAll("4", "EVENT")
-				.replaceAll("5", "CONFIRM")
-				.replaceAll("6", "EMPTY");
 	}
 
 	private void saveLoot(String[] arrayLoots){
@@ -181,11 +176,15 @@ public class FishLoot implements Command{
 	public String getKey(){
 		
 		String[] arrayLoots = getLootIndices();
+		LOG.info("Loot types: " + Loot.toString(arrayLoots));
+
+		String[] lootFrames = getLootFrames();
+		LOG.info("Loot frames: " + LootFrame.toString(lootFrames));
 
 		saveLoot(arrayLoots);
 
 		boolean isTakeUnknown = Application.getInstance().TAKE_UNKNOWN();
-		Looter looter = new Looter(arrayLoots, isTakeUnknown);
+		Looter looter = new Looter(arrayLoots, lootFrames, isTakeUnknown);
 
 		if(looter.isTakeAll()) {
 			LOG.info("Loot ok. Take all..");
