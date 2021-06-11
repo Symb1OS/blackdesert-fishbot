@@ -155,7 +155,7 @@ public class FishLoot implements Command{
 		}
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
-			colorScreens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));
+			screens.forEach(screen -> screen.saveImage(Path.DEBUG_FILTERLOOT));
 		}
 
 		if (Application.getInstance().SAVE_UNKNOWN()) {
