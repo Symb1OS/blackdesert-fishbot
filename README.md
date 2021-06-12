@@ -1,6 +1,6 @@
 # Black Desert Online fishbot
  
- Bot working on EU and RU servers.
+ Bot working on RU/EU/NA servers.
  
  Features:
 
