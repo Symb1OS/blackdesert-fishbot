@@ -36,13 +36,10 @@ More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 - Screen resolution 1920x1080 (full screen or in window without frame)
 - [JDK 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
 
-- [Arduino pro micro](https://all-arduino.ru/arduino-micro/#_Arduino_Micro_Arduino_Pro_Micro) `(Optional)`
-- [Arduino IDE](https://www.arduino.cc/en/main/software) `(Optional)`
-
 
 ### Presets
 
-- Download and install [Java](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html).
+- Download and install [Java](https://jdk.java.net/java-se-ri/13).
 
 - Download last version [bot](https://github.com/Symb1OS/blackdesert-fishbot/releases/latest).
 
