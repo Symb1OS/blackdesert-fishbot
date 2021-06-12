@@ -544,7 +544,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     boolean DEBUG_CAPTCHA();
 
     @Key("bot.screen.debug.filterloot")
-    @DefaultValue("true")
+    @DefaultValue("false")
     boolean DEBUG_FILTER_LOOT();
 
 	@Key("bot.screen.debug.pmmessage")
