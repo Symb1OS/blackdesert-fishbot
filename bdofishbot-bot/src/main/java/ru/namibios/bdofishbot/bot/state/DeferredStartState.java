@@ -12,7 +12,9 @@ public class DeferredStartState extends State {
     public DeferredStartState(FishBot fishBot) {
         super(fishBot);
 
-        LOG.info("Bot starting over " + TimeUtils.getStringTime(Application.getInstance().TASK_START().getDelay()));
+        if (Application.getInstance().TASK_START().isActive()) {
+            LOG.info("Bot starting over " + TimeUtils.getStringTime(Application.getInstance().TASK_START().getDelay()));
+        }
     }
 
     @Override
