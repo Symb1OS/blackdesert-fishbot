@@ -119,7 +119,7 @@ public class PaletteParser {
             }
 
         }
-
+        LOG.debug("maxCoef = " + maxCoef);
         return maxCoef > coefIdentification ? max : null;
     }
 
