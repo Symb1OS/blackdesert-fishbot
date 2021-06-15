@@ -221,6 +221,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("true")
 	boolean LOOT_SYNC();
 
+	@Key("bot.delay.filterloot.empty_coef")
+	@DefaultValue("0.05")
+	double LOOT_EMPTY_COEF();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// TASKS
@@ -451,6 +455,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("865,490,195,72")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_CAPTCHA();
+
+	@Key("bot.screen.loot_window")
+	@DefaultValue("1400,450, 336, 230")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_WINDOW();
 
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")

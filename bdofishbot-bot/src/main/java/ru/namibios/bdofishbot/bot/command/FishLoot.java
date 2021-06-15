@@ -9,6 +9,7 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class FishLoot implements Command{
 	private List<Screen> screens;
 
 	private List<Screen> colorScreens;
+	private Screen lootWindow;
 
 	public FishLoot(String... loot) throws IOException {
 		if (loot.length <= 0 || loot.length > 8) {
@@ -56,6 +58,8 @@ public class FishLoot implements Command{
 
 	public FishLoot() {
 		LOG.info("Init filter");
+
+		this.lootWindow = toScreen(Application.getInstance().LOOT_WINDOW(), false);
 
 		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
@@ -111,6 +115,11 @@ public class FishLoot implements Command{
 			parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
 
 			MatrixTemplate value = parser.getValue();
+			if (value == null) {
+				LOG.info("Incorrect loot window position.. Image saved resources/debug. Reset settings to default..");
+				JOptionPane.showMessageDialog(null, "Incorrect loot window position.. Image saved resources/debug. Reset settings to default..", "Warning", JOptionPane.ERROR_MESSAGE);
+				lootWindow.saveDebugImage();
+			}
 			LootFrame lootFrame = LootFrame.valueOf(value.toString());
 			colorLoots.append(lootFrame.ordinal()).append(",");
 		}
@@ -129,9 +138,9 @@ public class FishLoot implements Command{
 			String key = imageParser.getKey();
 			if (key.equals("-1,")) {
 				double coefWhite = imageParser.getCoefWhite();
-				LOG.debug("Loot cell is not defined");
-				if (coefWhite < 0.05) {
-					LOG.debug("CoefWhite = " + coefWhite + ". Replaced on empty cell");
+				LOG.debug("Loot cell is not defined. CoefWhite =" + coefWhite);
+				if (coefWhite < Application.getInstance().LOOT_EMPTY_COEF()) {
+					LOG.debug("Replaced on empty cell");
 					key = Loot.EMPTY.ordinal() + ",";
 				}
 			}
