@@ -9,6 +9,7 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class FishLoot implements Command{
 	private List<Screen> screens;
 
 	private List<Screen> colorScreens;
+
+	private Screen lootWindow;
 
 	public FishLoot(String... loot) throws IOException {
 		if (loot.length <= 0 || loot.length > 8) {
@@ -56,6 +59,8 @@ public class FishLoot implements Command{
 
 	public FishLoot() {
 		LOG.info("Init filter");
+
+		this.lootWindow = toScreen(Application.getInstance().LOOT_WINDOW_1(), false);
 
 		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
@@ -101,16 +106,39 @@ public class FishLoot implements Command{
         return null;
     }
 
+	public static void main(String[] args) throws IOException {
+//		FishLoot fishLoot = new FishLoot(Path.RESOURCES+ "4.jpg");
+//		String key = fishLoot.getKey();
+//		System.out.println(key);
+
+		Rectangle[] x = Application.getInstance().LOOT_SLOT_LIST();
+		for (Rectangle rectangle : x) {
+			System.out.println(rectangle);
+		}
+
+		System.out.println();
+
+		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST_COLOR();
+		for (Rectangle rectangle : rectangles) {
+			System.out.println(rectangle);
+		}
+
+	}
+
     private String[] getLootFrames(){
 
 		StringBuilder colorLoots = new StringBuilder();
 
 		for (Screen colorScreen : colorScreens) {
-
 			PaletteParser parser = new PaletteParser(colorScreen, LootFrame.values());
 			parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
 
 			MatrixTemplate value = parser.getValue();
+			if (value == null) {
+				LOG.info("Incorrect loot window position.. Image saved resources/debug");
+				JOptionPane.showMessageDialog(null, "Incorrect loot window position.. Image saved resources/debug", "Warning", JOptionPane.ERROR_MESSAGE);
+				lootWindow.saveDebugImage();
+			}
 			LootFrame lootFrame = LootFrame.valueOf(value.toString());
 			colorLoots.append(lootFrame.ordinal()).append(",");
 		}

@@ -452,20 +452,55 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle STATUS_CAPTCHA();
 
+	@Key("bot.screen.loot_window_1")
+	@DefaultValue("1400,450, 336, 230")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_WINDOW_1();
+
+	@Key("bot.screen.loot_window_2")
+	@DefaultValue("1400,560, 336, 230")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_WINDOW_2();
+
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")
-    @DefaultValue("1412, 512, 42, 42;"
-                + "1466, 512, 42, 42;"
-                + "1520, 512, 42, 42;"
-                + "1574, 512, 42, 42;"
-                + "1628, 512, 42, 42;"
-                + "1682, 512, 42, 42;"
-                + "1412, 566, 42, 42;"
-                + "1466, 566, 42, 42")
+	@DefaultValue("${bot.screen.loot_slot_list_1}")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] LOOT_SLOT_LIST();
 
 	@Key("bot.screen.loot_slot_list.color")
+	@Separator(";")
+	@DefaultValue("${bot.screen.loot_slot_list.color_1}")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] LOOT_SLOT_LIST_COLOR();
+
+	@Key("bot.screen.loot_slot_list_1")
+	@Separator(";")
+	@DefaultValue("1412, 512, 42, 42;"
+				+ "1466, 512, 42, 42;"
+				+ "1520, 512, 42, 42;"
+				+ "1574, 512, 42, 42;"
+				+ "1628, 512, 42, 42;"
+				+ "1682, 512, 42, 42;"
+				+ "1412, 566, 42, 42;"
+				+ "1466, 566, 42, 42")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] LOOT_SLOT_LIST_1();
+
+	@Key("bot.screen.loot_slot_list_2")
+	@Separator(";")
+	@DefaultValue("1412, 622, 42, 42;"
+			+ "1466, 622, 42, 42;"
+			+ "1520, 622, 42, 42;"
+			+ "1574, 622, 42, 42;"
+			+ "1628, 622, 42, 42;"
+			+ "1682, 622, 42, 42;"
+			+ "1412, 676, 42, 42;"
+			+ "1466, 676, 42, 42")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] LOOT_SLOT_LIST_2();
+
+	@Key("bot.screen.loot_slot_list.color_1")
 	@Separator(";")
 	@DefaultValue("1411, 511, 45, 1;"
 				+ "1465, 511, 45, 1;"
@@ -476,7 +511,20 @@ public interface ApplicationConfig extends Accessible, Mutable{
 				+ "1411, 565, 45, 1;"
 				+ "1465, 565, 45, 1")
 	@ConverterClass(RectangleConverter.class)
-	Rectangle[] LOOT_SLOT_LIST_COLOR();
+	Rectangle[] LOOT_SLOT_LIST_COLOR_1();
+
+	@Key("bot.screen.loot_slot_list.color_2")
+	@Separator(";")
+	@DefaultValue("1411, 621, 45, 1;"
+			+ "1465, 621, 45, 1;"
+			+ "1519, 621, 45, 1;"
+			+ "1573, 621, 45, 1;"
+			+ "1627, 621, 45, 1;"
+			+ "1681, 621, 45, 1;"
+			+ "1411, 675, 45, 1;"
+			+ "1465, 675, 45, 1")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] LOOT_SLOT_LIST_COLOR_2();
 
 	@Key("bot.screen.chat")
 	@DefaultValue("5, 1000, 355, 40")
@@ -516,7 +564,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
     ///////////////////////////////////////////////////////////////////////////
 
     @Key("bot.screen.debug")
-    @DefaultValue("false")
+    @DefaultValue("true")
     boolean DEBUG_SCREEN();
 
 	@Key("bot.screen.debug.image_parser")
