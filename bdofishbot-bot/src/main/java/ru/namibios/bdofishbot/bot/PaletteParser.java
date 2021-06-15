@@ -119,7 +119,7 @@ public class PaletteParser {
             }
 
         }
-        LOG.debug("maxCoef = " + maxCoef);
+        LOG.debug("palette maxCoef = " + maxCoef);
         return maxCoef > coefIdentification ? max : null;
     }
 
@@ -140,4 +140,7 @@ public class PaletteParser {
         return coef;
     }
 
+    public void setCoefIdentification(double coefIdentification) {
+        this.coefIdentification = coefIdentification;
+    }
 }

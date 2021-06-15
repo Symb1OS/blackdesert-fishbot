@@ -461,6 +461,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle LOOT_WINDOW();
 
+	@Key("bot.screen.loot_window_close")
+	@DefaultValue("1702,466, 18, 18")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle LOOT_WINDOW_CLOSE();
+
 	@Key("bot.screen.loot_slot_list")
 	@Separator(";")
     @DefaultValue("1412, 512, 42, 42;"

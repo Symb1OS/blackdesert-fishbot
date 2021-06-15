@@ -247,10 +247,11 @@ public class ImageParser {
 		
 		void calculate(int index) {
 			calcKoef = valueKoef / templateKoef;
-			boolean isNewKoef = calcKoef > maxCalcKoef; 
+			boolean isNewKoef = calcKoef > maxCalcKoef;
 			if( isNewKoef ){
 				rezultIndex = index;
 				maxCalcKoef = calcKoef;
+				LOG.debug("maxCalcKoef=" + maxCalcKoef);
 			}
 		}
 

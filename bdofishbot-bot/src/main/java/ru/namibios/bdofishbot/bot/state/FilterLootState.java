@@ -2,6 +2,7 @@ package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.command.FishLoot;
+import ru.namibios.bdofishbot.bot.command.LootWindow;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -23,9 +24,13 @@ public class FilterLootState extends State{
 		
 		try {
 
-			inputService.send(new FishLoot());
-			fishBot.setState(new UseSlotState(fishBot));
-			
+			if (new LootWindow().getKey().isEmpty()) {
+				fishBot.setRunned(false);
+			} else {
+				inputService.send(new FishLoot());
+				fishBot.setState(new UseSlotState(fishBot));
+			}
+
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
