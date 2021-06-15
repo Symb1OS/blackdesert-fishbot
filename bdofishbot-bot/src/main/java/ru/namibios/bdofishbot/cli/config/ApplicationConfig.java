@@ -83,7 +83,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int STATE_CUT_OVERFLOW();
 
 	@Key("bot.state.skip_calendar")
-	@DefaultValue("false")
+	@DefaultValue("true")
 	boolean SKIP_CALENDAR();
 
 	@Key("bot.hotkey.start")
@@ -501,6 +501,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("676, 868, 28, 28")
     @ConverterClass(RectangleConverter.class)
 	Rectangle DEBUFF_DESERT();
+
+	@Key("bot.screen.calendar")
+	@Separator(";")
+	@DefaultValue("1459, 158, 11, 11;"
+				+ "1308, 106, 18, 18;"
+			    + "1308, 126, 18, 18")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] CALENDAR();
 
 
     ///////////////////////////////////////////////////////////////////////////

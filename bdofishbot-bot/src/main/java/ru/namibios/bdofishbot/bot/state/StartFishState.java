@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.command.Calendar;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.bot.service.PauseService;
 import ru.namibios.bdofishbot.cli.Application;
@@ -32,7 +33,7 @@ public class StartFishState extends State{
 			}
 
 			if (Application.getInstance().SKIP_CALENDAR()) {
-				inputService.send(ShortCommand.SKIP_CALENDAR);
+				inputService.send(new Calendar());
 			}
 
 			if(inputService.send(ShortCommand.SPACE)){

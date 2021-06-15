@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.command.Calendar;
 import ru.namibios.bdofishbot.bot.service.SlotService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
@@ -32,6 +33,10 @@ public class SlotTaskModeState extends State {
     public void onStep() {
 
         try {
+
+            if (Application.getInstance().SKIP_CALENDAR()) {
+                inputService.send(new Calendar());
+            }
 
             if (!slotService.isActiveTasks()
                     && !Application.getInstance().SLOT_DEBUF_DESERT_DAY().isActive()
