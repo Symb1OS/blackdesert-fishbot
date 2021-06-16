@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot.template;
 
-import ru.namibios.bdofishbot.bot.PaletteParser;
+import ru.namibios.bdofishbot.bot.ImageParser;
+import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ImageUtils;
 
@@ -30,8 +31,8 @@ public enum CalendarTemplate implements MatrixTemplate{
         ArrayList<int[][]> collect = Arrays.stream(filenames)
                 .map(s -> {
                     BufferedImage image = ImageUtils.read(new File(Path.CLOSE + s));
-                    PaletteParser parser = new PaletteParser(image);
-                    parser.parse(PaletteParser.DEFAULT_PALETTE);
+                    ImageParser parser = new ImageParser(image);
+                    parser.parse(Screen.GRAY);
                     return parser.getImageMatrix();
                 })
                 .collect(Collectors.toCollection(ArrayList::new));

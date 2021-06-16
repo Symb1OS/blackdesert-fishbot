@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.bot.command;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.PaletteParser;
+import ru.namibios.bdofishbot.bot.ImageParser;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.template.CalendarTemplate;
 import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
@@ -21,12 +21,12 @@ public class Calendar implements Command {
         try {
 
             for (Rectangle rectangle : Application.getInstance().CALENDAR()) {
-                Screen screen = new Screen(rectangle, false);
+                Screen screen = new Screen(rectangle, true);
 
-                PaletteParser parser = new PaletteParser(screen, CalendarTemplate.values());
-                parser.parse(PaletteParser.DEFAULT_PALETTE);
+                ImageParser parser = new ImageParser(screen, CalendarTemplate.values());
+                parser.parse(Screen.GRAY);
 
-                MatrixTemplate window = parser.getValue();
+                MatrixTemplate window = parser.getNameTemplate();
                 if (window != null) {
                     LOG.info("Detected " + window);
                     return "Skip_calendar";
