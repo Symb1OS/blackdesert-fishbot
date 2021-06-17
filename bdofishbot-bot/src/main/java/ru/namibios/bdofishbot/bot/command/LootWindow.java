@@ -9,8 +9,6 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
-import javax.swing.*;
-
 public class LootWindow implements Command {
 
     private final static Logger LOG = Logger.getLogger(Calendar.class);
@@ -27,7 +25,6 @@ public class LootWindow implements Command {
             MatrixTemplate value = parser.getNameTemplate();
             if (value == null) {
                 LOG.info("Incorrect loot window position.. Image saved resources/debug. Reset settings to default..");
-                JOptionPane.showMessageDialog(null, "Incorrect loot window position.. Image saved resources/debug. Reset settings to default..", "Warning", JOptionPane.ERROR_MESSAGE);
 
                 Screen lootWindow = new Screen(Application.getInstance().LOOT_WINDOW());
                 Screen full = new Screen(Application.getInstance().FULL_SCREEN(), false);
