@@ -146,14 +146,6 @@ public class Screen {
 		}
 	}
 
-	public void saveDirty(String name){
-		saveToStore(name, Path.STORE_CAPTCHA_DIRTY);
-	}
-
-	public void saveClean(String name){
-		saveToStore(name, Path.STORE_CAPTCHA_CLEAN);
-	}
-
 	public void saveImage(String folder) {
 		
 		try {

@@ -1,7 +1,6 @@
 package ru.namibios.bdofishbot.cli;
 
 import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.log4j.Logger;
@@ -10,6 +9,7 @@ import ru.namibios.bdofishbot.cli.config.ApplicationConfig;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.cli.config.User;
+import ru.namibios.bdofishbot.utils.AppUtils;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import javax.swing.*;
@@ -105,13 +105,19 @@ public class Application {
 
 			LOG.info("Create archive..");
 
-			String lootFolder = Path.RESOURCES + "loot";
-			String archive = lootFolder + ".zip";
+			String version = AppUtils.getVersion();
+			String lootFolder = Path.BOT_HOME + version + "/";
+			File file = new File(lootFolder);
+			if (file.mkdirs()) {
+				LOG.info("Dir created: " + lootFolder);
+			}
+
+			String archive = lootFolder + "loot.zip";
 
 			Files.deleteIfExists(Paths.get(archive));
 
 			ZipFile zipFile = new ZipFile(archive);
-			zipFile.addFolder(lootFolder, new ZipParameters());
+			zipFile.addFolder(Path.RESOURCES, new ZipParameters());
 
 			LOG.info("Archive " + archive + " created..");
 
@@ -120,7 +126,7 @@ public class Application {
 			HttpService httpService = new HttpService();
 			httpService.sync(new File(archive));
 
-		} catch (ZipException | IOException e) {
+		} catch (Exception e) {
             LOG.error(ExceptionUtils.getString(e));
 		}
 

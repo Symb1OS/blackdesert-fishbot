@@ -1,7 +1,5 @@
 package ru.namibios.bdofishbot.cli.config;
 
-import java.io.File;
-
 public class Path {
 
 	public static final String RESOURCES = "resources/";
@@ -36,20 +34,6 @@ public class Path {
 
 	public static final String TEST_RESOURCES = "src/test/resources/";
 
-	public static final String STORE_CAPTCHA = System.getProperty("user.home") + "/bdo/captcha/store";
-	public static final String STORE_CAPTCHA_DIRTY = System.getProperty("user.home") + "/bdo/captcha/store/dirty/";
-	public static final String STORE_CAPTCHA_CLEAN = System.getProperty("user.home") + "/bdo/captcha/store/clean/";
+	public static final String BOT_HOME = System.getProperty("user.home") + "/blackdesert-fishbot/";
 
-    static {
-
-		File storeCaptcha = new File(STORE_CAPTCHA);
-		File storeCaptchaDirty = new File(STORE_CAPTCHA_DIRTY);
-		File storeCaptchaClean = new File(STORE_CAPTCHA_CLEAN);
-
-		if (!storeCaptcha.exists()) {
-			storeCaptcha.mkdirs();
-			storeCaptchaDirty.mkdirs();
-			storeCaptchaClean.mkdirs();
-		}
-	}
 }

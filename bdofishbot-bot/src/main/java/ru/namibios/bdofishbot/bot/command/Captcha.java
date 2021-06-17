@@ -10,7 +10,6 @@ import ru.namibios.bdofishbot.utils.ExceptionUtils;
 import ru.namibios.bdofishbot.utils.ImageUtils;
 
 import java.awt.*;
-import java.util.Date;
 
 public class Captcha implements Command{
 
@@ -33,10 +32,7 @@ public class Captcha implements Command{
 
 	private void init() throws AWTException {
 
-		String name = String.valueOf(new Date().getTime());
-
 		this.screen = new Screen(Application.getInstance().CAPTCHA());
-		this.screen.saveDirty(name);
 		this.key = "";
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_CAPTCHA()) {
