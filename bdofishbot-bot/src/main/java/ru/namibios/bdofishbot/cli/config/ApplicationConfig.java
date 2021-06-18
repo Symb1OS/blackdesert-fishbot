@@ -281,7 +281,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_AFTER_START();
 	
 	@Key("bot.delay.waitfish.before")
-	@DefaultValue("3000")
+	@DefaultValue("2500")
 	int DELAY_BEFORE_WAIT_FISH();
 	
 	@Key("bot.delay.waitfish.after")
@@ -509,8 +509,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.screen.calendar")
 	@Separator(";")
-	@DefaultValue("1459, 158, 11, 11;"
-				+ "1308, 106, 18, 18;"
+	@DefaultValue("1308, 106, 18, 18;"
 			    + "1308, 126, 18, 18")
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] CALENDAR();

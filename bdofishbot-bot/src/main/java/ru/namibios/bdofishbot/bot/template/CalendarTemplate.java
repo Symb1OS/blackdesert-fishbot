@@ -1,7 +1,6 @@
 package ru.namibios.bdofishbot.bot.template;
 
-import ru.namibios.bdofishbot.bot.ImageParser;
-import ru.namibios.bdofishbot.bot.Screen;
+import ru.namibios.bdofishbot.bot.PaletteParser;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ImageUtils;
 
@@ -14,9 +13,7 @@ import java.util.stream.Collectors;
 
 public enum CalendarTemplate implements MatrixTemplate{
 
-    REWARD("reward.jpg"),
-
-    CHALLENGE("challenge.jpg");
+    REWARD("reward.jpg");
 
     private final List<int[][]> templates;
 
@@ -31,8 +28,8 @@ public enum CalendarTemplate implements MatrixTemplate{
         ArrayList<int[][]> collect = Arrays.stream(filenames)
                 .map(s -> {
                     BufferedImage image = ImageUtils.read(new File(Path.CLOSE + s));
-                    ImageParser parser = new ImageParser(image);
-                    parser.parse(Screen.GRAY);
+                    PaletteParser parser = new PaletteParser(image);
+                    parser.parse(PaletteParser.CALENDAR_PALETTE);
                     return parser.getImageMatrix();
                 })
                 .collect(Collectors.toCollection(ArrayList::new));

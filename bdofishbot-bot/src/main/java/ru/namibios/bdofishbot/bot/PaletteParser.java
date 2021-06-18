@@ -50,6 +50,12 @@ public class PaletteParser {
             Color.BLUE,
     };
 
+    public static Color[] CALENDAR_PALETTE = {
+            new Color(130, 102,63),
+            new Color(251, 220, 174),
+            new Color(227, 189, 145)
+    };
+
     public static Color[] LOOT_FRAME_PALETTE = {
             new Color(24, 24, 26),
             new Color(112, 128, 151),
@@ -112,6 +118,7 @@ public class PaletteParser {
                     continue;
                 }
                 double coef = getCoef(template, screenMatrix);
+                LOG.debug("coef = " + coef);
                 if (coef > maxCoef) {
                     maxCoef = coef;
                     max = matrixTemplate;
@@ -119,7 +126,7 @@ public class PaletteParser {
             }
 
         }
-        LOG.debug("palette maxCoef = " + maxCoef);
+
         return maxCoef > coefIdentification ? max : null;
     }
 

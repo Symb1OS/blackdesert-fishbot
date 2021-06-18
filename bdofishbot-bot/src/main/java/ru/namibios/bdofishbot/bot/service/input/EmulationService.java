@@ -161,6 +161,8 @@ public class EmulationService implements InputService{
         LOG.info("Close pop-up windows");
 
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
+        DelayUtils.delay(1000);
+        emulationInput.sendInput(KeyEvent.VK_ESCAPE);
     }
 
     private void inventory(){

@@ -121,11 +121,6 @@ public class Application {
 
 			LOG.info("Archive " + archive + " created..");
 
-			LOG.info("Start sync with server..");
-
-			HttpService httpService = new HttpService();
-			httpService.sync(new File(archive));
-
 		} catch (Exception e) {
             LOG.error(ExceptionUtils.getString(e));
 		}

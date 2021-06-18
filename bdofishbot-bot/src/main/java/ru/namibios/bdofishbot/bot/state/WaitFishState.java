@@ -2,6 +2,7 @@ package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Screen;
+import ru.namibios.bdofishbot.bot.command.Calendar;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.bot.command.WaitFish;
 import ru.namibios.bdofishbot.bot.service.HttpService;
@@ -76,6 +77,11 @@ public class WaitFishState extends State {
 		try {
 
 			runSideTask();
+
+
+			if (Application.getInstance().SKIP_CALENDAR()) {
+				inputService.send(new Calendar());
+			}
 
 			if (inputService.send(new WaitFish())) {
 				LOG.info("Fish detected..");
