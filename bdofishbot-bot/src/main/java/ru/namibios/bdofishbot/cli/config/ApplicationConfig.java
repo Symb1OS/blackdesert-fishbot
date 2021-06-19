@@ -99,7 +99,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int UI_WINDOW_ROOT_X();
 
 	@Key("bot.ui.window.root.y")
-	@DefaultValue("400")
+	@DefaultValue("300")
 	int UI_WINDOW_ROOT_Y();
 
 
