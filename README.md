@@ -45,7 +45,7 @@ More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 
 
 ### Build and install on YouTube
-- [YouTube](http://www.youtube.com/watch?v=CsaE7CvNHSk&t=5s)
+- [YouTube](https://youtu.be/de7OafXbMfk)
 
 
 ### Building
