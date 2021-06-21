@@ -9,9 +9,13 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
+import java.util.Date;
+
 public class StatusCaptchaState extends State{
 
 	private static final Logger LOG = Logger.getLogger(StatusCaptchaState.class);
+
+	private final long startTime;
 
 	private HttpService httpService = new HttpService();
 	private StatusService<StatusCaptchaTemplate> statusService;
@@ -21,6 +25,9 @@ public class StatusCaptchaState extends State{
 	StatusCaptchaState(FishBot fishBot, String name) {
 
 		super(fishBot);
+
+		this.startTime = new Date().getTime();
+
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_KAPCHA();
 		this.overflow = Application.getInstance().STATE_STATUS_CAPTCHA_OVERFLOW();
@@ -36,21 +43,17 @@ public class StatusCaptchaState extends State{
         this.filename = filename;
     }
 
-    @Override
-	public void onOverflow() {
-		LOG.info("Captcha parsed success. Go filter loot...");
-		fishBot.setState(new FilterLootState(fishBot));
-	}
-
 	@Override
 	public void onStep() {
 
 		try {
 
 			StatusCaptchaTemplate status = statusService.getTemplate(new StatusCaptcha());
-			
-			if (status == null) {
-				overflow();
+
+			long curTime = new Date().getTime();
+			if ((curTime - startTime) > Application.getInstance().STATE_STATUS_CAPTCHA_MAX_TIME()) {
+				LOG.info("Captcha parsed success. Go filter loot...");
+				fishBot.setState(new FilterLootState(fishBot));
 
 			} else if (status == StatusCaptchaTemplate.FAILED){
 				LOG.info("Captcha parsed failure. Back to start...");

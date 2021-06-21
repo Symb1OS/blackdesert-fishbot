@@ -74,6 +74,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("10")
 	int STATE_OVERFLOW();
 
+	@Key("bot.state.maxtime.captcha")
+	@DefaultValue("5000")
+	long STATE_STATUS_CAPTCHA_MAX_TIME();
+
 	@Key("bot.state.overflow.captcha")
 	@DefaultValue("10")
 	int STATE_STATUS_CAPTCHA_OVERFLOW();
@@ -281,7 +285,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_AFTER_START();
 	
 	@Key("bot.delay.waitfish.before")
-	@DefaultValue("2500")
+	@DefaultValue("2000")
 	int DELAY_BEFORE_WAIT_FISH();
 	
 	@Key("bot.delay.waitfish.after")
@@ -430,11 +434,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.space.offset.y")
 	@DefaultValue("0")
 	int SPACE_OFFSET_Y();
-
-	@Key("bot.screen.line")
-	@DefaultValue("820, 402, 278, 25")
-	@ConverterClass(RectangleConverter.class)
-	Rectangle LINE();
 
 	@Key("bot.screen.subline")
 	@DefaultValue("1011, 373, 10, 25")

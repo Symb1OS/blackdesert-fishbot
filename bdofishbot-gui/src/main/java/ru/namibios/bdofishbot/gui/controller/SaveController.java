@@ -119,7 +119,6 @@ public class SaveController implements ActionListener{
 
 		Application.getInstance().setProperty("bot.screen.fullscreen", String.format(FORMAT_SCREEN, view.getTfFullscreenX().getText(), view.getTfFullscreenY().getText(), view.getTfFullscreenWidth().getText(), view.getTfFullscreenHeight().getText()));
 		Application.getInstance().setProperty("bot.screen.space", String.format(FORMAT_SCREEN,view.getTfSpaceX().getText(), view.getTfSpaceY().getText(), view.getTfSpaceWidth().getText(), view.getTfSpaceHeight().getText()));
-		Application.getInstance().setProperty("bot.screen.line", String.format(FORMAT_SCREEN, view.getTfLineX().getText(), view.getTfLineY().getText(), view.getTfLineWidth().getText(), view.getTfLineHeight().getText()));
 		Application.getInstance().setProperty("bot.screen.subline", String.format(FORMAT_SCREEN, view.getTfSubLineX().getText(), view.getTfSubLineY().getText(), view.getTfSubLineWidth().getText(), view.getTfSubLineHeight().getText()));
 		Application.getInstance().setProperty("bot.screen.statuscut", String.format(FORMAT_SCREEN, view.getTfStatusCutX().getText(), view.getTfStatusCutY().getText(), view.getTfStatusCutWidth().getText(), view.getTfStatusCutHeight().getText()));
 		Application.getInstance().setProperty("bot.screen.captcha", String.format(FORMAT_SCREEN, view.getTfCaptchaX().getText(), view.getTfCaptchaY().getText(), view.getTfCaptchaWidth().getText(), view.getTfCaptchaHeight().getText()));
@@ -166,7 +165,6 @@ public class SaveController implements ActionListener{
 		Application.getInstance().setProperty("bot.screen.debug.filterloot", String.valueOf(view.getCbDebugLootFilter().isSelected()));
 		Application.getInstance().setProperty("bot.screen.debug.pmmessage", String.valueOf(view.getCbDebugPersonalMessage().isSelected()));
 		Application.getInstance().setProperty("bot.screen.debug.debuf", String.valueOf(view.getCbDebugDebuf().isSelected()));
-		Application.getInstance().setProperty("bot.loot.save_unsort", String.valueOf(view.getCbUnsortLoot().isSelected()));
 		Application.getInstance().setProperty("bot.loot.save_unknown", String.valueOf(view.getCbUnknownLoot().isSelected()));
 
 	}
