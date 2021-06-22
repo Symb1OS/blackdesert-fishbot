@@ -513,6 +513,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle[] CALENDAR();
 
+	@Key("bot.screen.challenge")
+	@Separator(";")
+	@DefaultValue("444, 156, 107, 17")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle[] CHALLENGE();
+
 
     ///////////////////////////////////////////////////////////////////////////
     // EMULATION
@@ -574,5 +580,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.debug.debuf")
 	@DefaultValue("false")
 	boolean DEBUG_DEBUF();
+
+	@Key("bot.screen.debug.challenge")
+	@DefaultValue("false")
+	boolean DEBUG_CHALLENGE();
+
 
 }

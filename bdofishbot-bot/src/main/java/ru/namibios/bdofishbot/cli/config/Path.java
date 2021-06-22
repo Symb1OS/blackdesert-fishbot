@@ -20,6 +20,7 @@ public class Path {
     public static final String DEBUG_FILTERLOOT = "debug/filterloot";
 	public static final String DEBUG_PM_MESSAGE = "debug/pm";
 	public static final String DEBUG_DEBUF = "debug/debuf";
+	public static final String DEBUG_CHALLENGE = "debug/challenge";
 
     public static final String LOOT_UNSORT = "loot/unsort";
     public static final String LOOT_UNKNOWN = "loot/unknown";
@@ -28,6 +29,7 @@ public class Path {
 	public static final String TEMPLATES = RESOURCES + "templates/";
 	public static final String DEBUF = TEMPLATES + "debuff/";
 	public static final String CLOSE = TEMPLATES + "close/";
+	public static final String CHALLENGE = TEMPLATES + "challenge/";
 	public static final String SPACE = TEMPLATES + "space/";
 	public static final String STATUS_CUT = TEMPLATES + "statuscut/";
 	public static final String STATUS_KAPCHA = TEMPLATES + "statuskapcha/";
