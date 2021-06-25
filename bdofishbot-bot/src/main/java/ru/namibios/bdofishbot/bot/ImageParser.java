@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.template.Loot;
 import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.cli.Application;
-import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.Matrix;
 
 import javax.imageio.ImageIO;
@@ -184,18 +183,6 @@ public class ImageParser {
 		}
 
 		return null ;
-	}
-
-	public static void main(String[] args) throws IOException {
-		Screen screen = new Screen(Path.RESOURCES + "loot/usefull/kusok.jpg");
-
-		ImageParser parser = new ImageParser(screen, Loot.values());
-		parser.parse(Screen.GRAY);
-
-		MatrixTemplate nameTemplate = parser.getNameTemplate();
-		System.out.println("nameTemplate = " + nameTemplate);
-
-
 	}
 
 	public MatrixTemplate getNameTemplateBySubImage() {
