@@ -101,50 +101,47 @@ public class FishLoot implements Command{
         return null;
     }
 
-    private String[] getLootFrames(){
+    private List<MatrixTemplate> getLootFrames(){
 
-		StringBuilder colorLoots = new StringBuilder();
-
+		List<MatrixTemplate> lootFrames = new ArrayList<>();
 		for (Screen colorScreen : colorScreens) {
 
 			PaletteParser parser = new PaletteParser(colorScreen, LootFrame.values());
 			parser.parse(PaletteParser.LOOT_FRAME_PALETTE);
 
 			MatrixTemplate value = parser.getValue();
-
-			LootFrame lootFrame = LootFrame.valueOf(value.toString());
-			colorLoots.append(lootFrame.ordinal()).append(",");
+			lootFrames.add(value);
 		}
 
-		return colorLoots.toString().split(",");
+		return lootFrames;
 	}
 
-    private String[] getLootIndices() {
+    private List<MatrixTemplate> getLootIndices() {
 
-		String loots = "";
+		List<MatrixTemplate> loots = new ArrayList<>();
 
 		for (Screen screen : screens) {
 			ImageParser imageParser = new ImageParser(screen, Loot.values());
 			imageParser.parse(Screen.GRAY);
 
-			String key = imageParser.getKey();
-			if (key.equals("-1,")) {
+			MatrixTemplate loot = imageParser.getNameTemplate();
+			if (loot == null){
 				double coefWhite = imageParser.getCoefWhite();
 				LOG.debug("Loot cell is not defined. CoefWhite =" + coefWhite);
+
 				if (coefWhite < Application.getInstance().LOOT_EMPTY_COEF()) {
 					LOG.debug("Replaced on empty cell");
-					key = Loot.EMPTY.ordinal() + ",";
+					loot = Loot.EMPTY;
 				}
 			}
-
-			loots+= key;
-
+			loots.add(loot);
 		}
 
-		return loots.split(",");
+		return loots;
 	}
 
-	private void saveLoot(String[] arrayLoots){
+
+	private void saveLoot(List<MatrixTemplate> arrayLoots){
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_FILTER_LOOT()) {
 			try {
@@ -160,8 +157,8 @@ public class FishLoot implements Command{
 		}
 
 		if (Application.getInstance().SAVE_UNKNOWN()) {
-			for (int i = 0; i < arrayLoots.length; i++) {
-				if (arrayLoots[i].equals(UNKNOWN_INDEX)) {
+			for (int i = 0; i < arrayLoots.size(); i++) {
+				if (arrayLoots.get(i) == null) {
 					screens.get(i).saveImage(Path.LOOT_UNKNOWN);
 				}
 			}
@@ -172,16 +169,16 @@ public class FishLoot implements Command{
 	@Override
 	public String getKey(){
 		
-		String[] arrayLoots = getLootIndices();
-		LOG.info("Loot types: " + Loot.toString(arrayLoots));
+		List<MatrixTemplate> loots = getLootIndices();
+		LOG.info(loots);
 
-		String[] lootFrames = getLootFrames();
-		LOG.info("Loot frames: " + LootFrame.toString(lootFrames));
+		List<MatrixTemplate> lootFrames = getLootFrames();
+		LOG.info("Loot frames: " + lootFrames);
 
-		saveLoot(arrayLoots);
+		saveLoot(loots);
 
 		boolean isTakeUnknown = Application.getInstance().TAKE_UNKNOWN();
-		Looter looter = new Looter(arrayLoots, lootFrames, isTakeUnknown);
+		Looter looter = new Looter(loots, lootFrames, isTakeUnknown);
 
 		if(looter.isTakeAll()) {
 			LOG.info("Loot ok. Take all..");

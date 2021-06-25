@@ -2,7 +2,6 @@ package ru.namibios.bdofishbot.bot;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.namibios.bdofishbot.bot.template.Loot;
 import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.bot.template.StatusCaptchaTemplate;
 import ru.namibios.bdofishbot.cli.config.Path;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 public class ImageParserTest {
 	
-	@Test
+	/*@Test
 	public void testGetNumber() throws IOException {
 		
 		Screen screen = new Screen(Path.TEST_RESOURCES + "parsing/loot/ok/key/key.jpg");
@@ -33,7 +32,7 @@ public class ImageParserTest {
 		parser.parse(Screen.GRAY);
 		String key = parser.getKey();
 		Assert.assertEquals("1,", key);
-	}
+	}*/
 
 /*	@Test
 	public void testSubImageSuccess() throws IOException {

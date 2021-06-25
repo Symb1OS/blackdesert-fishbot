@@ -2,6 +2,7 @@ package ru.namibios.bdofishbot.bot;
 
 import ru.namibios.bdofishbot.bot.template.Loot;
 import ru.namibios.bdofishbot.bot.template.LootFrame;
+import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.cli.Application;
 
 import java.util.ArrayList;
@@ -9,62 +10,60 @@ import java.util.List;
 
 public class Looter {
 
-	private static final int UNKNOWN = -1;
-
 	private List<LootType> lootTypeList;
 
     private LootCount count;
 	
-	public Looter(String[] slots, String[] frames, boolean isTakeUnknown) {
+	public Looter(List<MatrixTemplate> slots, List<MatrixTemplate> frames, boolean isTakeUnknown) {
 
-		List<Integer> lootFrameOk = new ArrayList<>();
-		List<Integer> lootFrameTrash = new ArrayList<>();
+		List<MatrixTemplate> lootFrameOk = new ArrayList<>();
+		List<MatrixTemplate> lootFrameTrash = new ArrayList<>();
 
-        List<Integer> lootOk = new ArrayList<>();
-        List<Integer> lootConfirm = new ArrayList<>();
-        List<Integer> lootTrash = new ArrayList<>();
+        List<MatrixTemplate> lootOk = new ArrayList<>();
+        List<MatrixTemplate> lootConfirm = new ArrayList<>();
+        List<MatrixTemplate> lootTrash = new ArrayList<>();
 		this.lootTypeList = new ArrayList<>();
 
-		if (Application.getInstance().RED_FRAME()) lootFrameOk.add(LootFrame.RED.ordinal()); else lootFrameTrash.add(LootFrame.RED.ordinal());
-		if (Application.getInstance().GOLD_FRAME()) lootFrameOk.add(LootFrame.GOLD.ordinal()); else lootFrameTrash.add(LootFrame.GOLD.ordinal());
-		if (Application.getInstance().BLUE_FRAME()) lootFrameOk.add(LootFrame.BLUE.ordinal()); else lootFrameTrash.add(LootFrame.BLUE.ordinal());
-		if (Application.getInstance().GREEN_FRAME()) lootFrameOk.add(LootFrame.GREEN.ordinal()); else lootFrameTrash.add(LootFrame.GREEN.ordinal());
-		if (Application.getInstance().GRAY_FRAME()) lootFrameOk.add(LootFrame.GRAY.ordinal()); else lootFrameTrash.add(LootFrame.GRAY.ordinal());
+		if (Application.getInstance().RED_FRAME()) lootFrameOk.add(LootFrame.RED); else lootFrameTrash.add(LootFrame.RED);
+		if (Application.getInstance().GOLD_FRAME()) lootFrameOk.add(LootFrame.GOLD); else lootFrameTrash.add(LootFrame.GOLD);
+		if (Application.getInstance().BLUE_FRAME()) lootFrameOk.add(LootFrame.BLUE); else lootFrameTrash.add(LootFrame.BLUE);
+		if (Application.getInstance().GREEN_FRAME()) lootFrameOk.add(LootFrame.GREEN); else lootFrameTrash.add(LootFrame.GREEN);
+		if (Application.getInstance().GRAY_FRAME()) lootFrameOk.add(LootFrame.GRAY); else lootFrameTrash.add(LootFrame.GRAY);
 
-		if (Application.getInstance().USEFULL()) lootOk.add(Loot.USEFULL.ordinal()); else lootTrash.add(Loot.USEFULL.ordinal());
-		if (Application.getInstance().CONFIRM()) lootConfirm.add(Loot.CONFIRM.ordinal()); else lootTrash.add(Loot.CONFIRM.ordinal());
+		if (Application.getInstance().USEFULL()) lootOk.add(Loot.USEFULL); else lootTrash.add(Loot.USEFULL);
+		if (Application.getInstance().CONFIRM()) lootConfirm.add(Loot.CONFIRM); else lootTrash.add(Loot.CONFIRM);
 
-		lootTrash.add(Loot.EXCEPTION.ordinal());
+		lootTrash.add(Loot.EXCEPTION);
 
-		for (int index = 0; index < slots.length; index++) {
+		for (int index = 0; index < slots.size(); index++) {
 
-			int slot = Integer.parseInt(slots[index]);
-			int frame = Integer.parseInt(frames[index]);
+			MatrixTemplate slot = slots.get(index);
+			MatrixTemplate frame = frames.get(index);
 
 			LootType lootType = new LootType(index);
 
-			for (Integer trashIndex : lootTrash) {
-				if (slot == trashIndex) lootType.setTrash(true);
+			for (MatrixTemplate trash : lootTrash) {
+				if (slot == trash) lootType.setTrash(true);
 			}
 
-			for (Integer okIndex : lootOk) {
-				if (slot == okIndex) lootType.setOk(true);
+			for (MatrixTemplate ok : lootOk) {
+				if (slot == ok) lootType.setOk(true);
 			}
 
-			for (Integer confirmIndex : lootConfirm) {
-				if (slot == confirmIndex) lootType.setConfirm(true);
+			for (MatrixTemplate confirm : lootConfirm) {
+				if (slot == confirm) lootType.setConfirm(true);
 			}
 
-			if(slot == Loot.EMPTY.ordinal()) lootType.setEmpty(true);
+			if (slot == Loot.EMPTY) lootType.setEmpty(true);
 
-			if (slot  == UNKNOWN) {
+			if (slot == null) {
 
-				for (Integer okIndex : lootFrameOk) {
-					if (frame == okIndex) lootType.setOk(true);
+				for (MatrixTemplate frameOk : lootFrameOk) {
+					if (frame == frameOk) lootType.setOk(true);
 				}
 
-				for (Integer trashIndex : lootFrameTrash) {
-					if (frame == trashIndex) lootType.setTrash(true);
+				for (MatrixTemplate frameTrash : lootFrameTrash) {
+					if (frame == frameTrash) lootType.setTrash(true);
 				}
 
 			}

@@ -17,6 +17,7 @@ module bdofishbot.bot {
 
     exports ru.namibios.bdofishbot.bot;
     exports ru.namibios.bdofishbot.bot.state;
+    exports ru.namibios.bdofishbot.bot.template;
     exports ru.namibios.bdofishbot.bot.service;
     exports ru.namibios.bdofishbot.cli;
     exports ru.namibios.bdofishbot.cli.config;

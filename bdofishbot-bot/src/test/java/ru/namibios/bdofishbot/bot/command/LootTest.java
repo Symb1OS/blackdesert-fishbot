@@ -1,15 +1,8 @@
 package ru.namibios.bdofishbot.bot.command;
 
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Before;
-import ru.namibios.bdofishbot.bot.ImageParser;
-import ru.namibios.bdofishbot.bot.Screen;
-import ru.namibios.bdofishbot.bot.template.Loot;
 import ru.namibios.bdofishbot.cli.Application;
-
-import java.io.File;
-import java.io.IOException;
 
 public class LootTest {
 
@@ -25,7 +18,7 @@ public class LootTest {
 
     }
 
-    private void testCategory(String dir, String name) throws IOException {
+   /* private void testCategory(String dir, String name) throws IOException {
 
         LOG.debug("Directory: " + dir);
 
@@ -40,7 +33,7 @@ public class LootTest {
             Assert.assertEquals(name, number);
 
         }
-    }
+    }*/
 
  /*   @Test
     public void testCorrectlyParse() throws IOException {

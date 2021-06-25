@@ -3,6 +3,7 @@ package ru.namibios.bdofishbot.bot.command;
 import ru.namibios.bdofishbot.bot.ImageParser;
 import ru.namibios.bdofishbot.bot.Screen;
 import ru.namibios.bdofishbot.bot.template.Chars;
+import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Path;
 
@@ -37,7 +38,7 @@ public class WaitFish implements Command{
 		return ShortCommand.IGNORE.getKey();
 	}
 
-	private String getRegionKey(Rectangle region) throws AWTException, IOException {
+	private MatrixTemplate getRegionKey(Rectangle region) throws AWTException, IOException {
 
         if (file != null) {
             screen = new Screen(file, region);
@@ -52,9 +53,7 @@ public class WaitFish implements Command{
             screen.saveImage(Path.DEBUG_WAITFISH);
         }
 
-//		MatrixUtils.printMatrix(imageParser.getImageMatrix(), "0");
-
-		return imageParser.getNumber();
+		return imageParser.getNameTemplate();
 	}
 
 	private String getKeyByRegion(int offsetX, int offsetY) throws AWTException, IOException {
@@ -64,20 +63,19 @@ public class WaitFish implements Command{
 		int startX = region.x;
 		int startY = region.y;
 
-		String key = "";
-
 		for (int x = startX; x <= startX + offsetX; x++) {
 			region.x = x;
 			for (int y = startY; y <= startY + offsetY; y++) {
 				region.y = y;
-				key = getRegionKey(region);
-				if (!key.isEmpty()) {
-					return key;
+
+				MatrixTemplate value = getRegionKey(region);
+				if (value != null) {
+					return value.toString();
 				}
 			}
 		}
 
-		return key;
+		return "";
 	}
 
 }
