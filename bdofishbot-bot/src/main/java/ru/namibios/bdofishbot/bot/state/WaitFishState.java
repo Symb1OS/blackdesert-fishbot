@@ -83,7 +83,7 @@ public class WaitFishState extends State {
 				inputService.send(new Calendar());
 			}
 
-			if (inputService.send(new WaitFish())) {
+			if (inputService.send(new WaitFish(Application.getInstance().SPACE()))) {
 				LOG.info("Fish detected..");
 				fishBot.setState(new CutFishState(fishBot));
 

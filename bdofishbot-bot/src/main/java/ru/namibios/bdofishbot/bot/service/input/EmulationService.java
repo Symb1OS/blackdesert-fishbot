@@ -95,12 +95,6 @@ public class EmulationService implements InputService{
 
     }
 
-    public static void main(String[] args) throws IOException {
-        EmulationService emulationService = new EmulationService(new AWTRobot());
-        emulationService.takeLootByIndex("Loot[1608,616]Loot[1655,616]!");
-
-    }
-
     private void takeLootByIndex(String command){
         emulationInput.sendInput(KeyEvent.VK_CONTROL);
         for (String touch : command.split(ShortCommand.LOOT.getKey())) {

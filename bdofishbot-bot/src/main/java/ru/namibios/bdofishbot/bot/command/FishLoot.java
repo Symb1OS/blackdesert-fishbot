@@ -170,7 +170,7 @@ public class FishLoot implements Command{
 	public String getKey(){
 		
 		List<MatrixTemplate> loots = getLootIndices();
-		LOG.info(loots);
+		LOG.info("Loot types: " + loots);
 
 		List<MatrixTemplate> lootFrames = getLootFrames();
 		LOG.info("Loot frames: " + lootFrames);

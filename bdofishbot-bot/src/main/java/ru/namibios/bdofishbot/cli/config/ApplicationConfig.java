@@ -427,14 +427,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle SPACE();
 
-	@Key("bot.screen.space.offset.x")
-	@DefaultValue("0")
-	int SPACE_OFFSET_X();
-
-	@Key("bot.screen.space.offset.y")
-	@DefaultValue("0")
-	int SPACE_OFFSET_Y();
-
 	@Key("bot.screen.subline")
 	@DefaultValue("1011, 373, 10, 25")
 	@ConverterClass(RectangleConverter.class)
