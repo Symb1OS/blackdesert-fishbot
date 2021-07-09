@@ -21,6 +21,7 @@ public class Screen {
 	private final static Logger logger = Logger.getLogger(Screen.class);
 
 	public static final Color WHITE = new Color(120,120,120);
+	public static final Color LIGHT_GRAY = new Color(100,100,100);
 	public static final Color GRAY = new Color(40,40,40);
 	
 	private BufferedImage screenShot;
