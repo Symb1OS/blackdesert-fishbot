@@ -87,7 +87,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int STATE_CUT_OVERFLOW();
 
 	@Key("bot.state.overflow.check_equip")
-	@DefaultValue("5")
+	@DefaultValue("3")
 	int CHECK_EQUIP_ITERATION();
 
 	@Key("bot.state.skip_calendar")
@@ -111,7 +111,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int UI_WINDOW_ROOT_Y();
 
 	@Key("bot.parsing.coef_white")
-	@DefaultValue("100")
+	@DefaultValue("70")
 	int COEF_WHITE();
 
 
@@ -301,7 +301,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_AFTER_WAIT_FISH();
 
 	@Key("bot.delay.check_equip.before")
-	@DefaultValue("500")
+	@DefaultValue("2500")
 	int DELAY_BEFORE_CHECK_EQUIP();
 
 	@Key("bot.delay.check_equip.after")

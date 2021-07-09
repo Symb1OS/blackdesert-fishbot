@@ -14,9 +14,9 @@ public class WaitFish implements Command{
 
     private final Screen screen;
 
-    private int coef = Application.getInstance().COEF_WHITE();
+	private static final Color GRAY = new Color(Application.getInstance().COEF_WHITE(), Application.getInstance().COEF_WHITE(), Application.getInstance().COEF_WHITE());
 
-	public WaitFish(String file, Rectangle rectangle) throws AWTException, IOException {
+	public WaitFish(String file, Rectangle rectangle) throws IOException {
 		this.screen = new Screen(file,rectangle);
 	}
 
@@ -28,7 +28,7 @@ public class WaitFish implements Command{
 	public String getKey() {
 
 		ImageParser imageParser = new ImageParser(screen, Chars.values());
-		imageParser.parse(new Color(coef,coef,coef));
+		imageParser.parse(GRAY);
 
 		if (Application.getInstance().DEBUG_SCREEN() || Application.getInstance().DEBUG_WAITFISH()) {
 			screen.saveImage(Path.DEBUG_WAITFISH);
