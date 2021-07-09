@@ -20,7 +20,6 @@ public class PersonalMessageState extends State {
 		this.beforeStart = 0;
 		this.afterStart = 0;
 
-
 		pm = new PersonalMessage(Application.getInstance().PM_COEF());
 	}
 
@@ -49,7 +48,7 @@ public class PersonalMessageState extends State {
 				fishBot.setPmDetected(true);
 			}
 			
-			fishBot.setState(new WaitFishState(fishBot));
+			fishBot.setState(new CheckEquipState(fishBot));
 		
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
