@@ -110,6 +110,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("300")
 	int UI_WINDOW_ROOT_Y();
 
+	@Key("bot.parsing.coef_white")
+	@DefaultValue("100")
+	int COEF_WHITE();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// RODS
