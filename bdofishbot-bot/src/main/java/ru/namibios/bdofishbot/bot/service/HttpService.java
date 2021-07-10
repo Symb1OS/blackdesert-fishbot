@@ -38,6 +38,7 @@ import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
@@ -51,6 +52,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static ru.namibios.bdofishbot.cli.config.Message.SERVER_NOT_AVAILABLE;
+import static ru.namibios.bdofishbot.cli.config.Message.SERVER_RESPONSE_TIMEOUT;
 
 public class HttpService {
 
@@ -194,9 +196,10 @@ public class HttpService {
             httpResponse = httpClient.execute(post, context);
 
         } catch (HttpHostConnectException e) {
-
             LOG.error(SERVER_NOT_AVAILABLE);
-
+            return ShortCommand.IGNORE.getKey();
+        } catch (SocketTimeoutException ste) {
+            LOG.error(SERVER_RESPONSE_TIMEOUT);
             return ShortCommand.IGNORE.getKey();
         }
 

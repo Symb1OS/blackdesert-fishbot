@@ -35,7 +35,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int HTTP_DEFAULT_SOCKET_TIMEOUT();
 
 	@Key("bot.http.socket_timeout.captcha")
-	@DefaultValue("6000")
+	@DefaultValue("5500")
 	int HTTP_CAPTCHA_SOCKET_TIMEOUT();
 
 	@Key("bot.game_title")
