@@ -229,10 +229,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("false")
 	boolean TAKE_UNKNOWN();
 	
-	@Key("bot.loot.save_unsort")
-	@DefaultValue("true")
-	boolean SAVE_UNSORT();
-
 	@Key("bot.loot.save_unknown")
 	@DefaultValue("true")
 	boolean SAVE_UNKNOWN();
@@ -289,7 +285,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 
 	@Key("bot.autouse.classic.exit.touches")
 	@Separator(";")
-	@DefaultValue("{540,243};{1300,708};{1051,666}")
+	@DefaultValue("{890,765};{1300,715};{1055,665}")
 	@ConverterClass(TouchConverter.class)
 	Touch[] CLASSIC_MENU_EXIT_TOUCHES();
 
