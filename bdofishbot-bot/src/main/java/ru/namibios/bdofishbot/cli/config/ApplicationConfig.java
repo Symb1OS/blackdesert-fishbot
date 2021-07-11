@@ -70,6 +70,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("English")
 	String LANGUAGE();
 
+	@Key("bot.game.menu")
+	@DefaultValue("ACTUAL")
+	GameMenu GAME_MENU();
+
 	@Key("bot.restart.pause")
 	@DefaultValue("10000")
 	long RESTART_PAUSE();
@@ -117,8 +121,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.parsing.coef_white")
 	@DefaultValue("75")
 	int COEF_WHITE();
-
-
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -279,11 +281,17 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @ConverterClass(HotSlotConverter.class)
     HotSlot TASK_EXIT_GAME();
 
-    @Key("bot.autouse.exit.touchs")
-    @Separator(";")
-    @DefaultValue("{540,243};{1300,708};{1051,666}")
-    @ConverterClass(TouchConverter.class)
-    Touch[] EXIT_TOUCHS();
+	@Key("bot.autouse.actual.exit.touches")
+	@Separator(";")
+	@DefaultValue("{540,243};{1300,708};{1051,666}")
+	@ConverterClass(TouchConverter.class)
+	Touch[] ACTUAL_MENU_EXIT_TOUCHES();
+
+	@Key("bot.autouse.classic.exit.touches")
+	@Separator(";")
+	@DefaultValue("{540,243};{1300,708};{1051,666}")
+	@ConverterClass(TouchConverter.class)
+	Touch[] CLASSIC_MENU_EXIT_TOUCHES();
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -598,6 +606,5 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.debug.challenge")
 	@DefaultValue("false")
 	boolean DEBUG_CHALLENGE();
-
 
 }

@@ -12,8 +12,8 @@ public class TouchConverter implements Converter<Touch>{
 
         boolean isActive = !input.startsWith("!");
 
-        Touch touch = new Touch(Integer.valueOf(input.substring(input.indexOf("{") + 1, input.indexOf(","))),
-                Integer.valueOf(input.substring(input.indexOf(",") + 1, input.indexOf("}"))));
+        Touch touch = new Touch(Integer.parseInt(input.substring(input.indexOf("{") + 1, input.indexOf(","))),
+                Integer.parseInt(input.substring(input.indexOf(",") + 1, input.indexOf("}"))));
 
         touch.setActive(isActive);
 

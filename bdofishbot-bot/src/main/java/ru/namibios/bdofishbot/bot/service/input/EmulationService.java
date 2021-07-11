@@ -8,6 +8,7 @@ import ru.namibios.bdofishbot.bot.service.RodService;
 import ru.namibios.bdofishbot.bot.service.input.emulation.AWTRobot;
 import ru.namibios.bdofishbot.bot.service.input.emulation.AbstractEmulationInput;
 import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.GameMenu;
 import ru.namibios.bdofishbot.utils.DelayUtils;
 
 import java.awt.event.KeyEvent;
@@ -129,8 +130,8 @@ public class EmulationService implements InputService{
             return;
         }
 
-        int x = Integer.valueOf(command.substring(command.indexOf("[") + 1, command.indexOf(",")));
-        int y = Integer.valueOf(command.substring(command.indexOf(",") + 1, command.indexOf("]")));
+        int x = Integer.parseInt(command.substring(command.indexOf("[") + 1, command.indexOf(",")));
+        int y = Integer.parseInt(command.substring(command.indexOf(",") + 1, command.indexOf("]")));
 
         LOG.debug("x: " + x + "; y: " + y);
 
@@ -148,7 +149,12 @@ public class EmulationService implements InputService{
         emulationInput.sendInput(KeyEvent.VK_ESCAPE);
         DelayUtils.delay(200);
 
-        clickSequence(Application.getInstance().EXIT_TOUCHS());
+        Touch[] touches = Application.getInstance().GAME_MENU() == GameMenu.CLASSIC
+                ? Application.getInstance().CLASSIC_MENU_EXIT_TOUCHES()
+                : Application.getInstance().ACTUAL_MENU_EXIT_TOUCHES();
+
+        clickSequence(touches);
+
     }
 
     private void skipCalendar() {
