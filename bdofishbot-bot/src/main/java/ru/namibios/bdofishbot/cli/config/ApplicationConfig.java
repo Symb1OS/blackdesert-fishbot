@@ -70,6 +70,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("English")
 	String LANGUAGE();
 
+	@Key("bot.restart.pause")
+	@DefaultValue("10000")
+	long RESTART_PAUSE();
+
 	@Key("bot.state.overflow")
 	@DefaultValue("10")
 	int STATE_OVERFLOW();
@@ -111,8 +115,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int UI_WINDOW_ROOT_Y();
 
 	@Key("bot.parsing.coef_white")
-	@DefaultValue("70")
+	@DefaultValue("75")
 	int COEF_WHITE();
+
+
 
 
 	///////////////////////////////////////////////////////////////////////////

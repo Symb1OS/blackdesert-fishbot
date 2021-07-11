@@ -22,8 +22,9 @@ public class Bot extends Thread{
 	}
 
 	private void restart(){
-		LOG.info("Need Restart. Restarted after 10 second...");
-		DelayUtils.delay(10000);
+		long pause = Application.getInstance().RESTART_PAUSE();
+		LOG.info("Need Restart. Restarted after " + pause/1000 + " second...");
+		DelayUtils.delay(pause);
 
 		fishBot.setRunned(true);
 		fishBot.setRestart(false);
