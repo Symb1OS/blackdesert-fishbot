@@ -22,6 +22,8 @@ public abstract class State {
 
 	Timer timer;
 
+	boolean isInterrupt;
+
 	public State(FishBot fishBot) {
 		this.fishBot = fishBot;
 		this.timer = new Timer();
@@ -34,13 +36,13 @@ public abstract class State {
 		this.afterStart = afterStart;
 	}
 
-	int overflow = Application.getInstance().STATE_OVERFLOW();
+	int maxStep = Application.getInstance().STATE_OVERFLOW();
 	private int step = 0;
 
-	void overflow() {
+	private void interrupt() {
 		step++;
-		if(step >= overflow){
-			onOverflow();
+		if(step >= maxStep){
+			onInterrupt();
 		}
 	}
 
@@ -82,6 +84,10 @@ public abstract class State {
 			if (onPremium()) onStep();
 			DelayUtils.delay(afterStart);
 
+			if (isInterrupt) {
+				interrupt();
+			}
+
 		}
 
 	}
@@ -90,7 +96,7 @@ public abstract class State {
 		return true;
 	}
 
-	public void onOverflow() {
+	public void onInterrupt() {
 
 	}
 

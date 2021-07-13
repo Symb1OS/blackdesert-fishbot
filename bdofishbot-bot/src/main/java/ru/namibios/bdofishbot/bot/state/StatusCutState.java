@@ -19,7 +19,9 @@ public class StatusCutState extends State{
 		super(fishBot);
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_CUT();
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_CUT();
-		this.overflow = Application.getInstance().STATE_CUT_OVERFLOW();
+
+		this.isInterrupt = true;
+		this.maxStep = Application.getInstance().STATE_CUT_OVERFLOW();
 
 		this.statusService = new StatusService<>();
 
@@ -27,7 +29,7 @@ public class StatusCutState extends State{
 	}
 
 	@Override
-	public void onOverflow() {
+	public void onInterrupt() {
 		LOG.info("Status not identified... Go to FilterLoot..");
 		fishBot.setState(new FilterLootState(fishBot));
 	}
@@ -39,28 +41,25 @@ public class StatusCutState extends State{
 
 			StatusCutTemplate status = statusService.getTemplate(new StatusCut());
 			if (status == null) {
-				overflow();
+				return;
+			}
 
-			} else {
-
-				switch ( status ) {
-					case PERFECT:{
-						LOG.info("PERFECT. Go filter loot..");
-						fishBot.setState(new FilterLootState(fishBot));
-						break;
-					}
-					case GOOD: {
-						LOG.info("GOOD. Go parse captcha");
-						fishBot.setState(new CaptchaState(fishBot));
-						break;
-					}
-					case BAD: {
-						LOG.info("BAD. Back to start...");
-						fishBot.setState(new StartFishState(fishBot));
-						break;
-					}
+			switch ( status ) {
+				case PERFECT:{
+					LOG.info("PERFECT. Go filter loot..");
+					fishBot.setState(new FilterLootState(fishBot));
+					break;
 				}
-
+				case GOOD: {
+					LOG.info("GOOD. Go parse captcha");
+					fishBot.setState(new CaptchaState(fishBot));
+					break;
+				}
+				case BAD: {
+					LOG.info("BAD. Back to start...");
+					fishBot.setState(new StartFishState(fishBot));
+					break;
+				}
 			}
 
 		}catch (Exception e) {

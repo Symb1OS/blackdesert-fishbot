@@ -19,13 +19,14 @@ public class CheckEquipState extends State {
         this.beforeStart = Application.getInstance().DELAY_BEFORE_CHECK_EQUIP();
         this.afterStart = Application.getInstance().DELAY_AFTER_CHECK_EQUIP();
 
-        this.overflow = Application.getInstance().CHECK_EQUIP_ITERATION();
+        this.isInterrupt = true;
+        this.maxStep = Application.getInstance().CHECK_EQUIP_ITERATION();
 
         LOG.info("Check equipment..");
     }
 
     @Override
-    public void onOverflow() {
+    public void onInterrupt() {
         fishBot.setState(new WaitFishState(fishBot));
     }
 
@@ -42,8 +43,6 @@ public class CheckEquipState extends State {
             if (!command.getKey().isEmpty()) {
                 cntActivityButton++;
             }
-
-            overflow();
 
         } catch (Exception e) {
             LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

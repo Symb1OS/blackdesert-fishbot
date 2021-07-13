@@ -30,7 +30,6 @@ public class StatusCaptchaState extends State{
 
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_STATUS_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_STATUS_KAPCHA();
-		this.overflow = Application.getInstance().STATE_STATUS_CAPTCHA_OVERFLOW();
 
 		this.filename = name;
 
@@ -50,8 +49,7 @@ public class StatusCaptchaState extends State{
 
 			StatusCaptchaTemplate status = statusService.getTemplate(new StatusCaptcha());
 
-			long curTime = new Date().getTime();
-			if ((curTime - startTime) > Application.getInstance().STATE_STATUS_CAPTCHA_MAX_TIME()) {
+			if (timer.isOver(Application.getInstance().STATE_STATUS_CAPTCHA_MAX_TIME())) {
 				LOG.info("Captcha parsed success. Go filter loot...");
 				fishBot.setState(new FilterLootState(fishBot));
 
