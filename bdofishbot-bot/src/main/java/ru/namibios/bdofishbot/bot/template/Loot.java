@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Loot implements MatrixTemplate {
+public enum  Loot implements MatrixTemplate {
 	
 	USEFULL("resources/loot/usefull"),
 

@@ -2,6 +2,7 @@ package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.command.Calendar;
+import ru.namibios.bdofishbot.bot.command.Mark;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.bot.service.PauseService;
 import ru.namibios.bdofishbot.cli.Application;
@@ -27,6 +28,13 @@ public class StartFishState extends State{
 		LOG.info("Start Fish...");
 
 		try {
+
+			if (Application.getInstance().MARK_SELT_THIEF()) {
+				Mark mark = new Mark();
+				if (mark.getKey().isEmpty()) {
+					inputService.send(ShortCommand.MARK);
+				}
+			}
 
 			if (pauseService.isReady()) {
 				pauseService.rest();

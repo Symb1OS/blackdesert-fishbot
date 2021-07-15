@@ -74,6 +74,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("ACTUAL")
 	GameMenu GAME_MENU();
 
+	@Key("bot.mark.self_thief")
+	@DefaultValue("false")
+	boolean MARK_SELT_THIEF();
+
 	@Key("bot.restart.pause")
 	@DefaultValue("10000")
 	long RESTART_PAUSE();
@@ -276,6 +280,12 @@ public interface ApplicationConfig extends Accessible, Mutable{
     @DefaultValue("false, 120m, Exit")
     @ConverterClass(HotSlotConverter.class)
     HotSlot TASK_EXIT_GAME();
+
+	@Key("bot.mark.self_thief.touches")
+	@Separator(";")
+	@DefaultValue("{791,179}")
+	@ConverterClass(TouchConverter.class)
+	Touch[] SELF_THIEF_TOUCHES();
 
 	@Key("bot.autouse.actual.exit.touches")
 	@Separator(";")
@@ -519,6 +529,11 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(RectangleConverter.class)
 	Rectangle INVENTORY();
 
+	@Key("bot.screen.mark")
+	@DefaultValue("784, 172, 15, 15")
+	@ConverterClass(RectangleConverter.class)
+	Rectangle MARK();
+
     @Key("bot.screen.debuff_desert")
     @DefaultValue("676, 868, 28, 28")
     @ConverterClass(RectangleConverter.class)
@@ -602,5 +617,6 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.screen.debug.challenge")
 	@DefaultValue("false")
 	boolean DEBUG_CHALLENGE();
+
 
 }

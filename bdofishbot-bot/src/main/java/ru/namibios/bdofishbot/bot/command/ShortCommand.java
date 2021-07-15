@@ -10,6 +10,7 @@ public class ShortCommand {
     public static final Command LOOT = () -> "Loot";
     public static final Command ROD = () -> "Rod";
 
+    public static final Command MARK = () -> "Checked_mark";
     public static final Command SKIP_CALENDAR = () -> "Skip_calendar";
 
     public static final Command BEER = () -> "Beer";

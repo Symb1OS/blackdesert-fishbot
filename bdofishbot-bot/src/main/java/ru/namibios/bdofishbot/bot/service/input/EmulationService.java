@@ -143,6 +143,11 @@ public class EmulationService implements InputService{
         emulationInput.sendInput(KeyEvent.VK_R);
     }
 
+    private void mark() {
+        LOG.info("Marked self thief");
+        clickSequence(Application.getInstance().SELF_THIEF_TOUCHES());
+    }
+
     private void exit() {
         LOG.info("Exit game");
 
@@ -198,6 +203,8 @@ public class EmulationService implements InputService{
             inventory();
         } else if (key.startsWith(ShortCommand.EXIT.getKey())) {
             exit();
+        } else if (key.startsWith(ShortCommand.MARK.getKey())) {
+            mark();
         } else {
             inputCaptcha(key);
         }
