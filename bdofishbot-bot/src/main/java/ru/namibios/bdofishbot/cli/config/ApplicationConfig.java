@@ -75,7 +75,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	GameMenu GAME_MENU();
 
 	@Key("bot.mark.self_thief")
-	@DefaultValue("false")
+	@DefaultValue("true")
 	boolean MARK_SELT_THIEF();
 
 	@Key("bot.restart.pause")

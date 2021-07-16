@@ -145,7 +145,10 @@ public class EmulationService implements InputService{
 
     private void mark() {
         LOG.info("Marked self thief");
+
+        emulationInput.sendInput(KeyEvent.VK_CONTROL);
         clickSequence(Application.getInstance().SELF_THIEF_TOUCHES());
+        emulationInput.sendInput(KeyEvent.VK_CONTROL);
     }
 
     private void exit() {
