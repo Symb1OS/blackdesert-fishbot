@@ -89,8 +89,10 @@ public class SaveController implements ActionListener{
 
 		Application.getInstance().setProperty("bot.language", String.valueOf(view.getCbLanguage().getSelectedItem()));
 		Application.getInstance().setProperty("bot.ui.theme", String.valueOf(view.getCbTheme().getSelectedItem()));
+		Application.getInstance().setProperty("bot.game.menu", String.valueOf(view.getCbGameMenu().getSelectedItem()));
 
 		Application.getInstance().setProperty("bot.state.skip_calendar", String.valueOf(view.getCbSkipCalendar().isSelected()));
+		Application.getInstance().setProperty("bot.mark.self_thief", String.valueOf(view.getCbMarkSelfThief().isSelected()));
 		Application.getInstance().setProperty("bot.keyboard.input.delay", view.getTfInputDelay().getText());
 		Application.getInstance().setProperty("bot.parsing.coefidentity", view.getTfParseCoef().getText());
 		Application.getInstance().setProperty("bot.kapcha.noise.iteration", view.getTfCaptchaNoiseIteration().getText());
