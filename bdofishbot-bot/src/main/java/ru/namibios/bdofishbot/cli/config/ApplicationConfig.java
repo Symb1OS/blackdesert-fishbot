@@ -368,6 +368,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("0")
 	int DELAY_AFTER_FILTER_LOOT();
 
+	@Key("bot.delay.self_thief.before")
+	@DefaultValue("0")
+	long DELAY_SELF_THIEF_BEFORE();
+
+	@Key("bot.delay.self_thief.after")
+	@DefaultValue("0")
+	long DELAY_SELF_THIEF_AFTER();
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// NOTIFICATION

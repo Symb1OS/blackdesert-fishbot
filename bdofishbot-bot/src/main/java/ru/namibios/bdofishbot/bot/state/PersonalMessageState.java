@@ -47,9 +47,9 @@ public class PersonalMessageState extends State {
 				
 				fishBot.setPmDetected(true);
 			}
-			
-			fishBot.setState(new CheckEquipState(fishBot));
-		
+
+			fishBot.setState(new SelfThiefState(fishBot));
+
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
