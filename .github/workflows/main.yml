@@ -15,4 +15,4 @@ jobs:
       - name: Update version for update utility
         run:
           cp bdofishbot/target/blackdesert-fishbot.zip ~/docker-volume/uat/fishing-resources/blackdesert-fishbot.zip
-          cp bdofishbot-base/target/classed/version ~/docker-volume/uat/fishing-resources/version.txt
+          cp bdofishbot-base/target/classes/version ~/docker-volume/uat/fishing-resources/version.txt
