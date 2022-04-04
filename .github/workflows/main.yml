@@ -11,6 +11,8 @@ jobs:
       - name: Build application
         run: ./mvnw -Dmaven.test.skip=true clean package
       - name: Copy build
-      - run: cp bdofishbot/target/blackdesert-fishbot.zip ~/docker-volume/uat/fishing-resources/blackdesert-fishbot.zip
+        run: |
+        cp bdofishbot/target/blackdesert-fishbot.zip ~/docker-volume/uat/fishing-resources/blackdesert-fishbot.zip
       - name: Copy version
-      - run: cp bdofishbot-base/target/classes/version ~/docker-volume/uat/fishing-resources/version.txt
+        run: |
+        cp bdofishbot-base/target/classes/version ~/docker-volume/uat/fishing-resources/version.txt
