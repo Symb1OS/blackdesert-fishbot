@@ -15,7 +15,7 @@
         <repository>
             <id>JetBrains</id>
             <name>JetBrains 3rdParty</name>
-            <url>https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/</url>
+            <url>https://www.jetbrains.com/intellij-repository/releases/</url>
         </repository>
     </repositories>
 
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.jetbrains.intellij.java</groupId>
             <artifactId>java-gui-forms-rt</artifactId>
-            <version>193.4744</version>
+            <version>213.7172.33</version>
         </dependency>
 
     </dependencies>
