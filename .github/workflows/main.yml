@@ -1,4 +1,4 @@
-name: CI
+name: Update test build
 on:
   push:
     branches: [ dev ]
@@ -13,6 +13,5 @@ jobs:
           ./mvnw -Dmaven.test.skip=true clean package
 
       - name: Update version for update utility
-        run:
-          cp bdofishbot/target/blackdesert-fishbot.zip ~/docker-volume/uat/fishing-resources/blackdesert-fishbot.zip
-          cp bdofishbot-base/target/classes/version ~/docker-volume/uat/fishing-resources/version.txt
+      - run: cp bdofishbot/target/blackdesert-fishbot.zip ~/docker-volume/uat/fishing-resources/blackdesert-fishbot.zip
+      - run: cp bdofishbot-base/target/classes/version ~/docker-volume/uat/fishing-resources/version.txt
