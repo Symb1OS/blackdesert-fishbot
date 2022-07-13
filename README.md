@@ -79,6 +79,7 @@ Right click at `run.bat` and *Run as administrator*(`!!IMPORTANT!!`)
 
 
 ### Donation
-- [PayPal](https://www.paypal.me/Symb1OS)
-- [Yandex Money](https://money.yandex.ru/to/410014569437812)
-- [Bitcoin](https://www.blockchain.com/btc/payment_request?address=1FCGtvDEbWi6B2rCxJ8gErCLWoNiDqqcuf)
+- [donationalerts](https://www.donationalerts.com/r/symb1os)
+- [yoomoney](https://yoomoney.ru/to/410014569437812)
+- Bitcoin - bc1qcdg8zcuuwqu07r6490kja3w84keuhlscqnjlam
+- Ethereum - 0x5B290D72A7D89eD6c1B48316AdD3f1758b74b3a8
