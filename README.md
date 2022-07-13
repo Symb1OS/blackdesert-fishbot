@@ -50,6 +50,7 @@ More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 
 ### Building
 - Unzip archive, move to bot folder.
+
 ![build](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/build.png)
 
 - run `build.bat`.
@@ -58,6 +59,7 @@ More features on [wiki](https://github.com/Symb1OS/blackdesert-fishbot/wiki).
 ### Installing
 
 Change dir to `target/blackdesert-fishbot`
+
 ![install](https://github.com/Symb1OS/blackdesert-fishbot/blob/master/docs/install.png)
 
 Run `install.bat`, installing all necessary dependencies for correct operation.
