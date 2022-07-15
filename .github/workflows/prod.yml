@@ -1,4 +1,4 @@
-name: Update prod build
+name: prod build
 on:
   push:
     tags:

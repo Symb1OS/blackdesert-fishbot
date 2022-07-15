@@ -1,4 +1,4 @@
-name: Update test build
+name: test build
 on:
   push:
     branches: [ dev ]
