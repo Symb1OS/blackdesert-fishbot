@@ -78,6 +78,8 @@ public class Bot extends Thread{
 		fishBot.notifyUser(Message.END_WORK);
 		fishBot.stopExecutors();
 
+		fishBot.saveStats();
+
 		LOG.info("End work.");
 
 	}

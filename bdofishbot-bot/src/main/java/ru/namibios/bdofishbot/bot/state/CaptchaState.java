@@ -3,6 +3,7 @@ package ru.namibios.bdofishbot.bot.state;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.command.Captcha;
 import ru.namibios.bdofishbot.bot.command.Command;
+import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -14,13 +15,17 @@ public class CaptchaState extends State {
     private static final Logger LOG = Logger.getLogger(CaptchaState.class);
 
     private final String name;
-    private Command captcha;
+	private final StatsService statsService;
+	private Command captcha;
 
     CaptchaState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_KAPCHA();
+		this.statsService = fishBot.getStatsService();
+
+		statsService.update(this.getClass());
 
         this.name = new Date().getTime() + "_" + Application.getUser().getHash();
         this.captcha = new Captcha(name);
@@ -48,6 +53,7 @@ public class CaptchaState extends State {
 			}
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");
+				statsService.notRecognizedCaptcha();
 				fishBot.setState(new StartFishState(fishBot));
 			}
 

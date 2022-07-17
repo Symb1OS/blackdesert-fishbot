@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.bot.service.StatusService;
 import ru.namibios.bdofishbot.bot.status.StatusCut;
 import ru.namibios.bdofishbot.bot.template.StatusCutTemplate;
@@ -13,6 +14,7 @@ public class StatusCutState extends State{
 	private static final Logger LOG = Logger.getLogger(StatusCutState.class);
 
 	private StatusService<StatusCutTemplate> statusService;
+	private final StatsService statsService;
 
 	StatusCutState(FishBot fishBot) {
 
@@ -25,7 +27,10 @@ public class StatusCutState extends State{
 
 		this.statusService = new StatusService<>();
 
-        LOG.info("Check status cut fish");
+		statsService = fishBot.getStatsService();
+		statsService.update(this.getClass());
+
+		LOG.info("Check status cut fish");
 	}
 
 	@Override
@@ -48,16 +53,19 @@ public class StatusCutState extends State{
 				case PERFECT:{
 					LOG.info("PERFECT. Go filter loot..");
 					fishBot.setState(new FilterLootState(fishBot));
+					statsService.perfectCut();
 					break;
 				}
 				case GOOD: {
 					LOG.info("GOOD. Go parse captcha");
 					fishBot.setState(new CaptchaState(fishBot));
+					statsService.goodCut();
 					break;
 				}
 				case BAD: {
 					LOG.info("BAD. Back to start...");
 					fishBot.setState(new StartFishState(fishBot));
+					statsService.badCut();
 					break;
 				}
 			}

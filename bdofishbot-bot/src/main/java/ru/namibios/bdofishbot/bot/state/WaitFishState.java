@@ -2,10 +2,12 @@ package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Screen;
+import ru.namibios.bdofishbot.bot.StatsState;
 import ru.namibios.bdofishbot.bot.command.Calendar;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.bot.command.WaitFish;
 import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -18,6 +20,9 @@ public class WaitFishState extends State {
 	private static final Logger LOG = Logger.getLogger(WaitFishState.class);
 
 	private final HttpService httpService;
+	private final StatsService statsService;
+
+	private StatsState statsState;
 
 	WaitFishState(FishBot fishBot) {
 		super(fishBot);
@@ -26,6 +31,11 @@ public class WaitFishState extends State {
 		this.afterStart = Application.getInstance().DELAY_AFTER_WAIT_FISH();
 
 		this.httpService = fishBot.getHttpService();
+		this.statsService = fishBot.getStatsService();
+
+		statsService.update(this.getClass());
+
+		statsState = new StatsState();
 
 	}
 
@@ -91,6 +101,8 @@ public class WaitFishState extends State {
 				LOG.info("Waiting time for fish is out..");
 				fishBot.setState(new ChangeRodState(fishBot));
 			}
+
+			statsState.initEnd();
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

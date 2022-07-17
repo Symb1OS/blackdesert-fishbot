@@ -4,10 +4,7 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Slot;
 import ru.namibios.bdofishbot.bot.Timer;
-import ru.namibios.bdofishbot.bot.service.HttpService;
-import ru.namibios.bdofishbot.bot.service.PauseService;
-import ru.namibios.bdofishbot.bot.service.RodService;
-import ru.namibios.bdofishbot.bot.service.SlotService;
+import ru.namibios.bdofishbot.bot.service.*;
 import ru.namibios.bdofishbot.bot.service.input.ArduinoService;
 import ru.namibios.bdofishbot.bot.service.input.EmulationService;
 import ru.namibios.bdofishbot.bot.service.input.InputService;
@@ -48,6 +45,8 @@ public class FishBot {
 
 	private PauseService pauseService;
 
+	private StatsService statsService;
+
 	private Timer timer;
 
     public FishBot(boolean start) {
@@ -86,6 +85,7 @@ public class FishBot {
 
 		this.timer = new Timer();
 		this.pauseService = new PauseService(Application.getInstance().TASK_PAUSE());
+		this.statsService = new StatsService();
 
 	}
 
@@ -146,6 +146,11 @@ public class FishBot {
 		}
 	}
 
+	public void saveStats() {
+    	statsService.endWork();
+    	statsService.export();
+	}
+
 	public PauseService getPauseService() {
 		return pauseService;
 	}
@@ -198,4 +203,7 @@ public class FishBot {
         return slotService;
     }
 
+	public StatsService getStatsService() {
+		return statsService;
+	}
 }

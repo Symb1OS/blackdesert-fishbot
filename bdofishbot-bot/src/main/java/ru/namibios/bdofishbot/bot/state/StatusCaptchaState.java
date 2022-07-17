@@ -2,6 +2,7 @@ package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.bot.service.StatusService;
 import ru.namibios.bdofishbot.bot.status.StatusCaptcha;
 import ru.namibios.bdofishbot.bot.template.StatusCaptchaTemplate;
@@ -21,6 +22,7 @@ public class StatusCaptchaState extends State{
 	private StatusService<StatusCaptchaTemplate> statusService;
 
 	private String filename;
+	private final StatsService statsService;
 
 	StatusCaptchaState(FishBot fishBot, String name) {
 
@@ -35,7 +37,10 @@ public class StatusCaptchaState extends State{
 
 		this.statusService = new StatusService<>();
 
-        LOG.info("Check status parsing captcha");
+		statsService = fishBot.getStatsService();
+		statsService.update(this.getClass());
+
+		LOG.info("Check status parsing captcha");
 	}
 
     public void setFilename(String filename) {
@@ -52,11 +57,13 @@ public class StatusCaptchaState extends State{
 			if (timer.isOver(Application.getInstance().STATE_STATUS_CAPTCHA_MAX_TIME())) {
 				LOG.info("Captcha parsed success. Go filter loot...");
 				fishBot.setState(new FilterLootState(fishBot));
+				statsService.okCaptcha();
 
 			} else if (status == StatusCaptchaTemplate.FAILED){
 				LOG.info("Captcha parsed failure. Back to start...");
 				fishBot.setState(new StartFishState(fishBot));
 				httpService.markFail(filename);
+				statsService.failCaptcha();
 			}
 
 		}catch (Exception e) {

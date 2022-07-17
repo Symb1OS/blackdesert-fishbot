@@ -22,4 +22,8 @@ public final class DateUtils {
 		return format.format(date);
 	}
 
+	public static long now(){
+		return new Date().getTime();
+	}
+
 }
