@@ -25,6 +25,7 @@ public class StartFishState extends State {
 		this.statsService = fishBot.getStatsService();
 
 		statsService.update(this.getClass());
+		statsService.initSeries();
 
 	}
 

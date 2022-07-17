@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot;
 
 import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,13 +13,13 @@ public class Stats {
         this.startWork = new Date().getTime();
         this.hash = Application.getUser().getHash();
         this.series = new ArrayList<>();
-
     }
 
     private String hash;
     private long startWork;
     private long endWork;
 
+    private StatSeries current;
     private List<StatSeries> series;
 
     private long startFish;
@@ -43,6 +44,13 @@ public class Stats {
     private long blueLoot;
     private long greenLoot;
     private long grayLoot;
+
+    public void newSeries() {
+        if (current != null) {
+            series.add(current);
+        }
+        current = new StatSeries();
+    }
 
     public String getHash() {
         return hash;
@@ -320,5 +328,65 @@ public class Stats {
                 ", greenLoot=" + greenLoot +
                 ", grayLoot=" + grayLoot +
                 '}';
+    }
+
+    public void initWaitFishStart() {
+        current.startWaitFish();
+    }
+
+    public void initWaitFishEnd() {
+        current.endWaitFish();
+    }
+
+    public void initCutFishStart() {
+        current.startCutFish();
+    }
+
+    public void initCutFishEnd() {
+        current.endCutFish();
+    }
+
+    public void initStatusCutFishStart() {
+        current.startStatusCutFish();
+    }
+
+    public void setStatusCut(String statusCut) {
+        current.setStatusCut(statusCut);
+    }
+
+    public void initStatusCutFishEnd() {
+        current.endStatusCutFish();
+    }
+
+    public void initCaptchaStart() {
+        current.startCaptcha();
+    }
+
+    public void setRecognizedCaptcha(boolean isRecognized) {
+        current.setRecognizedCaptcha(isRecognized);
+    }
+
+    public void initCaptchaEnd() {
+        current.endCaptcha();
+    }
+
+    public void initStatusCaptchaStart() {
+        current.setStatusCaptchaStart(DateUtils.now());
+    }
+
+    public void initStatusCaptchaEnd() {
+        current.setStatusCaptchaEnd(DateUtils.now());
+    }
+
+    public void setStatusCaptcha(boolean isParsed) {
+        current.setStatusCaptcha(isParsed);
+    }
+
+    public void initFilterLootStart() {
+        current.setFilterLootStart(DateUtils.now());
+    }
+
+    public void initFilterLootEnd() {
+        current.setFilterLootEnd(DateUtils.now());
     }
 }

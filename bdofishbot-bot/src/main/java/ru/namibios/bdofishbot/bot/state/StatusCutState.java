@@ -29,6 +29,7 @@ public class StatusCutState extends State{
 
 		statsService = fishBot.getStatsService();
 		statsService.update(this.getClass());
+		statsService.initStatusCutFishStart();
 
 		LOG.info("Check status cut fish");
 	}
@@ -69,6 +70,8 @@ public class StatusCutState extends State{
 					break;
 				}
 			}
+
+			statsService.initStatusCutFishEnd();
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

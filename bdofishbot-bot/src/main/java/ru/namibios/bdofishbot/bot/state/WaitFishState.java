@@ -22,8 +22,6 @@ public class WaitFishState extends State {
 	private final HttpService httpService;
 	private final StatsService statsService;
 
-	private StatsState statsState;
-
 	WaitFishState(FishBot fishBot) {
 		super(fishBot);
 
@@ -34,8 +32,7 @@ public class WaitFishState extends State {
 		this.statsService = fishBot.getStatsService();
 
 		statsService.update(this.getClass());
-
-		statsState = new StatsState();
+		statsService.initWaitFishStart();
 
 	}
 
@@ -102,7 +99,7 @@ public class WaitFishState extends State {
 				fishBot.setState(new ChangeRodState(fishBot));
 			}
 
-			statsState.initEnd();
+			statsService.initWaitFishEnd();
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

@@ -2,7 +2,6 @@ package ru.namibios.bdofishbot.bot.service;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Stats;
-import ru.namibios.bdofishbot.bot.StatsState;
 import ru.namibios.bdofishbot.bot.state.*;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -36,6 +35,11 @@ public class StatsService {
 
     }
 
+    public void initSeries(){
+        LOG.debug("init new stat series");
+        stats.newSeries();
+    }
+
     public void update(Class clazz) {
 
         String simpleName = clazz.getSimpleName();
@@ -63,30 +67,85 @@ public class StatsService {
 
     public void failCaptcha() {
         stats.incFailCapthca();
+        stats.setStatusCaptcha(false);
     }
 
     public void okCaptcha() {
         stats.incOkCapthca();
+        stats.setStatusCaptcha(true);
+
     }
 
-    public void notRecognizedCaptcha() {
+    public void recognizedCaptcha(boolean isRecognized) {
         stats.incNotRecognizedCaptcha();
+        stats.setRecognizedCaptcha(isRecognized);
     }
 
     public void perfectCut() {
         stats.incCutPerfect();
+        stats.setStatusCut("PERFECT");
+
     }
 
     public void goodCut() {
         stats.incCutGood();
+        stats.setStatusCut("GOOD");
     }
 
     public void badCut() {
         stats.incCutBad();
+        stats.setStatusCut("BAD");
     }
 
     public void endWork() {
         stats.updateEndWork();
     }
 
+    public void initWaitFishStart() {
+        stats.initWaitFishStart();
+    }
+
+    public void initWaitFishEnd() {
+        stats.initWaitFishEnd();
+    }
+
+    public void initCutFishStart() {
+        stats.initCutFishStart();
+    }
+
+    public void initCutFishEnd() {
+        stats.initCutFishEnd();
+    }
+
+    public void initStatusCutFishStart() {
+        stats.initStatusCutFishStart();
+    }
+
+    public void initStatusCutFishEnd() {
+        stats.initStatusCutFishEnd();
+    }
+
+    public void initCaptchaStart() {
+        stats.initCaptchaStart();
+    }
+
+    public void initCaptchaEnd() {
+        stats.initCaptchaEnd();
+    }
+
+    public void initStatusCaptchaStart() {
+        stats.initStatusCaptchaStart();
+    }
+
+    public void initStatusCaptchaEnd() {
+        stats.initStatusCaptchaEnd();
+    }
+
+    public void initFilterLootStart() {
+        stats.initFilterLootStart();
+    }
+
+    public void initFilterLootEnd() {
+        stats.initFilterLootEnd();
+    }
 }

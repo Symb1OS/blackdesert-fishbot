@@ -39,6 +39,7 @@ public class StatusCaptchaState extends State{
 
 		statsService = fishBot.getStatsService();
 		statsService.update(this.getClass());
+		statsService.initStatusCaptchaStart();
 
 		LOG.info("Check status parsing captcha");
 	}
@@ -65,6 +66,8 @@ public class StatusCaptchaState extends State{
 				httpService.markFail(filename);
 				statsService.failCaptcha();
 			}
+
+			statsService.initStatusCaptchaEnd();
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

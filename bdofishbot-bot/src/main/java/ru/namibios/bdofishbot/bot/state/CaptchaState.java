@@ -26,6 +26,7 @@ public class CaptchaState extends State {
 		this.statsService = fishBot.getStatsService();
 
 		statsService.update(this.getClass());
+		statsService.initCaptchaStart();
 
         this.name = new Date().getTime() + "_" + Application.getUser().getHash();
         this.captcha = new Captcha(name);
@@ -49,13 +50,16 @@ public class CaptchaState extends State {
 
 			if (inputService.send(() -> key)){
 				LOG.info("Go check status parsing captcha...");
+				statsService.recognizedCaptcha(true);
 				fishBot.setState(new StatusCaptchaState(fishBot, name));
 			}
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");
-				statsService.notRecognizedCaptcha();
+				statsService.recognizedCaptcha(false);
 				fishBot.setState(new StartFishState(fishBot));
 			}
+
+			statsService.initCaptchaEnd();
 
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

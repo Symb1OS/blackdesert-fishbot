@@ -20,6 +20,7 @@ public class CutFishState extends State {
 		this.statsService = fishBot.getStatsService();
 
 		statsService.update(this.getClass());
+		statsService.initCutFishStart();
 	}
 
 	@Override
@@ -35,6 +36,8 @@ public class CutFishState extends State {
 				LOG.info("Waiting time for fish is out..");
 				fishBot.setState(new ChangeRodState(fishBot));
 			}
+
+			statsService.initCutFishEnd();
 			
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

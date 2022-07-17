@@ -21,6 +21,8 @@ public class FilterLootState extends State{
 		this.statsService = fishBot.getStatsService();
 
 		statsService.update(this.getClass());
+		statsService.initFilterLootStart();
+
 	}
 
 	@Override
@@ -35,6 +37,8 @@ public class FilterLootState extends State{
 				inputService.send(new FishLoot());
 				fishBot.setState(new UseSlotState(fishBot));
 			}
+
+			statsService.initFilterLootEnd();
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

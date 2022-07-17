@@ -2,8 +2,6 @@ package ru.namibios.bdofishbot.bot;
 
 import ru.namibios.bdofishbot.utils.DateUtils;
 
-import java.util.Date;
-
 public class StatSeries {
 
     private long waitFishStart;
@@ -18,15 +16,29 @@ public class StatSeries {
 
     private long captchaStart;
     private long captchaEnd;
-    private String captcha;
+    private boolean recognizedCaptcha;
 
     private long statusCaptchaStart;
     private long statusCaptchaEnd;
-    private String statusCaptcha;
+    private boolean statusCaptcha;
 
-    public void initStatusCut(String status) {
-        statusCut = status;
-        statusCutEnd = DateUtils.now();
+    private long filterLootStart;
+    private long filterLootEnd;
+
+    public long getFilterLootStart() {
+        return filterLootStart;
+    }
+
+    public void setFilterLootStart(long filterLootStart) {
+        this.filterLootStart = filterLootStart;
+    }
+
+    public long getFilterLootEnd() {
+        return filterLootEnd;
+    }
+
+    public void setFilterLootEnd(long filterLootEnd) {
+        this.filterLootEnd = filterLootEnd;
     }
 
     public long getWaitFishStart() {
@@ -101,12 +113,12 @@ public class StatSeries {
         this.captchaEnd = captchaEnd;
     }
 
-    public String getCaptcha() {
-        return captcha;
+    public boolean isRecognizedCaptcha() {
+        return recognizedCaptcha;
     }
 
-    public void setCaptcha(String captcha) {
-        this.captcha = captcha;
+    public void setRecognizedCaptcha(boolean recognizedCaptcha) {
+        this.recognizedCaptcha = recognizedCaptcha;
     }
 
     public long getStatusCaptchaStart() {
@@ -125,11 +137,56 @@ public class StatSeries {
         this.statusCaptchaEnd = statusCaptchaEnd;
     }
 
-    public String getStatusCaptcha() {
+    public boolean isStatusCaptcha() {
         return statusCaptcha;
     }
 
-    public void setStatusCaptcha(String statusCaptcha) {
+    public void setStatusCaptcha(boolean statusCaptcha) {
         this.statusCaptcha = statusCaptcha;
+    }
+
+    public void initStatusCut(String status) {
+        statusCut = status;
+        statusCutEnd = DateUtils.now();
+    }
+
+    public void startWaitFish() {
+        waitFishStart = DateUtils.now();
+    }
+
+    public void endWaitFish() {
+        waitFishEnd = DateUtils.now();
+    }
+
+    public void startCutFish() {
+        cutFishStart = DateUtils.now();
+    }
+
+    public void endCutFish() {
+        cutFishEnd = DateUtils.now();
+    }
+
+    public void startStatusCutFish() {
+        statusCutStart = DateUtils.now();
+    }
+
+    public void endStatusCutFish() {
+        statusCutEnd = DateUtils.now();
+    }
+
+    public void startCaptcha() {
+        captchaStart = DateUtils.now();
+    }
+
+    public void endCaptcha() {
+        captchaEnd = DateUtils.now();
+    }
+
+    public void startFilterLoot() {
+        filterLootStart = DateUtils.now();
+    }
+
+    public void endFilterLoot() {
+        filterLootEnd = DateUtils.now();
     }
 }
