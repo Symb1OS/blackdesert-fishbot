@@ -8,13 +8,13 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
-public class StartFishState extends State{
+public class StartFishState extends State {
 
 	private static final Logger LOG = Logger.getLogger(StartFishState.class);
 
 	private PauseService pauseService;
 
-	StartFishState(FishBot fishBot) {
+	public StartFishState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_START();
@@ -37,7 +37,13 @@ public class StartFishState extends State{
 			}
 
 			if(inputService.send(ShortCommand.SPACE)){
-				fishBot.setState(new PersonalMessageState(fishBot));
+				switch (Application.getInstance().MODE()) {
+					case FISHING:
+						fishBot.setState(new PersonalMessageState(fishBot));
+						break;
+					case AFK_FISH:
+						fishBot.setState(new AfkFishState(fishBot));
+				}
 			}
 
 		} catch (Exception e) {

@@ -51,7 +51,17 @@ public class ChangeRodState extends State{
 				String nextFree = rodService.getNext();
 				inputService.send( () -> nextFree);
 
-				fishBot.setState(new StartFishState(fishBot));
+				switch (Application.getInstance().MODE()) {
+					case FISHING:
+						fishBot.setState(new StartFishState(fishBot));
+						break;
+					case AFK_FISH:
+						fishBot.setState(new AfkFishState(fishBot));
+						break;
+					default:
+						LOG.info("Undefined mode..");
+				}
+
 				fishBot.restart();
 
 			}else {

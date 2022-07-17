@@ -2,9 +2,7 @@ package ru.namibios.bdofishbot.cli;
 
 import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.state.DeferredStartState;
-import ru.namibios.bdofishbot.bot.state.FishBot;
-import ru.namibios.bdofishbot.bot.state.SlotTaskModeState;
+import ru.namibios.bdofishbot.bot.state.*;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.DelayUtils;
 import ru.namibios.bdofishbot.utils.WinAPI;
@@ -51,6 +49,10 @@ public class Bot extends Thread{
 			case FISHING:
 				LOG.info("Bot started on FISHING mode..");
 				fishBot.setState(new DeferredStartState(fishBot));
+				break;
+			case AFK_FISH:
+				LOG.info("Bot started on AFK Fishing mode..");
+				fishBot.setState(new StartFishState(fishBot));
 				break;
 			case TASK_SLOT:
 				LOG.info("Bot started on TASK/SLOT mode..");

@@ -139,6 +139,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("180000")
 	int TIME_CHANGE_ROD();
 
+	@Key("bot.rod.afk_fish.changetime")
+	@DefaultValue("240000")
+	int TIME_CHANGE_AFK_FISH_ROD();
+
 	@Key("bot.rod.x")
 	@DefaultValue("1488")
 	int ROD_START_X();
@@ -375,6 +379,14 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@Key("bot.delay.self_thief.after")
 	@DefaultValue("0")
 	long DELAY_SELF_THIEF_AFTER();
+
+	@Key("bot.delay.afk_fish.before")
+	@DefaultValue("1000")
+	long DELAY_BEFORE_AFK_FISH();
+
+	@Key("bot.delay.afk_fish.after")
+	@DefaultValue("0")
+	long DELAY_AFTER_AFK_FISH();
 
 
 	///////////////////////////////////////////////////////////////////////////
