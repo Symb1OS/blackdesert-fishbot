@@ -1,7 +1,5 @@
 package ru.namibios.bdofishbot.bot;
 
-import ru.namibios.bdofishbot.utils.DateUtils;
-
 public class StatSeries {
 
     private long waitFishStart;
@@ -145,48 +143,4 @@ public class StatSeries {
         this.statusCaptcha = statusCaptcha;
     }
 
-    public void initStatusCut(String status) {
-        statusCut = status;
-        statusCutEnd = DateUtils.now();
-    }
-
-    public void startWaitFish() {
-        waitFishStart = DateUtils.now();
-    }
-
-    public void endWaitFish() {
-        waitFishEnd = DateUtils.now();
-    }
-
-    public void startCutFish() {
-        cutFishStart = DateUtils.now();
-    }
-
-    public void endCutFish() {
-        cutFishEnd = DateUtils.now();
-    }
-
-    public void startStatusCutFish() {
-        statusCutStart = DateUtils.now();
-    }
-
-    public void endStatusCutFish() {
-        statusCutEnd = DateUtils.now();
-    }
-
-    public void startCaptcha() {
-        captchaStart = DateUtils.now();
-    }
-
-    public void endCaptcha() {
-        captchaEnd = DateUtils.now();
-    }
-
-    public void startFilterLoot() {
-        filterLootStart = DateUtils.now();
-    }
-
-    public void endFilterLoot() {
-        filterLootEnd = DateUtils.now();
-    }
 }

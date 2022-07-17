@@ -8,7 +8,7 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
-public class FilterLootState extends State{
+public class FilterLootState extends State {
 
 	private static final Logger LOG = Logger.getLogger(FilterLootState.class);
 	private final StatsService statsService;
@@ -20,7 +20,6 @@ public class FilterLootState extends State{
 		this.afterStart = Application.getInstance().DELAY_AFTER_FILTER_LOOT();
 		this.statsService = fishBot.getStatsService();
 
-		statsService.update(this.getClass());
 		statsService.initFilterLootStart();
 
 	}
@@ -40,7 +39,7 @@ public class FilterLootState extends State{
 
 			statsService.initFilterLootEnd();
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
 			

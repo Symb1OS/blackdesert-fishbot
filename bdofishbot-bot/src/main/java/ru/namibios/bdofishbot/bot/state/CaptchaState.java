@@ -25,7 +25,6 @@ public class CaptchaState extends State {
 		this.afterStart = Application.getInstance().DELAY_AFTER_KAPCHA();
 		this.statsService = fishBot.getStatsService();
 
-		statsService.update(this.getClass());
 		statsService.initCaptchaStart();
 
         this.name = new Date().getTime() + "_" + Application.getUser().getHash();

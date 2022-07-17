@@ -31,7 +31,6 @@ public class WaitFishState extends State {
 		this.httpService = fishBot.getHttpService();
 		this.statsService = fishBot.getStatsService();
 
-		statsService.update(this.getClass());
 		statsService.initWaitFishStart();
 
 	}

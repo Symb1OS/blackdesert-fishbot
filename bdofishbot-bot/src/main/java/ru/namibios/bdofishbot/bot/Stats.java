@@ -22,29 +22,6 @@ public class Stats {
     private StatSeries current;
     private List<StatSeries> series;
 
-    private long startFish;
-
-    private long cutFish;
-    private long statusCutFish;
-    private long cutBad;
-    private long cutGood;
-    private long cutPerfect;
-
-    private long captcha;
-    private long notRecognizedCaptcha;
-
-    private long statusCaptcha;
-    private long okCaptcha;
-    private long failCaptcha;
-
-    private long lootFish;
-    private long trashLoot;
-    private long okLoot;
-    private long goldLoot;
-    private long blueLoot;
-    private long greenLoot;
-    private long grayLoot;
-
     public void newSeries() {
         if (current != null) {
             series.add(current);
@@ -58,78 +35,6 @@ public class Stats {
 
     public void setHash(String hash) {
         this.hash = hash;
-    }
-
-    public void incStartFish(){
-        startFish++;
-    }
-
-    public void incCutFish(){
-        cutFish++;
-    }
-
-    public void incStatusCutFish(){
-        statusCutFish++;
-    }
-
-    public void incCutBad(){
-        cutBad++;
-    }
-
-    public void incCutGood(){
-        cutGood++;
-    }
-
-    public void incCutPerfect() {
-        cutPerfect++;
-    }
-
-    public void incCaptcha() {
-        captcha++;
-    }
-
-    public void incNotRecognizedCaptcha() {
-        notRecognizedCaptcha++;
-    }
-
-    public void incStatusCaptcha() {
-        statusCaptcha++;
-    }
-
-    public void incOkCapthca() {
-        okCaptcha++;
-    }
-
-    public void incFailCapthca() {
-        failCaptcha++;
-    }
-
-    public void incLootFish() {
-        lootFish++;
-    }
-
-    public void incTrashLoot(){
-        trashLoot++;
-    }
-
-    public void incOkLoot(){
-        okLoot++;
-    }
-
-    public void incGoldLoot(){
-        goldLoot++;
-    }
-
-    public void incBlueLoot(){
-        blueLoot++;
-    }
-
-    public void incGreenLoot(){
-        greenLoot++;
-    }
-
-    public void incGrayLoot(){
-        grayLoot++;
     }
 
     public void updateEndWork() {
@@ -152,150 +57,6 @@ public class Stats {
         this.endWork = endWork;
     }
 
-    public long getStartFish() {
-        return startFish;
-    }
-
-    public void setStartFish(long startFish) {
-        this.startFish = startFish;
-    }
-
-    public long getCutFish() {
-        return cutFish;
-    }
-
-    public void setCutFish(long cutFish) {
-        this.cutFish = cutFish;
-    }
-
-    public long getStatusCutFish() {
-        return statusCutFish;
-    }
-
-    public void setStatusCutFish(long statusCutFish) {
-        this.statusCutFish = statusCutFish;
-    }
-
-    public long getCutBad() {
-        return cutBad;
-    }
-
-    public void setCutBad(long cutBad) {
-        this.cutBad = cutBad;
-    }
-
-    public long getCutGood() {
-        return cutGood;
-    }
-
-    public void setCutGood(long cutGood) {
-        this.cutGood = cutGood;
-    }
-
-    public long getCutPerfect() {
-        return cutPerfect;
-    }
-
-    public void setCutPerfect(long cutPerfect) {
-        this.cutPerfect = cutPerfect;
-    }
-
-    public long getCaptcha() {
-        return captcha;
-    }
-
-    public void setCaptcha(long captcha) {
-        this.captcha = captcha;
-    }
-
-    public long getNotRecognizedCaptcha() {
-        return notRecognizedCaptcha;
-    }
-
-    public void setNotRecognizedCaptcha(long notRecognizedCaptcha) {
-        this.notRecognizedCaptcha = notRecognizedCaptcha;
-    }
-
-    public long getStatusCaptcha() {
-        return statusCaptcha;
-    }
-
-    public void setStatusCaptcha(long statusCaptcha) {
-        this.statusCaptcha = statusCaptcha;
-    }
-
-    public long getOkCaptcha() {
-        return okCaptcha;
-    }
-
-    public void setOkCaptcha(long okCaptcha) {
-        this.okCaptcha = okCaptcha;
-    }
-
-    public long getFailCaptcha() {
-        return failCaptcha;
-    }
-
-    public void setFailCaptcha(long failCaptcha) {
-        this.failCaptcha = failCaptcha;
-    }
-
-    public long getLootFish() {
-        return lootFish;
-    }
-
-    public void setLootFish(long lootFish) {
-        this.lootFish = lootFish;
-    }
-
-    public long getTrashLoot() {
-        return trashLoot;
-    }
-
-    public void setTrashLoot(long trashLoot) {
-        this.trashLoot = trashLoot;
-    }
-
-    public long getOkLoot() {
-        return okLoot;
-    }
-
-    public void setOkLoot(long okLoot) {
-        this.okLoot = okLoot;
-    }
-
-    public long getGoldLoot() {
-        return goldLoot;
-    }
-
-    public void setGoldLoot(long goldLoot) {
-        this.goldLoot = goldLoot;
-    }
-
-    public long getBlueLoot() {
-        return blueLoot;
-    }
-
-    public void setBlueLoot(long blueLoot) {
-        this.blueLoot = blueLoot;
-    }
-
-    public long getGreenLoot() {
-        return greenLoot;
-    }
-
-    public void setGreenLoot(long greenLoot) {
-        this.greenLoot = greenLoot;
-    }
-
-    public long getGrayLoot() {
-        return grayLoot;
-    }
-
-    public void setGrayLoot(long grayLoot) {
-        this.grayLoot = grayLoot;
-    }
-
     public List<StatSeries> getSeries() {
         return series;
     }
@@ -304,50 +65,24 @@ public class Stats {
         this.series = series;
     }
 
-    @Override
-    public String toString() {
-        return "Stats{" +
-                "startWork=" + startWork +
-                ", endWork=" + endWork +
-                ", startFish=" + startFish +
-                ", cutFish=" + cutFish +
-                ", statusCutFish=" + statusCutFish +
-                ", cutBad=" + cutBad +
-                ", cutGood=" + cutGood +
-                ", cutPerfect=" + cutPerfect +
-                ", captcha=" + captcha +
-                ", notRecognizedCaptcha=" + notRecognizedCaptcha +
-                ", statusCaptcha=" + statusCaptcha +
-                ", okCaptcha=" + okCaptcha +
-                ", failCaptcha=" + failCaptcha +
-                ", lootFish=" + lootFish +
-                ", trashLoot=" + trashLoot +
-                ", okLoot=" + okLoot +
-                ", goldLoot=" + goldLoot +
-                ", blueLoot=" + blueLoot +
-                ", greenLoot=" + greenLoot +
-                ", grayLoot=" + grayLoot +
-                '}';
-    }
-
     public void initWaitFishStart() {
-        current.startWaitFish();
+        current.setWaitFishStart(DateUtils.now());
     }
 
     public void initWaitFishEnd() {
-        current.endWaitFish();
+        current.setWaitFishEnd(DateUtils.now());
     }
 
     public void initCutFishStart() {
-        current.startCutFish();
+        current.setCutFishStart(DateUtils.now());
     }
 
     public void initCutFishEnd() {
-        current.endCutFish();
+        current.setCutFishEnd(DateUtils.now());
     }
 
     public void initStatusCutFishStart() {
-        current.startStatusCutFish();
+        current.setStatusCutStart(DateUtils.now());
     }
 
     public void setStatusCut(String statusCut) {
@@ -355,11 +90,11 @@ public class Stats {
     }
 
     public void initStatusCutFishEnd() {
-        current.endStatusCutFish();
+        current.setStatusCutEnd(DateUtils.now());
     }
 
     public void initCaptchaStart() {
-        current.startCaptcha();
+        current.setCaptchaStart(DateUtils.now());
     }
 
     public void setRecognizedCaptcha(boolean isRecognized) {
@@ -367,7 +102,7 @@ public class Stats {
     }
 
     public void initCaptchaEnd() {
-        current.endCaptcha();
+        current.setCaptchaEnd(DateUtils.now());
     }
 
     public void initStatusCaptchaStart() {

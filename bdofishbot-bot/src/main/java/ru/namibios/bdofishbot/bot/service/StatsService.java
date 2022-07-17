@@ -2,7 +2,6 @@ package ru.namibios.bdofishbot.bot.service;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Stats;
-import ru.namibios.bdofishbot.bot.state.*;
 import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 import ru.namibios.bdofishbot.utils.JSON;
@@ -40,60 +39,29 @@ public class StatsService {
         stats.newSeries();
     }
 
-    public void update(Class clazz) {
-
-        String simpleName = clazz.getSimpleName();
-        if (StartFishState.class.getSimpleName().equals(simpleName)) {
-            stats.incStartFish();
-        }
-
-        if (CutFishState.class.getSimpleName().equals(simpleName)) {
-            stats.incCutFish();
-        }
-
-        if (StatusCutState.class.getSimpleName().equals(simpleName)) {
-            stats.incStatusCutFish();
-        }
-
-        if (CaptchaState.class.getSimpleName().equals(simpleName)) {
-            stats.incCaptcha();
-        }
-
-        if (FilterLootState.class.getSimpleName().equals(simpleName)) {
-            stats.incLootFish();
-        }
-
-    }
-
     public void failCaptcha() {
-        stats.incFailCapthca();
         stats.setStatusCaptcha(false);
     }
 
     public void okCaptcha() {
-        stats.incOkCapthca();
         stats.setStatusCaptcha(true);
 
     }
 
     public void recognizedCaptcha(boolean isRecognized) {
-        stats.incNotRecognizedCaptcha();
         stats.setRecognizedCaptcha(isRecognized);
     }
 
     public void perfectCut() {
-        stats.incCutPerfect();
         stats.setStatusCut("PERFECT");
 
     }
 
     public void goodCut() {
-        stats.incCutGood();
         stats.setStatusCut("GOOD");
     }
 
     public void badCut() {
-        stats.incCutBad();
         stats.setStatusCut("BAD");
     }
 

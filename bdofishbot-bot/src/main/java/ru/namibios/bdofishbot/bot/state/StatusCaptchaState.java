@@ -38,7 +38,6 @@ public class StatusCaptchaState extends State{
 		this.statusService = new StatusService<>();
 
 		statsService = fishBot.getStatsService();
-		statsService.update(this.getClass());
 		statsService.initStatusCaptchaStart();
 
 		LOG.info("Check status parsing captcha");

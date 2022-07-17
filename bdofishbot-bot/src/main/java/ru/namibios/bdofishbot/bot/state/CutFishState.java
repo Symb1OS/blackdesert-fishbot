@@ -19,7 +19,6 @@ public class CutFishState extends State {
 		this.afterStart = Application.getInstance().DELAY_AFTER_CUT_FISH();
 		this.statsService = fishBot.getStatsService();
 
-		statsService.update(this.getClass());
 		statsService.initCutFishStart();
 	}
 
