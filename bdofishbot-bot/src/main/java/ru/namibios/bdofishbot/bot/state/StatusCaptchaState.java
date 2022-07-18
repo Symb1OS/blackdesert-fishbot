@@ -1,8 +1,8 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.service.HttpService;
-import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.bot.service.StatusService;
 import ru.namibios.bdofishbot.bot.status.StatusCaptcha;
 import ru.namibios.bdofishbot.bot.template.StatusCaptchaTemplate;
@@ -22,7 +22,7 @@ public class StatusCaptchaState extends State{
 	private StatusService<StatusCaptchaTemplate> statusService;
 
 	private String filename;
-	private final StatsService statsService;
+	private final Stats stats;
 
 	StatusCaptchaState(FishBot fishBot, String name) {
 
@@ -37,8 +37,8 @@ public class StatusCaptchaState extends State{
 
 		this.statusService = new StatusService<>();
 
-		statsService = fishBot.getStatsService();
-		statsService.initStatusCaptchaStart();
+		this.stats = fishBot.getStats();
+		stats.initStatusCaptchaStart();
 
 		LOG.info("Check status parsing captcha");
 	}
@@ -57,16 +57,16 @@ public class StatusCaptchaState extends State{
 			if (timer.isOver(Application.getInstance().STATE_STATUS_CAPTCHA_MAX_TIME())) {
 				LOG.info("Captcha parsed success. Go filter loot...");
 				fishBot.setState(new FilterLootState(fishBot));
-				statsService.okCaptcha();
+				stats.setStatusCaptcha(true);
 
 			} else if (status == StatusCaptchaTemplate.FAILED){
 				LOG.info("Captcha parsed failure. Back to start...");
 				fishBot.setState(new StartFishState(fishBot));
 				httpService.markFail(filename);
-				statsService.failCaptcha();
+				stats.setStatusCaptcha(false);
 			}
 
-			statsService.initStatusCaptchaEnd();
+			stats.initStatusCaptchaEnd();
 
 		}catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

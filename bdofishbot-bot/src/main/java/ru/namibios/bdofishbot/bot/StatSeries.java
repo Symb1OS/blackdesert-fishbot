@@ -23,6 +23,17 @@ public class StatSeries {
     private long filterLootStart;
     private long filterLootEnd;
 
+    private long unknown;
+    private long ok;
+    private long trash;
+    private long empty;
+
+    private long red;
+    private long gold;
+    private long blue;
+    private long green;
+    private long gray;
+
     public long getFilterLootStart() {
         return filterLootStart;
     }
@@ -143,4 +154,75 @@ public class StatSeries {
         this.statusCaptcha = statusCaptcha;
     }
 
+    public long getUnknown() {
+        return unknown;
+    }
+
+    public void setUnknown(long unknown) {
+        this.unknown = unknown;
+    }
+
+    public long getOk() {
+        return ok;
+    }
+
+    public void setOk(long ok) {
+        this.ok = ok;
+    }
+
+    public long getTrash() {
+        return trash;
+    }
+
+    public void setTrash(long trash) {
+        this.trash = trash;
+    }
+
+    public long getEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(long empty) {
+        this.empty = empty;
+    }
+
+    public long getRed() {
+        return red;
+    }
+
+    public void setRed(long red) {
+        this.red = red;
+    }
+
+    public long getGold() {
+        return gold;
+    }
+
+    public void setGold(long gold) {
+        this.gold = gold;
+    }
+
+    public long getBlue() {
+        return blue;
+    }
+
+    public void setBlue(long blue) {
+        this.blue = blue;
+    }
+
+    public long getGreen() {
+        return green;
+    }
+
+    public void setGreen(long green) {
+        this.green = green;
+    }
+
+    public long getGray() {
+        return gray;
+    }
+
+    public void setGray(long gray) {
+        this.gray = gray;
+    }
 }

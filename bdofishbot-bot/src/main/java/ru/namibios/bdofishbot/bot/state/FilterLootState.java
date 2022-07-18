@@ -1,9 +1,9 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.command.FishLoot;
 import ru.namibios.bdofishbot.bot.command.LootWindow;
-import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -11,17 +11,16 @@ import ru.namibios.bdofishbot.utils.ExceptionUtils;
 public class FilterLootState extends State {
 
 	private static final Logger LOG = Logger.getLogger(FilterLootState.class);
-	private final StatsService statsService;
+	private final Stats stats;
 
 	FilterLootState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_FILTER_LOOT();
 		this.afterStart = Application.getInstance().DELAY_AFTER_FILTER_LOOT();
-		this.statsService = fishBot.getStatsService();
+		this.stats = fishBot.getStats();
 
-		statsService.initFilterLootStart();
-
+		stats.initFilterLootStart();
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class FilterLootState extends State {
 				fishBot.setState(new UseSlotState(fishBot));
 			}
 
-			statsService.initFilterLootEnd();
+			stats.initFilterLootEnd();
 
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));

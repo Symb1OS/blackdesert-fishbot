@@ -3,8 +3,12 @@ package ru.namibios.bdofishbot.bot.state;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Slot;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.Timer;
-import ru.namibios.bdofishbot.bot.service.*;
+import ru.namibios.bdofishbot.bot.service.HttpService;
+import ru.namibios.bdofishbot.bot.service.PauseService;
+import ru.namibios.bdofishbot.bot.service.RodService;
+import ru.namibios.bdofishbot.bot.service.SlotService;
 import ru.namibios.bdofishbot.bot.service.input.ArduinoService;
 import ru.namibios.bdofishbot.bot.service.input.EmulationService;
 import ru.namibios.bdofishbot.bot.service.input.InputService;
@@ -12,9 +16,14 @@ import ru.namibios.bdofishbot.bot.service.input.emulation.AWTRobot;
 import ru.namibios.bdofishbot.bot.service.notification.Notification;
 import ru.namibios.bdofishbot.bot.service.notification.TelegramNotification;
 import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.config.Path;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
+import ru.namibios.bdofishbot.utils.JSON;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -45,7 +54,7 @@ public class FishBot {
 
 	private PauseService pauseService;
 
-	private StatsService statsService;
+	private Stats stats;
 
 	private Timer timer;
 
@@ -85,7 +94,7 @@ public class FishBot {
 
 		this.timer = new Timer();
 		this.pauseService = new PauseService(Application.getInstance().TASK_PAUSE());
-		this.statsService = new StatsService();
+		this.stats = new Stats();
 
 	}
 
@@ -147,8 +156,16 @@ public class FishBot {
 	}
 
 	public void saveStats() {
-    	statsService.endWork();
-    	statsService.export();
+    	stats.updateEndWork();
+
+		String exportDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
+		try {
+			String filename = Path.RESOURCES + exportDate + ".json";
+			LOG.info("export stats to " + filename);
+			JSON.getInstance().writeValue(new File(filename), stats);
+		} catch (IOException e) {
+			LOG.error(ExceptionUtils.getString(e));
+		}
 	}
 
 	public PauseService getPauseService() {
@@ -203,7 +220,7 @@ public class FishBot {
         return slotService;
     }
 
-	public StatsService getStatsService() {
-		return statsService;
+	public Stats getStats() {
+		return stats;
 	}
 }

@@ -81,7 +81,7 @@ public class Stats {
         current.setCutFishEnd(DateUtils.now());
     }
 
-    public void initStatusCutFishStart() {
+    public void initStatusCutStart() {
         current.setStatusCutStart(DateUtils.now());
     }
 
@@ -89,7 +89,8 @@ public class Stats {
         current.setStatusCut(statusCut);
     }
 
-    public void initStatusCutFishEnd() {
+    public void initStatusCutEndAndStatus(String name) {
+        current.setStatusCut(name);
         current.setStatusCutEnd(DateUtils.now());
     }
 

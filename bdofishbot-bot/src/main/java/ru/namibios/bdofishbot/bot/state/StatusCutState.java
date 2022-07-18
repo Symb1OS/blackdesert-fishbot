@@ -1,7 +1,7 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.service.StatsService;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.service.StatusService;
 import ru.namibios.bdofishbot.bot.status.StatusCut;
 import ru.namibios.bdofishbot.bot.template.StatusCutTemplate;
@@ -9,12 +9,12 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
-public class StatusCutState extends State{
+public class StatusCutState extends State {
 
 	private static final Logger LOG = Logger.getLogger(StatusCutState.class);
 
 	private StatusService<StatusCutTemplate> statusService;
-	private final StatsService statsService;
+	private final Stats stats;
 
 	StatusCutState(FishBot fishBot) {
 
@@ -27,8 +27,9 @@ public class StatusCutState extends State{
 
 		this.statusService = new StatusService<>();
 
-		statsService = fishBot.getStatsService();
-		statsService.initStatusCutFishStart();
+		stats = fishBot.getStats();
+
+		stats.initStatusCutStart();
 
 		LOG.info("Check status cut fish");
 	}
@@ -42,7 +43,7 @@ public class StatusCutState extends State{
 	@Override
 	public void onStep() {
 
-		try{
+		try {
 
 			StatusCutTemplate status = statusService.getTemplate(new StatusCut());
 			if (status == null) {
@@ -53,26 +54,23 @@ public class StatusCutState extends State{
 				case PERFECT:{
 					LOG.info("PERFECT. Go filter loot..");
 					fishBot.setState(new FilterLootState(fishBot));
-					statsService.perfectCut();
 					break;
 				}
 				case GOOD: {
 					LOG.info("GOOD. Go parse captcha");
 					fishBot.setState(new CaptchaState(fishBot));
-					statsService.goodCut();
 					break;
 				}
 				case BAD: {
 					LOG.info("BAD. Back to start...");
 					fishBot.setState(new StartFishState(fishBot));
-					statsService.badCut();
 					break;
 				}
 			}
 
-			statsService.initStatusCutFishEnd();
+			stats.initStatusCutEndAndStatus(status.name());
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
 			

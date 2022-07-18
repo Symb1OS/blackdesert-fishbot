@@ -2,12 +2,11 @@ package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Screen;
-import ru.namibios.bdofishbot.bot.StatsState;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.command.Calendar;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.bot.command.WaitFish;
 import ru.namibios.bdofishbot.bot.service.HttpService;
-import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -20,7 +19,7 @@ public class WaitFishState extends State {
 	private static final Logger LOG = Logger.getLogger(WaitFishState.class);
 
 	private final HttpService httpService;
-	private final StatsService statsService;
+	private final Stats stats;
 
 	WaitFishState(FishBot fishBot) {
 		super(fishBot);
@@ -29,10 +28,9 @@ public class WaitFishState extends State {
 		this.afterStart = Application.getInstance().DELAY_AFTER_WAIT_FISH();
 
 		this.httpService = fishBot.getHttpService();
-		this.statsService = fishBot.getStatsService();
 
-		statsService.initWaitFishStart();
-
+		this.stats = fishBot.getStats();
+		stats.initWaitFishStart();
 	}
 
 	private void runSideTask(){
@@ -98,9 +96,9 @@ public class WaitFishState extends State {
 				fishBot.setState(new ChangeRodState(fishBot));
 			}
 
-			statsService.initWaitFishEnd();
+			stats.initWaitFishEnd();
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
 			LOG.error(ExceptionUtils.getString(e));
 		}

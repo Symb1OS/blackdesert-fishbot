@@ -1,9 +1,9 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.command.Captcha;
 import ru.namibios.bdofishbot.bot.command.Command;
-import ru.namibios.bdofishbot.bot.service.StatsService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
@@ -15,17 +15,17 @@ public class CaptchaState extends State {
     private static final Logger LOG = Logger.getLogger(CaptchaState.class);
 
     private final String name;
-	private final StatsService statsService;
 	private Command captcha;
+	private final Stats stats;
 
-    CaptchaState(FishBot fishBot) {
+	CaptchaState(FishBot fishBot) {
 		super(fishBot);
 		
 		this.beforeStart = Application.getInstance().DELAY_BEFORE_KAPCHA();
 		this.afterStart = Application.getInstance().DELAY_AFTER_KAPCHA();
-		this.statsService = fishBot.getStatsService();
 
-		statsService.initCaptchaStart();
+		this.stats = fishBot.getStats();
+		stats.initCaptchaStart();
 
         this.name = new Date().getTime() + "_" + Application.getUser().getHash();
         this.captcha = new Captcha(name);
@@ -49,16 +49,16 @@ public class CaptchaState extends State {
 
 			if (inputService.send(() -> key)){
 				LOG.info("Go check status parsing captcha...");
-				statsService.recognizedCaptcha(true);
+				stats.setRecognizedCaptcha(true);
 				fishBot.setState(new StatusCaptchaState(fishBot, name));
 			}
 			else {
 				LOG.info("Captcha is not recognized. Return to start...");
-				statsService.recognizedCaptcha(false);
+				stats.setRecognizedCaptcha(false);
 				fishBot.setState(new StartFishState(fishBot));
 			}
 
-			statsService.initCaptchaEnd();
+			stats.initCaptchaEnd();
 
 		} catch (Exception e) {
 			LOG.info(String.format(Message.LOG_FORMAT_ERROR, e));
