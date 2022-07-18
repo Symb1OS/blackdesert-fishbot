@@ -166,6 +166,15 @@ public class FishBot {
 		} catch (IOException e) {
 			LOG.error(ExceptionUtils.getString(e));
 		}
+
+		try {
+			String statsJson = JSON.getInstance().writeValueAsString(stats);
+			httpService.sendStats(statsJson);
+
+		} catch (IOException e) {
+			LOG.error(ExceptionUtils.getString(e));
+		}
+
 	}
 
 	public PauseService getPauseService() {

@@ -24,6 +24,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.Screen;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.command.ShortCommand;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.User;
@@ -73,6 +74,7 @@ public class HttpService {
 
 	private static final String CALL_URL = "https://%s/fishingserver/call";
     private static final String SYNC_URL = "https://%s/fishingserver/sync";
+    private static final String STATS_URL = "https://%s/fishingserver/sync";
 
     private HttpClient httpClient;
 
@@ -122,6 +124,26 @@ public class HttpService {
 
         EntityUtils.consume(httpResponse.getEntity());
 	}
+
+    public static void main(String[] args) throws IOException {
+
+        Stats stats = JSON.getInstance().readValue(new File("resources/2022-07-18-02-52-55.json"), Stats.class);
+        String json = JSON.getInstance().writeValueAsString(stats);
+        System.out.println(json);
+        HttpService httpService = new HttpService();
+        httpService.sendStats(json);
+    }
+
+    public void sendStats(String stats) throws IOException{
+
+        HttpPost post = Builder.config().setUrl(String.format(STATS_URL, Application.getInstance().URL_SERVER_HTTPS()))
+                .setParameter(new BasicNameValuePair("stats", stats))
+                .build();
+
+        HttpResponse httpResponse = httpClient.execute(post);
+
+        EntityUtils.consume(httpResponse.getEntity());
+    }
 
     public void sendTelegramMessage(String key, String message) throws IOException{
 

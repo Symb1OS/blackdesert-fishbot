@@ -279,4 +279,12 @@ public class StatSeries {
     public void unknownFrame() {
         unknownFrame++;
     }
+
+    public long getUnknownFrame() {
+        return unknownFrame;
+    }
+
+    public void setUnknownFrame(long unknownFrame) {
+        this.unknownFrame = unknownFrame;
+    }
 }
