@@ -32,7 +32,7 @@ public class FilterLootState extends State {
 			if (new LootWindow().getKey().isEmpty()) {
 				fishBot.setState(new StartFishState(fishBot));
 			} else {
-				inputService.send(new FishLoot());
+				inputService.send(new FishLoot(stats));
 				fishBot.setState(new UseSlotState(fishBot));
 			}
 

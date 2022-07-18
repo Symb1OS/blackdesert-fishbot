@@ -26,6 +26,8 @@ public class FishLoot implements Command{
 
 	private List<Screen> colorScreens;
 
+	private Stats stats;
+
 	public FishLoot(String... loot) throws IOException {
 		if (loot.length <= 0 || loot.length > 8) {
 			throw new IllegalArgumentException("Expected 1-8 files.. Actual " + loot.length);
@@ -54,9 +56,10 @@ public class FishLoot implements Command{
 
 	}
 
-	public FishLoot() {
+	public FishLoot(Stats stats) {
 		LOG.info("Init filter");
 
+		this.stats = stats;
 		Rectangle[] rectangles = Application.getInstance().LOOT_SLOT_LIST();
 
 		this.screens = Arrays.stream(rectangles)
@@ -175,6 +178,8 @@ public class FishLoot implements Command{
 		List<MatrixTemplate> lootFrames = getLootFrames();
 		LOG.info("Loot frames: " + lootFrames);
 
+		lootStats(loots, lootFrames);
+
 		saveLoot(loots);
 
 		boolean isTakeUnknown = Application.getInstance().TAKE_UNKNOWN();
@@ -206,6 +211,17 @@ public class FishLoot implements Command{
 		
 		LOG.info("Strategy is not defined. Take..");
 		return ShortCommand.TAKE.getKey();
+	}
+
+	private void lootStats(List<MatrixTemplate> loots, List<MatrixTemplate> lootFrames) {
+
+		for (MatrixTemplate loot : loots) {
+			stats.incLoot(loot);
+		}
+
+		for (MatrixTemplate lootFrame : lootFrames) {
+			stats.incFrame(lootFrame);
+		}
 	}
 
 }

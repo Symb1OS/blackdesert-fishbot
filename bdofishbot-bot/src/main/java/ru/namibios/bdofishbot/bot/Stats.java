@@ -1,5 +1,8 @@
 package ru.namibios.bdofishbot.bot;
 
+import ru.namibios.bdofishbot.bot.template.Loot;
+import ru.namibios.bdofishbot.bot.template.LootFrame;
+import ru.namibios.bdofishbot.bot.template.MatrixTemplate;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.utils.DateUtils;
 
@@ -125,4 +128,35 @@ public class Stats {
     public void initFilterLootEnd() {
         current.setFilterLootEnd(DateUtils.now());
     }
+
+    public void incLoot(MatrixTemplate loot) {
+        if (loot == null) {
+            current.incUnknown();
+        } else if (loot == Loot.USEFULL) {
+            current.incUsefull();
+        } else if (loot == Loot.CONFIRM) {
+            current.incConfirm();
+        } else if (loot == Loot.EXCEPTION) {
+            current.incTrash();
+        } else if (loot == Loot.EMPTY) {
+            current.incEmpty();
+        }
+    }
+
+    public void incFrame(MatrixTemplate lootFrame) {
+        if (lootFrame == null) {
+            current.unknownFrame();
+        } else if (lootFrame == LootFrame.RED) {
+            current.incRedFrame();
+        } else if (lootFrame == LootFrame.GOLD) {
+            current.incGoldFrame();
+        } else if (lootFrame == LootFrame.BLUE) {
+            current.incBlueFrame();
+        } else if (lootFrame == LootFrame.GREEN) {
+            current.incGreenFrame();
+        } else if (lootFrame == LootFrame.GRAY) {
+            current.incGrayFrame();
+        }
+    }
+
 }

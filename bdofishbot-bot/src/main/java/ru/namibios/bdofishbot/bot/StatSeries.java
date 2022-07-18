@@ -24,7 +24,8 @@ public class StatSeries {
     private long filterLootEnd;
 
     private long unknown;
-    private long ok;
+    private long usefull;
+    private long confirm;
     private long trash;
     private long empty;
 
@@ -33,6 +34,7 @@ public class StatSeries {
     private long blue;
     private long green;
     private long gray;
+    private long unknownFrame;
 
     public long getFilterLootStart() {
         return filterLootStart;
@@ -162,14 +164,6 @@ public class StatSeries {
         this.unknown = unknown;
     }
 
-    public long getOk() {
-        return ok;
-    }
-
-    public void setOk(long ok) {
-        this.ok = ok;
-    }
-
     public long getTrash() {
         return trash;
     }
@@ -224,5 +218,65 @@ public class StatSeries {
 
     public void setGray(long gray) {
         this.gray = gray;
+    }
+
+    public void incRedFrame() {
+        red++;
+    }
+
+    public void incGoldFrame() {
+        gold++;
+    }
+
+    public void incBlueFrame() {
+        blue++;
+    }
+
+    public void incGreenFrame() {
+        green++;
+    }
+
+    public long getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(long confirm) {
+        this.confirm = confirm;
+    }
+
+    public void incGrayFrame() {
+        gray++;
+    }
+
+    public void incUnknown() {
+        unknown++;
+    }
+
+    public void incUsefull() {
+        usefull++;
+    }
+
+    public void incConfirm() {
+        confirm++;
+    }
+
+    public long getUsefull() {
+        return usefull;
+    }
+
+    public void setUsefull(long usefull) {
+        this.usefull = usefull;
+    }
+
+    public void incEmpty() {
+        empty++;
+    }
+
+    public void incTrash() {
+        trash++;
+    }
+
+    public void unknownFrame() {
+        unknownFrame++;
     }
 }
