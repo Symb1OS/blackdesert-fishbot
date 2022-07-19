@@ -65,7 +65,7 @@ public class StartController implements ActionListener {
 
     private void stop(){
         enablePreference(true);
-        if(bot != null){
+        if(bot.getFishBot() != null){
             bot.getFishBot().setRunned(false);
             bot.getFishBot().stopExecutors();
         }

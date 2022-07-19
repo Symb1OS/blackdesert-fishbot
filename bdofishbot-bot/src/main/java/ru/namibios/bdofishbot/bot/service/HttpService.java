@@ -74,7 +74,7 @@ public class HttpService {
 
 	private static final String CALL_URL = "https://%s/fishingserver/call";
     private static final String SYNC_URL = "https://%s/fishingserver/sync";
-    private static final String STATS_URL = "https://%s/fishingserver/sync";
+    private static final String STATS_URL = "https://%s/fishingserver/stats";
 
     private HttpClient httpClient;
 
@@ -137,7 +137,7 @@ public class HttpService {
     public void sendStats(String stats) throws IOException{
 
         HttpPost post = Builder.config().setUrl(String.format(STATS_URL, Application.getInstance().URL_SERVER_HTTPS()))
-                .setParameter(new BasicNameValuePair("stats", stats))
+                .setParameter(new BasicNameValuePair("jsonStats", stats))
                 .build();
 
         HttpResponse httpResponse = httpClient.execute(post);

@@ -176,6 +176,7 @@ public class RootView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                buttonStop.doClick();
                 Application.closeBot(Application.CODE_CLOSE_GUI);
             }
         });
