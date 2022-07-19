@@ -20,6 +20,7 @@ import ru.namibios.bdofishbot.gui.Info;
 import ru.namibios.bdofishbot.gui.MousePointer;
 import ru.namibios.bdofishbot.gui.controller.*;
 import ru.namibios.bdofishbot.utils.AppUtils;
+import ru.namibios.bdofishbot.utils.DelayUtils;
 import ru.namibios.bdofishbot.utils.ExceptionUtils;
 import ru.namibios.bdofishbot.utils.ExecUtils;
 
@@ -62,7 +63,7 @@ public class RootView extends JFrame {
         setAlwaysOnTop(true);
         setLocation(Application.getInstance().UI_WINDOW_ROOT_X(), Application.getInstance().UI_WINDOW_ROOT_Y());
         setSize(new Dimension(520, 300));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         Image im = new ImageIcon(Path.ROOT_ICON).getImage();
         setIconImage(im);
@@ -177,6 +178,7 @@ public class RootView extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 buttonStop.doClick();
+                DelayUtils.delay(Application.getInstance().EXIT_PAUSE());
                 Application.closeBot(Application.CODE_CLOSE_GUI);
             }
         });

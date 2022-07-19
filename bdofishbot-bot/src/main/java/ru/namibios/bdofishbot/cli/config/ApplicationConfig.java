@@ -82,6 +82,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("10000")
 	long RESTART_PAUSE();
 
+	@Key("bot.exit.pause")
+	@DefaultValue("4000")
+	long EXIT_PAUSE();
+
 	@Key("bot.state.overflow")
 	@DefaultValue("10")
 	int STATE_OVERFLOW();

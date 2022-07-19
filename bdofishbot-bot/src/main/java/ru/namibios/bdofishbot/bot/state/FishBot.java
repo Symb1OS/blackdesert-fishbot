@@ -156,12 +156,13 @@ public class FishBot {
 	}
 
 	public void saveStats() {
+    	LOG.info("Save stats..");
     	stats.updateEndWork();
 
 		String exportDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
 		try {
 			String filename = Path.RESOURCES + exportDate + ".json";
-			LOG.info("export stats to " + filename);
+			LOG.info("Export stats to " + filename);
 			JSON.getInstance().writeValue(new File(filename), stats);
 		} catch (IOException e) {
 			LOG.error(ExceptionUtils.getString(e));
