@@ -19,6 +19,24 @@
         <revision>3.3.3</revision>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <server>dev</server>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <server>prod</server>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
 
         <dependency>

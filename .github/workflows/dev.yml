@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build application
-        run: ./mvnw -Dmaven.test.skip=true clean package
+        run: ./mvnw -Dmaven.test.skip=true clean package -P dev
       - name: Copy build
         run: |
           cp bdofishbot/target/blackdesert-fishbot.zip ~/docker-volume/uat/fishing-resources/blackdesert-fishbot.zip
