@@ -43,6 +43,7 @@ public class Application {
 	public static final int CODE_INIT_CHARS = 13;
 	public static final int CODE_CLOSE_GUI = 15;
 	public static final int CODE_USER_ALREADY_LOGGED = 16;
+	public static final int CODE_UNDEFINED_PROFILE = 17;
 
 	private static final Logger LOG = Logger.getLogger(Application.class);
 
@@ -314,6 +315,10 @@ public class Application {
 
 		@Override
 		public boolean check() {
+
+			if (System.getProperty("skipResolution") != null) {
+				return next();
+			}
 
 			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			int width = gd.getDisplayMode().getWidth();

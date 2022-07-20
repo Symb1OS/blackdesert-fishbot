@@ -18,12 +18,9 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@ConverterClass(UiThemeConverter.class)
 	String THEME();
 
-	@Key("bot.http")
-	@DefaultValue("namibios.ru:9090")
-	String URL_SERVER_HTTP();
-
 	@Key("bot.https")
-	@DefaultValue("namibios.ru:9443")
+	@DefaultValue("namibios.ru")
+	@ConverterClass(ProfileConverter.class)
 	String URL_SERVER_HTTPS();
 
 	@Key("bot.http.connect_timeout")
