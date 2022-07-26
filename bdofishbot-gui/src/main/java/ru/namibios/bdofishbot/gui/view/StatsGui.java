@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.function.Predicate;
 
 public class StatsGui extends JDialog {
 
@@ -61,9 +62,11 @@ public class StatsGui extends JDialog {
 
             fishBot.getSlotService().info();
             long countSeries = series.size();
-            long successSeries = series.stream().filter(statSeries -> statSeries.getStatusCut().equals("PERFECT") || (statSeries.isRecognizedCaptcha() && statSeries.isStatusCaptcha())).count();
 
-            OptionalDouble avgCycles = series.stream().mapToLong(statSeries -> statSeries.getFilterLootEnd() - statSeries.getWaitFishStart()).average();
+            Predicate<StatSeries> successCycle = statSeries -> statSeries.getStatusCut().equals("PERFECT") || (statSeries.isRecognizedCaptcha() && statSeries.isStatusCaptcha());
+
+            long successSeries = series.stream().filter(successCycle).count();
+            OptionalDouble avgCycles = series.stream().filter(successCycle).mapToLong(statSeries -> statSeries.getFilterLootEnd() - statSeries.getWaitFishStart()).average();
 
             long usefull = series.stream().mapToLong(StatSeries::getUsefull).sum();
             long confirm = series.stream().mapToLong(StatSeries::getConfirm).sum();
