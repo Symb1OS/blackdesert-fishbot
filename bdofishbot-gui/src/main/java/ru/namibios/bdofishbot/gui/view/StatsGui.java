@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import ru.namibios.bdofishbot.bot.StatSeries;
 import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.state.FishBot;
+import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.Bot;
 import ru.namibios.bdofishbot.gui.UI;
 import ru.namibios.bdofishbot.utils.DelayUtils;
@@ -47,7 +48,7 @@ public class StatsGui extends JDialog {
 
         new Thread(() -> {
             while (isOpen) {
-                DelayUtils.delay(1000);
+                DelayUtils.delay(Application.getInstance().DELAY_STATS_GUI());
                 update();
             }
         }).start();

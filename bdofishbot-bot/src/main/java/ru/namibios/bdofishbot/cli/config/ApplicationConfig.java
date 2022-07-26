@@ -79,6 +79,10 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	@DefaultValue("10000")
 	long RESTART_PAUSE();
 
+	@Key("bot.gui_stats.delay")
+	@DefaultValue("5000")
+	long DELAY_STATS_GUI();
+
 	@Key("bot.exit.pause")
 	@DefaultValue("4000")
 	long EXIT_PAUSE();
