@@ -18,18 +18,13 @@ public class SlotService {
         this.slotList = new ArrayList<>(slots);
     }
 
-    public void info(){
+    public String info(){
 
         Optional<Slot> optional = slotList.stream()
                 .filter(Slot::isActive)
                 .max(Comparator.comparingLong(Slot::getReadyTime));
 
-        if (optional.isPresent()) {
-            LOG.info(optional.get().info());
-        } else {
-            LOG.info("No active slot/task");
-        }
-
+        return optional.isPresent() ? optional.get().info() : "No active slot/task";
     }
 
     public boolean isReady(){

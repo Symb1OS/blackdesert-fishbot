@@ -6,6 +6,7 @@ public class UI {
     public static final String IMG_DEBUF_NIGHT = "resources/templates/debuff/night.jpg";
 
     public static final String IMG_SETTINGS = "resources/img/settings.png";
+    public static final String IMG_STATS = "resources/img/stats.png";
     public static final String IMG_SAVE = "resources/img/save.png";
     public static final String IMG_CLOSE = "resources/img/close.png";
     public static final String IMG_RESET = "resources/img/reset.png";

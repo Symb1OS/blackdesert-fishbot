@@ -23,9 +23,9 @@ public class StartController implements ActionListener {
 
 	private Bot bot;
 
-	public StartController(RootView view) {
+	public StartController(RootView view, Bot bot) {
 		this.view = view;
-        this.bot = new Bot();
+        this.bot = bot;
 
 	}
 

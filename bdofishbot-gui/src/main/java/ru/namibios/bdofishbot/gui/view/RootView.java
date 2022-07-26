@@ -14,6 +14,7 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import ru.namibios.bdofishbot.cli.Application;
+import ru.namibios.bdofishbot.cli.Bot;
 import ru.namibios.bdofishbot.cli.config.*;
 import ru.namibios.bdofishbot.gui.CheckUpdate;
 import ru.namibios.bdofishbot.gui.Info;
@@ -92,8 +93,14 @@ public class RootView extends JFrame {
         preference = new JMenuItem(UIManager.getString("rootview.menu.file.preference"));
         preference.setIcon(new ImageIcon(IMG_SETTINGS));
         preference.addActionListener(new SettingsController());
-
         file.add(preference);
+
+        Bot bot = new Bot();
+
+        JMenuItem stats = new JMenuItem("Stats");
+        stats.setIcon(new ImageIcon(IMG_STATS));
+        stats.addActionListener(new StatsController(bot));
+        file.add(stats);
 
         file.addSeparator();
 
@@ -137,7 +144,7 @@ public class RootView extends JFrame {
             premiumLabel.setIcon(new ImageIcon(IMG_PREMIUM));
         }
 
-        StartController startStopController = new StartController(this);
+        StartController startStopController = new StartController(this, bot);
 
         buttonStart.addActionListener(startStopController);
         buttonStart.setIcon(new ImageIcon(IMG_PLAY));

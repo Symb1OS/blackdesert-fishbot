@@ -59,8 +59,8 @@ public class Slot implements Command{
 		long ready = Math.abs(timer.getReadyTime());
 
 		return ready < minute
-				? String.format("Next %s in %s second", toCommand(), ready / 1000)
-				: String.format("Next %s in %s minute", toCommand(), ready / 1000 / 60);
+				? String.format("Next %s at %s second", toCommand(), ready / 1000)
+				: String.format("Next %s at %s minute", toCommand(), ready / 1000 / 60);
 	}
 
 	@Override
