@@ -2,18 +2,23 @@ package ru.namibios.bdofishbot.cli;
 
 import com.sun.jna.platform.win32.WinDef;
 import org.apache.log4j.Logger;
-import ru.namibios.bdofishbot.bot.state.*;
+import ru.namibios.bdofishbot.bot.state.DeferredStartState;
+import ru.namibios.bdofishbot.bot.state.FishBot;
+import ru.namibios.bdofishbot.bot.state.SlotTaskModeState;
+import ru.namibios.bdofishbot.bot.state.StartFishState;
 import ru.namibios.bdofishbot.cli.config.Message;
 import ru.namibios.bdofishbot.utils.DelayUtils;
 import ru.namibios.bdofishbot.utils.WinAPI;
 
-public class Bot extends Thread{
+public class Bot extends Thread {
 	
 	private final static Logger LOG = Logger.getLogger(Bot.class);
 
 	private FishBot fishBot;
 	
-	public Bot() {}
+	public Bot() {
+		LOG.debug("init new " + this);
+	}
 
 	public FishBot getFishBot() {
 		return fishBot;
@@ -21,7 +26,7 @@ public class Bot extends Thread{
 
 	private void restart(){
 		long pause = Application.getInstance().RESTART_PAUSE();
-		LOG.info("Need Restart. Restarted after " + pause/1000 + " second...");
+		LOG.info("Need Restart. Restarted after " + pause / 1000 + " second...");
 		DelayUtils.delay(pause);
 
 		fishBot.setRunned(true);
@@ -32,7 +37,7 @@ public class Bot extends Thread{
 
 	private void process(){
 
-		LOG.info("Start...");
+		LOG.info(getName() + " start...");
 
 		WinDef.HWND windowGame = WinAPI.findWindow(Application.getInstance().GAME_TITLE());
 		if (windowGame == null) {
@@ -64,9 +69,9 @@ public class Bot extends Thread{
 
 		while (fishBot.isRunned()) fishBot.getState().process();
 
-		LOG.info("Thread stop.");
-
 		if(fishBot.isRestart()) restart();
+
+		LOG.info(getName() + " stop.");
 
 	}
 
@@ -80,7 +85,7 @@ public class Bot extends Thread{
 
 		fishBot.saveStats();
 
-		LOG.info("End work.");
+		LOG.info(getName() + " end work.");
 
 	}
 

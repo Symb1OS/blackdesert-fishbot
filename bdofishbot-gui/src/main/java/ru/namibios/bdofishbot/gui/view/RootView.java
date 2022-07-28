@@ -55,6 +55,7 @@ public class RootView extends JFrame {
     private JComboBox<Mode> cbWorkMode;
     private JLabel lMode;
     private final JMenuItem preference;
+    private Bot bot;
 
     public RootView() {
 
@@ -95,11 +96,12 @@ public class RootView extends JFrame {
         preference.addActionListener(new SettingsController());
         file.add(preference);
 
-        Bot bot = new Bot();
+        bot = new Bot();
 
         JMenuItem stats = new JMenuItem("Stats");
         stats.setIcon(new ImageIcon(IMG_STATS));
-        stats.addActionListener(new StatsController(bot));
+        StatsController statsController = new StatsController(bot);
+        stats.addActionListener(statsController);
         file.add(stats);
 
         file.addSeparator();
@@ -144,7 +146,7 @@ public class RootView extends JFrame {
             premiumLabel.setIcon(new ImageIcon(IMG_PREMIUM));
         }
 
-        StartController startStopController = new StartController(this, bot);
+        StartController startStopController = new StartController(this, bot, statsController);
 
         buttonStart.addActionListener(startStopController);
         buttonStart.setIcon(new ImageIcon(IMG_PLAY));

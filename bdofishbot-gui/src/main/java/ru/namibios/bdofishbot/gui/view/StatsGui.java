@@ -2,6 +2,7 @@ package ru.namibios.bdofishbot.gui.view;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.apache.log4j.Logger;
 import ru.namibios.bdofishbot.bot.StatSeries;
 import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.state.FishBot;
@@ -9,6 +10,7 @@ import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.Bot;
 import ru.namibios.bdofishbot.gui.UI;
 import ru.namibios.bdofishbot.utils.DelayUtils;
+import ru.namibios.bdofishbot.utils.ExceptionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,8 @@ import java.util.OptionalDouble;
 import java.util.function.Predicate;
 
 public class StatsGui extends JDialog {
+
+    private static final Logger LOG = Logger.getLogger(StatsGui.class);
 
     private JTextArea area;
     private JPanel panel;
@@ -31,6 +35,7 @@ public class StatsGui extends JDialog {
         this.setContentPane(panel);
         this.setIconImage(new ImageIcon(UI.IMG_STATS).getImage());
         this.setLocation(0, 600);
+        this.setSize(200, 300);
         this.setResizable(false);
         this.setAlwaysOnTop(true);
         this.setVisible(true);
@@ -47,24 +52,36 @@ public class StatsGui extends JDialog {
         });
 
         new Thread(() -> {
+            LOG.debug(getName() + " start");
             while (isOpen) {
-                DelayUtils.delay(Application.getInstance().DELAY_STATS_GUI());
-                update();
+                if (bot.getFishBot() != null && bot.getFishBot().isRunned()) {
+                    try {
+                        update();
+                        DelayUtils.delay(Application.getInstance().DELAY_STATS_GUI());
+                    } catch (Exception e) {
+                        LOG.debug(ExceptionUtils.getString(e));
+                    }
+                } else {
+                    break;
+                }
             }
+            LOG.debug(getName() +  " stop");
         }).start();
     }
 
     private void update() {
-
         FishBot fishBot = bot.getFishBot();
         if (fishBot != null) {
             Stats stats = fishBot.getStats();
             List<StatSeries> series = stats.getSeries();
+            if (series.isEmpty()) {
+                LOG.debug("empty series..");
+                return;
+            }
 
-            fishBot.getSlotService().info();
             long countSeries = series.size();
 
-            Predicate<StatSeries> successCycle = statSeries -> statSeries.getStatusCut().equals("PERFECT") || (statSeries.isRecognizedCaptcha() && statSeries.isStatusCaptcha());
+            Predicate<StatSeries> successCycle = statSeries -> statSeries.getStatusCut() != null && statSeries.getStatusCut().equals("PERFECT") || (statSeries.isRecognizedCaptcha() && statSeries.isStatusCaptcha());
 
             long successSeries = series.stream().filter(successCycle).count();
             OptionalDouble avgCycles = series.stream().filter(successCycle).mapToLong(statSeries -> statSeries.getFilterLootEnd() - statSeries.getWaitFishStart()).average();
@@ -72,7 +89,7 @@ public class StatsGui extends JDialog {
             long usefull = series.stream().mapToLong(StatSeries::getUsefull).sum();
             long confirm = series.stream().mapToLong(StatSeries::getConfirm).sum();
             long unknown = series.stream().mapToLong(StatSeries::getUnknown).sum();
-            long exception = series.stream().mapToLong(StatSeries::getTrash).sum();
+            long trash = series.stream().mapToLong(StatSeries::getTrash).sum();
             long empty = series.stream().mapToLong(StatSeries::getEmpty).sum();
 
             long red = series.stream().mapToLong(StatSeries::getRed).sum();
@@ -83,7 +100,7 @@ public class StatsGui extends JDialog {
 
             StringBuilder sb = new StringBuilder();
             sb.append("Uptime: ").append(fishBot.getUptime() / 1000 / 60).append(" minutes")
-                    .append("\nFree fishing rods: ").append(fishBot.getRodService().getCountAvailableRods())
+                    .append("\nFree fishing rods: ").append(fishBot.getRodService().getCountAvailableRods()).append(" of ").append(Application.getInstance().COUNT_ROD())
                     .append("\nSlot: ").append(fishBot.getSlotService().info())
                     .append("\n----------------------------")
                     .append("\nAverage fishing time: ").append(Math.round(avgCycles.isPresent() ? avgCycles.getAsDouble() / 1000 : 0)).append(" seconds")
@@ -93,7 +110,7 @@ public class StatsGui extends JDialog {
                     .append("\nUsefull: ").append(usefull)
                     .append("\nConfirm: ").append(confirm)
                     .append("\nUnknown: ").append(unknown)
-                    .append("\nException: ").append(exception)
+                    .append("\nTrash: ").append(trash)
                     .append("\nEmpty: ").append(empty)
                     .append("\n----------------------------")
                     .append("\nRed: ").append(red)

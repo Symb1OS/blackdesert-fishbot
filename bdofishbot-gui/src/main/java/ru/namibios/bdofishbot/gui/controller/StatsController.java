@@ -11,6 +11,10 @@ public class StatsController implements ActionListener {
 
     private Bot bot;
 
+    public void setBot(Bot bot) {
+        this.bot = bot;
+    }
+
     public StatsController(Bot bot) {
         this.bot = bot;
     }

@@ -22,12 +22,14 @@ public class StartController implements ActionListener {
     private Executor executor = Executors.newSingleThreadExecutor();
 
 	private Bot bot;
+    private StatsController statsController;
 
-	public StartController(RootView view, Bot bot) {
+    public StartController(RootView view, Bot bot, StatsController statsController) {
 		this.view = view;
         this.bot = bot;
 
-	}
+        this.statsController = statsController;
+    }
 
 	private void showMessageDialog(String message) {
         LOG.info(message);
@@ -59,6 +61,7 @@ public class StartController implements ActionListener {
                 executor.execute(bot);
             }
 
+            statsController.setBot(bot);
             enablePreference(false);
         }
     }

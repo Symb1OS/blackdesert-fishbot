@@ -62,7 +62,7 @@ public class ChangeRodState extends State{
 						LOG.info("Undefined mode..");
 				}
 
-				fishBot.restart();
+//				fishBot.restart();
 
 			}else {
 				LOG.info("Free fishing rods are locked. Finish work.");

@@ -76,7 +76,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	boolean MARK_SELT_THIEF();
 
 	@Key("bot.restart.pause")
-	@DefaultValue("10000")
+	@DefaultValue("5000")
 	long RESTART_PAUSE();
 
 	@Key("bot.gui_stats.delay")
@@ -137,7 +137,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.rod.count")
-	@DefaultValue("0")
+	@DefaultValue("6")
 	int COUNT_ROD();
 	
 	@Key("bot.rod.changetime")
