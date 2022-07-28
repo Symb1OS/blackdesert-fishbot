@@ -137,7 +137,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	///////////////////////////////////////////////////////////////////////////
 
 	@Key("bot.rod.count")
-	@DefaultValue("6")
+	@DefaultValue("0")
 	int COUNT_ROD();
 	
 	@Key("bot.rod.changetime")
