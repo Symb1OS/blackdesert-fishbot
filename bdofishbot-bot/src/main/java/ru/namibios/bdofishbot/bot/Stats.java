@@ -68,24 +68,28 @@ public class Stats {
         this.series = series;
     }
 
+    public void initChangeRod(){
+        current.setChangeRodStart(DateUtils.nowTimestamp());
+    }
+
     public void initWaitFishStart() {
-        current.setWaitFishStart(DateUtils.now());
+        current.setWaitFishStart(DateUtils.nowTimestamp());
     }
 
     public void initWaitFishEnd() {
-        current.setWaitFishEnd(DateUtils.now());
+        current.setWaitFishEnd(DateUtils.nowTimestamp());
     }
 
     public void initCutFishStart() {
-        current.setCutFishStart(DateUtils.now());
+        current.setCutFishStart(DateUtils.nowTimestamp());
     }
 
     public void initCutFishEnd() {
-        current.setCutFishEnd(DateUtils.now());
+        current.setCutFishEnd(DateUtils.nowTimestamp());
     }
 
     public void initStatusCutStart() {
-        current.setStatusCutStart(DateUtils.now());
+        current.setStatusCutStart(DateUtils.nowTimestamp());
     }
 
     public void setStatusCut(String statusCut) {
@@ -94,11 +98,11 @@ public class Stats {
 
     public void initStatusCutEndAndStatus(String name) {
         current.setStatusCut(name);
-        current.setStatusCutEnd(DateUtils.now());
+        current.setStatusCutEnd(DateUtils.nowTimestamp());
     }
 
     public void initCaptchaStart() {
-        current.setCaptchaStart(DateUtils.now());
+        current.setCaptchaStart(DateUtils.nowTimestamp());
     }
 
     public void setRecognizedCaptcha(boolean isRecognized) {
@@ -106,15 +110,15 @@ public class Stats {
     }
 
     public void initCaptchaEnd() {
-        current.setCaptchaEnd(DateUtils.now());
+        current.setCaptchaEnd(DateUtils.nowTimestamp());
     }
 
     public void initStatusCaptchaStart() {
-        current.setStatusCaptchaStart(DateUtils.now());
+        current.setStatusCaptchaStart(DateUtils.nowTimestamp());
     }
 
     public void initStatusCaptchaEnd() {
-        current.setStatusCaptchaEnd(DateUtils.now());
+        current.setStatusCaptchaEnd(DateUtils.nowTimestamp());
     }
 
     public void setStatusCaptcha(boolean isParsed) {
@@ -122,11 +126,11 @@ public class Stats {
     }
 
     public void initFilterLootStart() {
-        current.setFilterLootStart(DateUtils.now());
+        current.setFilterLootStart(DateUtils.nowTimestamp());
     }
 
     public void initFilterLootEnd() {
-        current.setFilterLootEnd(DateUtils.now());
+        current.setFilterLootEnd(DateUtils.nowTimestamp());
     }
 
     public void incLoot(MatrixTemplate loot) {

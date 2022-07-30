@@ -2,6 +2,7 @@ module bdofishbot.gui {
 
     requires java.desktop;
     requires java.logging;
+    requires java.sql;
     requires log4j;
     requires jnativehook;
     requires jSerialComm;

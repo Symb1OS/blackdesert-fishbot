@@ -1,5 +1,6 @@
 package ru.namibios.bdofishbot.utils;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,6 +25,10 @@ public final class DateUtils {
 
 	public static long now(){
 		return new Date().getTime();
+	}
+
+	public static Timestamp nowTimestamp(){
+		return new Timestamp(System.currentTimeMillis());
 	}
 
 }

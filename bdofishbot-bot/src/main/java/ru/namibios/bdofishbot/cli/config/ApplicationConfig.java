@@ -80,7 +80,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	long RESTART_PAUSE();
 
 	@Key("bot.gui_stats.delay")
-	@DefaultValue("5000")
+	@DefaultValue("3000")
 	long DELAY_STATS_GUI();
 
 	@Key("bot.exit.pause")
@@ -169,7 +169,7 @@ public interface ApplicationConfig extends Accessible, Mutable{
 	int DELAY_BEFORE_CHANGE_ROD();
 	
 	@Key("bot.delay.rod.after")
-	@DefaultValue("15000")
+	@DefaultValue("10000")
 	int DELAY_AFTER_CHANGE_ROD();
 
 

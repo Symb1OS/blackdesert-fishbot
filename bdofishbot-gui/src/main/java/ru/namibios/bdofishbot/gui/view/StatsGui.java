@@ -84,7 +84,10 @@ public class StatsGui extends JDialog {
             Predicate<StatSeries> successCycle = statSeries -> statSeries.getStatusCut() != null && statSeries.getStatusCut().equals("PERFECT") || (statSeries.isRecognizedCaptcha() && statSeries.isStatusCaptcha());
 
             long successSeries = series.stream().filter(successCycle).count();
-            OptionalDouble avgCycles = series.stream().filter(successCycle).mapToLong(statSeries -> statSeries.getFilterLootEnd() - statSeries.getWaitFishStart()).average();
+            long perfectSeries = series.stream().filter(statSeries -> statSeries.getStatusCut() != null).filter(statSeries -> statSeries.getStatusCut().equals("PERFECT")).count();
+            long parsingSeries = series.stream().filter(statSeries -> statSeries.isRecognizedCaptcha() && statSeries.isStatusCaptcha()).count();
+
+            OptionalDouble avgCycles = series.stream().filter(statSeries -> statSeries.getFilterLootEnd() != null && statSeries.getWaitFishStart() != null).filter(successCycle).mapToLong(statSeries -> statSeries.getFilterLootEnd().getTime() - statSeries.getWaitFishStart().getTime()).average();
 
             long usefull = series.stream().mapToLong(StatSeries::getUsefull).sum();
             long confirm = series.stream().mapToLong(StatSeries::getConfirm).sum();
@@ -106,6 +109,8 @@ public class StatsGui extends JDialog {
                     .append("\nAverage fishing time: ").append(Math.round(avgCycles.isPresent() ? avgCycles.getAsDouble() / 1000 : 0)).append(" seconds")
                     .append("\nFishing cycles: ").append(countSeries)
                     .append("\nSuccess fishing: ").append(successSeries)
+                    .append("\nPerfect cycles: ").append(perfectSeries)
+                    .append("\nParsing cycles: ").append(parsingSeries)
                     .append("\n----------------------------")
                     .append("\nUsefull: ").append(usefull)
                     .append("\nConfirm: ").append(confirm)

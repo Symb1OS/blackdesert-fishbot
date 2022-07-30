@@ -1,6 +1,7 @@
 module bdofishbot.bot {
 
     requires java.desktop;
+    requires java.sql;
     requires log4j;
     requires jSerialComm;
     requires org.apache.httpcomponents.httpcore;

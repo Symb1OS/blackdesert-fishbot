@@ -1,27 +1,31 @@
 package ru.namibios.bdofishbot.bot;
 
+import java.sql.Timestamp;
+
 public class StatSeries {
 
-    private long waitFishStart;
-    private long waitFishEnd;
+    private Timestamp changeRodStart;
 
-    private long cutFishStart;
-    private long cutFishEnd;
+    private Timestamp waitFishStart;
+    private Timestamp waitFishEnd;
 
-    private long statusCutStart;
-    private long statusCutEnd;
+    private Timestamp cutFishStart;
+    private Timestamp cutFishEnd;
+
+    private Timestamp statusCutStart;
+    private Timestamp statusCutEnd;
     private String statusCut;
 
-    private long captchaStart;
-    private long captchaEnd;
+    private Timestamp captchaStart;
+    private Timestamp captchaEnd;
     private boolean recognizedCaptcha;
 
-    private long statusCaptchaStart;
-    private long statusCaptchaEnd;
+    private Timestamp statusCaptchaStart;
+    private Timestamp statusCaptchaEnd;
     private boolean statusCaptcha;
 
-    private long filterLootStart;
-    private long filterLootEnd;
+    private Timestamp filterLootStart;
+    private Timestamp filterLootEnd;
 
     private long unknown;
     private long usefull;
@@ -36,67 +40,59 @@ public class StatSeries {
     private long gray;
     private long unknownFrame;
 
-    public long getFilterLootStart() {
-        return filterLootStart;
+    public Timestamp getChangeRodStart() {
+        return changeRodStart;
     }
 
-    public void setFilterLootStart(long filterLootStart) {
-        this.filterLootStart = filterLootStart;
+    public void setChangeRodStart(Timestamp changeRodStart) {
+        this.changeRodStart = changeRodStart;
     }
 
-    public long getFilterLootEnd() {
-        return filterLootEnd;
-    }
-
-    public void setFilterLootEnd(long filterLootEnd) {
-        this.filterLootEnd = filterLootEnd;
-    }
-
-    public long getWaitFishStart() {
+    public Timestamp getWaitFishStart() {
         return waitFishStart;
     }
 
-    public void setWaitFishStart(long waitFishStart) {
+    public void setWaitFishStart(Timestamp waitFishStart) {
         this.waitFishStart = waitFishStart;
     }
 
-    public long getWaitFishEnd() {
+    public Timestamp getWaitFishEnd() {
         return waitFishEnd;
     }
 
-    public void setWaitFishEnd(long waitFishEnd) {
+    public void setWaitFishEnd(Timestamp waitFishEnd) {
         this.waitFishEnd = waitFishEnd;
     }
 
-    public long getCutFishStart() {
+    public Timestamp getCutFishStart() {
         return cutFishStart;
     }
 
-    public void setCutFishStart(long cutFishStart) {
+    public void setCutFishStart(Timestamp cutFishStart) {
         this.cutFishStart = cutFishStart;
     }
 
-    public long getCutFishEnd() {
+    public Timestamp getCutFishEnd() {
         return cutFishEnd;
     }
 
-    public void setCutFishEnd(long cutFishEnd) {
+    public void setCutFishEnd(Timestamp cutFishEnd) {
         this.cutFishEnd = cutFishEnd;
     }
 
-    public long getStatusCutStart() {
+    public Timestamp getStatusCutStart() {
         return statusCutStart;
     }
 
-    public void setStatusCutStart(long statusCutStart) {
+    public void setStatusCutStart(Timestamp statusCutStart) {
         this.statusCutStart = statusCutStart;
     }
 
-    public long getStatusCutEnd() {
+    public Timestamp getStatusCutEnd() {
         return statusCutEnd;
     }
 
-    public void setStatusCutEnd(long statusCutEnd) {
+    public void setStatusCutEnd(Timestamp statusCutEnd) {
         this.statusCutEnd = statusCutEnd;
     }
 
@@ -108,19 +104,19 @@ public class StatSeries {
         this.statusCut = statusCut;
     }
 
-    public long getCaptchaStart() {
+    public Timestamp getCaptchaStart() {
         return captchaStart;
     }
 
-    public void setCaptchaStart(long captchaStart) {
+    public void setCaptchaStart(Timestamp captchaStart) {
         this.captchaStart = captchaStart;
     }
 
-    public long getCaptchaEnd() {
+    public Timestamp getCaptchaEnd() {
         return captchaEnd;
     }
 
-    public void setCaptchaEnd(long captchaEnd) {
+    public void setCaptchaEnd(Timestamp captchaEnd) {
         this.captchaEnd = captchaEnd;
     }
 
@@ -132,20 +128,36 @@ public class StatSeries {
         this.recognizedCaptcha = recognizedCaptcha;
     }
 
-    public long getStatusCaptchaStart() {
+    public Timestamp getStatusCaptchaStart() {
         return statusCaptchaStart;
     }
 
-    public void setStatusCaptchaStart(long statusCaptchaStart) {
+    public void setStatusCaptchaStart(Timestamp statusCaptchaStart) {
         this.statusCaptchaStart = statusCaptchaStart;
     }
 
-    public long getStatusCaptchaEnd() {
+    public Timestamp getStatusCaptchaEnd() {
         return statusCaptchaEnd;
     }
 
-    public void setStatusCaptchaEnd(long statusCaptchaEnd) {
+    public void setStatusCaptchaEnd(Timestamp statusCaptchaEnd) {
         this.statusCaptchaEnd = statusCaptchaEnd;
+    }
+
+    public Timestamp getFilterLootStart() {
+        return filterLootStart;
+    }
+
+    public void setFilterLootStart(Timestamp filterLootStart) {
+        this.filterLootStart = filterLootStart;
+    }
+
+    public Timestamp getFilterLootEnd() {
+        return filterLootEnd;
+    }
+
+    public void setFilterLootEnd(Timestamp filterLootEnd) {
+        this.filterLootEnd = filterLootEnd;
     }
 
     public boolean isStatusCaptcha() {

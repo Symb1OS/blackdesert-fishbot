@@ -1,6 +1,7 @@
 package ru.namibios.bdofishbot.bot.state;
 
 import org.apache.log4j.Logger;
+import ru.namibios.bdofishbot.bot.Stats;
 import ru.namibios.bdofishbot.bot.service.RodService;
 import ru.namibios.bdofishbot.cli.Application;
 import ru.namibios.bdofishbot.cli.config.Message;
@@ -11,6 +12,7 @@ public class ChangeRodState extends State{
 	private static final Logger LOG = Logger.getLogger(ChangeRodState.class);
 
 	private RodService rodService;
+	private final Stats stats;
 
 	ChangeRodState(FishBot fishBot) {
 		super(fishBot);
@@ -18,6 +20,7 @@ public class ChangeRodState extends State{
 		this.afterStart = Application.getInstance().DELAY_AFTER_CHANGE_ROD();
 
 		this.rodService = fishBot.getRodService();
+		this.stats = fishBot.getStats();
 
 	}
 
@@ -39,6 +42,8 @@ public class ChangeRodState extends State{
 
 		try {
 
+			stats.initChangeRod();
+
 			LOG.info("Checking availability fishing rod..");
 			if (rodService.hasNext()) {
 
@@ -51,18 +56,7 @@ public class ChangeRodState extends State{
 				String nextFree = rodService.getNext();
 				inputService.send( () -> nextFree);
 
-				switch (Application.getInstance().MODE()) {
-					case FISHING:
-						fishBot.setState(new StartFishState(fishBot));
-						break;
-					case AFK_FISH:
-						fishBot.setState(new AfkFishState(fishBot));
-						break;
-					default:
-						LOG.info("Undefined mode..");
-				}
-
-//				fishBot.restart();
+				fishBot.setState(new StartFishState(fishBot));
 
 			}else {
 				LOG.info("Free fishing rods are locked. Finish work.");
