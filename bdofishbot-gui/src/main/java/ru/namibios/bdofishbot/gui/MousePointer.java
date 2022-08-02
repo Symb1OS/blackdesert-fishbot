@@ -16,14 +16,14 @@ public class MousePointer implements NativeMouseMotionListener {
 
     @Override
     public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
-
+        mouseXY.setText(String.format("[x: %s, y: %s]",
+                (int) MouseInfo.getPointerInfo().getLocation().getLocation().getX(),
+                (int) MouseInfo.getPointerInfo().getLocation().getLocation().getY()));
     }
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
-        mouseXY.setText(String.format("[x: %s, y: %s]",
-                (int) MouseInfo.getPointerInfo().getLocation().getLocation().getX(),
-                (int) MouseInfo.getPointerInfo().getLocation().getLocation().getY()));
+
     }
 
 }

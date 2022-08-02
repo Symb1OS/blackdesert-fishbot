@@ -21,6 +21,7 @@ public class Stats {
     private String hash;
     private long startWork;
     private long endWork;
+    private String mode;
 
     private StatSeries current;
     private List<StatSeries> series;
@@ -38,6 +39,14 @@ public class Stats {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     public void updateEndWork() {

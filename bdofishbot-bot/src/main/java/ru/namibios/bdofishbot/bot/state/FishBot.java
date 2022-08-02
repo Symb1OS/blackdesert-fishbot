@@ -94,7 +94,9 @@ public class FishBot {
 
 		this.timer = new Timer();
 		this.pauseService = new PauseService(Application.getInstance().TASK_PAUSE());
+
 		this.stats = new Stats();
+		this.stats.setMode(Application.getInstance().MODE().name());
 
 	}
 
