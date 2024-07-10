@@ -83,5 +83,4 @@ Right click at `run.bat` and *Run as administrator*(`!!IMPORTANT!!`)
 ### Donation
 - [donationalerts](https://www.donationalerts.com/r/symb1os)
 - [yoomoney](https://yoomoney.ru/to/410014569437812)
-- Bitcoin - bc1qcdg8zcuuwqu07r6490kja3w84keuhlscqnjlam
-- Ethereum - 0x5B290D72A7D89eD6c1B48316AdD3f1758b74b3a8
+- ETH - 0x55c23b07887A86293418f783267A06e69ac8BcCB
